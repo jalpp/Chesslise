@@ -1,0 +1,153 @@
+import chariot.Client;
+import chariot.model.Result;
+import chariot.model.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+
+import java.awt.*;
+
+public class UserProfile {
+
+    private Client client;
+    private  EmbedBuilder embedBuilder;
+    private String userID;
+
+
+    public UserProfile(Client client, String[] userParsing){
+        this.client = client;
+        this.userID = userParsing[1].toLowerCase();
+    }
+
+
+
+    /**
+     * ,profile command to see people's lichess profiles
+     * input: Lichess username
+     * output the whole Lichess  profile
+     */
+
+
+    public EmbedBuilder getUserProfile(){
+
+        Result<User> userResult = client.users().byId(this.userID);
+
+        boolean userPresent = userResult.isPresent();
+
+        this.embedBuilder = new EmbedBuilder();
+
+
+        if (userPresent == true) {  // checking if the user is present in the lichess
+            User user = userResult.get();
+
+            boolean cheater = user.tosViolation();
+
+            boolean closedaccount = user.closed();
+
+            if (cheater == true) { // check if the user is cheater
+               this.embedBuilder.setDescription(" This user has violated Lichess Terms of Service");
+
+            }
+            if (closedaccount == true) { // check if user is clossed account
+                this.embedBuilder.setDescription("This account is closed");
+            }
+
+
+            if (cheater == false && closedaccount == false) {
+
+
+                // List of variables
+
+
+                String name = user.username();
+
+                String bio = user.profile().bio();
+
+                int wins = user.count().win();
+
+                int lose = user.count().loss();
+
+                int all = user.count().all();
+
+                int draw = user.count().draw();
+
+                int playing = user.count().playing();
+
+                String userUrl = user.url();
+
+                boolean pat = user.patron();
+
+                String patWings = "";
+
+
+
+                if(pat == true){
+                    patWings += "https://cdn.discordapp.com/emojis/900426733814165534.png?size=96";
+
+
+                }else{
+                    patWings += " https://www.google.com/url?sa=i&url=https%3A%2F%2Flichess.fandom.com%2Fwiki%2FHorsey&psig=AOvVaw27c2RGn3iSXKXx26gOqKlo&ust=1634835688231000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIiPvvC72fMCFQAAAAAdAAAAABAJ";
+
+                }
+
+
+
+
+                String sayTitle = "";
+
+                String titledPlayer = user.title();
+
+                Boolean hasTitle = false;
+
+
+
+
+                if (titledPlayer != null) { // check if the user is titled, I wish I was titled player :))
+                    hasTitle = true;
+                } else {
+                    hasTitle = false;
+                }
+
+                if (hasTitle == true) {
+                    sayTitle +=titledPlayer ;
+                } else {
+                    sayTitle += "";
+                }
+
+
+
+                // creating the Lichess style profile with embeds
+
+
+                this.embedBuilder = new EmbedBuilder();
+                this.embedBuilder.setColor(Color.white);
+                this.embedBuilder.setThumbnail(patWings);
+
+                this.embedBuilder.setTitle("Lichess Profile for: " + name);
+                this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing +  "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
+
+
+            }
+        }
+        if (userPresent == false) {
+            this.embedBuilder.setDescription("User Not Present, Please try again");
+        }
+
+
+        return this.embedBuilder;
+
+
+    }
+
+
+    public Client getClient(){
+        return this.client;
+    }
+
+    public String getUserID(){
+        return this.userID;
+    }
+
+
+
+
+
+}
