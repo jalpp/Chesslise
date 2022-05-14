@@ -36,6 +36,8 @@ public class UserProfile {
         boolean userPresent = userResult.isPresent();
 
         this.embedBuilder = new EmbedBuilder();
+        this.embedBuilder.setDescription("");
+
 
 
         if (userPresent == true) {  // checking if the user is present in the lichess
@@ -49,10 +51,12 @@ public class UserProfile {
 
             if (cheater == true) { // check if the user is cheater
                this.embedBuilder.setDescription(" This user has violated Lichess Terms of Service");
+               return this.embedBuilder;
 
             }
             if (closedaccount == true) { // check if user is clossed account
                 this.embedBuilder.setDescription("This account is closed");
+                return this.embedBuilder;
             }
 
 
@@ -123,7 +127,7 @@ public class UserProfile {
                 // getting user profiles
 
                 for (chariot.model.Trophy trophy : user.trophies()) {
-                    sayrewards += trophy.name() + "\n";
+                    sayrewards += "\n " + trophy.name() + "\n";
                 }
 
 
@@ -143,13 +147,14 @@ public class UserProfile {
                 this.embedBuilder.setThumbnail(patWings);
 
                 this.embedBuilder.setTitle("Lichess Profile for: " + name);
-                this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing + "\n " + sayrewards + "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
+                this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing + "\n **User Trophies:** " + sayrewards + "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
 
 
             }
         }
         if (userPresent == false) {
             this.embedBuilder.setDescription("User Not Present, Please try again");
+            return this.embedBuilder;
         }
 
 
