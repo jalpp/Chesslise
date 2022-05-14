@@ -1,9 +1,12 @@
 import chariot.Client;
 import chariot.model.Result;
+import chariot.model.Trophy;
 import chariot.model.User;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class UserProfile {
 
@@ -28,7 +31,7 @@ public class UserProfile {
 
     public EmbedBuilder getUserProfile(){
 
-        Result<User> userResult = client.users().byId(this.userID);
+        Result<User> userResult = client.users().byId(this.userID, true);
 
         boolean userPresent = userResult.isPresent();
 
@@ -37,6 +40,8 @@ public class UserProfile {
 
         if (userPresent == true) {  // checking if the user is present in the lichess
             User user = userResult.get();
+
+
 
             boolean cheater = user.tosViolation();
 
@@ -57,9 +62,9 @@ public class UserProfile {
                 // List of variables
 
 
-                String name = user.username();
+                String name = user.id();
 
-                String bio = user.profile().bio();
+                String bio = user.profile().get().bio();
 
                 int wins = user.count().win();
 
@@ -93,24 +98,40 @@ public class UserProfile {
 
                 String sayTitle = "";
 
-                String titledPlayer = user.title();
+                Optional<String> titledPlayer = user.title();
 
-                Boolean hasTitle = false;
-
-
+                Boolean hasTitle;
 
 
-                if (titledPlayer != null) { // check if the user is titled, I wish I was titled player :))
+
+
+                if (titledPlayer.isPresent()) { // check if the user is titled, I wish I was titled player :))
                     hasTitle = true;
                 } else {
                     hasTitle = false;
                 }
 
                 if (hasTitle == true) {
-                    sayTitle +=titledPlayer ;
+                    sayTitle += titledPlayer.get() ;
                 } else {
                     sayTitle += "";
                 }
+
+                String sayrewards= "";
+
+
+                // getting user profiles
+
+                for (chariot.model.Trophy trophy : user.trophies()) {
+                    sayrewards += trophy.name() + "\n";
+                }
+
+
+
+
+
+
+
 
 
 
@@ -122,7 +143,7 @@ public class UserProfile {
                 this.embedBuilder.setThumbnail(patWings);
 
                 this.embedBuilder.setTitle("Lichess Profile for: " + name);
-                this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing +  "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
+                this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing + "\n " + sayrewards + "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
 
 
             }
