@@ -41,8 +41,8 @@ The bot is still under testing, and new features will be added
 
 # How Can I help?
 
- 1. You can star this project to let me know you support this bot
- 2. You can fork the bot, and start playing with it by having your own [discord token](https://www.writebots.com/discord-bot-token/)
+
+ 1. You can fork the bot, and start playing with it by having your own [discord token](https://www.writebots.com/discord-bot-token/)
 
  
 
