@@ -127,7 +127,9 @@ public class UserProfile {
                 // getting user profiles
 
                 for (chariot.model.Trophy trophy : user.trophies()) {
-                    sayrewards += "\n " + trophy.name() + "\n";
+
+                    UserTrophy userTrophy = new UserTrophy(trophy);
+                    sayrewards +=  userTrophy.getImageLink() + "\n";
                 }
 
 
@@ -147,7 +149,7 @@ public class UserProfile {
                 this.embedBuilder.setThumbnail(patWings);
 
                 this.embedBuilder.setTitle("Lichess Profile for: " + name);
-                this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing + "\n **User Trophies:** " + sayrewards + "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
+                this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing + "\n **User Trophies:** \n" + sayrewards + "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
 
 
             }
