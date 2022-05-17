@@ -39,10 +39,12 @@
 The bot is still under testing, and new features will be added
 
 
-# How Can I help?
+# Contributing:
 
 
- 1. You can fork the bot, and start playing with it by having your own [discord token](https://www.writebots.com/discord-bot-token/)
+ 1. Get your own [discord token](https://www.writebots.com/discord-bot-token/)
+ 2. Clone/Fork to add or make any type of improvements to the bot
+ 
 
  
 
