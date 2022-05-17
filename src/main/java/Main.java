@@ -198,6 +198,14 @@ public class Main extends ListenerAdapter {
          event.getChannel().sendMessage(Chessgame.getNewGame().build()).queue();
 
      }
+        
+        
+     
+     String[] engine = event.getMessage().getContentRaw().split(" ");
+     EngineEval eval = new EngineEval(client, engine[1]);
+     if(engine[0].equals(",engine")){
+       event.getChannel().sendMessage(eval.getEval().build()).queue();
+     }   
 
 
     }
