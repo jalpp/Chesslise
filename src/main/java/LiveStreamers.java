@@ -22,10 +22,10 @@ public class LiveStreamers {
         this.embedBuilder = new EmbedBuilder();
 
         String getLivePeople = "";
-        // String online = "✅";
 
 
-        for(int i = 0; i < live.size(); i++){
+
+        for(int i = 0; i < 10; i++){
 
             String title = "";
 
@@ -37,11 +37,11 @@ public class LiveStreamers {
                 title += "";
             }
 
-            getLivePeople += title + " " + live.get(i).id() + " is Streaming! \n";
+            getLivePeople += title + " " + live.get(i).id() + " is Streaming! \n " + " [**Watch Stream**](https://lichess.org/@/" + live.get(i).id() + ") \n\n";
 
 
         }
-
+        this.embedBuilder.setThumbnail("https://i.imgur.com/fHhSq9B.jpg");
         this.embedBuilder.setTitle("Current Live Streamers: ");
         this.embedBuilder.setColor(Color.orange);
         this.embedBuilder.setDescription(getLivePeople);
