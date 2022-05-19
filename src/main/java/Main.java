@@ -59,16 +59,14 @@ public class Main extends ListenerAdapter {
 
 
     }
-
-
-
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    
+     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         Client client = Client.basic();
 
 
         String command = event.getMessage().getContentRaw();
         CommandInfo help = new CommandInfo();
-        if (command.equals(",help")) { // help method
+        if (command.equals(",help") || command.equals(",streaming") || command.equals(",profile")) { // help method note ,streaming is to check for invalid input
           event.getChannel().sendMessage(help.getCommandInfo().build()).queue();
         }
 
@@ -148,12 +146,22 @@ public class Main extends ListenerAdapter {
 
 
         String[] checkStatus = event.getMessage().getContentRaw().split(" ");
+
         UserStreaming userStreaming = new UserStreaming(client, checkStatus);
-        if (checkStatus[0].equals(",streaming?")) {
+        LiveStreamers watch = new LiveStreamers(client);
 
-            event.getChannel().sendMessage(userStreaming.getStreamingStatus().build()).queue();
 
-        }
+
+            if (checkStatus[0].equals(",streaming")) {
+
+                event.getChannel().sendMessage(userStreaming.getStreamingStatus().build()).queue();
+                event.getChannel().sendMessage("\uD83C\uDF99️ Why not check out this streamers... \uD83C\uDF99️").queue();
+                event.getChannel().sendMessage(watch.getTv().build()).queue();
+
+            }
+
+
+
 
 
 
@@ -190,25 +198,42 @@ public class Main extends ListenerAdapter {
 
 
 
-     String[] challenge1 = event.getMessage().getContentRaw().split(" ");
-     Game Chessgame = new Game(client, challenge1[1], challenge1[2]);
+         String[] challenge1 = event.getMessage().getContentRaw().split(" ");
+         Game Chessgame = new Game(client, challenge1[1], challenge1[2]);
 
-     if(challenge1[0].equals(",play")){
+         if(challenge1[0].equals(",play")){
 
-         event.getChannel().sendMessage(Chessgame.getNewGame().build()).queue();
+             event.getChannel().sendMessage(Chessgame.getNewGame().build()).queue();
 
-     }
-        
-        
-     
-     String[] engine = event.getMessage().getContentRaw().split(" ");
-     EngineEval eval = new EngineEval(client, engine[1]);
-     if(engine[0].equals(",engine")){
-       event.getChannel().sendMessage(eval.getEval().build()).queue();
-     }   
+         }
+
+         String[] engine = event.getMessage().getContentRaw().split(" ");
+         EngineEval eval = new EngineEval(client, engine[1]);
+
+         if(engine[0].equals(",engine")){
+           event.getChannel().sendMessage(eval.getEval().build()).queue();
+
+
+         }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
+
+
+
+   
 
 
 
