@@ -41,6 +41,14 @@ public class UserStreaming extends UserProfile{
 
             User user = result.get();
 
+            String sayTitle = "";
+
+            if(user.title().isPresent()){
+                sayTitle += user.title().get();
+            }else{
+                sayTitle += "";
+            }
+
 
             if (user.tosViolation() == true) { // check to see if the user is a cheater
                this.embedBuilder.setDescription(this.getUserID() + "  has violated Lichess terms of service ");
@@ -55,12 +63,12 @@ public class UserStreaming extends UserProfile{
                 this.embedBuilder.setColor(Color.green);
                 String stream = user.url();
 
-                this.embedBuilder.setDescription(user.title() + " " + this.getUserID() + " Is Streaming! " + "✅" + " View the Stream [Here in the Lichess profile](" + stream + ")");
+                this.embedBuilder.setDescription(sayTitle + " " + this.getUserID() + " Is Streaming! " + "✅" + " View the Stream [Here in the Lichess profile](" + stream + ")");
 
             }
             if (user.streaming() == false && user.tosViolation() == false && user.closed() == false) { // displaying the non-stream status
                 this.embedBuilder.setColor(Color.red);
-                this.embedBuilder.setDescription(user.title() + " " + this.getUserID() + " Is not Streaming " + "❌" + " Check back later!");
+                this.embedBuilder.setDescription(sayTitle+ " " + this.getUserID() + " Is not Streaming " + "❌" + " Check back later!");
 
             }
 
