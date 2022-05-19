@@ -1,4 +1,4 @@
-# Welcome to Lichess Search Engine Bot
+# ♘ Welcome to Lichess Search Engine Bot ♘
 
  This a Discord Bot which unables users to play live chess games in discord and access Lichess data in discord, The bot uses Object Oriented Programming Design and is user-friendly
 
@@ -26,9 +26,9 @@
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-16-at-2.26.44-PM.png)
 
 
-## Streaming: Check who is streaming!
+## Streaming: Check and Watch who is streaming with Lichess supported suggestions!
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-12-at-4.54.05-PM.png)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-19-at-3.03.38-PM.png)
 
 ## Play live Chess
 
