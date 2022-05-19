@@ -21,31 +21,31 @@
 
 # Commands:
 
-## Profile Lookup: See anyone's lichess Profile
+## 🔎 Profile Lookup: See anyone's lichess Profile
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-16-at-2.26.44-PM.png)
 
 
-## Streaming: Check and Watch who is streaming with Lichess supported suggestions!
+## 🎙️ Streaming: Check and Watch who is streaming with Lichess supported suggestions!
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-19-at-3.03.38-PM.png)
 
-## Play live Chess
+## ⚔️ Play live Chess
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-12-at-4.54.13-PM.png)
 
-## Do Daily Chess Puzzles
+## ⏰ Do Daily Chess Puzzles
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-12-at-5.04.07-PM.png)
 
 ## And much more to Come!
 
 
-# Testing:
+# 🛠️ Testing:
 The bot is still under testing, and new features will be added
 
 
-# Contributing:
+# 🛠️ Contributing:
 
  
  1. Get your own [discord token](https://www.writebots.com/discord-bot-token/) and create your own discord bot from Discord Developer's Portal 
