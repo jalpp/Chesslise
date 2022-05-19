@@ -26,7 +26,7 @@
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-16-at-2.26.44-PM.png)
 
 
-## 🎙️ Streaming: Check and Watch who is streaming with Lichess supported suggestions!
+## 🎙️ Streaming: Check who is streaming with Lichess supported suggestions!
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-19-at-3.03.38-PM.png)
 
