@@ -26,7 +26,7 @@ public class Main extends ListenerAdapter {
 
         String TOKEN;
 
-        jdaBuilder = JDABuilder.createDefault(TOKEN);// string toke
+        jdaBuilder = JDABuilder.createDefault(TOKEN);// string token
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.watching("Playing Lichess"));
@@ -62,11 +62,13 @@ public class Main extends ListenerAdapter {
     
      public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         Client client = Client.basic();
+         
+         // help method note ,streaming is to check for invalid input
 
 
         String command = event.getMessage().getContentRaw();
         CommandInfo help = new CommandInfo();
-        if (command.equals(",help") || command.equals(",streaming") || command.equals(",profile")) { // help method note ,streaming is to check for invalid input
+        if (command.equals(",help") || command.equals(",streaming") || command.equals(",profile")) { 
           event.getChannel().sendMessage(help.getCommandInfo().build()).queue();
         }
 
