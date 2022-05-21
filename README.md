@@ -6,7 +6,7 @@
 
 # Goal of this Project
 
-## The goal of Lichess Search Engine is to provide users direct access to lichess features in Discord itself 
+## The goal of Lichess Search Engine is to provide users direct access to lichess features in Discord itself, this includes watching, playing and enjoying chess in discord. This Bot is fully Open-Source since its for Open-Source site [Lichess](https://lichess.org/).
 
 
 # Sources:
