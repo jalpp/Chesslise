@@ -14,7 +14,9 @@
  1. [Lichess Site](https://lichess.org/) 
  2. [Lichess API](https://lichess.org/api) 
  3. [Lichess Java Client](https://github.com/tors42/chariot) 
- 4. [Java Discord Api](https://github.com/DV8FromTheWorld/JDA)
+ 4. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
+ 5. [Java Discord Api](https://github.com/DV8FromTheWorld/JDA)
+ 
 
 # Below are images of the bot in action
 
@@ -37,12 +39,14 @@
 ## ⏰ Do Daily Chess Puzzles
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-12-at-5.04.07-PM.png)
+## 👀 Watch anyone's Games
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-21-at-4.03.14-PM.png)
 
 ## And much more to Come!
 
 
 # 🛠️ Testing:
-The bot is still under testing, and new features will be added
+[Join Here](https://discord.gg/6GdGqwxBdW) for testing and contributing
 
 
 # 🛠️ Contributing:
