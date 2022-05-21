@@ -100,6 +100,12 @@ public class Main extends ListenerAdapter {
             event.getChannel().sendMessage(userProfile.getUserProfile().build()).queue();
 
         }
+         
+        String[] gameCommand = event.getMessage().getContentRaw().split(" ");
+        UserGame games = new UserGame(client, gameCommand[1]);
+        if(gameCommand[0].equals(",watch")){
+            event.getChannel().sendMessage(games.getUserGames()).queue();
+        }
 
 
 
