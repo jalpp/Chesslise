@@ -42,7 +42,8 @@ public class Main extends ListenerAdapter {
 
         CommandListUpdateAction action = jda.updateCommands();
 
-        action.addCommands(new CommandData("play", "Start a new Lichess Game")).complete();
+        action.addCommands(new CommandData("play", "Start a new rapid Lichess Game")).complete();
+        action.addCommands(new CommandData("help", "See Commands Info!")).complete();a
 
 
     }
