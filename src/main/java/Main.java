@@ -106,6 +106,14 @@ public class Main extends ListenerAdapter {
         if(gameCommand[0].equals(",watch")){
             event.getChannel().sendMessage(games.getUserGames()).queue();
         }
+         
+        String[] gameReview = event.getMessage().getContentRaw().split(" ");
+
+        GameReview stockFishReview = new GameReview(client, gameReview[1]);
+        if(gameReview[0].equals(",review")){
+            event.getChannel().sendMessage(stockFishReview.getGameReviewData().build()).queue();
+        }
+ 
 
 
 
