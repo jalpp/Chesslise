@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDashboard extends UserProfile{
 
@@ -46,10 +47,10 @@ public class UserDashboard extends UserProfile{
 
             String title = "";
 
-            String titleplayer = user.title();
+            Optional<String> titleplayer = user.title();
 
-            if(titleplayer != null){
-                title += titleplayer;
+            if(titleplayer.isPresent()){
+                title += titleplayer.get();
             }else{
                 title = "";
             }
@@ -91,7 +92,7 @@ public class UserDashboard extends UserProfile{
                 this.embedBuilder = new EmbedBuilder();
                 this.embedBuilder.setColor(Color.white);
                 this.embedBuilder.setThumbnail("https://www.linkpicture.com/q/storm-yellow.png");
-                this.embedBuilder.setTitle("StormDashboard for: " + titleplayer + " " +this.getUserID());
+                this.embedBuilder.setTitle("StormDashboard for: " + title + " " + this.getUserID());
                 this.embedBuilder.setDescription(" All Time High score: **" + allTime + "** \n \n This Month: **" + month + "\n\n **This Week: **" + week + "** \n \n **Today:** " + today+ "\n\n **Storm History:** \n \n" + dashs +  "\n\n [View on Lichess](" + link + ")");
 
 
@@ -111,3 +112,4 @@ public class UserDashboard extends UserProfile{
 
 
 }
+
