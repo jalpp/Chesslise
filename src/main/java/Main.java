@@ -47,8 +47,27 @@ public class Main extends ListenerAdapter {
 
     }
 
-    public void onSlashCommand(SlashCommandEvent event){
+      public void onSlashCommand(SlashCommandEvent event){
         String name = event.getName();
+        Client client = Client.basic();
+
+
+        switch(name) {
+            case "help":
+                CommandInfo commandInfo = new CommandInfo();
+                event.replyEmbeds(commandInfo.getCommandInfo().build()).queue();
+                break;
+            case "play":
+
+                 Game game = new Game(client, "rapid", "casual");
+                 event.replyEmbeds(game.getNewGame().build()).queue();
+                break;
+            default:
+
+        }
+
+
+
 
 
 
