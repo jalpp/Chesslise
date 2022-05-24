@@ -44,6 +44,8 @@ public class Main extends ListenerAdapter {
 
         action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
+        action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
+        action.addCommands(new CommandData("livestreaming", "See Lichess LiveStreams for given User").addOption(OptionType.STRING, "streamername", "input Lichess username", true)).complete();
 
 
     }
