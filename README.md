@@ -23,6 +23,11 @@
 
 # Commands:
 
+## 🔮 Lichess Login Challenge: Challenge a Lichess User directly from Discord!
+
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-24-at-5.28.32-PM.png)
+
+
 ## 🔎 Profile Lookup: See anyone's lichess Profile
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-16-at-2.26.44-PM.png)
