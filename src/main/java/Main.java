@@ -46,6 +46,10 @@ public class Main extends ListenerAdapter {
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
         action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
         action.addCommands(new CommandData("livestreaming", "See Lichess LiveStreams for given User").addOption(OptionType.STRING, "streamername", "input Lichess username", true)).complete();
+        action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
+        action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
+        action.addCommands(new CommandData("watch", "watch games of a particular Lichess User").addOption(OptionType.STRING, "watchuser", "input Lichess username", true)).complete();
+
 
 
     }
