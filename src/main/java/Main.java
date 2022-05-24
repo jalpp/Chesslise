@@ -55,7 +55,7 @@ public class Main extends ListenerAdapter {
     }
 
       public void onSlashCommand(SlashCommandEvent event){
-        String name = event.getName();
+         String name = event.getName();
         Client client = Client.basic();
 
 
@@ -65,10 +65,38 @@ public class Main extends ListenerAdapter {
                 event.replyEmbeds(commandInfo.getCommandInfo().build()).queue();
                 break;
             case "play":
-
-                 Game game = new Game(client, "rapid", "casual");
+                 String variant = event.getOption("variant").getAsString();
+                 String challengeOption = event.getOption("challengetype").getAsString();
+                 Game game = new Game(client, variant, challengeOption);
                  event.replyEmbeds(game.getNewGame().build()).queue();
                 break;
+            case "profile":
+                String userID = event.getOption("username").getAsString();
+                String[] insert = {"", userID};
+                UserProfile userProfile = new UserProfile(client, insert);
+                event.replyEmbeds(userProfile.getUserProfile().build()).queue();
+                break;
+            case "livestreaming":
+                String streamerID = event.getOption("streamername").getAsString();
+                String[] addStreamer = {"", streamerID};
+                UserStreaming userStreaming = new UserStreaming(client, addStreamer);
+
+                event.replyEmbeds(userStreaming.getStreamingStatus().build()).queue();
+                break;
+            case "streamers":
+                LiveStreamers liveStreamers = new LiveStreamers(client);
+                event.replyEmbeds(liveStreamers.getTv().build()).queue();
+                break;
+            case "dailypuzzle":
+                DailyCommand dailyCommand = new DailyCommand(client);
+                event.replyEmbeds(dailyCommand.getPuzzleData().build()).queue();
+                break;
+            case "watch":
+                String gameUserID = event.getOption("watchuser").getAsString();
+                UserGame userGame = new UserGame(client,gameUserID);
+                event.reply(userGame.getUserGames()).queue();
+                break;
+
             default:
 
         }
