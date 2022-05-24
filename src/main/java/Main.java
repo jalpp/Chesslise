@@ -167,6 +167,13 @@ public class Main extends ListenerAdapter {
         if(gameReview[0].equals(",review")){
             event.getChannel().sendMessage(stockFishReview.getGameReviewData().build()).queue();
         }
+         
+        String[] realChallenge = event.getMessage().getContentRaw().split(" ");
+        if(realChallenge[0].equals(",login")){
+            AdminLoginChallenge adminLoginChallenge = new AdminLoginChallenge(client, realChallenge[1], realChallenge[2]);
+
+            event.getChannel().sendMessage(adminLoginChallenge.getChallenge().build()).queue();
+        } 
  
 
 
