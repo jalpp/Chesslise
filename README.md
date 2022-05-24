@@ -37,7 +37,7 @@
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-19-at-3.03.38-PM.png)
 
-## ⚔️ Play live Chess
+## ⚔️ Play live Chess: open to anyone anywhere
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-12-at-4.54.13-PM.png)
 
