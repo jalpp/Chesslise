@@ -42,14 +42,18 @@ public class Main extends ListenerAdapter {
 
         CommandListUpdateAction action = jda.updateCommands();
 
-        action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
+         action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
         action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
         action.addCommands(new CommandData("livestreaming", "See Lichess LiveStreams for given User").addOption(OptionType.STRING, "streamername", "input Lichess username", true)).complete();
         action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
         action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
         action.addCommands(new CommandData("watch", "watch games of a particular Lichess User").addOption(OptionType.STRING, "watchuser", "input Lichess username", true)).complete();
-
+        action.addCommands(new CommandData("gamereview", "review Stockfish analyzed games").addOption(OptionType.STRING, "gamelook", "input Lichess gameID", true)).complete();
+        action.addCommands(new CommandData("top10", "see top 10 list for given variant(blitz classical etc) ").addOption(OptionType.STRING, "top", "input Lichess variant", true)).complete();
+        action.addCommands(new CommandData("arena", "see arena leaderboard list").addOption(OptionType.STRING, "arenaid", "input Lichess arena link", true)).complete();
+        action.addCommands(new CommandData("team", "view Lichess team board").addOption(OptionType.STRING, "teamboard", "input Lichess team name", true)).complete();
+        action.addCommands(new CommandData("challengeauth", "Send direct Lichess Challenge with Personal Token Login").addOption(OptionType.STRING, "logincha", "input your Lichess Personal API Token").addOption(OptionType.STRING, "userlog", "input opponent's username")).complete();
 
 
     }
