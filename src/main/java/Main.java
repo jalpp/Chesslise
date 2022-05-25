@@ -58,8 +58,8 @@ public class Main extends ListenerAdapter {
 
     }
 
-      public void onSlashCommand(SlashCommandEvent event){
-         String name = event.getName();
+       public void onSlashCommand(SlashCommandEvent event){
+        String name = event.getName();
         Client client = Client.basic();
 
 
@@ -100,6 +100,52 @@ public class Main extends ListenerAdapter {
                 UserGame userGame = new UserGame(client,gameUserID);
                 event.reply(userGame.getUserGames()).queue();
                 break;
+
+            case "top10":
+
+                String variantID = event.getOption("top").getAsString();
+                leaderBoard leaderBoard = new leaderBoard(client);
+
+                switch(variantID){
+
+                    case "blitz":
+                        event.replyEmbeds(leaderBoard.getBlitzBoard().build()).queue();
+                    break;
+                    case "rapid":
+                        event.replyEmbeds(leaderBoard.getRapidBoard().build()).queue();
+                    break;
+                    case "classical":
+                        event.replyEmbeds(leaderBoard.getClassicalBoard().build()).queue();
+                    break;
+                    case "bullet":
+                        event.replyEmbeds(leaderBoard.getBulletBoard().build()).queue();
+                    break;
+                    case "ultrabullet":
+                        event.replyEmbeds(leaderBoard.getUltraBoard().build()).queue();
+                    break;
+
+                }
+                break;
+
+            case "arena":
+                 String arenaLink = event.getOption("arenaid").getAsString();
+                 UserArena userArena = new UserArena(client,arenaLink);
+                 event.replyEmbeds(userArena.getUserArena().build()).queue();
+                break;
+
+            case "team":
+                String teamLink = event.getOption("teamboard").getAsString();
+                String[] teamName = {"", teamLink};
+                UserTeam userTeam = new UserTeam(client, teamName);
+                event.replyEmbeds(userTeam.getUserTeam().build()).queue();
+                break;
+
+            case "challengeauth":
+               final String password = event.getOption("loginch").getAsString();
+               String oppUserID = event.getOption("userlog").getAsString();
+               AdminLoginChallenge adminLogin = new AdminLoginChallenge(client, password, oppUserID);
+               event.replyEmbeds(adminLogin.getChallenge().build()).queue();
+               break;
 
             default:
 
