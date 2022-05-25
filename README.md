@@ -2,6 +2,7 @@
 
  This a Discord Bot which unables users to play live chess games in discord and access Lichess data in discord, The bot uses Object Oriented Programming Design and is user-friendly
 
+![image](https://www.linkpicture.com/q/final_628e56cc958641125da571a6_775710.png)
 
 
 # Goal of this Project
@@ -25,7 +26,7 @@
 
 ## 🔮 Lichess Login Challenge: Challenge a Lichess User directly from Discord!
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-24-at-5.28.32-PM.png)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.32.26-PM.png)
 
 
 ## 🔎 Profile Lookup: See anyone's lichess Profile
