@@ -54,7 +54,7 @@ public class Main extends ListenerAdapter {
         action.addCommands(new CommandData("arena", "see arena leaderboard list").addOption(OptionType.STRING, "arenaid", "input Lichess arena link", true)).complete();
         action.addCommands(new CommandData("team", "view Lichess team board").addOption(OptionType.STRING, "teamboard", "input Lichess team name", true)).complete();
         action.addCommands(new CommandData("challengeauth", "Send direct Lichess Challenge with Personal Token Login").addOption(OptionType.STRING, "logincha", "input your Lichess Personal API Token").addOption(OptionType.STRING, "userlog", "input opponent's username")).complete();
-
+        action.addCommands(new CommandData("chatauth", "Send direct chat message to a user").addOption(OptionType.STRING, "logicidchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "messagereceiver", "input receiver's username", true).addOption(OptionType.STRING, "messageid", "input your message", true)).complete();
 
     }
 
@@ -101,28 +101,34 @@ public class Main extends ListenerAdapter {
                 event.reply(userGame.getUserGames()).queue();
                 break;
 
-            case "top10":
+           case "top10":
 
                 String variantID = event.getOption("top").getAsString();
-                leaderBoard leaderBoard = new leaderBoard(client);
+                leaderBoard lichessBoard = new leaderBoard(client);
 
-                switch(variantID){
+                if (variantID.equals("blitz")) {
 
-                    case "blitz":
-                        event.replyEmbeds(leaderBoard.getBlitzBoard().build()).queue();
-                    break;
-                    case "rapid":
-                        event.replyEmbeds(leaderBoard.getRapidBoard().build()).queue();
-                    break;
-                    case "classical":
-                        event.replyEmbeds(leaderBoard.getClassicalBoard().build()).queue();
-                    break;
-                    case "bullet":
-                        event.replyEmbeds(leaderBoard.getBulletBoard().build()).queue();
-                    break;
-                    case "ultrabullet":
-                        event.replyEmbeds(leaderBoard.getUltraBoard().build()).queue();
-                    break;
+                    event.getChannel().sendMessage(lichessBoard.getBlitzBoard().build()).queue();
+
+                }else if ((variantID.equals("classical"))) {
+
+
+                    event.getChannel().sendMessage(lichessBoard.getClassicalBoard().build()).queue();
+
+                }else if ((variantID.equals("rapid"))) {
+
+                    event.getChannel().sendMessage(lichessBoard.getRapidBoard().build()).queue();
+
+                }
+
+                else if (variantID.equals("bullet")) {
+
+                    event.getChannel().sendMessage(lichessBoard.getBulletBoard().build()).queue();
+                }
+
+                else if (variantID.equals("ultrabullet")) {
+
+                    event.getChannel().sendMessage(lichessBoard.getUltraBoard().build()).queue();
 
                 }
                 break;
@@ -146,6 +152,19 @@ public class Main extends ListenerAdapter {
                AdminLoginChallenge adminLogin = new AdminLoginChallenge(client, password, oppUserID);
                event.replyEmbeds(adminLogin.getChallenge().build()).queue();
                break;
+
+            case "chatauth":
+
+                final String loginPassword = event.getOption("logicidchat").getAsString();
+                String receiverUserID = event.getOption("messagereceiver").getAsString();
+                String sendMessage = event.getOption("messageid").getAsString();
+                AdminLoginChat chat = new AdminLoginChat(client,loginPassword, receiverUserID, sendMessage);
+                event.reply("Processing your Request...").queue();
+                event.getChannel().sendMessage("connecting to lichess..").queueAfter(10, TimeUnit.SECONDS);
+                event.getChannel().sendMessage(chat.getDelayMessage().build()).queueAfter(20, TimeUnit.SECONDS);
+                event.getChannel().sendMessage(chat.getChatStatus().build()).queueAfter(42, TimeUnit.SECONDS);
+
+                break;
 
             default:
 
