@@ -19,15 +19,21 @@
  5. [Java Discord Api](https://github.com/DV8FromTheWorld/JDA)
  
 
-# Below are images of the bot in action
-
-
 # Commands:
 
-## 🔮 Lichess Login Challenge: Challenge a Lichess User directly from Discord!
+# Lichess Lichess Authentication Commands
 
+## 🔮 Challenge a Lichess User directly from Discord by Lichess authentication!
+
+
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-26-at-7.09.05-PM.png)
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.32.26-PM.png)
 
+## 💬 Chat on Lichess via Discord!
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-26-at-7.09.37-PM.png)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-26-at-7.11.15-PM.png)
+
+# Standard Commands 
 
 ## 🔎 Profile Lookup: See anyone's lichess Profile
 
@@ -50,20 +56,3 @@
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.30.24-PM.png)
 
 ## And much more to Come!
-
-
-# 🛠️ Testing:
-[Join Here](https://discord.gg/6GdGqwxBdW) for testing and contributing
-
-
-# 🛠️ Contributing:
-
- 
- 1. Install IntellJ or open a new folder
- 2. Download/Git Clone this Repo, open this repo in IntellJ 
- 3. Get your own [discord token](https://www.writebots.com/discord-bot-token/) and create your own discord bot from Discord Developer's Portal 
- 4. You can clone/fork the bot and start exploring 
- 5. Start testing if you have any ideas to implement new features feel free to do so
- 6. if you don't have any ideas, feel free to implement TODOs in TODOs.md
-
- 
