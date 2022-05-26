@@ -2,10 +2,8 @@
 
  This a Discord Bot which unables users to play live chess games in discord and access Lichess data in discord, The bot uses Object Oriented Programming Design and is user-friendly
 
-![image](https://www.linkpicture.com/q/final_628e56cc958641125da571a6_775710.png)
 
-
-# Goal of this Project
+# Why LiseBot?
 
 ## The goal of Lichess Search Engine is to provide users direct access to lichess features in Discord itself, this includes watching, playing and enjoying chess in Discord. This Bot is fully Open-Source since its for Open-Source site [Lichess](https://lichess.org/).
 
@@ -21,7 +19,7 @@
 
 # Commands:
 
-# Lichess Lichess Authentication Commands
+# Lichess Authentication Commands
 
 ## 🔮 Challenge a Lichess User directly from Discord by Lichess authentication!
 
