@@ -27,6 +27,7 @@
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-26-at-7.09.05-PM.png)
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.32.26-PM.png)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-28-at-7.08.29-PM.png)
 
 ## 💬 Chat on Lichess via Discord!
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-26-at-7.09.37-PM.png)
