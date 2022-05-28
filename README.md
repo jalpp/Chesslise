@@ -31,6 +31,11 @@
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-26-at-7.09.37-PM.png)
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-26-at-7.11.15-PM.png)
 
+
+## 🗓️ Schedule Tournament via Discord!
+
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-28-at-2.24.21-PM.png)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-28-at-2.26.23-PM.png)
 # Standard Commands 
 
 ## 🔎 Profile Lookup: See anyone's lichess Profile
