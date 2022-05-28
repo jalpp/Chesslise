@@ -2,6 +2,7 @@
 
  This a Discord Bot which unables users to play live chess games in discord and access Lichess data in discord, The bot uses Object Oriented Programming Design and is user-friendly
 
+![image](https://www.linkpicture.com/q/newLiseLogo.png)
 
 # Why LiseBot?
 
