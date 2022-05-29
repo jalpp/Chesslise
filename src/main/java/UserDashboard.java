@@ -18,22 +18,6 @@ public class UserDashboard extends UserProfile{
 
 
 
-
-    /**
-     *
-     * ,stormdash command to see the storm score for given user
-     *
-     *
-     * input: username
-     *
-     * output the score
-     *
-     *
-     *
-     */
-
-
-
     public EmbedBuilder getUserDashboard(){
 
         Result<User> userResult = this.getClient().users().byId(this.getUserID());
@@ -41,7 +25,7 @@ public class UserDashboard extends UserProfile{
 
 
 
-        if(userResult.isPresent()){
+        if(userResult.isPresent() && !userResult.get().closed() && !userResult.get().tosViolation()){
 
             User user = userResult.get();
 
@@ -60,13 +44,18 @@ public class UserDashboard extends UserProfile{
 
             String dashs = "";
 
-            String highestscore = "";
-
             if (dash.isPresent()) {
 
                 StormDashboard dashboard = dash.get();
 
                 List<StormDashboard.Day> day = dashboard.days();
+
+                if(day.isEmpty()){
+                    this.embedBuilder = new EmbedBuilder();
+                    this.embedBuilder.setColor(Color.red);
+                    return this.embedBuilder.setDescription("This User has not played enough storm puzzles to calculate the dashboard");
+                }
+
                 StormDashboard.High high = dashboard.high();
 
                 int allTime = high.allTime();
@@ -90,18 +79,24 @@ public class UserDashboard extends UserProfile{
 
 
                 this.embedBuilder = new EmbedBuilder();
-                this.embedBuilder.setColor(Color.white);
-                this.embedBuilder.setThumbnail("https://www.linkpicture.com/q/storm-yellow.png");
+                this.embedBuilder.setColor(Color.orange);
+                this.embedBuilder.setThumbnail("https://prismic-io.s3.amazonaws.com/lichess/4689c1c3-092d-46f9-b554-ca47e91c7d81_storm-yellow.png");
                 this.embedBuilder.setTitle("StormDashboard for: " + title + " " + this.getUserID());
                 this.embedBuilder.setDescription(" All Time High score: **" + allTime + "** \n \n This Month: **" + month + "\n\n **This Week: **" + week + "** \n \n **Today:** " + today+ "\n\n **Storm History:** \n \n" + dashs +  "\n\n [View on Lichess](" + link + ")");
 
 
 
 
+            }else{
+                this.embedBuilder = new EmbedBuilder();
+                this.embedBuilder.setColor(Color.red);
+                return this.embedBuilder.setDescription("This User has not played enough storm puzzles to calculate the dashboard");
             }
 
         }else{
-            this.embedBuilder.setDescription("User not present ");
+            this.embedBuilder = new EmbedBuilder();
+            this.embedBuilder.setColor(Color.red);
+            return this.embedBuilder.setDescription("User not present");
         }
 
 
