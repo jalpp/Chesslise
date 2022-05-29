@@ -56,7 +56,8 @@ public class Main extends ListenerAdapter {
         action.addCommands(new CommandData("challengeauth", "Send direct Lichess Challenge with Personal Token Login").addOption(OptionType.STRING, "logincha", "input your Lichess Personal API Token").addOption(OptionType.STRING, "userlog", "input opponent's username")).complete();
         action.addCommands(new CommandData("chatauth", "Send direct chat message to a user").addOption(OptionType.STRING, "logicidchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "messagereceiver", "input receiver's username", true).addOption(OptionType.STRING, "messageid", "input your message", true)).complete();
         action.addCommands(new CommandData("scheduletournament", "schedule Lichess arena from Discord").addOption(OptionType.STRING, "apipassword", "Input your Lichess Personal API Token", true).addOption(OptionType.STRING, "timeformat", "Input tournament's variant: blitz, classical etc.", true)).complete();
-    
+        action.addCommands(new CommandData("invite", "Invite me to your servers!")).complete();
+        action.addCommands(new CommandData("stormdash" , "See storm dashboard for given user!").addOption(OptionType.STRING, "storm", "Input Lichess Username")).complete();
     }
 
        public void onSlashCommand(SlashCommandEvent event){
@@ -175,7 +176,15 @@ public class Main extends ListenerAdapter {
                 event.reply("Processing your Request...").queue();
                 event.getChannel().sendMessage("connecting to lichess..").queueAfter(10, TimeUnit.SECONDS);
                 event.getChannel().sendMessage(createTournament.getCreatedTournament().build()).queueAfter(20, TimeUnit.SECONDS);
-                break;     
+                break;  
+                
+                
+            case "stormdash":
+                String stormUser = event.getOption("storm").getAsString();
+                String[] userArray = {"stormCommand", stormUser};
+                UserDashboard userDashboard = new UserDashboard(client, userArray);
+                event.replyEmbeds(userDashboard.getUserDashboard().build()).queue();
+                break;      
 
             default:
 
