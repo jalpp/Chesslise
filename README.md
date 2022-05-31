@@ -44,6 +44,9 @@
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.25.00-PM.png)
 
+## 📊 Puzzles Dashboard: View lichess user's Puzzle stats
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-31-at-3.40.27-PM.png)
+
 
 ## 🎙️ Streaming: Check who is streaming with Lichess supported suggestions!
 
@@ -60,4 +63,4 @@
 ## 👀 Watch anyone's Games
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.30.24-PM.png)
 
-## And much more to Come!
+
