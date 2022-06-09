@@ -1,70 +1,108 @@
 import chariot.Client;
-import chariot.model.LightUser;
 import chariot.model.Result;
-import chariot.model.Team;
+import chariot.model.StormDashboard;
+import chariot.model.User;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
-public class UserTeam extends UserProfile{
-
+public class UserDashboard extends UserProfile{
 
     private EmbedBuilder embedBuilder;
 
-    public UserTeam(Client client, String userParsing) {
+    public UserDashboard(Client client, String userParsing) {
         super(client, userParsing);
     }
 
 
-    /**
-     *
-     * ,team command to see the team pages of lichess team
-     *
-     * input: the team name
-     * note: if the team has spaces it must be included with - so Lichess swiss will be Lichess-swiss
-     *
-     * output: the team page of the given Lichess team (you can join teams also)
-     *
-     */
 
-    public EmbedBuilder getUserTeam(){
-        Result<Team> result = this.getClient().teams().byTeamId(this.getUserID());
+    public EmbedBuilder getUserDashboard(){
+
+        Result<User> userResult = this.getClient().users().byId(this.getUserID());
         this.embedBuilder = new EmbedBuilder();
 
-        if (result.isPresent()) { // check if the team is present
-            Team team = result.get();
-
-            List<LightUser> leader = team.leaders();
-
-            String leadernames = "";
 
 
-            for (int i = 0; i < leader.size(); i++) {
-                leadernames += leader.get(i).title() + " " + leader.get(i).name() + " \n";
+        if(userResult.isPresent() && !userResult.get().closed() && !userResult.get().tosViolation()){
+
+            User user = userResult.get();
+
+            String title = "";
+
+            Optional<String> titleplayer = user.title();
+
+            if(titleplayer.isPresent()){
+                title += titleplayer.get();
+            }else{
+                title = "";
             }
 
 
+            Result<StormDashboard> dash = this.getClient().puzzles().stormDashboard(this.getUserID());
 
-            String url = "https://lichess.org/team/" + team.id();
+            String dashs = "";
 
-            String tournaurl = url + "/tournaments";
+            if (dash.isPresent()) {
 
-            this.embedBuilder.setTitle(team.name() + " " + "Information");
-            this.embedBuilder.setColor(Color.white);
-            this.embedBuilder.setDescription("**Team name:** \n " + team.name() + "\n \n **Team Leaders:** \n" + leadernames + "\n\n **Team Members:** \n" + team.nbMembers() + "\n\n [Join team](" + url + ")" + "\n\n [Tournaments](" + tournaurl + ")");
+                StormDashboard dashboard = dash.get();
+
+                List<StormDashboard.Day> day = dashboard.days();
+
+                if(day.isEmpty()){
+                    this.embedBuilder = new EmbedBuilder();
+                    this.embedBuilder.setColor(Color.red);
+                    return this.embedBuilder.setDescription("This User has not played enough storm puzzles to calculate the dashboard");
+                }
+
+                StormDashboard.High high = dashboard.high();
+
+                int allTime = high.allTime();
+
+                int month = high.month();
+
+                int week = high.week();
+
+                int today = high.day();
+
+                String link = "https://lichess.org/storm/dashboard/" + this.getUserID();
+
+
+                for(int i = 0; i < 1; i++){
+
+                    dashs += "  Date: " + day.get(i)._id() + "  Runs: " + day.get(i).runs() + " Score: " + day.get(i).score() + " Best Puzzle Solved: " + day.get(i).highest() + "\n";
+
+
+                }
 
 
 
-        } else {
-           return this.embedBuilder.setDescription("Team not found, Please try again!");
+                this.embedBuilder = new EmbedBuilder();
+                this.embedBuilder.setColor(Color.orange);
+                this.embedBuilder.setThumbnail("https://prismic-io.s3.amazonaws.com/lichess/4689c1c3-092d-46f9-b554-ca47e91c7d81_storm-yellow.png");
+                this.embedBuilder.setTitle("StormDashboard for: " + title + " " + this.getUserID());
+                this.embedBuilder.setDescription(" All Time High score: **" + allTime + "** \n \n This Month: **" + month + "\n\n **This Week: **" + week + "** \n \n **Today:** " + today+ "\n\n **Storm History:** \n \n" + dashs +  "\n\n [View on Lichess](" + link + ")");
+
+
+
+
+            }else{
+                this.embedBuilder = new EmbedBuilder();
+                this.embedBuilder.setColor(Color.red);
+                return this.embedBuilder.setDescription("This User has not played enough storm puzzles to calculate the dashboard");
+            }
+
+        }else{
+            this.embedBuilder = new EmbedBuilder();
+            this.embedBuilder.setColor(Color.red);
+            return this.embedBuilder.setDescription("User not present");
         }
+
 
         return this.embedBuilder;
 
     }
-
-
 
 
 
