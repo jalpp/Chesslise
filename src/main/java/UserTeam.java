@@ -12,7 +12,7 @@ public class UserTeam extends UserProfile{
 
     private EmbedBuilder embedBuilder;
 
-    public UserTeam(Client client, String[] userParsing) {
+    public UserTeam(Client client, String userParsing) {
         super(client, userParsing);
     }
 
@@ -57,7 +57,7 @@ public class UserTeam extends UserProfile{
 
 
         } else {
-            this.embedBuilder.setDescription("Team not found, Please try again!");
+           return this.embedBuilder.setDescription("Team not found, Please try again!");
         }
 
         return this.embedBuilder;
