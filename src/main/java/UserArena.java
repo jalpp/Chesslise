@@ -33,55 +33,64 @@ public class UserArena {
 
 
     public EmbedBuilder getUserArena() {
-        String[] spliturl = this.arenaID.split("tournament/");
-        this.embedBuilder = new EmbedBuilder();
 
-        String touryID = "";
+        try {
 
-        for (String a : spliturl) {
+            String[] spliturl = this.arenaID.split("tournament/");
+            this.embedBuilder = new EmbedBuilder();
 
-            touryID = a;
+            String touryID = "";
 
-        }
+            for (String a : spliturl) {
 
-
-        Result<Arena> arenaResult1 = client.tournaments().arenaById(touryID);
-
-        if (arenaResult1.isPresent()) {
-
-            Arena arena = arenaResult1.get();
-
-            String name = arena.fullName();
-
-            int numPlayers = arena.nbPlayers();
-
-            int timeLeft = arena.minutes();
-
-            Arena.Perf perf = arena.perf();
-
-            String perfname = perf.name();
-
-            String stand = "";
-
-
-            Arena.Standing standing = arena.standing();
-
-
-            List<Arena.Standing.Player> players = standing.players();
-
-            for (int i = 0; i < players.size(); i++) {
-
-                stand += players.get(i).rank() + " " + players.get(i).name() + "  " + players.get(i).rating() + "  " + players.get(i).score() + " " + players.get(i).team() + "\n ------------------------------------------------------------------- \n ";
-
+                touryID = a;
 
             }
 
 
-            this.embedBuilder = new EmbedBuilder();
-            this.embedBuilder.setColor(Color.white);
-            this.embedBuilder.setTitle(name);
-            this.embedBuilder.setDescription("**Tournament Name:** " + name + "\n\n**Variant:** " + perfname + "\n" + "\n\n **Time Duration :** " + timeLeft + " mins" + "\n **Total Players:** " + numPlayers + "\n\n **Standings:**" + "\n \n **Rank:**  **Username**  **Rating:**  **Score** \n \n " + stand + "\n\n" + "[View on Lichess](" + this.arenaID + ")");
+            Result<Arena> arenaResult1 = client.tournaments().arenaById(touryID);
 
+            if (arenaResult1.isPresent()) {
+
+                Arena arena = arenaResult1.get();
+
+                String name = arena.fullName();
+
+                int numPlayers = arena.nbPlayers();
+
+                int timeLeft = arena.minutes();
+
+                Arena.Perf perf = arena.perf();
+
+                String perfname = perf.name();
+
+                String stand = "";
+
+
+                Arena.Standing standing = arena.standing();
+
+
+                List<Arena.Standing.Player> players = standing.players();
+
+                for (int i = 0; i < players.size(); i++) {
+
+                    stand += players.get(i).rank() + " " + players.get(i).name() + "  " + players.get(i).rating() + "  " + players.get(i).score() + " " + players.get(i).team() + "\n ------------------------------------------------------------------- \n ";
+
+
+                }
+
+
+                this.embedBuilder = new EmbedBuilder();
+                this.embedBuilder.setColor(Color.white);
+                this.embedBuilder.setTitle(name);
+                this.embedBuilder.setDescription("**Tournament Name:** " + name + "\n\n**Variant:** " + perfname + "\n" + "\n\n **Time Duration :** " + timeLeft + " mins" + "\n **Total Players:** " + numPlayers + "\n\n **Standings:**" + "\n \n **Rank:**  **Username**  **Rating:**  **Score** \n \n " + stand + "\n\n" + "[View on Lichess](" + this.arenaID + ")");
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            this.embedBuilder = new EmbedBuilder();
+            return this.embedBuilder.setDescription("Error occurred, please provide valid Lichess arena url");
         }
 
         return this.embedBuilder;
