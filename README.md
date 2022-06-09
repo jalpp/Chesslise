@@ -63,4 +63,10 @@
 ## 👀 Watch anyone's Games
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.30.24-PM.png)
 
+# Support Server
+[Join Here](https://discord.gg/6GdGqwxBdW)
+
+# Invite the Bot
+[Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
+
 
