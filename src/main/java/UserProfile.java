@@ -1,4 +1,4 @@
-iimport chariot.Client;
+import chariot.Client;
 import chariot.model.Result;
 import chariot.model.Trophy;
 import chariot.model.User;
