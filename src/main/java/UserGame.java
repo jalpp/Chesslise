@@ -12,6 +12,7 @@ public class UserGame {
     private EmbedBuilder embedBuilder;
     private Client client;
     private String getUserID;
+    private String gameID;
 
     public UserGame(Client client, String userID){
         this.client = client;
@@ -41,4 +42,21 @@ public class UserGame {
        return gameGifs;
 
     }
+
+    public String getGameId(){
+        Result<Game> getGameID = this.client.games().byUserId(this.getUserID);
+        this.gameID = getGameID.get().id();
+
+        return this.gameID;
+    }
+
+    public String getUserID(){
+        return this.getUserID;
+    }
+
+    public Client getClient(){
+        return this.client;
+    }
+
+
 }
