@@ -58,6 +58,7 @@ public class Main extends ListenerAdapter {
         action.addCommands(new CommandData("scheduletournament", "schedule Lichess arena from Discord").addOption(OptionType.STRING, "apipassword", "Input your Lichess Personal API Token", true).addOption(OptionType.STRING, "timeformat", "Input tournament's variant: blitz, classical etc.", true)).complete();
         action.addCommands(new CommandData("invite", "Invite me to your servers!")).complete();
         action.addCommands(new CommandData("stormdash" , "See storm dashboard for given user!").addOption(OptionType.STRING, "storm", "Input Lichess Username")).complete();
+        action.addCommands(new CommandData("gamereview", "Get Stockfish analysis of given user's latest games").addOption(OptionType.STRING, "usergameid","Input Lichess Username" )).complete();
     }
 
     public void onSlashCommand(SlashCommandEvent event){
@@ -183,6 +184,11 @@ public class Main extends ListenerAdapter {
                 InviteMe inviteMe = new InviteMe();
                 event.replyEmbeds(inviteMe.getInviteInfo().build()).queue();
                 break;
+             case "gamereview":
+                String gameuser = event.getOption("usergameid").getAsString();
+                GameReview gameReview = new GameReview(client, gameuser);
+                event.replyEmbeds(gameReview.getGameReviewData().build()).queue();
+                break;    
 
             default:
 
