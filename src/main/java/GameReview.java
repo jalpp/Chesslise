@@ -1,28 +1,36 @@
 import chariot.Client;
+import chariot.model.Result;
+import chariot.model.User;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 
-public class GameReview {
+public class GameReview extends UserGame {
 
-    private Client client;
+
     private EmbedBuilder embedBuilder;
-    private String gameID;
 
 
-    public GameReview(Client client, String gameID){
-        this.client = client;
-        this.gameID = gameID;
+    public GameReview(Client client, String userID) {
+        super(client, userID);
     }
 
 
     public EmbedBuilder getGameReviewData(){
-        this.embedBuilder = new EmbedBuilder();
-        ComputeEvalSummary computeEvalSummary = new ComputeEvalSummary();
 
-        this.embedBuilder.setTitle("Game Review Report");
-        this.embedBuilder.setColor(Color.white);
-        this.embedBuilder.setDescription(computeEvalSummary.getEvalSummary(this.gameID));
+
+        Result<User> userResult = this.getClient().users().byId(this.getUserID(), true);
+
+        if(userResult.isPresent()){
+
+            this.embedBuilder = new EmbedBuilder();
+            ComputeEvalSummary computeEvalSummary = new ComputeEvalSummary();
+
+            this.embedBuilder.setTitle("Game Review Report");
+            this.embedBuilder.setColor(Color.white);
+            this.embedBuilder.setDescription(computeEvalSummary.getEvalSummary(this.getGameId()));
+        }
+
 
 
 
