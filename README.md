@@ -58,10 +58,17 @@
 
 ## ⏰ Do Daily Chess Puzzles
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.29.19-PM.png)
-
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-18-at-3.59.11-PM.png)
 ## 👀 Watch anyone's Games
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.30.24-PM.png)
+
+# Few Features Coming...
+
+## Buttons for Profile
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-18-at-2.48.40-PM.png)
+
+## StockFish Game Review
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-18-at-2.49.00-PM.png)
 
 # Support Server
 [Join Here](https://discord.gg/6GdGqwxBdW)
