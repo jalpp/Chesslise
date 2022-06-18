@@ -1,19 +1,21 @@
 
 import chariot.Client;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -21,17 +23,20 @@ public class Main extends ListenerAdapter {
 
     private static JDABuilder jdaBuilder;
     private static JDA jda;
+    private String ButtonUserId;
+    private Client ButtonClient;
 
 
 
     public static void main(String[] args) {
 
-        String TOKEN="Your Discord Token";
+       String TOKEN = "Insert Your Discord Token Here";
+
 
         jdaBuilder = JDABuilder.createDefault(TOKEN);// string toke
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
-        jdaBuilder.setActivity(Activity.watching("Playing Lichess"));
+        jdaBuilder.setActivity(Activity.playing("helping chess servers"));
         jdaBuilder.addEventListeners(new Main());
 
 
@@ -46,6 +51,7 @@ public class Main extends ListenerAdapter {
 
         action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
+        action.addCommands(new CommandData("broadcast", "see Lichess Broadcasts")).complete();
         action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
         action.addCommands(new CommandData("livestreaming", "See Lichess LiveStreams for given User").addOption(OptionType.STRING, "streamername", "Input Lichess username", true)).complete();
         action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
@@ -59,11 +65,13 @@ public class Main extends ListenerAdapter {
         action.addCommands(new CommandData("invite", "Invite me to your servers!")).complete();
         action.addCommands(new CommandData("stormdash" , "See storm dashboard for given user!").addOption(OptionType.STRING, "storm", "Input Lichess Username")).complete();
         action.addCommands(new CommandData("gamereview", "Get Stockfish analysis of given user's latest games").addOption(OptionType.STRING, "usergameid","Input Lichess Username" )).complete();
+
     }
 
     public void onSlashCommand(SlashCommandEvent event){
         String name = event.getName();
         Client client = Client.basic();
+        this.ButtonClient = client;
 
 
         switch(name) {
@@ -79,8 +87,9 @@ public class Main extends ListenerAdapter {
                 break;
             case "profile":
                 String userID = event.getOption("username").getAsString();
+                this.ButtonUserId = userID;
                 UserProfile userProfile = new UserProfile(client,userID);
-                event.replyEmbeds(userProfile.getUserProfile().build()).queue();
+                event.replyEmbeds(userProfile.getUserProfile().build()).addActionRow(Button.primary("userwatch", "Watch Latest Game"), Button.danger("userpuzzle","Puzzle Storm Stats"), Button.primary("userstreaming", "Streaming Status"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "View Ratings On Lichess")).queue();
                 break;
             case "livestreaming":
                 String streamerID = event.getOption("streamername").getAsString();
@@ -184,11 +193,15 @@ public class Main extends ListenerAdapter {
                 InviteMe inviteMe = new InviteMe();
                 event.replyEmbeds(inviteMe.getInviteInfo().build()).queue();
                 break;
-             case "gamereview":
+            case "gamereview":
                 String gameuser = event.getOption("usergameid").getAsString();
                 GameReview gameReview = new GameReview(client, gameuser);
                 event.replyEmbeds(gameReview.getGameReviewData().build()).queue();
-                break;    
+                break;
+            case "broadcast":
+                Broadcasts broadcasts = new Broadcasts(client);
+                event.replyEmbeds(broadcasts.getBroadcastData().build()).queue();
+                break;
 
             default:
 
@@ -198,7 +211,36 @@ public class Main extends ListenerAdapter {
     }
 
 
+    @Override
+    public void onButtonClick(@NotNull ButtonClickEvent event) {
+       if(event.getComponentId().equals("userwatch")){
+           UserGame userGame = new UserGame(this.ButtonClient, this.ButtonUserId);
+           EmbedBuilder gameEmbed = new EmbedBuilder();
+           gameEmbed.setColor(Color.green);
+           gameEmbed.setDescription("Hope you enjoyed the game, You can get a game review report of the game, and request Stockfish Analysis!");
+           event.getChannel().sendMessage(userGame.getUserGames()).queue();
+           event.replyEmbeds(gameEmbed.build()).addActionRow(Button.danger("review", "Game Review Report"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "Request Stockfish Analysis")).queue();
+
+       }
+
+       if(event.getComponentId().equals("userpuzzle")){
+           UserDashboard userDashboard = new UserDashboard(this.ButtonClient, this.ButtonUserId);
+           event.replyEmbeds(userDashboard.getUserDashboard().build()).queue();
+       }
+
+       if(event.getComponentId().equals("userstreaming")){
+           UserStreaming userStreaming = new UserStreaming(this.ButtonClient, this.ButtonUserId);
+           event.replyEmbeds(userStreaming.getStreamingStatus().build()).queue();
+       }
+
+       if(event.getComponentId().equals("review")){
+           GameReview gameReview = new GameReview(this.ButtonClient, this.ButtonUserId);
+           event.replyEmbeds(gameReview.getGameReviewData().build()).queue();
+       }
 
 
+
+    }
 }
+
 
