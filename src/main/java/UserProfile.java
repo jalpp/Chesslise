@@ -1,39 +1,24 @@
-import chariot.Client;
-import chariot.model.Result;
-import chariot.model.Trophy;
-import chariot.model.User;
-import net.dv8tion.jda.api.EmbedBuilder;
-
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Optional;
 
-public class UserProfile {
+public class UserProfile extends UserObject{
 
-    private Client client;
-    private  EmbedBuilder embedBuilder;
-    private String userID;
 
+    private EmbedBuilder embedBuilder;
 
     public UserProfile(Client client, String userParsing){
-        this.client = client;
-        this.userID = userParsing.toLowerCase();
+        super(client, userParsing);
+
     }
 
 
-
-    /**
-     * ,profile command to see people's lichess profiles
-     * input: Lichess username
-     * output the whole Lichess  profile
-     */
+    
 
 
     public EmbedBuilder getUserProfile(){
 
         try {
 
-            Result<User> userResult = client.users().byId(this.userID, true);
+            Result<User> userResult = this.getClient().users().byId(this.getUserID(), true);
 
             boolean userPresent = userResult.isPresent();
 
@@ -141,7 +126,7 @@ public class UserProfile {
                     this.embedBuilder.setThumbnail(patWings);
 
                     this.embedBuilder.setTitle("Lichess Profile for: " + name);
-                    this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n **User bio:** " + bio + "\n \n **Games** \n \n" + "**All Games**: " + all + "\n" + "**wins:** " + wins + "\n **Loses:** " + lose + "\n **draws:** " + draw + "\n **Playing:** " + playing + "\n **User Trophies:** \n" + sayrewards + "  \n \n[[See Stats on Lichess](" + userUrl + ")]");
+                    this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n ** ✏️ User Bio:** " + bio + "\n \n ** ♚ Games** \n \n" + "**All Games**: " + all + "\n" + "** ⚔️ Wins:** " + wins + "\n ** \uD83D\uDE14 Loses:** " + lose + "\n ** \uD83E\uDD1D Draws:** " + draw + "\n\n ** ♗ Playing:** " + playing + "\n\n ** \uD83D\uDCA0 User Trophies:** \n\n" + sayrewards );
 
 
                 }
@@ -163,13 +148,6 @@ public class UserProfile {
     }
 
 
-    public Client getClient(){
-        return this.client;
-    }
-
-    public String getUserID(){
-        return this.userID;
-    }
 
 
 
