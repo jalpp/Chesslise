@@ -40,28 +40,6 @@
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-28-at-2.26.23-PM.png)
 # Standard Commands 
 
-## 🔎 Profile Lookup: See anyone's lichess Profile
-
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.25.00-PM.png)
-
-## 📊 Puzzles Dashboard: View lichess user's Puzzle stats
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-31-at-3.40.27-PM.png)
-
-
-## 🎙️ Streaming: Check who is streaming with Lichess supported suggestions!
-
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.26.13-PM.png)
-
-## ⚔️ Play live Chess: open to anyone anywhere
-
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.28.18-PM.png)
-
-## ⏰ Do Daily Chess Puzzles
-
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-18-at-3.59.11-PM.png)
-## 👀 Watch anyone's Games
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-25-at-12.30.24-PM.png)
-
 # Few Features Coming...
 
 ## Buttons for Profile
@@ -70,10 +48,17 @@
 ## StockFish Game Review
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-18-at-2.49.00-PM.png)
 
-# Support Server
+## A Complete Tournament Manager
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.46.23-PM.png)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.46.39-PM.png)
+
+## Read Lichess Blogs
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.47.55-PM.png)
+
 [Join Here](https://discord.gg/6GdGqwxBdW)
 
 # Invite the Bot
 [Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
+
 
 
