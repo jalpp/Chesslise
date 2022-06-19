@@ -25,15 +25,16 @@ public class Main extends ListenerAdapter {
     private static JDA jda;
     private String ButtonUserId;
     private Client ButtonClient;
+    private String APIPASSWORD;
 
 
 
     public static void main(String[] args) {
 
-       String TOKEN = "Insert Your Discord Token Here";
+      String Token= "Your Discord Token";
 
 
-        jdaBuilder = JDABuilder.createDefault(TOKEN);// string toke
+        jdaBuilder = JDABuilder.createDefault(Token);// string token
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.playing("helping chess servers"));
@@ -51,9 +52,10 @@ public class Main extends ListenerAdapter {
 
         action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
-        action.addCommands(new CommandData("broadcast", "see Lichess Broadcasts")).complete();
+        //action.addCommands(new CommandData("broadcast", "see Lichess Broadcasts")).complete();
+        action.addCommands(new CommandData("tourneymanager", "Create and Manage Your Lichess Tournament").addOption(OptionType.STRING, "lichessapipassword", "Input Your Lichess API Token", true)).complete();
+        action.addCommands(new CommandData("blog", "Read Lichess Blogs"));
         action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
-        action.addCommands(new CommandData("livestreaming", "See Lichess LiveStreams for given User").addOption(OptionType.STRING, "streamername", "Input Lichess username", true)).complete();
         action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
         action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
         action.addCommands(new CommandData("watch", "watch games of a particular Lichess User").addOption(OptionType.STRING, "watchuser", "Input Lichess username", true)).complete();
@@ -65,6 +67,7 @@ public class Main extends ListenerAdapter {
         action.addCommands(new CommandData("invite", "Invite me to your servers!")).complete();
         action.addCommands(new CommandData("stormdash" , "See storm dashboard for given user!").addOption(OptionType.STRING, "storm", "Input Lichess Username")).complete();
         action.addCommands(new CommandData("gamereview", "Get Stockfish analysis of given user's latest games").addOption(OptionType.STRING, "usergameid","Input Lichess Username" )).complete();
+
 
     }
 
@@ -198,9 +201,23 @@ public class Main extends ListenerAdapter {
                 GameReview gameReview = new GameReview(client, gameuser);
                 event.replyEmbeds(gameReview.getGameReviewData().build()).queue();
                 break;
-            case "broadcast":
-                Broadcasts broadcasts = new Broadcasts(client);
-                event.replyEmbeds(broadcasts.getBroadcastData().build()).queue();
+//            case "broadcast":
+//                Broadcasts broadcasts = new Broadcasts(client);
+//                event.replyEmbeds(broadcasts.getBroadcastData().build()).queue();
+               // break;
+            case "blog":
+                EmbedBuilder BlogEmbed = new EmbedBuilder();
+                BlogEmbed.setColor(Color.orange);
+                BlogEmbed.setTitle("Read Lichess Blogs");
+                BlogEmbed.setThumbnail("https://www.pngitem.com/pimgs/m/17-174815_writing-hand-emoji-png-transparent-png.png");
+                BlogEmbed.setDescription("Read Lichess Blogs by clicking on topics of your interest!");
+                event.replyEmbeds(BlogEmbed.build()).addActionRow(Button.success("newblog", "Latest Lichess Blog"), Button.primary("comblog", "Community Blogs"), Button.primary("chessblog", "Chess Blogs")).queue();
+                break;
+            case "tourneymanager":
+                final String passwordTournament = event.getOption("lichessapipassword").getAsString();
+                this.APIPASSWORD = passwordTournament;
+                TournamentManager manager = new TournamentManager(passwordTournament);
+                event.replyEmbeds(manager.sayStatus().build()).addActionRow(Button.primary("createone", "Create Arenas"), Button.primary("createtwo", "Create Monthly Arenas")).queue();
                 break;
 
             default:
@@ -213,6 +230,9 @@ public class Main extends ListenerAdapter {
 
     @Override
     public void onButtonClick(@NotNull ButtonClickEvent event) {
+
+        TournamentManager tournamentManager = new TournamentManager(this.APIPASSWORD);
+
        if(event.getComponentId().equals("userwatch")){
            UserGame userGame = new UserGame(this.ButtonClient, this.ButtonUserId);
            EmbedBuilder gameEmbed = new EmbedBuilder();
@@ -238,9 +258,41 @@ public class Main extends ListenerAdapter {
            event.replyEmbeds(gameReview.getGameReviewData().build()).queue();
        }
 
+        Blog Chessblog = new Blog("Chess");
+        Blog CommunityBlog = new Blog("Community");
+
+        if(event.getComponentId().equals("newblog")){
+            event.reply(CommunityBlog.getLatestBlog()).queue();
+        }else if(event.getComponentId().equals("comblog")){
+            event.reply(CommunityBlog.getCommunityBlogs()).queue();
+        }else if(event.getComponentId().equals("chessblog")){
+            event.reply(Chessblog.getBlogsByTopic()).queue();
+        }
+
+        if(event.getComponentId().equals("createone")){
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setColor(Color.yellow);
+            embedBuilder.setTitle("Select Your Arena's Mode");
+            event.replyEmbeds(embedBuilder.build()).addActionRow(Button.primary("bulletarena", "Create Bullet Arena"), Button.primary("blitzarena", "Create Blitz Arena"), Button.primary("rapidarena", "Create Rapid Arena")).queue();
+        }
+
+        if(event.getComponentId().equals("createtwo")){
+            event.reply(tournamentManager.getMonthlyTournamentStatus());
+        }
+
+        if(event.getComponentId().equals("bulletarena")){
+            event.replyEmbeds(tournamentManager.getBulletTournamentCreated().build()).queue();
+        }else if(event.getComponentId().equals("blitzarena")){
+            event.replyEmbeds(tournamentManager.getBlitzTournamentCreated().build()).queue();
+        }else if(event.getComponentId().equals("rapidarena")){
+            event.replyEmbeds(tournamentManager.getRapidTournamentCreated().build()).queue();
+        }
+
 
 
     }
-}
 
+
+
+}
 
