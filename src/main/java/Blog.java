@@ -28,7 +28,17 @@ public class Blog {
         return "https://lichess.org/blog/topic/" + this.topic;
     }
 
+    public String getCommunityBlogs(){
+        return "https://lichess.org/blog/community";
+    }
+
+
+
+
+
+
 
 
 
 }
+
