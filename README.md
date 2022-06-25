@@ -20,6 +20,10 @@
 
 # Commands:
 
+# ALL COMMANDS
+
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.39.47-PM.png)
+
 # Lichess Authentication Commands
 
 ## 🔮 Challenge a Lichess User directly from Discord by Lichess authentication!
