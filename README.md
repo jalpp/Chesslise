@@ -40,9 +40,7 @@
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-28-at-2.26.23-PM.png)
 
 ## A Complete Tournament Manager
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.46.23-PM.png)
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.46.39-PM.png)
-
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.35.47-PM.png)
 
 # Standard Commands 
 
@@ -59,10 +57,8 @@
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.27.57-PM.png)
 
 
-
 ## Read Lichess Blogs
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.47.55-PM.png)
-
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.34.47-PM.png)
 
 ## Support Server
  
