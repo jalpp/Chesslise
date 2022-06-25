@@ -37,13 +37,13 @@ public class LiveStreamers {
                 title += "";
             }
 
-            getLivePeople += title + " " + live.get(i).id() + " is Streaming! \n " + " [**Watch Stream**](https://lichess.org/@/" + live.get(i).id() + ") \n\n";
+            getLivePeople +=" \uD83C\uDF99️ " + title +  " " +  live.get(i).id() + " is Streaming! \n " + " [**Profile**](https://lichess.org/@/" + live.get(i).id() + ") \n";
 
 
         }
-        this.embedBuilder.setThumbnail("https://i.imgur.com/fHhSq9B.jpg");
+        this.embedBuilder.setThumbnail("https://cdn5.vectorstock.com/i/1000x1000/14/24/twitch-and-youtube-logo-with-background-ima-vector-19461424.jpg");
         this.embedBuilder.setTitle("Current Live Streamers: ");
-        this.embedBuilder.setColor(Color.orange);
+        this.embedBuilder.setColor(Color.pink);
         this.embedBuilder.setDescription(getLivePeople);
 
         return this.embedBuilder;
