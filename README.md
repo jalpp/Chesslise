@@ -38,23 +38,34 @@
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-28-at-2.24.21-PM.png)
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-05-28-at-2.26.23-PM.png)
-# Standard Commands 
-
-# Few Features Coming...
-
-## Buttons for Profile
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-18-at-2.48.40-PM.png)
-
-## StockFish Game Review
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-18-at-2.49.00-PM.png)
 
 ## A Complete Tournament Manager
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.46.23-PM.png)
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.46.39-PM.png)
 
+
+# Standard Commands 
+
+## A newer way to Lichess Profile
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.26.44-PM.png)
+
+## Stockfish Game Review
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.27.11-PM.png)
+
+## Watch Lichess TV in Discord
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.27.31-PM.png)
+
+## Watch Lichess Streamers
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.27.57-PM.png)
+
+
+
 ## Read Lichess Blogs
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-19-at-6.47.55-PM.png)
 
+
+## Support Server
+ 
 [Join Here](https://discord.gg/6GdGqwxBdW)
 
 # Invite the Bot
