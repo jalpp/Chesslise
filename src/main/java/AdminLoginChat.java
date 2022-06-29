@@ -1,10 +1,13 @@
 import chariot.Client;
 import chariot.ClientAuth;
+import chariot.model.Ack;
 import chariot.model.Result;
+import chariot.model.TokenBulkResult;
 import chariot.model.User;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
+import java.util.Set;
 
 public class AdminLoginChat extends AdminLoginChallenge{
 
@@ -18,24 +21,37 @@ public class AdminLoginChat extends AdminLoginChallenge{
 
 
    public EmbedBuilder getChatStatus(){
+       ClientAuth clientAuth = Client.auth(this.getLichessToken());
 
-        this.embedBuilder = new EmbedBuilder();
+        try {
+            this.embedBuilder = new EmbedBuilder();
 
-        Result<User> userResult = this.getBasicClient().users().byId(this.getUserID());
 
-        if(userResult.isPresent() && !userResult.get().tosViolation() && !userResult.get().closed()){
-            ClientAuth clientAuth = Client.auth(this.getLichessToken());
+            Result<User> userResult = this.getBasicClient().users().byId(this.getUserID());
 
-            clientAuth.users().sendMessageToUser(this.getUserID(), this.message);
-            this.embedBuilder.setColor(Color.green);
-            this.embedBuilder.setDescription("Message Successfully send!");
+            if (userResult.isPresent() && !userResult.get().tosViolation() && !userResult.get().closed()) {
 
-            return embedBuilder;
-        }else{
-            this.embedBuilder.setColor(Color.red);
-            this.embedBuilder.setDescription("The given user does not exist in Lichess, please supply a proper username");
 
-            return this.embedBuilder;
+                clientAuth.users().sendMessageToUser(this.getUserID(), this.message);
+                this.embedBuilder.setColor(Color.green);
+                this.embedBuilder.setDescription("Message Successfully send!");
+                Result<Ack> deleteToken = clientAuth.account().revokeToken();
+
+                return embedBuilder;
+
+
+            } else {
+                this.embedBuilder.setColor(Color.red);
+                this.embedBuilder.setDescription("Invalid Input, Please try again");
+                Result<Ack> deleteToken = clientAuth.account().revokeToken();
+                return this.embedBuilder;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            this.embedBuilder = new EmbedBuilder();
+            Result<Ack> deleteToken = clientAuth.account().revokeToken();
+            return this.embedBuilder.setDescription("Error Occurred, please provide proper input!");
         }
 
 
