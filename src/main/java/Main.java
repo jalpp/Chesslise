@@ -1,5 +1,6 @@
 
 import chariot.Client;
+import lombok.SneakyThrows;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -7,6 +8,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -32,14 +34,13 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) {
 
-       
         String Token= "Your Discord Token";
 
 
         jdaBuilder = JDABuilder.createDefault(Token);// string token
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
-        jdaBuilder.setActivity(Activity.playing("helping chess servers"));
+        jdaBuilder.setActivity(Activity.playing("Helping Chess Servers"));
         jdaBuilder.addEventListeners(new Main());
 
 
@@ -51,26 +52,28 @@ public class Main extends ListenerAdapter {
         }
 
         CommandListUpdateAction action = jda.updateCommands();
-        action.addCommands(new CommandData("tv", "Watch Lichess TV")).complete();
-        action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
+        action.addCommands(new CommandData("puzzle", "Solve random chess puzzles from master games")).complete();
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
+        action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
+        action.addCommands(new CommandData("chatauth", "Send direct chat message to a user").addOption(OptionType.STRING, "logicidchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "messagereceiver", "input receiver's username", true).addOption(OptionType.STRING, "messageid", "input your message", true)).complete();
+        action.addCommands(new CommandData("scheduletournament", "schedule Lichess arena from Discord").addOption(OptionType.STRING, "apipassword", "Input your Lichess Personal API Token", true).addOption(OptionType.STRING, "timeformat", "Input tournament's variant: blitz, classical etc.", true)).complete();
+        action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
+        action.addCommands(new CommandData("tv", "Watch Lichess TV")).complete();
         action.addCommands(new CommandData("tourneymanager", "Create and Manage Your Lichess Tournament").addOption(OptionType.STRING, "lichessapipassword", "Input Your Lichess API Token", true)).complete();
         action.addCommands(new CommandData("blog", "Read Lichess Blogs"));
         action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
         action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
-        action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
         action.addCommands(new CommandData("watch", "watch games of a particular Lichess User").addOption(OptionType.STRING, "watchuser", "Input Lichess username", true)).complete();
         action.addCommands(new CommandData("top10", "see top 10 list for given variant(blitz classical etc) ").addOption(OptionType.STRING, "top", "input Lichess variant", true)).complete();
         action.addCommands(new CommandData("arena", "see arena leaderboard list").addOption(OptionType.STRING, "arenaid", "Input Lichess arena link", true)).complete();
         action.addCommands(new CommandData("challengeauth", "Send direct Lichess Challenge with Personal Token Login").addOption(OptionType.STRING, "loginchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "userlog", "input opponent's username", true)).complete();
-        action.addCommands(new CommandData("chatauth", "Send direct chat message to a user").addOption(OptionType.STRING, "logicidchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "messagereceiver", "input receiver's username", true).addOption(OptionType.STRING, "messageid", "input your message", true)).complete();
-        action.addCommands(new CommandData("scheduletournament", "schedule Lichess arena from Discord").addOption(OptionType.STRING, "apipassword", "Input your Lichess Personal API Token", true).addOption(OptionType.STRING, "timeformat", "Input tournament's variant: blitz, classical etc.", true)).complete();
         action.addCommands(new CommandData("invite", "Invite me to your servers!")).complete();
 
 
 
     }
 
+    @SneakyThrows
     public void onSlashCommand(SlashCommandEvent event){
         String name = event.getName();
         Client client = Client.basic();
@@ -94,20 +97,13 @@ public class Main extends ListenerAdapter {
                 UserProfile userProfile = new UserProfile(client,userID);
                 event.replyEmbeds(userProfile.getUserProfile().build()).addActionRow(Button.primary("userwatch", "\uD83D\uDCFA"), Button.danger("userpuzzle","\uD83C\uDF2A️"), Button.primary("userstreaming", "\uD83C\uDF99️"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "♞")).queue();
                 break;
-            case "livestreaming":
-                String streamerID = event.getOption("streamername").getAsString();
-
-                UserStreaming userStreaming = new UserStreaming(client, streamerID);
-
-                event.replyEmbeds(userStreaming.getStreamingStatus().build()).queue();
-                break;
             case "streamers":
                 LiveStreamers liveStreamers = new LiveStreamers(client);
                 event.replyEmbeds(liveStreamers.getTv().build()).queue();
                 break;
             case "dailypuzzle":
                 DailyCommand dailyCommand = new DailyCommand(client);
-                event.replyEmbeds(dailyCommand.getPuzzleData().build()).addActionRow(Button.success("puzzlewatch", "\uD83D\uDCFA"), Button.link("https://lichess.org/training/daily", "View Solution")).queue();
+                event.replyEmbeds(dailyCommand.getPuzzleData().build()).addActionRow(Button.link("https://lichess.org/training/daily", "View Solution")).queue();
                 break;
             case "watch":
                 String gameUserID = event.getOption("watchuser").getAsString();
@@ -152,13 +148,6 @@ public class Main extends ListenerAdapter {
                  UserArena userArena = new UserArena(client,arenaLink);
                  event.replyEmbeds(userArena.getUserArena().build()).queue();
                 break;
-
-            case "team":
-                String teamLink = event.getOption("teamboard").getAsString();
-                UserTeam userTeam = new UserTeam(client, teamLink);
-                event.replyEmbeds(userTeam.getUserTeam().build()).queue();
-                break;
-
             case "challengeauth":
                String password = event.getOption("loginchat").getAsString();
                String oppUserID = event.getOption("userlog").getAsString();
@@ -167,7 +156,6 @@ public class Main extends ListenerAdapter {
                break;
 
             case "chatauth":
-
                 final String loginPassword = event.getOption("logicidchat").getAsString();
                 String receiverUserID = event.getOption("messagereceiver").getAsString();
                 String sendMessage = event.getOption("messageid").getAsString();
@@ -196,15 +184,6 @@ public class Main extends ListenerAdapter {
                 InviteMe inviteMe = new InviteMe();
                 event.replyEmbeds(inviteMe.getInviteInfo().build()).queue();
                 break;
-            case "gamereview":
-                String gameuser = event.getOption("usergameid").getAsString();
-                GameReview gameReview = new GameReview(client, gameuser);
-                event.replyEmbeds(gameReview.getGameReviewData().build()).queue();
-                break;
-//            case "broadcast":
-//                Broadcasts broadcasts = new Broadcasts(client);
-//                event.replyEmbeds(broadcasts.getBroadcastData().build()).queue();
-               // break;
             case "blog":
                 EmbedBuilder BlogEmbed = new EmbedBuilder();
                 BlogEmbed.setColor(Color.orange);
@@ -222,7 +201,10 @@ public class Main extends ListenerAdapter {
             case "tv":
                 WatchTv watchTv = new WatchTv(client);
                 event.replyEmbeds(watchTv.getTV().build()).addActionRow(Button.primary("blitztv", "⚡"), Button.primary("bullettv", "\uD83D\uDE85"), Button.primary("rapidtv", "\uD83D\uDC3F")).queue();
-
+                break;
+            case "puzzle":
+                puzzle puzzle = new puzzle();
+                event.replyEmbeds(puzzle.getRandom().build()).queue();
                 break;
             default:
 
@@ -301,17 +283,19 @@ public class Main extends ListenerAdapter {
             event.replyEmbeds(tournamentManager.getRapidTournamentCreated().build()).queueAfter(60, TimeUnit.SECONDS);
         }
 
-        if(event.getComponentId().equals("puzzlewatch")){
-            DailyCommand dailypuzzle = new DailyCommand(this.ButtonClient);
-            event.reply(dailypuzzle.getPuzzleGame()).queue();
-        }
 
         if(event.getComponentId().equals("blitztv")){
-            event.reply(tv.getBlitz()).queue();
+            event.getChannel().sendMessage("Connecting to Lichess...").queue();
+            event.getChannel().sendMessage("Connecting to Lichess TV...").queueAfter(10,TimeUnit.SECONDS);
+            event.getChannel().sendMessage(tv.getBlitz()).queueAfter(20, TimeUnit.SECONDS);
         }else if(event.getComponentId().equals("bullettv")){
-            event.reply(tv.getBullet()).queue();
+            event.getChannel().sendMessage("Connecting to Lichess...").queue();
+            event.getChannel().sendMessage("Connecting to Lichess TV...").queueAfter(10,TimeUnit.SECONDS);
+            event.getChannel().sendMessage(tv.getBullet()).queueAfter(20, TimeUnit.SECONDS);
         }else if(event.getComponentId().equals("rapidtv")){
-            event.reply(tv.getRapid()).queue();
+            event.getChannel().sendMessage("Connecting to Lichess...").queue();
+            event.getChannel().sendMessage("Connecting to Lichess TV...").queueAfter(10,TimeUnit.SECONDS);
+            event.getChannel().sendMessage(tv.getRapid()).queueAfter(20, TimeUnit.SECONDS);
         }
 
 
@@ -321,3 +305,7 @@ public class Main extends ListenerAdapter {
 
 
 }
+
+
+
+
