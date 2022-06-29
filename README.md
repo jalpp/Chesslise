@@ -16,6 +16,7 @@
  3. [Lichess Java Client](https://github.com/tors42/chariot) 
  4. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
  5. [Java Discord Api](https://github.com/DV8FromTheWorld/JDA)
+ 6. [Chess.com Java Wrapper for Puzzle Generator](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  
 
 # Commands:
