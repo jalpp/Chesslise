@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 import java.awt.*;
-import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 
@@ -35,12 +33,13 @@ public class Main extends ListenerAdapter {
     public static void main(String[] args) {
 
         String Token= "Your Discord Token";
+       
 
 
         jdaBuilder = JDABuilder.createDefault(Token);// string token
 
-        jdaBuilder.setStatus(OnlineStatus.ONLINE);
-        jdaBuilder.setActivity(Activity.playing("Helping Chess Servers"));
+        jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB);
+        jdaBuilder.setActivity(Activity.playing("/help"));
         jdaBuilder.addEventListeners(new Main());
 
 
@@ -52,7 +51,8 @@ public class Main extends ListenerAdapter {
         }
 
         CommandListUpdateAction action = jda.updateCommands();
-        action.addCommands(new CommandData("puzzle", "Solve random chess puzzles from master games")).complete();
+        action.addCommands(new CommandData("tourney", "Join Current Lichess Tournaments")).complete();
+        action.addCommands(new CommandData("liga", "view Liga Leaderboard based on your favorite Lichess team").addOption(OptionType.STRING, "teamname", "Your Lichess team", true)).complete();
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
         action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
         action.addCommands(new CommandData("chatauth", "Send direct chat message to a user").addOption(OptionType.STRING, "logicidchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "messagereceiver", "input receiver's username", true).addOption(OptionType.STRING, "messageid", "input your message", true)).complete();
@@ -81,6 +81,10 @@ public class Main extends ListenerAdapter {
 
 
         switch(name) {
+            case "tourney":
+                currentTournament currentTournament = new currentTournament(client);
+                event.replyEmbeds(currentTournament.getTournaments().build()).queue();
+                break;
             case "help":
                 CommandInfo commandInfo = new CommandInfo();
                 event.replyEmbeds(commandInfo.getCommandInfo().build()).queue();
@@ -174,7 +178,6 @@ public class Main extends ListenerAdapter {
                 event.getChannel().sendMessage("connecting to lichess..").queueAfter(10, TimeUnit.SECONDS);
                 event.getChannel().sendMessageEmbeds(createTournament.getCreatedTournament().build()).queueAfter(20, TimeUnit.SECONDS);
                 break;
-
             case "stormdash":
                 String stormUser = event.getOption("storm").getAsString();
                 UserDashboard userDashboard = new UserDashboard(client,stormUser);
@@ -202,9 +205,10 @@ public class Main extends ListenerAdapter {
                 WatchTv watchTv = new WatchTv(client);
                 event.replyEmbeds(watchTv.getTV().build()).addActionRow(Button.primary("blitztv", "⚡"), Button.primary("bullettv", "\uD83D\uDE85"), Button.primary("rapidtv", "\uD83D\uDC3F")).queue();
                 break;
-            case "puzzle":
-                puzzle puzzle = new puzzle();
-                event.replyEmbeds(puzzle.getRandom().build()).queue();
+            case "liga":
+                 String team = event.getOption("teamname").getAsString();
+                 LigaEmbed ligaEmbed = new LigaEmbed(client, team);
+                 event.getChannel().sendMessageEmbeds(ligaEmbed.getLigaEmbed().build()).queue();
                 break;
             default:
 
