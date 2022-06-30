@@ -1,5 +1,5 @@
 import chariot.Client;
-import chariot.model.UserStatus;
+import chariot.model.StreamerStatus;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
@@ -17,19 +17,16 @@ public class LiveStreamers {
 
     public EmbedBuilder getTv(){
 
-        List<UserStatus> live = client.users().liveStreamers().stream().toList();
+        List<StreamerStatus> live = client.users().liveStreamers().stream().toList();
 
         this.embedBuilder = new EmbedBuilder();
 
         String getLivePeople = "";
 
 
-
         for(int i = 0; i < 10; i++){
 
             String title = "";
-
-
 
             if(live.get(i).title().isPresent()){
                 title += live.get(i).title().get();
