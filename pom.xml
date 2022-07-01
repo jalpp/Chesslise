@@ -43,12 +43,17 @@
         <dependency>
             <groupId>io.github.tors42</groupId>
             <artifactId>chariot</artifactId>
-            <version>0.0.39</version>
+            <version>0.0.40</version>
         </dependency>
         <dependency>
             <groupId>io.github.sornerol</groupId>
             <artifactId>chesscom-pubapi-wrapper</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bhlangonijr</groupId>
+            <artifactId>chesslib</artifactId>
+            <version>1.3.3</version>
         </dependency>
     </dependencies>
 
