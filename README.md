@@ -27,6 +27,9 @@
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.39.47-PM.png)
 
+# Do Chess Puzzles
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-07-01-at-6.30.52-PM.png)
+
 # Lichess Authentication Commands
 
 ## 🔮 Challenge a Lichess User directly from Discord by Lichess authentication!
