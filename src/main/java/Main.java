@@ -33,7 +33,7 @@ public class Main extends ListenerAdapter {
     public static void main(String[] args) {
 
         String Token= "Your Discord Token";
-       
+        
 
 
         jdaBuilder = JDABuilder.createDefault(Token);// string token
@@ -51,13 +51,14 @@ public class Main extends ListenerAdapter {
         }
 
         CommandListUpdateAction action = jda.updateCommands();
+        action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
+        action.addCommands(new CommandData("puzzle", "View Puzzles")).complete();
         action.addCommands(new CommandData("tourney", "Join Current Lichess Tournaments")).complete();
         action.addCommands(new CommandData("liga", "view Liga Leaderboard based on your favorite Lichess team").addOption(OptionType.STRING, "teamname", "Your Lichess team", true)).complete();
         action.addCommands(new CommandData("help", "See Commands Info!")).complete();
         action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
         action.addCommands(new CommandData("chatauth", "Send direct chat message to a user").addOption(OptionType.STRING, "logicidchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "messagereceiver", "input receiver's username", true).addOption(OptionType.STRING, "messageid", "input your message", true)).complete();
         action.addCommands(new CommandData("scheduletournament", "schedule Lichess arena from Discord").addOption(OptionType.STRING, "apipassword", "Input your Lichess Personal API Token", true).addOption(OptionType.STRING, "timeformat", "Input tournament's variant: blitz, classical etc.", true)).complete();
-        action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
         action.addCommands(new CommandData("tv", "Watch Lichess TV")).complete();
         action.addCommands(new CommandData("tourneymanager", "Create and Manage Your Lichess Tournament").addOption(OptionType.STRING, "lichessapipassword", "Input Your Lichess API Token", true)).complete();
         action.addCommands(new CommandData("blog", "Read Lichess Blogs"));
@@ -81,6 +82,11 @@ public class Main extends ListenerAdapter {
 
 
         switch(name) {
+            case "puzzle":
+                puzzle puzzle = new puzzle();
+                event.reply("\uD83E\uDDE9 **Chess Tactics** \uD83E\uDDE9").queue();
+                event.getChannel().sendMessageEmbeds(puzzle.getRandom().build()).queue();
+                break;
             case "tourney":
                 currentTournament currentTournament = new currentTournament(client);
                 event.replyEmbeds(currentTournament.getTournaments().build()).queue();
@@ -208,6 +214,7 @@ public class Main extends ListenerAdapter {
             case "liga":
                  String team = event.getOption("teamname").getAsString();
                  LigaEmbed ligaEmbed = new LigaEmbed(client, team);
+                 event.reply("Generating Liga Results..").queue();
                  event.getChannel().sendMessageEmbeds(ligaEmbed.getLigaEmbed().build()).queue();
                 break;
             default:
@@ -309,7 +316,6 @@ public class Main extends ListenerAdapter {
 
 
 }
-
 
 
 
