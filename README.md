@@ -17,6 +17,8 @@
  4. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
  5. [Java Discord Api](https://github.com/DV8FromTheWorld/JDA)
  6. [Chess.com Java Wrapper for Puzzle Generator](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
+ 7. [Java Chess Lib for FEN conversion From PGN](https://github.com/bhlangonijr/chesslib)
+ 8. [Beautiful Chess Image Generator](https://chessboardimage.com/)
  
 
 # Commands:
