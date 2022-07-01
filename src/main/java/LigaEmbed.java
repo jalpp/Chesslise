@@ -34,12 +34,23 @@ public class LigaEmbed {
 
         String realName = String.valueOf(split);
 
+        boolean checkTeamName = this.client.teams().byTeamId(realName).isPresent();
+
+
         liga liga = new liga(realName, 1 , null);
-       this.embedBuilder.setTitle("Liga Leaderboard");
-       this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
-       this.embedBuilder.setColor(Color.blue);
-       this.embedBuilder.setDescription(liga.run());
-        return this.embedBuilder;
+        if(!liga.run().equals("") && checkTeamName) {
+            this.embedBuilder.setTitle("Liga Leaderboard");
+            this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
+            this.embedBuilder.setColor(Color.blue);
+            this.embedBuilder.setDescription(liga.run());
+            return this.embedBuilder;
+        }else if(checkTeamName == false){
+            return this.embedBuilder.setDescription("Invalid Team Input.. Please try again");
+        }else{
+
+            return this.embedBuilder.setDescription("The Given Team has not participated in a Lichess Team Battle/Lichess Liga, please try again");
+        }
+
     }
 
 
