@@ -1,10 +1,11 @@
 import chariot.Client;
 import chariot.model.Puzzle;
 import chariot.model.Result;
+import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
-import java.util.List;
+
 
 public class DailyCommand {
 
@@ -31,22 +32,33 @@ public class DailyCommand {
             if (dailypuzzle.isPresent()) { // check if the puzzle is present
                 Puzzle puzzle1 = dailypuzzle.get();
 
-                this.gameID = puzzle1.game().id();
+                Board board = new Board();
 
-                String puzzleID = puzzle1.puzzle().id();
-                String puzzleImg = "https://lichess1.org/training/export/gif/thumbnail/"  + puzzleID + ".gif";
-                
+                String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
+                for (String move : moves) {
+                    board.doMove(move);
+                }
+
+
+                String cor = board.getFen();
+
+                String[] split = cor.split(" ");
+
+                String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+
+
+
 
                 Puzzle.PuzzleInfo puzzleInfo = puzzle1.puzzle();
 
                 int puzzleRating = puzzleInfo.rating();
-            
-                
+
+
 
                 this.embedBuilder = new EmbedBuilder();
                 this.embedBuilder.setColor(Color.blue);
                 this.embedBuilder.setTitle("\uD83E\uDDE9 Puzzle of The Day \uD83E\uDDE9");
-                this.embedBuilder.setImage(puzzleImg);
+                this.embedBuilder.setImage(coordImg);
                 this.embedBuilder.setDescription("**" + "Puzzle Rating: " + puzzleRating+ "**");
 
 
@@ -71,7 +83,9 @@ public class DailyCommand {
 
     }
 
-    
 
-    
+
+
 }
+
+
