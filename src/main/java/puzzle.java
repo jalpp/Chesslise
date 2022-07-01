@@ -19,9 +19,15 @@ public class puzzle {
     public EmbedBuilder getRandom()  {
         this.embedBuilder = new EmbedBuilder();
         try {
+            String cor = this.dailyPuzzleClient.getRandomDailyPuzzle().getFen();
+
+            String[] split = cor.split(" ");
+
+            String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
             this.embedBuilder.setTitle(this.dailyPuzzleClient.getRandomDailyPuzzle().getTitle());
             this.embedBuilder.setColor(Color.blue);
-            this.embedBuilder.setImage(this.dailyPuzzleClient.getRandomDailyPuzzle().getImageUrl());
+
+            this.embedBuilder.setImage(coordImg);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,6 +40,8 @@ public class puzzle {
 
         return this.embedBuilder;
     }
+
+
 
 
 
