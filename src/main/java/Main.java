@@ -32,11 +32,12 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) {
 
-        String Token= "Your Discord Token";
-        
+
+        String Token = "Your Discord Token";
 
 
-        jdaBuilder = JDABuilder.createDefault(Token);// string token
+
+        jdaBuilder = JDABuilder.createDefault(TOKEN);// string token
 
         jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB);
         jdaBuilder.setActivity(Activity.playing("/help"));
@@ -51,6 +52,8 @@ public class Main extends ListenerAdapter {
         }
 
         CommandListUpdateAction action = jda.updateCommands();
+        action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
+        action.addCommands(new CommandData("watchmaster", "Watch Master Games")).complete();
         action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
         action.addCommands(new CommandData("puzzle", "View Puzzles")).complete();
         action.addCommands(new CommandData("tourney", "Join Current Lichess Tournaments")).complete();
@@ -63,7 +66,6 @@ public class Main extends ListenerAdapter {
         action.addCommands(new CommandData("tourneymanager", "Create and Manage Your Lichess Tournament").addOption(OptionType.STRING, "lichessapipassword", "Input Your Lichess API Token", true)).complete();
         action.addCommands(new CommandData("blog", "Read Lichess Blogs"));
         action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
-        action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
         action.addCommands(new CommandData("watch", "watch games of a particular Lichess User").addOption(OptionType.STRING, "watchuser", "Input Lichess username", true)).complete();
         action.addCommands(new CommandData("top10", "see top 10 list for given variant(blitz classical etc) ").addOption(OptionType.STRING, "top", "input Lichess variant", true)).complete();
         action.addCommands(new CommandData("arena", "see arena leaderboard list").addOption(OptionType.STRING, "arenaid", "Input Lichess arena link", true)).complete();
@@ -82,6 +84,10 @@ public class Main extends ListenerAdapter {
 
 
         switch(name) {
+            case "watchmaster":
+                WatchMaster watchMaster = new WatchMaster(client);
+                event.reply(watchMaster.getMasterGames()).queue();
+                break;
             case "puzzle":
                 puzzle puzzle = new puzzle();
                 event.reply("\uD83E\uDDE9 **Chess Tactics** \uD83E\uDDE9").queue();
@@ -312,10 +318,4 @@ public class Main extends ListenerAdapter {
 
 
     }
-
-
-
-}
-
-
 
