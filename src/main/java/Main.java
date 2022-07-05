@@ -1,22 +1,30 @@
-
-import chariot.Client;
-import lombok.SneakyThrows;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+
+import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.Modal;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.interactions.components.text.TextInput;
+import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 import java.awt.*;
+import java.util.EnumSet;
 import java.util.concurrent.TimeUnit;
 
 
@@ -32,16 +40,18 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) {
 
-
+      
         String Token = "Your Discord Token";
 
 
 
-        jdaBuilder = JDABuilder.createDefault(TOKEN);// string token
+        jdaBuilder = JDABuilder.createDefault(Token);// string token
 
-        jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB);
+        jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.playing("/help"));
         jdaBuilder.addEventListeners(new Main());
+
+
 
 
         try {
@@ -51,42 +61,63 @@ public class Main extends ListenerAdapter {
             exception.printStackTrace();
         }
 
-        CommandListUpdateAction action = jda.updateCommands();
-        action.addCommands(new CommandData("streamers", "See current Live Streamers")).complete();
-        action.addCommands(new CommandData("watchmaster", "Watch Master Games")).complete();
-        action.addCommands(new CommandData("dailypuzzle", "Do daily chess puzzle")).complete();
-        action.addCommands(new CommandData("puzzle", "View Puzzles")).complete();
-        action.addCommands(new CommandData("tourney", "Join Current Lichess Tournaments")).complete();
-        action.addCommands(new CommandData("liga", "view Liga Leaderboard based on your favorite Lichess team").addOption(OptionType.STRING, "teamname", "Your Lichess team", true)).complete();
-        action.addCommands(new CommandData("help", "See Commands Info!")).complete();
-        action.addCommands(new CommandData("play", "Start a new Lichess Game").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true)).complete();
-        action.addCommands(new CommandData("chatauth", "Send direct chat message to a user").addOption(OptionType.STRING, "logicidchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "messagereceiver", "input receiver's username", true).addOption(OptionType.STRING, "messageid", "input your message", true)).complete();
-        action.addCommands(new CommandData("scheduletournament", "schedule Lichess arena from Discord").addOption(OptionType.STRING, "apipassword", "Input your Lichess Personal API Token", true).addOption(OptionType.STRING, "timeformat", "Input tournament's variant: blitz, classical etc.", true)).complete();
-        action.addCommands(new CommandData("tv", "Watch Lichess TV")).complete();
-        action.addCommands(new CommandData("tourneymanager", "Create and Manage Your Lichess Tournament").addOption(OptionType.STRING, "lichessapipassword", "Input Your Lichess API Token", true)).complete();
-        action.addCommands(new CommandData("blog", "Read Lichess Blogs"));
-        action.addCommands(new CommandData("profile", "See Lichess Profile of given User").addOption(OptionType.STRING, "username", "input Lichess username", true)).complete();
-        action.addCommands(new CommandData("watch", "watch games of a particular Lichess User").addOption(OptionType.STRING, "watchuser", "Input Lichess username", true)).complete();
-        action.addCommands(new CommandData("top10", "see top 10 list for given variant(blitz classical etc) ").addOption(OptionType.STRING, "top", "input Lichess variant", true)).complete();
-        action.addCommands(new CommandData("arena", "see arena leaderboard list").addOption(OptionType.STRING, "arenaid", "Input Lichess arena link", true)).complete();
-        action.addCommands(new CommandData("challengeauth", "Send direct Lichess Challenge with Personal Token Login").addOption(OptionType.STRING, "loginchat", "input your Lichess Personal API Token", true).addOption(OptionType.STRING, "userlog", "input opponent's username", true)).complete();
-        action.addCommands(new CommandData("invite", "Invite me to your servers!")).complete();
+        CommandListUpdateAction commands = jda.updateCommands();
+
+          commands.addCommands(Commands.slash("puzzleracer", "Play Puzzle Racer"));
+          commands.addCommands(Commands.slash("answer", "View Daily Puzzle Answer"));
+          commands.addCommands(Commands.slash("dailypuzzle", "Daily Lichess Puzzles"));
+          commands.addCommands(Commands.slash("arena", "See Swiss/Arena standings").addOption(OptionType.STRING, "arenaid", "Input Lichess arena link", true));
+          commands.addCommands(Commands.slash("watchmaster", "Watch GM Games in gif"));
+          commands.addCommands(Commands.slash("profile", "See Lichess Profile of given user").addOption(OptionType.STRING, "username", "input Lichess username", true));
+          commands.addCommands(Commands.slash("streamers", "See current Live Streamers"));
+          commands.addCommands(Commands.slash("puzzle", "View Puzzles"));
+          commands.addCommands(Commands.slash("tourney", "Join Current Lichess Tournaments"));
+          commands.addCommands(Commands.slash("liga", "view Liga Leaderboard based on your favorite Lichess team"));
+          commands.addCommands(Commands.slash("help", "View LISEBOT Commands"));
+          commands.addCommands(Commands.slash("play", "Play Live Chess Games").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true));
+          commands.addCommands(Commands.slash("chatauth", "Send DMs to Lichess User"));
+          commands.addCommands(Commands.slash("scheduletournament", "schedule Lichess arena from Discord"));
+          commands.addCommands(Commands.slash("tv", "Watch Lichess TV"));
+          commands.addCommands(Commands.slash("tourneymanager", "Create and Manage Your Lichess Tournament"));
+          commands.addCommands(Commands.slash("blog", "Read Lichess Blogs"));
+          commands.addCommands(Commands.slash("watch", "Watch Lichess games for given user"));
+          commands.addCommands(Commands.slash("top10", "see top 10 list for given variant(blitz classical etc) ").addOption(OptionType.STRING, "top", "input Lichess variant", true));
+          commands.addCommands(Commands.slash("challengeauth", "Send direct Lichess Challenge with Personal Token Login"));
+          commands.addCommands(Commands.slash("invite", "Invite me to your servers!"));
+
+
+          commands.queue();
 
 
 
     }
 
     @SneakyThrows
-    public void onSlashCommand(SlashCommandEvent event){
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
         String name = event.getName();
         Client client = Client.basic();
         this.ButtonClient = client;
 
 
         switch(name) {
+            case "puzzleracer":
+                TextInput puzzletext = TextInput.create("racerauth", "Token Input", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your Lichess Token")
+                        .setMinLength(10)
+                        .setMaxLength(100)
+                        .build();
+                Modal modalpuzzle = Modal.create("modalpuzzle", "Play Puzzle Racer")
+                        .addActionRows(ActionRow.of(puzzletext))
+                        .build();
+                event.replyModal(modalpuzzle).queue();
+                break;
+            case "answer":
+                DailyCommand dailyCommandsol = new DailyCommand(client);
+                event.replyEmbeds(dailyCommandsol.getSolution().build()).queue();
+                break;
             case "watchmaster":
                 WatchMaster watchMaster = new WatchMaster(client);
-                event.reply(watchMaster.getMasterGames()).queue();
+                event.reply(watchMaster.getMasterGames()).addActionRow(Button.link("https://lichess.org" + watchMaster.getGameId()[1], "View On Lichess")).queue();
                 break;
             case "puzzle":
                 puzzle puzzle = new puzzle();
@@ -99,7 +130,7 @@ public class Main extends ListenerAdapter {
                 break;
             case "help":
                 CommandInfo commandInfo = new CommandInfo();
-                event.replyEmbeds(commandInfo.getCommandInfo().build()).queue();
+                event.replyEmbeds(commandInfo.getPageOne().build()).addActionRow(Button.primary("next", "➡️")).queue();
                 break;
             case "play":
                  String variant = event.getOption("variant").getAsString();
@@ -128,10 +159,9 @@ public class Main extends ListenerAdapter {
                 break;
 
             case "top10":
-
                 String variantID = event.getOption("top").getAsString();
                 leaderBoard lichessBoard = new leaderBoard(client);
-
+                event.deferReply(true).queue();
                 if (variantID.equals("blitz")) {
 
                     event.getChannel().sendMessageEmbeds(lichessBoard.getBlitzBoard().build()).queue();
@@ -162,33 +192,65 @@ public class Main extends ListenerAdapter {
             case "arena":
                  String arenaLink = event.getOption("arenaid").getAsString();
                  UserArena userArena = new UserArena(client,arenaLink);
-                 event.replyEmbeds(userArena.getUserArena().build()).queue();
+                 event.deferReply(true).queue();
+                 event.getChannel().sendMessageEmbeds(userArena.getUserArena().build()).queue();
                 break;
             case "challengeauth":
-               String password = event.getOption("loginchat").getAsString();
-               String oppUserID = event.getOption("userlog").getAsString();
-               AdminLoginChallenge adminLogin = new AdminLoginChallenge(client, password, oppUserID);
-               event.replyEmbeds(adminLogin.getChallenge().build()).queue();
+                TextInput subject = TextInput.create("challengeauth", "Token Input", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your Lichess Token")
+                        .setMinLength(10)
+                        .setMaxLength(100)
+                        .build();
+                TextInput subjectuser = TextInput.create("challengeauthuser", "Input Lichess Username", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your opponent Lichess Username")
+                        .setMinLength(5)
+                        .setMaxLength(28)
+                        .build();
+
+                Modal modal = Modal.create("modalplay", "Send Lichess Challenge!")
+                        .addActionRows(ActionRow.of(subject), ActionRow.of(subjectuser))
+                        .build();
+                event.replyModal(modal).queue();
                break;
 
             case "chatauth":
-                final String loginPassword = event.getOption("logicidchat").getAsString();
-                String receiverUserID = event.getOption("messagereceiver").getAsString();
-                String sendMessage = event.getOption("messageid").getAsString();
-                AdminLoginChat chat = new AdminLoginChat(client,loginPassword, receiverUserID, sendMessage);
-                event.reply("Processing your Request...").queue();
-                event.getChannel().sendMessage("connecting to lichess..").queueAfter(10, TimeUnit.SECONDS);
-                event.getChannel().sendMessageEmbeds(chat.getDelayMessage().build()).queueAfter(20, TimeUnit.SECONDS);
-                event.getChannel().sendMessageEmbeds(chat.getChatStatus().build()).queueAfter(42, TimeUnit.SECONDS);
+                TextInput chattoken = TextInput.create("chatauth", "Token Input", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your Lichess Token")
+                        .setMinLength(10)
+                        .setMaxLength(100)
+                        .build();
+                TextInput chatmember = TextInput.create("chatuser", "Input Lichess Username", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your Friends Lichess Username")
+                        .setMinLength(5)
+                        .setMaxLength(28)
+                        .build();
+                TextInput msgParagraph = TextInput.create("chatcontent", "Input DM Content.. ex. Lichess Rocks!", TextInputStyle.PARAGRAPH)
+                        .setMinLength(10)
+                        .setMaxLength(500)
+                        .build();
+
+                Modal modalchat = Modal.create("modalchat", "Send A Direct Message")
+                        .addActionRows(ActionRow.of(chattoken), ActionRow.of(chatmember), ActionRow.of(msgParagraph))
+                        .build();
+                event.replyModal(modalchat).queue();
                 break;
 
             case "scheduletournament":
-                final String apiPassword = event.getOption("apipassword").getAsString();
-                String timeFormat = event.getOption("timeformat").getAsString();
-                AdminLoginCreateTournament createTournament = new AdminLoginCreateTournament(apiPassword, timeFormat);
-                event.reply("Processing your Request...").queue();
-                event.getChannel().sendMessage("connecting to lichess..").queueAfter(10, TimeUnit.SECONDS);
-                event.getChannel().sendMessageEmbeds(createTournament.getCreatedTournament().build()).queueAfter(20, TimeUnit.SECONDS);
+                TextInput tourtoken = TextInput.create("tourauth", "Token Input", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your Lichess Token")
+                        .setMinLength(10)
+                        .setMaxLength(100)
+                        .build();
+                TextInput tourtime = TextInput.create("timeformat", "Input Tournament's Time", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your Tournaments Time Control Ex. blitz")
+                        .setMinLength(5)
+                        .setMaxLength(20)
+                        .build();
+
+                Modal modaltour = Modal.create("modaltour", "Schedule A Lichess Tournament")
+                        .addActionRows(ActionRow.of(tourtoken), ActionRow.of(tourtime))
+                        .build();
+                event.replyModal(modaltour).queue();
                 break;
             case "stormdash":
                 String stormUser = event.getOption("storm").getAsString();
@@ -208,10 +270,15 @@ public class Main extends ListenerAdapter {
                 event.replyEmbeds(BlogEmbed.build()).addActionRow(Button.success("newblog", "Latest Lichess Blog"), Button.primary("comblog", "Community Blogs"), Button.primary("chessblog", "Chess Blogs")).queue();
                 break;
             case "tourneymanager":
-                final String passwordTournament = event.getOption("lichessapipassword").getAsString();
-                this.APIPASSWORD = passwordTournament;
-                TournamentManager manager = new TournamentManager(passwordTournament);
-                event.replyEmbeds(manager.sayStatus().build()).addActionRow(Button.primary("createone", "Create Arenas"), Button.primary("createtwo", "Create Monthly Arenas")).queue();
+                TextInput tourmanager = TextInput.create("managerauth", "Token Input", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Your Lichess Token")
+                        .setMinLength(10)
+                        .setMaxLength(100)
+                        .build();
+                Modal modalmanager = Modal.create("modalmanager", "Your Tournament Manager")
+                        .addActionRows(ActionRow.of(tourmanager))
+                        .build();
+                event.replyModal(modalmanager).queue();
                 break;
             case "tv":
                 WatchTv watchTv = new WatchTv(client);
@@ -232,35 +299,73 @@ public class Main extends ListenerAdapter {
 
 
     @Override
-    public void onButtonClick(@NotNull ButtonClickEvent event) {
+    public void onModalInteraction(@NotNull ModalInteractionEvent event) {
+        Client client = Client.basic();
+        String name = event.getModalId();
+
+        switch (name){
+            case "modalplay":
+                AdminLoginChallenge adminLogin = new AdminLoginChallenge(client, event.getValue("challengeauth").getAsString() , event.getValue("challengeauthuser").getAsString());
+                event.replyEmbeds(adminLogin.getChallenge().build()).queue();
+                break;
+            case "modalchat":
+                AdminLoginChat chat = new AdminLoginChat(client,event.getValue("chatauth").getAsString(), event.getValue("chatuser").getAsString(), event.getValue("chatcontent").getAsString());
+                event.reply("Processing your Request...").queue();
+                event.deferReply(true).queue();
+                event.getTextChannel().sendMessageEmbeds(chat.getChatStatus().build()).queueAfter(42, TimeUnit.SECONDS);
+                break;
+            case "modaltour":
+                AdminLoginCreateTournament createTournament = new AdminLoginCreateTournament(event.getValue("tourauth").getAsString(), event.getValue("timeformat").getAsString());
+                event.deferReply(true).queue();
+                event.getTextChannel().sendMessageEmbeds(createTournament.getCreatedTournament().build()).queueAfter(20, TimeUnit.SECONDS);
+                break;
+            case "modalmanager":
+                  String passwordTournament = event.getValue("managerauth").getAsString();
+                  this.APIPASSWORD = passwordTournament;
+                  TournamentManager manager = new TournamentManager(passwordTournament);
+                  event.replyEmbeds(manager.sayStatus().build()).addActionRow(Button.primary("createone", "Create Arenas"), Button.primary("createtwo", "Create Monthly Arenas")).queue();
+                break;
+            case "modalpuzzle":
+
+                PuzzleRacer puzzleRacer = new PuzzleRacer(event.getValue("racerauth").getAsString());
+                event.deferReply(true).queue();
+                event.getTextChannel().sendMessageEmbeds(puzzleRacer.getPuzzleRacerLinks().build()).queue();
+                break;
+        }
+    }
+
+
+
+    @Override
+    public void onButtonInteraction(@NotNull  ButtonInteractionEvent event) {
+
+
 
         TournamentManager tournamentManager = new TournamentManager(this.APIPASSWORD);
         WatchTv tv = new WatchTv(this.ButtonClient);
+        CommandInfo commandInfo = new CommandInfo();
 
        if(event.getComponentId().equals("userwatch")){
            UserGame userGame = new UserGame(this.ButtonClient, this.ButtonUserId);
            EmbedBuilder gameEmbed = new EmbedBuilder();
+           EmbedBuilder resultEmbed = new EmbedBuilder();
+           resultEmbed.setDescription("Game Information");
            gameEmbed.setColor(Color.green);
-           gameEmbed.setDescription("Hope you enjoyed the game, You can get a game review report of the game, and request Stockfish Analysis!");
-           event.getChannel().sendMessage(userGame.getUserGames()).queue();
-           event.replyEmbeds(gameEmbed.build()).addActionRow(Button.danger("review", "Game Review Report"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "Request Stockfish Analysis")).queue();
+           gameEmbed.setImage(userGame.getUserGames());
+           event.editMessageEmbeds(gameEmbed.build()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA").asDisabled(), Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
 
        }
 
        if(event.getComponentId().equals("userpuzzle")){
            UserDashboard userDashboard = new UserDashboard(this.ButtonClient, this.ButtonUserId);
-           event.replyEmbeds(userDashboard.getUserDashboard().build()).queue();
+           event.editMessageEmbeds(userDashboard.getUserDashboard().build()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA").asDisabled(), Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
        }
 
        if(event.getComponentId().equals("userstreaming")){
            UserStreaming userStreaming = new UserStreaming(this.ButtonClient, this.ButtonUserId);
-           event.replyEmbeds(userStreaming.getStreamingStatus().build()).queue();
+           event.editMessageEmbeds(userStreaming.getStreamingStatus().build()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA").asDisabled(), Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
        }
 
-       if(event.getComponentId().equals("review")){
-           GameReview gameReview = new GameReview(this.ButtonClient, this.ButtonUserId);
-           event.replyEmbeds(gameReview.getGameReviewData().build()).queue();
-       }
 
         Blog Chessblog = new Blog("Chess");
         Blog CommunityBlog = new Blog("Community");
@@ -281,41 +386,77 @@ public class Main extends ListenerAdapter {
         }
 
         if(event.getComponentId().equals("createtwo")){
-            event.getChannel().sendMessage("Connecting to Lichess...").queue();
-            event.getChannel().sendMessage("Loading....").queueAfter(5, TimeUnit.SECONDS);
+            event.deferReply(true).queue();
             event.reply(tournamentManager.getMonthlyTournamentStatus()).queueAfter(60, TimeUnit.SECONDS);
         }
 
         if(event.getComponentId().equals("bulletarena")){
-            event.getChannel().sendMessage("Connecting to Lichess...").queue();
-            event.getChannel().sendMessage("Loading....").queueAfter(5, TimeUnit.SECONDS);
+            event.deferReply(true).queue();
             event.replyEmbeds(tournamentManager.getBulletTournamentCreated().build()).queueAfter(60, TimeUnit.SECONDS);
         }else if(event.getComponentId().equals("blitzarena")){
-            event.getChannel().sendMessage("Connecting to Lichess...").queue();
-            event.getChannel().sendMessage("Loading....").queueAfter(5, TimeUnit.SECONDS);
+            event.deferReply(true).queue();
             event.replyEmbeds(tournamentManager.getBlitzTournamentCreated().build()).queueAfter(60, TimeUnit.SECONDS);
         }else if(event.getComponentId().equals("rapidarena")){
-            event.getChannel().sendMessage("Connecting to Lichess...").queue();
-            event.getChannel().sendMessage("Loading....").queueAfter(5, TimeUnit.SECONDS);
+            event.deferReply(true).queue();
             event.replyEmbeds(tournamentManager.getRapidTournamentCreated().build()).queueAfter(60, TimeUnit.SECONDS);
         }
 
 
         if(event.getComponentId().equals("blitztv")){
-            event.getChannel().sendMessage("Connecting to Lichess...").queue();
-            event.getChannel().sendMessage("Connecting to Lichess TV...").queueAfter(10,TimeUnit.SECONDS);
+            event.deferReply(true).queue();
             event.getChannel().sendMessage(tv.getBlitz()).queueAfter(20, TimeUnit.SECONDS);
         }else if(event.getComponentId().equals("bullettv")){
-            event.getChannel().sendMessage("Connecting to Lichess...").queue();
-            event.getChannel().sendMessage("Connecting to Lichess TV...").queueAfter(10,TimeUnit.SECONDS);
+            event.deferReply(true).queue();
             event.getChannel().sendMessage(tv.getBullet()).queueAfter(20, TimeUnit.SECONDS);
         }else if(event.getComponentId().equals("rapidtv")){
-            event.getChannel().sendMessage("Connecting to Lichess...").queue();
-            event.getChannel().sendMessage("Connecting to Lichess TV...").queueAfter(10,TimeUnit.SECONDS);
+            event.deferReply(true).queue();
             event.getChannel().sendMessage(tv.getRapid()).queueAfter(20, TimeUnit.SECONDS);
+        }
+
+        if(event.getComponentId().equals("next")){
+            event.editMessageEmbeds(commandInfo.getPageTwo().build()).setActionRow(Button.primary("nexttwo", "➡️")).queue();
+        }else if(event.getComponentId().equals("nexttwo")){
+            event.editMessageEmbeds(commandInfo.getPageThree().build()).setActionRow(Button.primary("nextthree", "➡️")).queue();
+        }else if(event.getComponentId().equals("nextthree")){
+            event.editMessageEmbeds(commandInfo.getPageFour().build()).setActionRow(Button.primary("nextthree", "➡️").asDisabled()).queue();
         }
 
 
 
     }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
