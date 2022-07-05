@@ -12,11 +12,13 @@ public class DailyCommand {
     private Client client;
     private EmbedBuilder embedBuilder;
     private String gameID;
+    private Board board;
 
 
     public DailyCommand(Client client) {
         this.client = client;
         this.gameID = "";
+        this.board = new Board();
     }
 
 
@@ -26,18 +28,21 @@ public class DailyCommand {
 
         try {
 
+
+
             Result<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
 
 
             if (dailypuzzle.isPresent()) { // check if the puzzle is present
                 Puzzle puzzle1 = dailypuzzle.get();
 
-                Board board = new Board();
 
                 String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
                 for (String move : moves) {
                     board.doMove(move);
                 }
+
+
 
 
                 String cor = board.getFen();
@@ -83,9 +88,75 @@ public class DailyCommand {
 
     }
 
+    public EmbedBuilder getSolution(){
+
+
+        try {
+
+
+
+            Result<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
+
+
+            if (dailypuzzle.isPresent()) { // check if the puzzle is present
+                Puzzle puzzle1 = dailypuzzle.get();
+
+
+                String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
+                for (String move : moves) {
+                    board.doMove(move);
+
+                }
+
+                this.board.doMove(puzzle1.puzzle().solution().get(0));
+
+
+                String cor = board.getFen();
+
+                String[] split = cor.split(" ");
+
+                String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+
+
+
+                
+
+                this.embedBuilder = new EmbedBuilder();
+                this.embedBuilder.setColor(Color.blue);
+                this.embedBuilder.setTitle("\uD83E\uDDE9 Puzzle of The Day Solution \uD83E\uDDE9");
+                this.embedBuilder.setImage(coordImg);
+
+
+
+                return this.embedBuilder;
+            }
+
+
+
+        } catch (ExceptionInInitializerError ex) {
+
+            Throwable throwable = ex.getException();
+            if (throwable != null) {
+                throwable.printStackTrace();
+            } else {
+                System.out.println("Throwable not present");
+            }
+
+
+        }
+
+        return this.embedBuilder;
+
+
+
+
+    }
+
+    public String getFen(){
+        return this.board.getFen();
+    }
+
 
 
 
 }
-
-
