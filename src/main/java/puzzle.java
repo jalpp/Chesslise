@@ -21,9 +21,26 @@ public class puzzle {
         try {
             String cor = this.dailyPuzzleClient.getRandomDailyPuzzle().getFen();
 
-            String[] split = cor.split(" ");
 
-            String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+            String[] split = cor.split(" ");
+            String moveSay = "";
+            String coordImg = "";
+
+            if(split[1].contains("w")){
+                moveSay += "**White To Move**";
+            }else{
+                moveSay += "**Black To Move**";
+            }
+
+            if(split[1].contains("w")){
+                coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+            }else{
+                coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+            }
+
+
+
+            this.embedBuilder.setDescription(moveSay);
             this.embedBuilder.setTitle(this.dailyPuzzleClient.getRandomDailyPuzzle().getTitle());
             this.embedBuilder.setColor(Color.blue);
 
