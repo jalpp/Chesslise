@@ -141,23 +141,23 @@ public class Main extends ListenerAdapter {
 
             };
 
-            // get the current ZonedDateTime of your TimeZone
+            
             ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/New_York"));
 
-            // set the ZonedDateTime of the first lesson at 8:05
+            
             ZonedDateTime nextmessage = now.withSecond(20);
 
-            // if it's already past the time (in this case 8:05) the first lesson will be scheduled for the next day
+        
             if (now.compareTo(nextmessage) > 0) {
                 nextmessage = nextmessage.withSecond(20);
             }
 
-            // duration between now and the beginning of the next first lesson
+          
             Duration durationUntilFirstmsg = Duration.between(now, nextmessage);
-            // in seconds
+           
             long initialDelayFirstmsg = durationUntilFirstmsg.getSeconds();
 
-            // schedules the reminder at a fixed rate of one day
+           
             ScheduledExecutorService schedulermsg = Executors.newScheduledThreadPool(1);
             schedulermsg.scheduleAtFixedRate(() -> {
 
