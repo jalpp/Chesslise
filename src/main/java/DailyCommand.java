@@ -28,7 +28,7 @@ public class DailyCommand {
 
         try {
 
-
+            String moveSay = "";
 
             Result<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
 
@@ -49,7 +49,20 @@ public class DailyCommand {
 
                 String[] split = cor.split(" ");
 
-                String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+                if(split[1].contains("w")){
+                    moveSay += "**White To Move**";
+                }else{
+                    moveSay += "**Black To Move**";
+                }
+
+                String coordImg = "";
+
+                if(split[1].contains("w")){
+                    coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+                }else{
+                    coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+                }
+
 
 
 
@@ -64,7 +77,7 @@ public class DailyCommand {
                 this.embedBuilder.setColor(Color.blue);
                 this.embedBuilder.setTitle("\uD83E\uDDE9 Puzzle of The Day \uD83E\uDDE9");
                 this.embedBuilder.setImage(coordImg);
-                this.embedBuilder.setDescription("**" + "Puzzle Rating: " + puzzleRating+ "**");
+                this.embedBuilder.setDescription("**" + "Puzzle Rating: " + puzzleRating+ "** \n\n" + moveSay);
 
 
               return this.embedBuilder;
@@ -119,7 +132,7 @@ public class DailyCommand {
 
 
 
-                
+
 
                 this.embedBuilder = new EmbedBuilder();
                 this.embedBuilder.setColor(Color.blue);
@@ -160,3 +173,5 @@ public class DailyCommand {
 
 
 }
+
+
