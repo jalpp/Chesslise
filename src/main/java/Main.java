@@ -1,13 +1,17 @@
+
+import chariot.Client;
+import lombok.SneakyThrows;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
-
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -20,11 +24,19 @@ import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+
 import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 import java.awt.*;
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
@@ -35,22 +47,23 @@ public class Main extends ListenerAdapter {
     private String ButtonUserId;
     private Client ButtonClient;
     private String APIPASSWORD;
+    private boolean checker = true;
+
 
 
 
     public static void main(String[] args) {
 
-      
+
         String Token = "Your Discord Token";
 
 
 
         jdaBuilder = JDABuilder.createDefault(Token);// string token
 
-        jdaBuilder.setStatus(OnlineStatus.ONLINE);
+        jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB);
         jdaBuilder.setActivity(Activity.playing("/help"));
         jdaBuilder.addEventListeners(new Main());
-
 
 
 
@@ -62,7 +75,10 @@ public class Main extends ListenerAdapter {
         }
 
         CommandListUpdateAction commands = jda.updateCommands();
-
+          commands.addCommands(Commands.slash("setreminderoff", "Turn of notifications"));
+          commands.addCommands(Commands.slash("setreminderon", "Turn on notifications"));
+          commands.addCommands(Commands.slash("subscribe", "set notifications for watching Magnus Carlsen"));
+          commands.addCommands(Commands.slash("board", "display moves").addOption(OptionType.STRING, "moves", "play moves to display on board ex. e4", true));
           commands.addCommands(Commands.slash("puzzleracer", "Play Puzzle Racer"));
           commands.addCommands(Commands.slash("answer", "View Daily Puzzle Answer"));
           commands.addCommands(Commands.slash("dailypuzzle", "Daily Lichess Puzzles"));
@@ -80,7 +96,7 @@ public class Main extends ListenerAdapter {
           commands.addCommands(Commands.slash("tv", "Watch Lichess TV"));
           commands.addCommands(Commands.slash("tourneymanager", "Create and Manage Your Lichess Tournament"));
           commands.addCommands(Commands.slash("blog", "Read Lichess Blogs"));
-          commands.addCommands(Commands.slash("watch", "Watch Lichess games for given user"));
+          commands.addCommands(Commands.slash("watch", "Watch Lichess games for given user").addOption(OptionType.STRING,"watchuser", "Enter Lichess Username to watch their games", true));
           commands.addCommands(Commands.slash("top10", "see top 10 list for given variant(blitz classical etc) ").addOption(OptionType.STRING, "top", "input Lichess variant", true));
           commands.addCommands(Commands.slash("challengeauth", "Send direct Lichess Challenge with Personal Token Login"));
           commands.addCommands(Commands.slash("invite", "Invite me to your servers!"));
@@ -92,6 +108,95 @@ public class Main extends ListenerAdapter {
 
     }
 
+
+
+
+
+
+    public void reminder(SlashCommandInteractionEvent event, String user, boolean disabled){
+        if(disabled != false) {
+            Client client = Client.basic();
+            List<User> userslist = new ArrayList<>();
+            var ref = new Object() {
+                private int c;
+
+
+                public void setCounter(int c) {
+                    this.c = c;
+                }
+
+                public int getCounter() {
+                    return this.c;
+                }
+
+                public boolean check() {
+                    if (this.getCounter() == 0) {
+                        return true;
+                    } else if (this.getCounter() == 1) {
+                        return false;
+                    }
+                    return false;
+                }
+
+
+            };
+
+            // get the current ZonedDateTime of your TimeZone
+            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/New_York"));
+
+            // set the ZonedDateTime of the first lesson at 8:05
+            ZonedDateTime nextmessage = now.withSecond(20);
+
+            // if it's already past the time (in this case 8:05) the first lesson will be scheduled for the next day
+            if (now.compareTo(nextmessage) > 0) {
+                nextmessage = nextmessage.withSecond(20);
+            }
+
+            // duration between now and the beginning of the next first lesson
+            Duration durationUntilFirstmsg = Duration.between(now, nextmessage);
+            // in seconds
+            long initialDelayFirstmsg = durationUntilFirstmsg.getSeconds();
+
+            // schedules the reminder at a fixed rate of one day
+            ScheduledExecutorService schedulermsg = Executors.newScheduledThreadPool(1);
+            schedulermsg.scheduleAtFixedRate(() -> {
+
+
+
+                        boolean check = client.users().statusByIds(user).get().online();
+
+                        if (check && ref.check()) {
+                            ref.setCounter(1);
+
+                            userslist.add(event.getUser());
+                            event.getUser().openPrivateChannel().queue(privateChannel -> {
+                                EmbedBuilder embedBuilder = new EmbedBuilder();
+                                embedBuilder.setTitle("Magnus Carlsen Is Online!");
+                                embedBuilder.setDescription("Check out what is Magnus Calsen up to by [clicking here](https://lichess.org/@/DrNykterstein)");
+                                embedBuilder.setColor(Color.green);
+                                privateChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+
+                            });
+
+
+                        } else {
+
+                            if (!check) {
+                                ref.setCounter(0);
+                            }
+
+                        }
+
+
+                    },
+                    initialDelayFirstmsg,
+                    TimeUnit.SECONDS.toSeconds(1),
+                    TimeUnit.SECONDS);
+        }else{
+            event.reply("Notifications are turned off, turn them on by running /setreminderon").setEphemeral(true).queue();
+        }
+    }
+
     @SneakyThrows
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
         String name = event.getName();
@@ -99,7 +204,37 @@ public class Main extends ListenerAdapter {
         this.ButtonClient = client;
 
 
+
+
         switch(name) {
+            case "setreminderon":
+                if(this.checker == false){
+                    this.checker = true;
+                    event.reply("Notifications are turned on!").setEphemeral(true).queue();
+                }else{
+                    event.reply("Notifications are already on!").setEphemeral(true).queue();
+                }
+                break;
+
+            case "setreminderoff":
+                if(this.checker == true){
+                    this.checker = false;
+                    event.reply("Notifications are turned off!").setEphemeral(true).queue();
+                }else{
+                    event.reply("Notifications are turned off already!").setEphemeral(true).queue();
+                }
+                break;
+
+            case "subscribe":
+                reminder(event, "DrNykterstein", checker);
+                event.reply("Notifications are turned on!").setEphemeral(true).queue();
+                break;
+            case "board":
+                String m = event.getOption("moves").getAsString();
+                Board b = new Board(m);
+                event.replyEmbeds(b.getView().build()).queue();
+
+                break;
             case "puzzleracer":
                 TextInput puzzletext = TextInput.create("racerauth", "Token Input", TextInputStyle.SHORT)
                         .setPlaceholder("Input Your Lichess Token")
@@ -426,12 +561,17 @@ public class Main extends ListenerAdapter {
     }
 
 
+
+
+
+
+
+
+
+
+
+
 }
-
-
-
-
-
 
 
 
