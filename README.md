@@ -1,7 +1,3 @@
-# ♘ Welcome to Lichess Search Engine Bot ♘
-
-All Rounder Lichess Discord Bot, uses Latest Lichess and Discord API to create Chess games, create Lichess tournaments and much more!
-
 
 # Sources:
 
