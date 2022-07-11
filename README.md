@@ -17,45 +17,74 @@ All Rounder Lichess Discord Bot, uses Latest Lichess and Discord API to create C
 
 # Commands:
 
-# ALL COMMANDS
+ /help 
+ to see command information for the LISEBOT
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-07-05-at-4.01.02-PM.png)
-# Do Chess Puzzles
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-07-01-at-6.30.52-PM.png)
+ /subscribe 
+ Turn notifications on when Magnus Carlsen is online! 
 
-# Lichess Authentication Commands
+ /setreminderoff 
+ turn notifications off 
 
-## 🔮 Challenge a Lichess User directly from Discord by Lichess authentication!
+ /setreminderon 
+ turn notifications on
 
+ /profile <Lichess username> 
+ to see lichess profiles for given username
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-07-05-at-3.59.52-PM.png)
+ /top10 <Lichess variant> 
+ see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet
 
-## 💬 Chat on Lichess via Discord!
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-07-05-at-4.00.14-PM.png)
+ /streamers 
+ Watch current live streamers
 
+ /board <Moves> Input chess moves to display on chess board!
 
-## 🗓️ Schedule Tournament via Discord!
+ /dailypuzzle 
+ see the daily Lichess puzzle and try to solve it!
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-07-05-at-4.00.33-PM.png)
+ /puzzle 
+ Do Random Chess Puzzles
 
-## A Complete Tournament Manager
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.35.47-PM.png)
+ /liga <Lichess Team> 
+ View Liga Leaderboard 
 
-# Standard Commands 
+ /arena <Lichess arena URL> 
+ see the standings and tournament information for given tournament link
 
-## A newer way to Lichess Profile
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.26.44-PM.png)
+ /tourney
+ View Current Lichess Tournaments
+ 
+ /tv 
+ Watch Lichess TV!
 
+ /invite 
+ invite LiSEBot to your servers
 
-## Watch Lichess TV in Discord
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.27.31-PM.png)
+ /play <variant> <rated/casual> 
+ created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc>
 
-## Watch Lichess Streamers
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.27.57-PM.png)
+ /watch <Lichess Username> 
+ watch latest Lichess game of the given user in gif!
 
+ /watchmaster 
+ watch random master games
+ 
+ /challengeauth  
+ challenge anyone directly from Discord
 
-## Read Lichess Blogs
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-06-25-at-4.34.47-PM.png)
+ /chatauth  
+ Message a Lichess user from discord!
+
+ /scheduletournament  
+ Schedule a pre-set variant tournament right from Discord!
+
+ /tourneymanager  
+ Manage and create your tournaments! 
+
+ /puzzleracer 
+ play puzzle racer! 
+
 
 ## Support Server
  
