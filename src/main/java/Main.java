@@ -1,10 +1,4 @@
 
-import chariot.Client;
-import lombok.SneakyThrows;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
@@ -14,15 +8,13 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.ItemComponent;
 import net.dv8tion.jda.api.interactions.components.Modal;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
-import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,8 +24,7 @@ import java.awt.*;
 import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.EnumSet;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -47,7 +38,10 @@ public class Main extends ListenerAdapter {
     private String ButtonUserId;
     private Client ButtonClient;
     private String APIPASSWORD;
+    private List<User> userslist = new ArrayList<>();
     private boolean checker = true;
+
+
 
 
 
@@ -57,12 +51,13 @@ public class Main extends ListenerAdapter {
 
         String Token = "Your Discord Token";
 
+       
 
 
         jdaBuilder = JDABuilder.createDefault(Token);// string token
 
         jdaBuilder.setStatus(OnlineStatus.DO_NOT_DISTURB);
-        jdaBuilder.setActivity(Activity.playing("/help"));
+        jdaBuilder.setActivity(Activity.playing("/help [Helping Chess Servers...]"));
         jdaBuilder.addEventListeners(new Main());
 
 
@@ -88,10 +83,9 @@ public class Main extends ListenerAdapter {
           commands.addCommands(Commands.slash("streamers", "See current Live Streamers"));
           commands.addCommands(Commands.slash("puzzle", "View Puzzles"));
           commands.addCommands(Commands.slash("tourney", "Join Current Lichess Tournaments"));
-          commands.addCommands(Commands.slash("liga", "view Liga Leaderboard based on your favorite Lichess team"));
+          commands.addCommands(Commands.slash("liga", "view Liga Leaderboard based on your favorite Lichess team").addOption(OptionType.STRING, "teamname", "Enter lichess team name", true));
           commands.addCommands(Commands.slash("help", "View LISEBOT Commands"));
           commands.addCommands(Commands.slash("play", "Play Live Chess Games").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true));
-          commands.addCommands(Commands.slash("chatauth", "Send DMs to Lichess User"));
           commands.addCommands(Commands.slash("scheduletournament", "schedule Lichess arena from Discord"));
           commands.addCommands(Commands.slash("tv", "Watch Lichess TV"));
           commands.addCommands(Commands.slash("tourneymanager", "Create and Manage Your Lichess Tournament"));
@@ -110,13 +104,12 @@ public class Main extends ListenerAdapter {
 
 
 
-
-
-
     public void reminder(SlashCommandInteractionEvent event, String user, boolean disabled){
         if(disabled != false) {
+
             Client client = Client.basic();
-            List<User> userslist = new ArrayList<>();
+            this.userslist.add(event.getUser());
+
             var ref = new Object() {
                 private int c;
 
@@ -141,58 +134,67 @@ public class Main extends ListenerAdapter {
 
             };
 
-            
-            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/New_York"));
+               int counter = Collections.frequency(this.userslist, event.getUser());
 
-            
-            ZonedDateTime nextmessage = now.withSecond(20);
-
-        
-            if (now.compareTo(nextmessage) > 0) {
-                nextmessage = nextmessage.withSecond(20);
-            }
-
-          
-            Duration durationUntilFirstmsg = Duration.between(now, nextmessage);
-           
-            long initialDelayFirstmsg = durationUntilFirstmsg.getSeconds();
-
-           
-            ScheduledExecutorService schedulermsg = Executors.newScheduledThreadPool(1);
-            schedulermsg.scheduleAtFixedRate(() -> {
+               if(counter == 1) {
 
 
-
-                        boolean check = client.users().statusByIds(user).get().online();
-
-                        if (check && ref.check()) {
-                            ref.setCounter(1);
-
-                            userslist.add(event.getUser());
-                            event.getUser().openPrivateChannel().queue(privateChannel -> {
-                                EmbedBuilder embedBuilder = new EmbedBuilder();
-                                embedBuilder.setTitle("Magnus Carlsen Is Online!");
-                                embedBuilder.setDescription("Check out what is Magnus Calsen up to by [clicking here](https://lichess.org/@/DrNykterstein)");
-                                embedBuilder.setColor(Color.green);
-                                privateChannel.sendMessageEmbeds(embedBuilder.build()).queue();
-
-                            });
+                   ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/New_York"));
 
 
-                        } else {
-
-                            if (!check) {
-                                ref.setCounter(0);
-                            }
-
-                        }
+                   ZonedDateTime nextmessage = now.withSecond(5);
 
 
-                    },
-                    initialDelayFirstmsg,
-                    TimeUnit.SECONDS.toSeconds(1),
-                    TimeUnit.SECONDS);
-        }else{
+                   if (now.compareTo(nextmessage) > 0) {
+                       nextmessage = nextmessage.withSecond(5);
+                   }
+
+
+                   Duration durationUntilFirstmsg = Duration.between(now, nextmessage);
+
+                   long initialDelayFirstmsg = durationUntilFirstmsg.getSeconds();
+
+
+                   ScheduledExecutorService schedulermsg = Executors.newScheduledThreadPool(2);
+                   schedulermsg.scheduleAtFixedRate(() -> {
+
+
+                               boolean check = client.users().statusByIds(user).get().online();
+
+                               if (check && ref.check()) {
+                                   ref.setCounter(1);
+
+
+                                   event.getUser().openPrivateChannel().queue(privateChannel -> {
+                                       EmbedBuilder embedBuilder = new EmbedBuilder();
+                                       embedBuilder.setTitle("Magnus Carlsen Is Online!");
+                                       embedBuilder.setDescription("Check out what is Magnus Calsen up to by [clicking here](https://lichess.org/@/DrNykterstein)");
+                                       embedBuilder.setColor(Color.green);
+                                       privateChannel.sendMessageEmbeds(embedBuilder.build()).queue();
+
+                                   });
+
+
+                               } else {
+
+                                   if (!check) {
+                                       ref.setCounter(0);
+                                   }
+
+                               }
+
+
+                           },
+                           initialDelayFirstmsg,
+                           TimeUnit.SECONDS.toSeconds(1),
+                           TimeUnit.SECONDS);
+
+               }else{
+                   event.deferReply(true).queue();
+                   event.getChannel().sendMessage("You have already singed up for the notifications!").queue();
+               }
+
+            }else{
             event.reply("Notifications are turned off, turn them on by running /setreminderon").setEphemeral(true).queue();
         }
     }
@@ -203,14 +205,11 @@ public class Main extends ListenerAdapter {
         Client client = Client.basic();
         this.ButtonClient = client;
 
-
-
-
         switch(name) {
             case "setreminderon":
                 if(this.checker == false){
                     this.checker = true;
-                    event.reply("Notifications are turned on!").setEphemeral(true).queue();
+                    event.reply("Please run /subscribe to turn them on!!").setEphemeral(true).queue();
                 }else{
                     event.reply("Notifications are already on!").setEphemeral(true).queue();
                 }
@@ -219,6 +218,7 @@ public class Main extends ListenerAdapter {
             case "setreminderoff":
                 if(this.checker == true){
                     this.checker = false;
+                    this.userslist.remove(event.getUser());
                     event.reply("Notifications are turned off!").setEphemeral(true).queue();
                 }else{
                     event.reply("Notifications are turned off already!").setEphemeral(true).queue();
@@ -348,28 +348,6 @@ public class Main extends ListenerAdapter {
                 event.replyModal(modal).queue();
                break;
 
-            case "chatauth":
-                TextInput chattoken = TextInput.create("chatauth", "Token Input", TextInputStyle.SHORT)
-                        .setPlaceholder("Input Your Lichess Token")
-                        .setMinLength(10)
-                        .setMaxLength(100)
-                        .build();
-                TextInput chatmember = TextInput.create("chatuser", "Input Lichess Username", TextInputStyle.SHORT)
-                        .setPlaceholder("Input Your Friends Lichess Username")
-                        .setMinLength(5)
-                        .setMaxLength(28)
-                        .build();
-                TextInput msgParagraph = TextInput.create("chatcontent", "Input DM Content.. ex. Lichess Rocks!", TextInputStyle.PARAGRAPH)
-                        .setMinLength(10)
-                        .setMaxLength(500)
-                        .build();
-
-                Modal modalchat = Modal.create("modalchat", "Send A Direct Message")
-                        .addActionRows(ActionRow.of(chattoken), ActionRow.of(chatmember), ActionRow.of(msgParagraph))
-                        .build();
-                event.replyModal(modalchat).queue();
-                break;
-
             case "scheduletournament":
                 TextInput tourtoken = TextInput.create("tourauth", "Token Input", TextInputStyle.SHORT)
                         .setPlaceholder("Input Your Lichess Token")
@@ -442,12 +420,6 @@ public class Main extends ListenerAdapter {
             case "modalplay":
                 AdminLoginChallenge adminLogin = new AdminLoginChallenge(client, event.getValue("challengeauth").getAsString() , event.getValue("challengeauthuser").getAsString());
                 event.replyEmbeds(adminLogin.getChallenge().build()).queue();
-                break;
-            case "modalchat":
-                AdminLoginChat chat = new AdminLoginChat(client,event.getValue("chatauth").getAsString(), event.getValue("chatuser").getAsString(), event.getValue("chatcontent").getAsString());
-                event.reply("Processing your Request...").queue();
-                event.deferReply(true).queue();
-                event.getTextChannel().sendMessageEmbeds(chat.getChatStatus().build()).queueAfter(42, TimeUnit.SECONDS);
                 break;
             case "modaltour":
                 AdminLoginCreateTournament createTournament = new AdminLoginCreateTournament(event.getValue("tourauth").getAsString(), event.getValue("timeformat").getAsString());
@@ -563,21 +535,7 @@ public class Main extends ListenerAdapter {
 
 
 
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
 
 
 
