@@ -32,20 +32,20 @@ public class AdminLoginChallenge extends AdminActionsManager{
     this.embedBuilder.setColor(Color.green);
     this.embedBuilder.setTitle("Successfully Created Challenge against: " + this.getUserID());
     this.embedBuilder.setDescription("Please Start your game here: " + "[Play Here](" + url + ")");
-    Result<Ack> deleteToken = clientAuth.account().revokeToken();
+
     return this.embedBuilder;
    } else {
     this.embedBuilder.setColor(Color.red);
     this.embedBuilder.setTitle("Challenge Failed!");
     this.embedBuilder.setDescription("Invalid Input, Please input proper Lichess username!");
-    Result<Ack> deleteToken = clientAuth.account().revokeToken();
+
     return this.embedBuilder;
    }
 
 
   }catch (Exception e){
    this.embedBuilder = new EmbedBuilder();
-   Result<Ack> deleteToken = clientAuth.account().revokeToken();
+
    return this.embedBuilder.setDescription("Error Occurred, please provide proper input!");
   }
 
@@ -56,8 +56,4 @@ public class AdminLoginChallenge extends AdminActionsManager{
 
 
 
-}
-
-
-
-
+ }
