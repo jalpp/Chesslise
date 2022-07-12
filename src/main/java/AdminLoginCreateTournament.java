@@ -60,11 +60,9 @@ public class AdminLoginCreateTournament{
         }catch (Exception e){
             e.printStackTrace();
             this.embedBuilder = new EmbedBuilder();
-            Result<Ack> deleteToken = clientAuth.account().revokeToken();
             return this.embedBuilder.setDescription("Error Occurred, Please provide proper input!");
         }
 
-        Result<Ack> deleteToken = clientAuth.account().revokeToken();
         return this.embedBuilder;
 
     }
