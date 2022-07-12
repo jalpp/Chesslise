@@ -28,7 +28,6 @@ public class MonthlyTournament{
                             LocalTime.parse("17:00"));
                     clientAuth.tournaments().createArena(params -> params.clockBlitz3m1s().name("my tournament").description("tournament made by LISEBOT").startTime(months));
                 }
-                Result<Ack> deleteToken = clientAuth.account().revokeToken();
                 return this.tournamentStatus = "tournaments created!";
 
 
@@ -36,7 +35,6 @@ public class MonthlyTournament{
 
         } catch (Exception e) {
             e.printStackTrace();
-            Result<Ack> deleteToken = clientAuth.account().revokeToken();
             return this.tournamentStatus = "error";
         }
 
