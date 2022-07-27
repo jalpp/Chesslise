@@ -16,15 +16,6 @@
  /help 
  to see command information for the LISEBOT
 
- /subscribe 
- Turn notifications on when Magnus Carlsen is online! 
-
- /setreminderoff 
- turn notifications off 
-
- /setreminderon 
- turn notifications on
-
  /profile <Lichess username> 
  to see lichess profiles for given username
 
