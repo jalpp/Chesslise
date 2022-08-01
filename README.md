@@ -1,3 +1,4 @@
+![](https://img.shields.io/badge/Status-Verified%20Discord%20Bot-brightgreen)
 
 # Sources:
 
