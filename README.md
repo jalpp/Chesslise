@@ -1,5 +1,8 @@
 ![](https://img.shields.io/badge/Status-Verified%20Discord%20Bot-brightgreen)
-
+![](https://img.shields.io/badge/Status-Offical%20Lichess%20Bot-blue)
+![](https://img.shields.io/badge/Status-Online-brightgreen)
+![](https://img.shields.io/badge/Bot%20Server%20Count-80%2B-yellow)
+![](https://img.shields.io/badge/Discord%20API-JDA-purple)
 # Sources:
 
  1. [Lichess Site](https://lichess.org/) 
