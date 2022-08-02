@@ -126,18 +126,22 @@ public class DailyCommand {
 
                 String cor = board.getFen();
 
+                String coordImg = "";
+
                 String[] split = cor.split(" ");
 
-                String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
-
-
-
+                if(split[1].contains("b")){
+                    coordImg += "https://chessboardimage.com/" + split[0] + ".png";
+                }else{
+                    coordImg += "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+                }
 
 
                 this.embedBuilder = new EmbedBuilder();
                 this.embedBuilder.setColor(Color.blue);
                 this.embedBuilder.setTitle("\uD83E\uDDE9 Puzzle of The Day Solution \uD83E\uDDE9");
                 this.embedBuilder.setImage(coordImg);
+
 
 
 
@@ -162,6 +166,33 @@ public class DailyCommand {
 
 
 
+
+    }
+
+    public String getanswer() {
+        Result<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
+
+
+
+            Puzzle puzzle1 = dailypuzzle.get();
+
+
+            String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
+            for (String move : moves) {
+                board.doMove(move);
+
+            }
+
+            this.board.doMove(puzzle1.puzzle().solution().get(0));
+
+
+            String cor = board.getFen();
+
+            String[] split = cor.split(" ");
+
+            String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+
+            return coordImg;
 
     }
 
