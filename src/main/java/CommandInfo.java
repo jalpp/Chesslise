@@ -14,7 +14,7 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Commands For LISEBOT**");
         this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
-        this.embedBuilder.setDescription("**/help** \n to see command information for the LISEBOT" + "\n\n **/profile <Lichess username>** \n to see lichess profiles for given username" + "\n\n **/top10 <Lichess variant>** \n see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet" + "\n\n **/streamers** \n Watch current live streamers");
+        this.embedBuilder.setDescription("**/help** \n to see command information for the LISEBOT" + "\n\n **/subscribe** \n Turn notifications on when Magnus Carlsen is online! \n\n **/setreminderoff** \n turn notifications off \n\n **/setreminderon** \n turn notifications on" +"\n\n **/profile <Lichess username>** \n to see lichess profiles for given username" + "\n\n **/top10 <Lichess variant>** \n see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet" + "\n\n **/streamers** \n Watch current live streamers" + "\n\n **/board <Moves>** Input chess moves to display on chess board!" + "\n\n **/openingdb** View chess openings and their master games!");
         this.embedBuilder.setFooter("Page 1/4");
 
         return this.embedBuilder;
@@ -34,7 +34,7 @@ public class CommandInfo {
         this.embedBuilder.setTitle("**Watch And Play Chess**");
         this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
         this.embedBuilder.setDescription( "\n\n **/tv** \n Watch Lichess TV!" +"\n\n **/invite** \n invite LiSEBot to your servers" + "\n\n **/play <variant> <rated/casual>** \n created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc>" + "\n\n **/watch <Lichess Username>** \n watch latest Lichess game of the given user in gif!" + "\n\n **/watchmaster** \n watch random master games");
-        this.embedBuilder.setFooter("3/4");
+        this.embedBuilder.setFooter("Page 3/4");
         return this.embedBuilder;
     }
 
@@ -42,11 +42,12 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("** Access Lichess From Discord Via Auth Commands**");
         this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
-        this.embedBuilder.setDescription(" \n\n **/challengeauth ** \n challenge anyone directly from Discord" + "\n\n **/chatauth ** \n Message a Lichess user from discord!" +  "\n\n **/scheduletournament ** \n Schedule a pre-set variant tournament right from Discord!" + "\n\n **/tourneymanager ** \n Manage and create your tournaments! \n\n **/puzzleracer** \n play puzzle racer! \n\n **Note** All Lichess tokens get deleted after use.");
-        this.embedBuilder.setFooter("4/4");
+        this.embedBuilder.setDescription(" \n\n **/challengeauth ** \n challenge anyone directly from Discord"  +  "\n\n **/scheduletournament ** \n Schedule a pre-set variant tournament right from Discord!" + "\n\n **/tourneymanager ** \n Manage and create your tournaments! \n\n **/puzzleracer** \n play puzzle racer!");
+        this.embedBuilder.setFooter("Page 4/4");
         return this.embedBuilder;
     }
 
 
 
 }
+
