@@ -11,11 +11,10 @@ public class InviteMe {
     }
 
     public EmbedBuilder getInviteInfo(){
-
         this.embedBuilder = new EmbedBuilder();
         this.embedBuilder.setColor(Color.orange);
         this.embedBuilder.setTitle("Invite me and Join our Discord Server!");
-        this.embedBuilder.setDescription("[Click here for invite, vote, and Support Server](https://discordbotlist.com/bots/lisebot)");
+        this.embedBuilder.setDescription("\uD83D\uDC4B [Click here for invite me](https://discord.com/api/oauth2/authorize?client_id=930544707300393021&permissions=277025704000&scope=bot%20applications.commands) \n\n \uD83D\uDC4D [Vote me on top.gg](https://top.gg/bot/930544707300393021/vote) \n\n \uD83D\uDEE0️ [Join Support Server](https://discord.com/invite/6GdGqwxBdW) ");
 
 
 
