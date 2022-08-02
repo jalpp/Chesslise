@@ -1,8 +1,3 @@
-import chariot.Client;
-import chariot.model.Result;
-import chariot.model.User;
-import net.dv8tion.jda.api.EmbedBuilder;
-
 import java.awt.*;
 
 public class UserStreaming extends UserProfile{
