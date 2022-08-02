@@ -12,7 +12,7 @@ public class UserDashboard extends UserProfile{
 
     private EmbedBuilder embedBuilder;
 
-    public UserDashboard(Client client, String[] userParsing) {
+    public UserDashboard(Client client, String userParsing) {
         super(client, userParsing);
     }
 
@@ -75,14 +75,19 @@ public class UserDashboard extends UserProfile{
 
 
                 }
+                String todayAns = "";
 
-
+                if(today == 0){
+                    todayAns += "No stormdash was played today";
+                }else{
+                    todayAns += today;
+                }
 
                 this.embedBuilder = new EmbedBuilder();
                 this.embedBuilder.setColor(Color.orange);
                 this.embedBuilder.setThumbnail("https://prismic-io.s3.amazonaws.com/lichess/4689c1c3-092d-46f9-b554-ca47e91c7d81_storm-yellow.png");
                 this.embedBuilder.setTitle("StormDashboard for: " + title + " " + this.getUserID());
-                this.embedBuilder.setDescription(" All Time High score: **" + allTime + "** \n \n This Month: **" + month + "\n\n **This Week: **" + week + "** \n \n **Today:** " + today+ "\n\n **Storm History:** \n \n" + dashs +  "\n\n [View on Lichess](" + link + ")");
+                this.embedBuilder.setDescription(" All Time High score: **" + allTime + "** \n \n This Month: **" + month + "\n\n **This Week: **" + week + "** \n \n **Today:** " + todayAns + "\n\n **Storm History:** \n \n" + dashs +  "\n\n [View on Lichess](" + link + ")");
 
 
 
@@ -107,4 +112,3 @@ public class UserDashboard extends UserProfile{
 
 
 }
-
