@@ -1,4 +1,4 @@
-import chariot.Client;
+iimport chariot.Client;
 import chariot.model.ExploreResult;
 
 import java.util.ArrayList;
@@ -10,11 +10,17 @@ public class WatchMaster {
 
     private Client client;
     private String masterGif;
+    private String openingGif;
+
 
     public WatchMaster(Client client){
         this.client = client;
         this.masterGif = "";
+        this.openingGif = "";
+
     }
+
+
 
 
     public String getMasterGames(){
@@ -55,6 +61,30 @@ public class WatchMaster {
 
 
         return masterGif;
+    }
+
+    public String getOpenings(String moves){
+        Random random = new Random();
+        List<ExploreResult.DBGame> games = chariot.Client.basic().games().openingExplorerMasters(conf -> conf.play(moves)).get().topGames();
+        int randomsizer = random.nextInt(games.size());
+
+        this.openingGif +=  "https://lichess1.org/game/export/gif/" + games.get(randomsizer).id() + ".gif";
+
+        return this.openingGif;
+    }
+
+    public String[] getOpeningId(){
+        String[] split = this.openingGif.split(".gif");
+
+        return split;
+    }
+
+
+
+
+    public String[] getGameId(){
+        String[] split = this.masterGif.split(".gif");
+        return  split;
     }
 
 
