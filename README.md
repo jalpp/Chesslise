@@ -16,65 +16,19 @@
  
 
 # Commands:
+| Commands      | Description |
+| ----------- | ----------- |
+| /help      | to see command information for the LISEBOT       |
+| /profile <Lichess username>    | to see lichess profiles for given username       |
+|  /top10 <Lichess variant>     |see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet      |
+| /streamers | Watch current live streamers |
+| /board <Moves> | Input chess moves to display on chess board! |
+| /dailypuzzle | see the daily Lichess puzzle and try to solve it! |
+|  /play <variant> <rated/casual> | created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
+|  /arena <Lichess arena URL>  | see the standings and tournament information for given tournament link|
+| /puzzleracer | play puzzle racer! |
 
- /help 
- to see command information for the LISEBOT
-
- /profile <Lichess username> 
- to see lichess profiles for given username
-
- /top10 <Lichess variant> 
- see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet
-
- /streamers 
- Watch current live streamers
-
- /board <Moves> Input chess moves to display on chess board!
-
- /dailypuzzle 
- see the daily Lichess puzzle and try to solve it!
-
- /puzzle 
- Do Random Chess Puzzles
-
- /liga <Lichess Team> 
- View Liga Leaderboard 
-
- /arena <Lichess arena URL> 
- see the standings and tournament information for given tournament link
-
- /tourney
- View Current Lichess Tournaments
  
- /tv 
- Watch Lichess TV!
-
- /invite 
- invite LiSEBot to your servers
-
- /play <variant> <rated/casual> 
- created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc>
-
- /watch <Lichess Username> 
- watch latest Lichess game of the given user in gif!
-
- /watchmaster 
- watch random master games
- 
- /challengeauth  
- challenge anyone directly from Discord
-
- /chatauth  
- Message a Lichess user from discord!
-
- /scheduletournament  
- Schedule a pre-set variant tournament right from Discord!
-
- /tourneymanager  
- Manage and create your tournaments! 
-
- /puzzleracer 
- play puzzle racer! 
 
 
 ## Support Server
