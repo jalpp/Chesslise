@@ -243,9 +243,10 @@ public class Main extends ListenerAdapter {
                 break;
 
                 //DrNykterstein
+                // Fixed User name error
 
             case "subscribe":
-                reminder(event, "noobmasterplayer123", checker);
+                reminder(event, "DrNykterstein", checker);
                 event.reply("Notifications are turned on!").setEphemeral(true).queue();
                 break;
             case "board":
