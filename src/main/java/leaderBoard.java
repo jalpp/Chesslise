@@ -1,5 +1,5 @@
 import chariot.Client;
-import chariot.model.Result;
+import chariot.model.One;
 import chariot.model.User;
 import chariot.model.UserPerformance;
 import chariot.model.UserTopAll;
@@ -20,17 +20,11 @@ public class leaderBoard {
     }
 
 
-    /**
-     * ,top10 command to see the top 10 players in the given variant
-     *
-     * input: Lichess variant
-     *
-     * output: The top 10 list with titled plus username and the rating
-     */
-
-
     public EmbedBuilder getBlitzBoard(){
-        Result<UserTopAll> top10 = this.client.users().top10();
+
+
+
+        One<UserTopAll> top10 = this.client.users().top10();
 
         UserTopAll top = top10.get();
 
@@ -42,7 +36,9 @@ public class leaderBoard {
         for (int i = 0; i < 10; i++) {
             UserPerformance userPerformance = blitzPer.get(i);
 
-            Result<User> topPlayer = this.client.users().byId(userPerformance.username());
+
+
+            One<User> topPlayer = this.client.users().byId(userPerformance.username());
 
             int rating = topPlayer.get().perfs().blitz().maybe().get().rating();
 
@@ -66,7 +62,7 @@ public class leaderBoard {
 
 
     public EmbedBuilder getClassicalBoard(){
-        Result<UserTopAll> top10 = this.client.users().top10();
+        One<UserTopAll> top10 = this.client.users().top10();
 
         UserTopAll top = top10.get();
 
@@ -78,7 +74,7 @@ public class leaderBoard {
         for (int i = 0; i < 10; i++) {
             UserPerformance userPerformance = classicalPer.get(i);
 
-            Result<User> topPlayer = this.client.users().byId(userPerformance.username());
+            One<User> topPlayer = this.client.users().byId(userPerformance.username());
 
             int rating = topPlayer.get().perfs().classical().maybe().get().rating();
 
@@ -102,7 +98,7 @@ public class leaderBoard {
 
 
     public EmbedBuilder getRapidBoard(){
-        Result<UserTopAll> top10 = this.client.users().top10();
+        One<UserTopAll> top10 = this.client.users().top10();
 
         UserTopAll top = top10.get();
 
@@ -114,7 +110,7 @@ public class leaderBoard {
         for (int i = 0; i < 10; i++) {
             UserPerformance userPerformance = rapidPer.get(i);
 
-            Result<User> topPlayer = this.client.users().byId(userPerformance.username());
+            One<User> topPlayer = this.client.users().byId(userPerformance.username());
 
             int rating = topPlayer.get().perfs().rapid().maybe().get().rating();
 
@@ -138,7 +134,7 @@ public class leaderBoard {
 
 
     public EmbedBuilder getBulletBoard(){
-        Result<UserTopAll> top10 = this.client.users().top10();
+        One<UserTopAll> top10 = this.client.users().top10();
 
         UserTopAll top = top10.get();
 
@@ -150,7 +146,7 @@ public class leaderBoard {
         for (int i = 0; i < 10; i++) {
             UserPerformance userPerformance = bulletPer.get(i);
 
-            Result<User> topPlayer = this.client.users().byId(userPerformance.username());
+            One<User> topPlayer = this.client.users().byId(userPerformance.username());
 
             int rating = topPlayer.get().perfs().bullet().maybe().get().rating();
 
@@ -174,7 +170,7 @@ public class leaderBoard {
 
     public EmbedBuilder getUltraBoard(){
 
-        Result<UserTopAll> top10 = this.client.users().top10();
+        One<UserTopAll> top10 = this.client.users().top10();
 
         UserTopAll top = top10.get();
 
@@ -186,7 +182,7 @@ public class leaderBoard {
         for (int i = 0; i < 10; i++) {
             UserPerformance userPerformance = bulletPer.get(i);
 
-            Result<User> topPlayer = this.client.users().byId(userPerformance.username());
+            One<User> topPlayer = this.client.users().byId(userPerformance.username());
 
             int rating = topPlayer.get().perfs().ultraBullet().maybe().get().rating();
 
