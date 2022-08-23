@@ -1,18 +1,26 @@
 ![](https://img.shields.io/badge/Status-Verified%20Discord%20Bot-brightgreen)
 ![](https://img.shields.io/badge/Status-Offical%20Lichess%20Bot-blue)
 ![](https://img.shields.io/badge/Status-Online-brightgreen)
-![](https://img.shields.io/badge/Bot%20Server%20Count-80%2B-yellow)
 ![](https://img.shields.io/badge/Discord%20API-JDA-purple)
 # Sources:
 
- 1. [Lichess Site](https://lichess.org/) 
- 2. [Lichess API](https://lichess.org/api) 
- 3. [Lichess Java Client](https://github.com/tors42/chariot) 
- 4. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
- 5. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
- 6. [Chess.com Java Wrapper for Puzzle Generator](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
- 7. [Java Chess Lib for FEN conversion From PGN](https://github.com/bhlangonijr/chesslib)
- 8. [Beautiful Chess Image Generator](https://chessboardimage.com/)
+# API
+
+ 1. [Lichess API](https://lichess.org/api) 
+ 2. [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
+ 3. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
+
+# Libraries
+
+
+ 1. [Lichess Java Client](https://github.com/tors42/chariot) 
+ 2. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
+ 3. [Chess.com Java Wrapper]
+ 4. [Java Chess Lib](https://github.com/bhlangonijr/chesslib)
+
+# Image Generation
+ 1. [Chess Board Image](https://chessboardimage.com/)
+ 2. [Lichess Gifs](https://github.com/lichess-org/lila-gif)
  
 
 # Commands:
@@ -24,18 +32,21 @@
 | /streamers | Watch current live streamers |
 | /board <Moves> | Input chess moves to display on chess board! |
 | /dailypuzzle | see the daily Lichess puzzle and try to solve it! |
-|  /play <variant> <rated/casual> | created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
+|  /play | created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
 |  /arena <Lichess arena URL>  | see the standings and tournament information for given tournament link|
 | /puzzleracer | play puzzle racer! |
 
+
+
  
 
+## Terms of Service
+User agrees that they will have to use latest updated versions of LISEBOT, User also agrees that some commands may be deleted if developer does not want to maintain those commands in future. User is fully responsible for their discord server and LISEBOT does not have any access to the server information/ management. User also agrees to privacy policy which states that LISEBOT does not and will not store any private information
 
-## Support Server
- 
-[Join Here](https://discord.gg/6GdGqwxBdW)
+## Privacy Policy
+LISEBOT Does not and will not store any private user information, all bot commands are Lichess related and use slash commands to run commands properly. LISEBOT is not responsible for any user actions in their servers.
 
-# Invite the Bot
+# Bot Testing Link
 [Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
 
 
