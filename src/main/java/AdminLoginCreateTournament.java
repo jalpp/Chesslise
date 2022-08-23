@@ -1,7 +1,5 @@
 import chariot.Client;
 import chariot.ClientAuth;
-import chariot.model.Ack;
-import chariot.model.Result;
 import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
 import java.time.LocalTime;
@@ -70,3 +68,4 @@ public class AdminLoginCreateTournament{
 
 
 }
+
