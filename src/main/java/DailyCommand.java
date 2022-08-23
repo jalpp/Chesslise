@@ -1,6 +1,6 @@
 import chariot.Client;
+import chariot.model.One;
 import chariot.model.Puzzle;
-import chariot.model.Result;
 import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -13,6 +13,8 @@ public class DailyCommand {
     private EmbedBuilder embedBuilder;
     private String gameID;
     private Board board;
+    private String moveSay = "";
+    private int rating;
 
 
     public DailyCommand(Client client) {
@@ -23,14 +25,10 @@ public class DailyCommand {
 
 
 
-    public EmbedBuilder getPuzzleData() {
+    public String getPuzzleData() {
 
 
-        try {
-
-            String moveSay = "";
-
-            Result<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
+            One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
 
 
             if (dailypuzzle.isPresent()) { // check if the puzzle is present
@@ -50,9 +48,9 @@ public class DailyCommand {
                 String[] split = cor.split(" ");
 
                 if(split[1].contains("w")){
-                    moveSay += "**White To Move**";
+                    moveSay += "White To Move";
                 }else{
-                    moveSay += "**Black To Move**";
+                    moveSay += "Black To Move";
                 }
 
                 String coordImg = "";
@@ -69,46 +67,34 @@ public class DailyCommand {
 
                 Puzzle.PuzzleInfo puzzleInfo = puzzle1.puzzle();
 
-                int puzzleRating = puzzleInfo.rating();
+                this.rating = puzzleInfo.rating();
 
 
 
-                this.embedBuilder = new EmbedBuilder();
-                this.embedBuilder.setColor(Color.blue);
-                this.embedBuilder.setTitle("\uD83E\uDDE9 Puzzle of The Day \uD83E\uDDE9");
-                this.embedBuilder.setImage(coordImg);
-                this.embedBuilder.setDescription("**" + "Puzzle Rating: " + puzzleRating+ "** \n\n" + moveSay);
 
 
-              return this.embedBuilder;
+
+              return coordImg;
+            }else{
+                return "loading..";
             }
 
-
-
-        } catch (ExceptionInInitializerError ex) {
-
-            Throwable throwable = ex.getException();
-            if (throwable != null) {
-                throwable.printStackTrace();
-            } else {
-                System.out.println("Throwable not present");
-            }
-
-
-        }
-
-        return this.embedBuilder;
 
     }
 
-    public EmbedBuilder getSolution(){
+
+    public String getMoveSay(){
+        return moveSay;
+    }
+
+    public String getSolution(){
 
 
-        try {
 
 
 
-            Result<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
+
+            One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
 
 
             if (dailypuzzle.isPresent()) { // check if the puzzle is present
@@ -137,72 +123,52 @@ public class DailyCommand {
                 }
 
 
-                this.embedBuilder = new EmbedBuilder();
-                this.embedBuilder.setColor(Color.blue);
-                this.embedBuilder.setTitle("\uD83E\uDDE9 Puzzle of The Day Solution \uD83E\uDDE9");
-                this.embedBuilder.setImage(coordImg);
 
 
 
 
-                return this.embedBuilder;
+                return coordImg;
+            }else{
+                return "loading...";
             }
 
 
 
-        } catch (ExceptionInInitializerError ex) {
-
-            Throwable throwable = ex.getException();
-            if (throwable != null) {
-                throwable.printStackTrace();
-            } else {
-                System.out.println("Throwable not present");
-            }
 
 
+
+
+
+
+
+    }
+
+    public EmbedBuilder getThemes(){
+        EmbedBuilder themes = new EmbedBuilder();
+
+        themes.setColor(Color.orange);
+
+        One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
+
+        String themessay = "";
+
+        for(int i = 0; i < dailypuzzle.get().puzzle().themes().size(); i++){
+            themessay += dailypuzzle.get().puzzle().themes().get(i) + " ";
         }
 
-        return this.embedBuilder;
-
-
-
-
-    }
-
-    public String getanswer() {
-        Result<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
-
-
-
-            Puzzle puzzle1 = dailypuzzle.get();
-
-
-            String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
-            for (String move : moves) {
-                board.doMove(move);
-
-            }
-
-            this.board.doMove(puzzle1.puzzle().solution().get(0));
-
-
-            String cor = board.getFen();
-
-            String[] split = cor.split(" ");
-
-            String coordImg = "https://chessboardimage.com/" + split[0] + ".png";
-
-            return coordImg;
-
-    }
-
-    public String getFen(){
-        return this.board.getFen();
+        themes.setDescription( "**"+ themessay + "**");
+        themes.setTitle("Some Hints...");
+        return themes;
     }
 
 
+    public int getRating(){
+        return rating;
+    }
 
 
 }
+
+
 
 
