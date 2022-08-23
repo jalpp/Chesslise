@@ -1,5 +1,5 @@
 import chariot.Client;
-import chariot.model.Result;
+import chariot.model.One;
 import chariot.model.StormDashboard;
 import chariot.model.User;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -20,7 +20,9 @@ public class UserDashboard extends UserProfile{
 
     public EmbedBuilder getUserDashboard(){
 
-        Result<User> userResult = this.getClient().users().byId(this.getUserID());
+
+
+        One<User> userResult = this.getClient().users().byId(this.getUserID());
         this.embedBuilder = new EmbedBuilder();
 
 
@@ -40,7 +42,8 @@ public class UserDashboard extends UserProfile{
             }
 
 
-            Result<StormDashboard> dash = this.getClient().puzzles().stormDashboard(this.getUserID());
+
+            One<StormDashboard> dash = this.getClient().puzzles().stormDashboard(this.getUserID());
 
             String dashs = "";
 
