@@ -1,9 +1,10 @@
 
+
 import chariot.Client;
 import chariot.ClientAuth;
-
 import chariot.model.Ack;
-import chariot.model.Result;
+import chariot.model.One;
+
 import chariot.model.User;
 import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
@@ -22,7 +23,7 @@ public class AdminLoginChallenge extends AdminActionsManager{
   try {
    this.embedBuilder = new EmbedBuilder();
 
-   Result<User> userResult = this.getBasicClient().users().byId(this.getUserID(), true);
+   One<User> userResult = this.getBasicClient().users().byId(this.getUserID(), params -> params.withTrophies(true));
 
    boolean userPresent = userResult.isPresent();
 
@@ -57,3 +58,7 @@ public class AdminLoginChallenge extends AdminActionsManager{
 
 
  }
+
+
+
+
