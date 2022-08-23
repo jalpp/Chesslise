@@ -15,7 +15,7 @@
 
  1. [Lichess Java Client](https://github.com/tors42/chariot) 
  2. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
- 3. [Chess.com Java Wrapper]
+ 3. [Chess.com Java Wrapper](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  4. [Java Chess Lib](https://github.com/bhlangonijr/chesslib)
 
 # Image Generation
