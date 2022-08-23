@@ -1,4 +1,4 @@
-iimport chariot.Client;
+import chariot.Client;
 import chariot.model.ExploreResult;
 
 import java.util.ArrayList;
