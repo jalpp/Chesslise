@@ -9,6 +9,7 @@ public class puzzle {
 
     private DailyPuzzleClient dailyPuzzleClient;
     private EmbedBuilder embedBuilder;
+    private String moveSay = "";
 
 
 
@@ -16,14 +17,14 @@ public class puzzle {
         this.dailyPuzzleClient = new DailyPuzzleClient();
     }
 
-    public EmbedBuilder getRandom()  {
-        this.embedBuilder = new EmbedBuilder();
+    public String getRandom()  {
+
         try {
             String cor = this.dailyPuzzleClient.getRandomDailyPuzzle().getFen();
 
 
             String[] split = cor.split(" ");
-            String moveSay = "";
+
             String coordImg = "";
 
             if(split[1].contains("w")){
@@ -38,24 +39,25 @@ public class puzzle {
                 coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
             }
 
+            return coordImg;
 
 
-            this.embedBuilder.setDescription(moveSay);
-            this.embedBuilder.setTitle(this.dailyPuzzleClient.getRandomDailyPuzzle().getTitle());
-            this.embedBuilder.setColor(Color.blue);
-
-            this.embedBuilder.setImage(coordImg);
 
         } catch (IOException e) {
             e.printStackTrace();
-            this.embedBuilder.setDescription("Loading...Please try again");
+            return "loading..";
         } catch (ChessComPubApiException e) {
             e.printStackTrace();
-            this.embedBuilder.setDescription("Loading...Please try again");
+            return "loading..";
         }
 
 
-        return this.embedBuilder;
+
+    }
+
+
+    public String getMoveSay(){
+        return moveSay;
     }
 
 
