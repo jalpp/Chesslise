@@ -1,6 +1,6 @@
 import chariot.Client;
 import chariot.model.Arena;
-import chariot.model.Result;
+import chariot.model.One;
 import chariot.model.Swiss;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -28,6 +28,7 @@ public class UserArena {
             String[] spliturl = this.arenaID.split("tournament/");
             this.embedBuilder = new EmbedBuilder();
             String[] emojileaderboard = {"1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "\uD83D\uDD1F"};
+            String[] podium = {"\uD83C\uDFC6", "\uD83E\uDD48", "\uD83E\uDD49"};
 
             String touryID = "";
 
@@ -38,7 +39,8 @@ public class UserArena {
             }
 
 
-            Result<Arena> arenaResult1 = client.tournaments().arenaById(touryID);
+
+            One<Arena> arenaResult1 = client.tournaments().arenaById(touryID);
 
             if (arenaResult1.isPresent() && spliturl[0].startsWith("http") && spliturl[0].contains("lichess")) {
 
@@ -57,12 +59,23 @@ public class UserArena {
                 String perfname = perf.name();
 
                 String stand = "";
+                String standPodium = "";
 
 
                 Arena.Standing standing = arena.standing();
 
 
+
+
                 List<Arena.Standing.Player> players = standing.players();
+
+                for (int i = 0; i < 3; i++) {
+
+                    standPodium +=  podium[i] + " " + players.get(i).name() + "  " + players.get(i).rating() + "  **" + players.get(i).score() + "** " + players.get(i).team() + "\n ";
+
+
+                }
+
 
                 for (int i = 0; i < players.size(); i++) {
 
@@ -73,9 +86,10 @@ public class UserArena {
 
 
                 this.embedBuilder = new EmbedBuilder();
-                this.embedBuilder.setColor(Color.white);
+                this.embedBuilder.setColor(Color.green);
                 this.embedBuilder.setTitle( "\uD83C\uDF96️ " + name  + " \uD83C\uDF96️");
-                this.embedBuilder.setDescription("** Tournament Name:** " + name + "\n **Variant:** " + perfname  + "\n **Time Duration :** " + timeLeft + " mins" + "\n **Total Players:** " + numPlayers + "\n **Standings:**" + "\n  **Rank:**  **Username**  **Rating:**  **Score** \n \n " + stand + "\n" + "[View on Lichess](" + this.arenaID + ")");
+                this.embedBuilder.setDescription("** Tournament Name:** " + name + "\n **Variant:** " + perfname  + "\n **Time Duration :** " + timeLeft + " mins" + "\n **Total Players:** " + numPlayers + "\n **Standings:**" + "\n  **Rank**  **Username**  **Rating:**  **Score** \n \n " + " **Podium** \n " + standPodium + "\n\n **Leaderboard** \n" + stand + "\n" + "[View on Lichess](" + this.arenaID + ")");
+
 
             }else{
                 this.embedBuilder = new EmbedBuilder();
@@ -88,7 +102,9 @@ public class UserArena {
                     touryIDSwiss = a;
 
                 }
-                Result<Swiss> swissResult = this.client.tournaments().swissById(touryIDSwiss);
+
+
+                One<Swiss> swissResult = this.client.tournaments().swissById(touryIDSwiss);
 
                 if(swissResult.isPresent()){
                     SwissResults swissResults = new SwissResults(client, touryIDSwiss);
