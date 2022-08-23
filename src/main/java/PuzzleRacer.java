@@ -1,7 +1,7 @@
 import chariot.Client;
 import chariot.ClientAuth;
+import chariot.model.One;
 import chariot.model.PuzzleRace;
-import chariot.model.Result;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 public class PuzzleRacer {
@@ -24,7 +24,7 @@ public class PuzzleRacer {
         ClientAuth clientAuth = Client.auth(this.adminToken);
 
         this.embedBuilder.setTitle("\uD83D\uDE97 Play Puzzle Racer \uD83D\uDE97");
-        Result<PuzzleRace> result = clientAuth.puzzles().createAndJoinRace();
+        One<PuzzleRace> result = clientAuth.puzzles().createAndJoinRace();
         String join = "[Click Here To Play Puzzle Racer](";
         if(result.isPresent()){
             join += result.get().url() + ")";
