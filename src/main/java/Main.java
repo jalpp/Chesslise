@@ -6,9 +6,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -16,25 +13,14 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.ItemComponent;
 import net.dv8tion.jda.api.interactions.components.Modal;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
-
-import net.dv8tion.jda.internal.entities.UserImpl;
 import org.jetbrains.annotations.NotNull;
-
 import javax.security.auth.login.LoginException;
 import java.awt.*;
-import java.time.Duration;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
@@ -45,25 +31,19 @@ public class Main extends ListenerAdapter {
     private String ButtonUserId;
     private Client ButtonClient;
     private String APIPASSWORD;
-    private List<User> userslist = new ArrayList<>();
-    private boolean checker = true;
-
-
-
 
 
 
 
     public static void main(String[] args) {
 
+        String TOKEN = "YOUR DISCORD TOKEN";
 
-        String Token = "Your Discord Token";
-        
 
-        jdaBuilder = JDABuilder.createDefault(Token);// string token
+        jdaBuilder = JDABuilder.createDefault(TOKEN);// string token
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
-        jdaBuilder.setActivity(Activity.playing("Chess"));
+        jdaBuilder.setActivity(Activity.playing("Chess and puzzles!"));
         jdaBuilder.addEventListeners(new Main());
 
 
@@ -76,23 +56,21 @@ public class Main extends ListenerAdapter {
         }
 
         CommandListUpdateAction commands = jda.updateCommands();
+          commands.addCommands(Commands.slash("view", "View Games").addOption(OptionType.STRING, "gameurl", "enter lichess game link", true));
+          commands.addCommands(Commands.slash("service", "Read our Terms of Service"));
           commands.addCommands(Commands.slash("openingdb", "View Chess Openings"));
-          commands.addCommands(Commands.slash("setreminderoff", "Turn of notifications"));
-          commands.addCommands(Commands.slash("setreminderon", "Turn on notifications"));
-          commands.addCommands(Commands.slash("subscribe", "set notifications for watching Magnus Carlsen"));
           commands.addCommands(Commands.slash("board", "display moves").addOption(OptionType.STRING, "moves", "play moves to display on board ex. e4", true));
           commands.addCommands(Commands.slash("puzzleracer", "Play Puzzle Racer"));
-          commands.addCommands(Commands.slash("answer", "View Daily Puzzle Answer"));
           commands.addCommands(Commands.slash("dailypuzzle", "Daily Lichess Puzzles"));
           commands.addCommands(Commands.slash("arena", "See Swiss/Arena standings").addOption(OptionType.STRING, "arenaid", "Input Lichess arena link", true));
           commands.addCommands(Commands.slash("watchmaster", "Watch GM Games in gif"));
           commands.addCommands(Commands.slash("profile", "See Lichess Profile of given user").addOption(OptionType.STRING, "username", "input Lichess username", true));
           commands.addCommands(Commands.slash("streamers", "See current Live Streamers"));
-          commands.addCommands(Commands.slash("puzzle", "View Puzzles"));
+          commands.addCommands(Commands.slash("puzzle", "do puzzles"));
           commands.addCommands(Commands.slash("tourney", "Join Current Lichess Tournaments"));
           commands.addCommands(Commands.slash("liga", "view Liga Leaderboard based on your favorite Lichess team").addOption(OptionType.STRING, "teamname", "Enter lichess team name", true));
           commands.addCommands(Commands.slash("help", "View LISEBOT Commands"));
-          commands.addCommands(Commands.slash("play", "Play Live Chess Games").addOption(OptionType.STRING, "variant", "choose mode blitz, rapid etc", true).addOption(OptionType.STRING, "challengetype", "rated/casual", true));
+          commands.addCommands(Commands.slash("play", "Play Live Chess Games"));
           commands.addCommands(Commands.slash("scheduletournament", "schedule Lichess arena from Discord"));
           commands.addCommands(Commands.slash("tv", "Watch Lichess TV"));
           commands.addCommands(Commands.slash("tourneymanager", "Create and Manage Your Lichess Tournament"));
@@ -110,105 +88,6 @@ public class Main extends ListenerAdapter {
     }
 
 
-
-    public void reminder(SlashCommandInteractionEvent event, String user, boolean disabled){
-
-        if(disabled != false) {
-
-            Client client = Client.basic();
-            this.userslist.add(event.getUser());
-
-            var ref = new Object() {
-                private int c;
-
-
-                public void setCounter(int c) {
-                    this.c = c;
-                }
-
-                public int getCounter() {
-                    return this.c;
-                }
-
-                public boolean check() {
-                    if (this.getCounter() == 0) {
-                        return true;
-                    } else if (this.getCounter() == 1) {
-                        return false;
-                    }
-                    return false;
-                }
-
-
-            };
-
-               int counter = Collections.frequency(this.userslist, event.getUser());
-
-               if(counter == 1) {
-
-
-                   ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/New_York"));
-
-
-                   ZonedDateTime nextmessage = now.withHour(1);
-
-
-                   if (now.compareTo(nextmessage) > 0) {
-                       nextmessage = nextmessage.withHour(1);
-                   }
-
-
-                   Duration durationUntilFirstmsg = Duration.between(now, nextmessage);
-
-                   long initialDelayFirstmsg = durationUntilFirstmsg.getSeconds();
-
-
-                   ScheduledExecutorService schedulermsg = Executors.newScheduledThreadPool(2);
-                   schedulermsg.scheduleAtFixedRate(() -> {
-
-
-                               boolean check = client.users().statusByIds(user).get().online();
-
-                               if (check && ref.check()) {
-                                   ref.setCounter(1);
-
-                                   for(int i = 0; i < this.userslist.stream().distinct().toList().size(); i++) {
-                                       this.userslist.stream().distinct().toList().get(i).openPrivateChannel().queue(privateChannel -> {
-                                           EmbedBuilder embedBuilder = new EmbedBuilder();
-                                           embedBuilder.setTitle("Magnus Carlsen Is Online!");
-                                           embedBuilder.setDescription("Check out what is Magnus Calsen up to by [clicking here](https://lichess.org/@/DrNykterstein)");
-                                           embedBuilder.setColor(Color.green);
-                                           privateChannel.sendMessageEmbeds(embedBuilder.build()).queue();
-
-                                       });
-
-                                   }
-
-
-                               } else {
-
-                                   if (!check) {
-                                       ref.setCounter(0);
-                                   }
-
-                               }
-
-
-                           },
-                           initialDelayFirstmsg,
-                           TimeUnit.SECONDS.toSeconds(50),
-                           TimeUnit.SECONDS);
-
-               }else{
-                   event.deferReply(true).queue();
-                   event.getChannel().sendMessage("You have already singed up for the notifications!").queue();
-               }
-
-            }else{
-            event.reply("Notifications are turned off, turn them on by running /setreminderon").setEphemeral(true).queue();
-        }
-    }
-
     @SneakyThrows
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
         String name = event.getName();
@@ -216,44 +95,29 @@ public class Main extends ListenerAdapter {
         this.ButtonClient = client;
 
         switch(name) {
+            case "service":
+                EmbedBuilder embedBuildertos = new EmbedBuilder();
+                embedBuildertos.setColor(Color.blue);
+                embedBuildertos.setTitle("Terms Of Service And Privacy Policy");
+                embedBuildertos.setDescription("What is LISEBOT Terms Of Service?\n" +
+                        "\n" +
+                        "User agrees that they will have to use latest updated versions of LISEBOT, User also agrees that some commands may be deleted if developer does not want to maintain those commands in future. User is fully responsible for their discord server and LISEBOT does not have any access to the server information/ management. User also agrees to privacy policy which states that LISEBOT does not and will not store any private information \n\n What information does LISEBOT store about me? What is the privacy policy?\n" +
+                        "\n" +
+                        "LISEBOT Does not and will not store any private user information, all bot commands are Lichess related so auth commands need Lichess token to operate for those commands (which the bot does not store)");
+                event.replyEmbeds(embedBuildertos.build()).queue();
+                break;
             case "openingdb":
-                EmbedBuilder openingbase = new EmbedBuilder();
-                openingbase.setColor(Color.green);
-                openingbase.setTitle("Opening DataBase");
-                openingbase.setDescription("1️⃣ **Italian Opening ~ e4 e5 Nf3 Nf6 Bc4** \n\n 2️⃣ **Queen's Gambit ~ d4 d5 c4** \n\n 3️⃣ **English Opening ~ c4** \n\n 4️⃣ **Zukertort Opening ~ Nf3** \n\n 5️⃣ **Sicilian Defence ~ e4 c5** \n\n ");
-                event.replyEmbeds(openingbase.build()).addActionRow(Button.primary("oneopening", "1️⃣"), Button.primary("twoopening", "2️⃣"), Button.primary("threeopening", "3️⃣"), Button.primary("fouropening", "4️⃣"), Button.primary("fiveopening", "5️⃣")).queue();
+                event.reply( "1️⃣ **Italian Opening ~ e4 e5 Nf3 Nf6 Bc4** \n\n 2️⃣ **Queen's Gambit ~ d4 d5 c4** \n\n 3️⃣ **English Opening ~ c4** \n\n 4️⃣ **Zukertort Opening ~ Nf3** \n\n 5️⃣ **Sicilian Defence ~ e4 c5** \n\n ").addActionRow(Button.primary("oneopening", "1️⃣"), Button.primary("twoopening", "2️⃣"), Button.primary("threeopening", "3️⃣"), Button.primary("fouropening", "4️⃣"), Button.primary("fiveopening", "5️⃣")).queue();
                 break;
-            case "setreminderon":
-                if(this.checker == false){
-                    this.checker = true;
-                    event.reply("Please run /subscribe to turn them on!!").setEphemeral(true).queue();
-                }else{
-                    event.reply("Notifications are already on!").setEphemeral(true).queue();
-                }
-                break;
-
-            case "setreminderoff":
-                if(this.checker == true){
-                    this.checker = false;
-                    this.userslist.remove(event.getUser());
-                    event.reply("Notifications are turned off!").setEphemeral(true).queue();
-                }else{
-                    event.reply("Notifications are turned off already!").setEphemeral(true).queue();
-                }
-                break;
-
-                //DrNykterstein
-                // Fixed User name error
-
-            case "subscribe":
-                reminder(event, "DrNykterstein", checker);
-                event.reply("Notifications are turned on!").setEphemeral(true).queue();
+            case "view":
+                String gameid = event.getOption("gameurl").getAsString();
+                ViewGame viewGame = new ViewGame(client, gameid);
+                event.replyEmbeds(viewGame.getViewGame().build()).queue();
                 break;
             case "board":
                 String m = event.getOption("moves").getAsString();
                 Board b = new Board(m);
                 event.replyEmbeds(b.getView().build()).queue();
-
                 break;
             case "puzzleracer":
                 TextInput puzzletext = TextInput.create("racerauth", "Token Input", TextInputStyle.SHORT)
@@ -266,21 +130,15 @@ public class Main extends ListenerAdapter {
                         .build();
                 event.replyModal(modalpuzzle).queue();
                 break;
-            case "answer":
-                DailyCommand dailyCommandsol = new DailyCommand(client);
-                event.replyEmbeds(dailyCommandsol.getSolution().build()).setEphemeral(true).queue();
-                break;
             case "watchmaster":
                 WatchMaster watchMaster = new WatchMaster(client);
-                EmbedBuilder embedBuilderw = new EmbedBuilder();
-                embedBuilderw.setColor(Color.cyan);
-                embedBuilderw.setImage(watchMaster.getMasterGames());
-                event.replyEmbeds(embedBuilderw.build()).addActionRow(Button.link("https://lichess.org" + watchMaster.getGameId()[1], "Analyze")).queue();
+                event.reply(watchMaster.getMasterGames()).addActionRow(Button.link("https://lichess.org" + watchMaster.getGameId()[1], "Analyze")).queue();
                 break;
             case "puzzle":
                 puzzle puzzle = new puzzle();
-                event.reply("\uD83E\uDDE9 **Chess Tactics** \uD83E\uDDE9").queue();
-                event.getChannel().sendMessageEmbeds(puzzle.getRandom().build()).queue();
+                event.reply("Generating Puzzles..").setEphemeral(true).queue();
+                event.getChannel().sendMessage(puzzle.getRandom()).queue();
+                event.getChannel().sendMessage(puzzle.getMoveSay()).queue();
                 break;
             case "tourney":
                 currentTournament currentTournament = new currentTournament(client);
@@ -290,17 +148,22 @@ public class Main extends ListenerAdapter {
                 CommandInfo commandInfo = new CommandInfo();
                 event.replyEmbeds(commandInfo.getPageOne().build()).addActionRow(Button.primary("next", "➡️")).queue();
                 break;
+            /**
+             * Blitz 3+2
+             * Rapid 5+5
+             * Bullet 1+0
+             * UltraBullet 1/4 + 0
+             * Classical 30+20
+             */
             case "play":
-                 String variant = event.getOption("variant").getAsString();
-                 String challengeOption = event.getOption("challengetype").getAsString();
-                 Game game = new Game(client, variant, challengeOption);
-                 event.replyEmbeds(game.getNewGame().build()).queue();
+                event.reply("**Please Pick Your Game's Mode**").addActionRow(
+                        Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated")).queue();
                 break;
             case "profile":
                 String userID = event.getOption("username").getAsString();
                 this.ButtonUserId = userID;
                 UserProfile userProfile = new UserProfile(client,userID);
-                event.replyEmbeds(userProfile.getUserProfile().build()).addActionRow(Button.primary("userwatch", "\uD83D\uDCFA"), Button.danger("userpuzzle","\uD83C\uDF2A️"), Button.primary("userstreaming", "\uD83C\uDF99️"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "♞")).queue();
+                event.reply(userProfile.getUserProfile()).addActionRow(Button.primary("userwatch", "\uD83D\uDCFA"), Button.danger("userpuzzle","\uD83C\uDF2A️"), Button.primary("userstreaming", "\uD83C\uDF99️"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "♞")).queue();
                 break;
             case "streamers":
                 LiveStreamers liveStreamers = new LiveStreamers(client);
@@ -308,16 +171,19 @@ public class Main extends ListenerAdapter {
                 break;
             case "dailypuzzle":
                 DailyCommand dailyCommand = new DailyCommand(client);
-                event.replyEmbeds(dailyCommand.getPuzzleData().build()).addActionRow(Button.link("https://lichess.org/training/daily", "Analyze"), Button.primary("sol", "Solution")).queue();
+                event.reply(dailyCommand.getPuzzleData()).addActionRow(Button.link("https://lichess.org/training/daily", dailyCommand.getMoveSay() + "| " + "Rating: " + dailyCommand.getRating()), Button.primary("sol", "Solution"), Button.success("hint", "Hint")).queue();
                 break;
             case "watch":
                 String gameUserID = event.getOption("watchuser").getAsString();
-                UserGame userGame = new UserGame(client,gameUserID);
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                embedBuilder.setColor(Color.green);
-                embedBuilder.setImage(userGame.getUserGames());
-                String link = "https://lichess.org/@/" + gameUserID.toLowerCase() + "/all";
-                event.replyEmbeds(embedBuilder.build()).addActionRow(Button.link(link, "View All Games")).queue();
+
+                if(client.users().byId(gameUserID).isPresent()) {
+                    this.ButtonUserId = gameUserID;
+                    UserGame userGame = new UserGame(client, gameUserID);
+                    String link = "https://lichess.org/@/" + gameUserID.toLowerCase() + "/all";
+                    event.reply(userGame.getUserGames()).addActionRow(Button.link(link, "@" +gameUserID + "'s Games"), Button.primary("profile",  "@" +gameUserID + "'s " +"Profile")).queue();
+                }else{
+                    event.reply("Please Provide A Valid Lichess Username!").queue();
+                }
                 break;
 
             case "top10":
@@ -451,7 +317,7 @@ public class Main extends ListenerAdapter {
             case "modaltour":
                 AdminLoginCreateTournament createTournament = new AdminLoginCreateTournament(event.getValue("tourauth").getAsString(), event.getValue("timeformat").getAsString());
                 event.deferReply(true).queue();
-                event.getTextChannel().sendMessageEmbeds(createTournament.getCreatedTournament().build()).queueAfter(20, TimeUnit.SECONDS);
+                event.getMessageChannel().sendMessageEmbeds(createTournament.getCreatedTournament().build()).queueAfter(20, TimeUnit.SECONDS);
                 break;
             case "modalmanager":
                   String passwordTournament = event.getValue("managerauth").getAsString();
@@ -460,10 +326,9 @@ public class Main extends ListenerAdapter {
                   event.replyEmbeds(manager.sayStatus().build()).addActionRow(Button.primary("createone", "Create Arenas"), Button.primary("createtwo", "Create Monthly Arenas")).queue();
                 break;
             case "modalpuzzle":
-
                 PuzzleRacer puzzleRacer = new PuzzleRacer(event.getValue("racerauth").getAsString());
                 event.deferReply(true).queue();
-                event.getTextChannel().sendMessageEmbeds(puzzleRacer.getPuzzleRacerLinks().build()).queue();
+                event.getMessageChannel().sendMessageEmbeds(puzzleRacer.getPuzzleRacerLinks().build()).queue();
                 break;
         }
     }
@@ -473,21 +338,108 @@ public class Main extends ListenerAdapter {
     @Override
     public void onButtonInteraction(@NotNull  ButtonInteractionEvent event) {
 
-
         Client client = Client.basic();
         TournamentManager tournamentManager = new TournamentManager(this.APIPASSWORD);
         WatchTv tv = new WatchTv(this.ButtonClient);
         WatchMaster watchMaster = new WatchMaster(client);
         CommandInfo commandInfo = new CommandInfo();
 
+
+     if(event.getComponentId().equals("casmode"))   {
+         event.editMessage("**Please Pick Your Time Control**").setActionRow(
+                 Button.primary("ultrafastc", "1/4+0"),
+                 Button.primary("bulletfastc", "1+0"),
+                 Button.primary("blitzfastc", "3+2"),
+                 Button.primary("rapidfastc", "5+5"),
+                 Button.primary("classicalfastc", "30+20")
+         ).queue();
+     }
+
+     if(event.getComponentId().equals("ratedmode")){
+         event.editMessage("**Please Pick Your Time Control**").setActionRow(
+                 Button.danger("ultrafastr", "1/4+0"),
+                 Button.danger("bulletfastr", "1+0"),
+                 Button.danger("blitzfastr", "3+2"),
+                 Button.danger("rapidfastr", "5+5"),
+                 Button.danger("classicalfastr", "30+20")
+         ).queue();
+     }
+
+     switch (event.getComponentId()){
+         case "ultrafastc":
+             Game ug = new Game(client, "ultrabullet", "casual");
+             ug.getNewGame();
+             event.editMessage("**Ultra Casual Challenge Loaded!**").setActionRow(Button.link(ug.getRandom(), "Join The Game!")).queue();
+         case "bulletfastc":
+             Game bg = new Game(client, "bullet", "casual");
+             bg.getNewGame();
+             event.editMessage("**Bullet Casual Challenge Loaded!**").setActionRow(Button.link(bg.getRandom(), "Join The Game!")).queue();
+             break;
+         case "blitzfastc":
+             Game bcg = new Game(client, "blitz", "casual");
+             bcg.getNewGame();
+             event.editMessage("**Blitz Casual Challenge Loaded!**").setActionRow(Button.link(bcg.getRandom(), "Join The Game!")).queue();
+             break;
+         case "rapidfastc":
+             Game rg = new Game(client, "rapid", "casual");
+             rg.getNewGame();
+             event.editMessage("**Rapid Casual Challenge Loaded!**").setActionRow(Button.link(rg.getRandom(), "Join The Game!")).queue();
+             break;
+         case "classicalfastc":
+             Game cg = new Game(client, "classical", "casual");
+             cg.getNewGame();
+             event.editMessage("**Classical Casual Challenge Loaded!**").setActionRow(Button.link(cg.getRandom(), "Join The Game!")).queue();
+             break;
+
+     }
+
+        switch (event.getComponentId()){
+            case "ultrafastr":
+                Game ug = new Game(client, "ultrabullet", "rated");
+                ug.getNewGame();
+                event.editMessage("**Ultra Rated Challenge Loaded!**").setActionRow(Button.link(ug.getRandom(), "Join The Game!")).queue();
+            case "bulletfastcr":
+                Game bg = new Game(client, "bullet", "rated");
+                bg.getNewGame();
+                event.editMessage("**Bullet Rated Challenge Loaded!**").setActionRow(Button.link(bg.getRandom(), "Join The Game!")).queue();
+                break;
+            case "blitzfastr":
+                Game bcg = new Game(client, "blitz", "rated");
+                bcg.getNewGame();
+                event.editMessage("**Blitz Rated Challenge Loaded!**").setActionRow(Button.link(bcg.getRandom(), "Join The Game!")).queue();
+                break;
+            case "rapidfastr":
+                Game rg = new Game(client, "rapid", "rated");
+                rg.getNewGame();
+                event.editMessage("**Rapid Rated Challenge Loaded!**").setActionRow(Button.link(rg.getRandom(), "Join The Game!")).queue();
+                break;
+            case "classicalfastr":
+                Game cg = new Game(client, "classical", "rated");
+                cg.getNewGame();
+                event.editMessage("**Classical Rated Challenge Loaded!**").setActionRow(Button.link(cg.getRandom(), "Join The Game!")).queue();
+                break;
+
+        }
+
+
+     if(event.getComponentId().equals("openingdata")){
+         EmbedBuilder openingbase = new EmbedBuilder();
+         openingbase.setColor(Color.green);
+         openingbase.setTitle("Opening DataBase");
+         openingbase.setDescription("1️⃣ **Italian Opening ~ e4 e5 Nf3 Nf6 Bc4** \n\n 2️⃣ **Queen's Gambit ~ d4 d5 c4** \n\n 3️⃣ **English Opening ~ c4** \n\n 4️⃣ **Zukertort Opening ~ Nf3** \n\n 5️⃣ **Sicilian Defence ~ e4 c5** \n\n ");
+         event.editMessageEmbeds(openingbase.build()).setActionRow(Button.primary("oneopening", "1️⃣"), Button.primary("twoopening", "2️⃣"), Button.primary("threeopening", "3️⃣"), Button.primary("fouropening", "4️⃣"), Button.primary("fiveopening", "5️⃣")).queue();
+
+     }
+
+      if(event.getComponentId().equals("profile")){
+          UserProfile userProfile = new UserProfile(client,this.ButtonUserId);
+          event.editMessage(userProfile.getUserProfile()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA"), Button.danger("userpuzzle","\uD83C\uDF2A️"), Button.primary("userstreaming", "\uD83C\uDF99️"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "♞")).queue();
+
+      }
+
        if(event.getComponentId().equals("userwatch")){
            UserGame userGame = new UserGame(this.ButtonClient, this.ButtonUserId);
-           EmbedBuilder gameEmbed = new EmbedBuilder();
-           EmbedBuilder resultEmbed = new EmbedBuilder();
-           resultEmbed.setDescription("Game Information");
-           gameEmbed.setColor(Color.green);
-           gameEmbed.setImage(userGame.getUserGames());
-           event.editMessageEmbeds(gameEmbed.build()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA").asDisabled(), Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
+           event.editMessage(userGame.getUserGames()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA").asDisabled(), Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
 
        }
 
@@ -558,78 +510,68 @@ public class Main extends ListenerAdapter {
 
         if(event.getComponentId().equals("sol")){
             DailyCommand dailyCommand = new DailyCommand(client);
-            event.replyEmbeds(dailyCommand.getSolution().build()).setEphemeral(true).queue();
+            event.reply(dailyCommand.getSolution()).setEphemeral(true).queue();
         }
 
         if(event.getComponentId().equals("oneopening")){
-            OpeningObject italian = new OpeningObject("Italian Opening","r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R");
-            event.editMessageEmbeds((italian.getOpeningEmbed().build())).setActionRow(Button.primary("watchitl", "Master Games")).queue();
+            OpeningObject italian = new OpeningObject("r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R");
+            event.editMessage(italian.getImage()).setActionRow(Button.primary("watchitl", "Master Games")).queue();
         }
 
         if(event.getComponentId().equals("watchitl")){
-
-            EmbedBuilder newEmbed = new EmbedBuilder();
-            newEmbed.setColor(Color.green);
-            newEmbed.setImage(watchMaster.getOpenings("e2e4,e7e5,g1f3,b8c6,f1c4"));
-            event.editMessageEmbeds(newEmbed.build()).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1], "Analyze")).queue();
+            event.editMessage(watchMaster.getOpenings("e2e4,e7e5,g1f3,b8c6,f1c4")).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1], "Analyze")).queue();
         }
 
         if(event.getComponentId().equals("twoopening")){
-            OpeningObject queensGambit = new OpeningObject("Queen's Gambit","rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR");
-            event.editMessageEmbeds(queensGambit.getOpeningEmbed().build()).setActionRow(Button.primary("watchqueen", "Master Games")).queue();
+            OpeningObject queensGambit = new OpeningObject("rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR");
+            event.editMessage(queensGambit.getImage()).setActionRow(Button.primary("watchqueen", "Master Games")).queue();
         }
 
         if(event.getComponentId().equals("watchqueen")){
-            EmbedBuilder embedBuilderqueen = new EmbedBuilder();
-            embedBuilderqueen.setColor(Color.green);
-            embedBuilderqueen.setImage(watchMaster.getOpenings("d2d4,d7d5,c2c4"));
-            event.editMessageEmbeds(embedBuilderqueen.build()).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1], "Analyze")).queue();
+            event.editMessage(watchMaster.getOpenings("d2d4,d7d5,c2c4")).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1], "Analyze")).queue();
         }
 
         if(event.getComponentId().equals("threeopening")){
-            OpeningObject english = new OpeningObject("English Opening", "rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR");
-            event.editMessageEmbeds(english.getOpeningEmbed().build()).setActionRow(Button.primary("watcheng", "Master Games")).queue();
+            OpeningObject english = new OpeningObject( "rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR");
+            event.editMessage(english.getImage()).setActionRow(Button.primary("watcheng", "Master Games")).queue();
         }
 
         if(event.getComponentId().equals("watcheng")){
-            EmbedBuilder threeEmebed = new EmbedBuilder();
-            threeEmebed.setColor(Color.green);
-            threeEmebed.setImage(watchMaster.getOpenings("c2c4"));
-            event.editMessageEmbeds(threeEmebed.build()).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1], "Analyze")).queue();
+            event.editMessage(watchMaster.getOpenings("c2c4")).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1], "Analyze")).queue();
         }
 
         if(event.getComponentId().equals("fouropening")){
-            OpeningObject zugOpening = new OpeningObject("Zukertort Opening", "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R");
-            event.editMessageEmbeds(zugOpening.getOpeningEmbed().build()).setActionRow(Button.primary("watchzug", "Master Games")).queue();
+            OpeningObject zugOpening = new OpeningObject("rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R");
+            event.editMessage(zugOpening.getImage()).setActionRow(Button.primary("watchzug", "Master Games")).queue();
         }
 
         if(event.getComponentId().equals("watchzug")){
-            EmbedBuilder zugEmbed = new EmbedBuilder();
-            zugEmbed.setColor(Color.green);
-            zugEmbed.setImage(watchMaster.getOpenings("g1f3"));
-            event.editMessageEmbeds(zugEmbed.build()).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1],"Analyze")).queue();
+            event.editMessage(watchMaster.getOpenings("g1f3")).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1],"Analyze")).queue();
         }
 
         if(event.getComponentId().equals("fiveopening")){
-            OpeningObject sclOpening = new OpeningObject("Sicilian Defence", "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR");
-            event.editMessageEmbeds(sclOpening.getOpeningEmbed().build()).setActionRow(Button.primary("watchsd", "Master Games")).queue();
+            OpeningObject sclOpening = new OpeningObject( "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR");
+            event.editMessage(sclOpening.getImage()).setActionRow(Button.primary("watchsd", "Master Games")).queue();
         }
 
         if(event.getComponentId().equals("watchsd")){
-            EmbedBuilder sdEmbed = new EmbedBuilder();
-            sdEmbed.setColor(Color.green);
-            sdEmbed.setImage(watchMaster.getOpenings("e2e4,c7c5"));
-            event.editMessageEmbeds(sdEmbed.build()).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1],"Analyze")).queue();
+            event.editMessage(watchMaster.getOpenings("e2e4,c7c5")).setActionRow(Button.link("https://lichess.org"+watchMaster.getOpeningId()[1],"Analyze")).queue();
         }
+
+        if(event.getComponentId().equals("hint")){
+            DailyCommand dailyCommand = new DailyCommand(client);
+            event.replyEmbeds(dailyCommand.getThemes().build()).setEphemeral(true).queue();
+        }
+
+
+
+
 
 
 
     }
 
+
+
 }
-
-
-
-
-
 
