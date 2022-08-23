@@ -1,5 +1,5 @@
 import chariot.Client;
-import chariot.model.Result;
+import chariot.model.One;
 import chariot.model.TVChannels;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -9,7 +9,7 @@ public class WatchTv {
 
     private Client client;
     private EmbedBuilder embedBuilder;
-    private Result<TVChannels> tv;
+    private One<TVChannels> tv;
 
     public WatchTv(Client client){
         this.client = client;
@@ -27,24 +27,21 @@ public class WatchTv {
     }
 
     public String getBlitz(){
-        String watchBlitz = new String("");
 
-            watchBlitz += "https://lichess1.org/game/export/gif/" + tv.get().blitz().gameId() + ".gif";
-            return watchBlitz;
+        UserGame blitzUser = new UserGame(this.client, tv.get().blitz().user().id());
+        return blitzUser.getUserGames();
 
     }
 
     public String getBullet(){
-        String watchBullet = "";
-        watchBullet += "https://lichess1.org/game/export/gif/" + tv.get().blitz().gameId() + ".gif";
-        return watchBullet;
 
+      UserGame bulletUser = new UserGame(this.client, tv.get().bullet().user().id());
+      return bulletUser.getUserGames();
     }
 
     public String getRapid(){
-        String watchRapid = "";
-        watchRapid += "https://lichess1.org/game/export/gif/" + tv.get().rapid().gameId() + ".gif";
-        return watchRapid;
+        UserGame rapidUser = new UserGame(this.client, tv.get().rapid().user().id());
+        return rapidUser.getUserGames();
     }
 
 
