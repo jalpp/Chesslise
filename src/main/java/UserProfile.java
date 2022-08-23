@@ -1,9 +1,16 @@
+import chariot.Client;
+import chariot.model.Enums;
+import chariot.model.One;
+import chariot.model.PerfStat;
+import chariot.model.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import java.awt.*;
 import java.util.Optional;
 
 public class UserProfile extends UserObject{
 
 
-    private EmbedBuilder embedBuilder;
+    private String sayProfile = "";
 
     public UserProfile(Client client, String userParsing){
         super(client, userParsing);
@@ -11,19 +18,74 @@ public class UserProfile extends UserObject{
     }
 
 
-    
+
+    public String getBlitzRatings(){
+        One<PerfStat> userBlitz = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.blitz);
+
+        String blitzRating = " \uD83D\uDD25 **Blitz**: ?";
+
+        if(userBlitz.isPresent() && !userBlitz.get().perf().glicko().provisional()){
+            return blitzRating = " \uD83D\uDD25 **Blitz**:  " + userBlitz.get().perf().glicko().rating().intValue();
+        }
+
+        return blitzRating;
+
+    }
+
+    public String getRapidRatings(){
+        One<PerfStat> userRapid = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.rapid);
+
+        String rapidRating = " \uD83D\uDC07 **Rapid**: ?";
+
+        if(userRapid.isPresent() && !userRapid.get().perf().glicko().provisional()){
+            return rapidRating = "\uD83D\uDC07 **Rapid**:  " + userRapid.get().perf().glicko().rating().intValue();
+        }
+
+        return rapidRating;
+
+    }
+
+    public String getBulletRatings(){
+        One<PerfStat> userBullet = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.bullet);
+
+        String bulletRating = "\uD83D\uDD2B **Bullet**: ?";
+
+        if(userBullet.isPresent() && !userBullet .get().perf().glicko().provisional()){
+            return bulletRating = "\uD83D\uDD2B **Bullet**:  " + userBullet .get().perf().glicko().rating().intValue();
+        }
+
+        return bulletRating;
+
+    }
+
+    public String getClassicalRatings(){
+        One<PerfStat> usercal = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.classical);
+
+        String calRating = "\uD83D\uDC22 **Classical**: ?";
+
+        if(usercal.isPresent() && !usercal.get().perf().glicko().provisional()){
+            return calRating = "\uD83D\uDC22 **Classical**:  " +usercal.get().perf().glicko().rating().intValue();
+        }
+
+        return calRating;
+
+    }
 
 
-    public EmbedBuilder getUserProfile(){
+
+
+
+
+    public String getUserProfile(){
 
         try {
 
-            Result<User> userResult = this.getClient().users().byId(this.getUserID(), true);
+            One<User> userResult = this.getClient().users().byId(this.getUserID(), params -> params.withTrophies(true));
+
+
 
             boolean userPresent = userResult.isPresent();
 
-            this.embedBuilder = new EmbedBuilder();
-            this.embedBuilder.setDescription("");
 
 
             if (userPresent == true) {  // checking if the user is present in the lichess
@@ -35,114 +97,104 @@ public class UserProfile extends UserObject{
                 boolean closedaccount = user.closed();
 
                 if (cheater == true) { // check if the user is cheater
-                    this.embedBuilder.setDescription(" This user has violated Lichess Terms of Service");
-                    return this.embedBuilder;
+                   return " This user has violated Lichess Terms of Service";
 
                 }
                 if (closedaccount == true) { // check if user is clossed account
-                    this.embedBuilder.setDescription("This account is closed");
-                    return this.embedBuilder;
+                   return "This account is closed";
+
                 }
 
 
                 if (cheater == false && closedaccount == false) {
 
+                    Optional<User.Profile> profile = user.profile();
 
-                    // List of variables
+                    if(profile.isPresent()) {
+
+                        String name = user.id();
+
+                        String bio = profile.get().bio();
+
+                        int wins = user.count().win();
+
+                        int lose = user.count().loss();
+
+                        int all = user.count().all();
+
+                        int draw = user.count().draw();
+
+                        int playing = user.count().playing();
+
+                        String userUrl = user.url();
+
+                        boolean pat = user.patron();
+
+                        String patWings = "";
+
+                        if (user.profile().isEmpty()) {
+
+                          return "can't generate profiles for user, not enough profile data";
+                        }
 
 
-                    String name = user.id();
 
-                    String bio = user.profile().get().bio();
+                        String sayTitle = "";
 
-                    int wins = user.count().win();
+                        Optional<String> titledPlayer = user.title();
 
-                    int lose = user.count().loss();
+                        Boolean hasTitle;
 
-                    int all = user.count().all();
 
-                    int draw = user.count().draw();
+                        if (titledPlayer.isPresent()) {
+                            hasTitle = true;
+                        } else {
+                            hasTitle = false;
+                        }
 
-                    int playing = user.count().playing();
+                        if (hasTitle == true) {
+                            sayTitle += titledPlayer.get();
+                        } else {
+                            sayTitle += "";
+                        }
 
-                    String userUrl = user.url();
+                        String sayrewards = "";
+                        String embedRewards = "";
 
-                    boolean pat = user.patron();
 
-                    String patWings = "";
+                        for (chariot.model.Trophy trophy : user.trophies()) {
 
-                    if (user.profile().isEmpty()) {
-                        this.embedBuilder = new EmbedBuilder();
-                        return this.embedBuilder.setDescription("can't generate profiles for user, not enough profile data");
+                            UserTrophy userTrophy = new UserTrophy(trophy);
+                            sayrewards += userTrophy.getImageLink() + "\n";
+                        }
+
+                        if(!user.trophies().isEmpty()) {
+
+                            embedRewards += "\n\n ** \uD83D\uDCA0 User Trophies:** \n\n" + sayrewards;
+
+                        }else{
+                            embedRewards += "";
+                        }
+
+
+                        this.sayProfile +=  "**Username:** " + " " + sayTitle + " " + name + "\n" +"**All Games**: " + all + "\n" + "** ⚔️ Won:** " +   wins + " ** \uD83D\uDE14 Loss:** " + lose + " ** \uD83E\uDD1D Draw:** " + draw + "\n** ♗ Playing:** " + playing + "\n \uD83D\uDCB9 **Ratings**: \n" + this.getBlitzRatings() + "\n" + this.getRapidRatings() + "\n" + this.getBulletRatings() + "\n" + this.getClassicalRatings()+ embedRewards ;
+                    }else{
+                        return "Please add Bio to Your Profile!";
                     }
-
-
-                    if (pat == true) {
-                        patWings += "https://cdn.discordapp.com/emojis/900426733814165534.png?size=96";
-
-
-                    } else {
-                        patWings += " https://www.google.com/url?sa=i&url=https%3A%2F%2Flichess.fandom.com%2Fwiki%2FHorsey&psig=AOvVaw27c2RGn3iSXKXx26gOqKlo&ust=1634835688231000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIiPvvC72fMCFQAAAAAdAAAAABAJ";
-
-                    }
-
-
-                    String sayTitle = "";
-
-                    Optional<String> titledPlayer = user.title();
-
-                    Boolean hasTitle;
-
-
-                    if (titledPlayer.isPresent()) { // check if the user is titled, I wish I was titled player :))
-                        hasTitle = true;
-                    } else {
-                        hasTitle = false;
-                    }
-
-                    if (hasTitle == true) {
-                        sayTitle += titledPlayer.get();
-                    } else {
-                        sayTitle += "";
-                    }
-
-                    String sayrewards = "";
-
-
-                    // getting user profiles
-
-                    for (chariot.model.Trophy trophy : user.trophies()) {
-
-                        UserTrophy userTrophy = new UserTrophy(trophy);
-                        sayrewards += userTrophy.getImageLink() + "\n";
-                    }
-
-
-                    // creating the Lichess style profile with embeds
-
-
-                    this.embedBuilder = new EmbedBuilder();
-                    this.embedBuilder.setColor(Color.white);
-                    this.embedBuilder.setThumbnail(patWings);
-
-                    this.embedBuilder.setTitle("Lichess Profile for: " + name);
-                    this.embedBuilder.setDescription("**Username:** " + " " + sayTitle + "  " + name + "\n \n ** ✏️ User Bio:** " + bio + "\n \n ** ♚ Games** \n \n" + "**All Games**: " + all + "\n" + "** ⚔️ Wins:** " + wins + "\n ** \uD83D\uDE14 Loses:** " + lose + "\n ** \uD83E\uDD1D Draws:** " + draw + "\n\n ** ♗ Playing:** " + playing + "\n\n ** \uD83D\uDCA0 User Trophies:** \n\n" + sayrewards );
-
 
                 }
             }
             if (userPresent == false) {
-                this.embedBuilder.setDescription("User Not Present, Please try again");
-                return this.embedBuilder;
+                return "User Not Present, Please try again";
+
             }
 
         }catch(Exception e){
             e.printStackTrace();
-            this.embedBuilder = new EmbedBuilder();
-            return this.embedBuilder.setDescription("Given user is not active, can't create profile for inactive(Less than 20 games) user");
+            return "Unknown Error..";
         }
 
-        return this.embedBuilder;
+        return sayProfile;
 
 
     }
