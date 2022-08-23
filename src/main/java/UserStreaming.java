@@ -1,3 +1,8 @@
+import chariot.Client;
+import chariot.model.One;
+import chariot.model.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+
 import java.awt.*;
 
 public class UserStreaming extends UserProfile{
@@ -15,23 +20,13 @@ public class UserStreaming extends UserProfile{
     }
 
 
-    /**
-     *
-     * ,streaming? command to see the given Lichess user is streaming
-     *
-     * input: Lichess username
-     *
-     * output: the streaming status of that player
-     *
-     *
-     */
 
 
     public EmbedBuilder getStreamingStatus(){
 
         try {
 
-            Result<User> result = this.getClient().users().byId(this.getUserID());
+            One<User> result = this.getClient().users().byId(this.getUserID());
             this.embedBuilder = new EmbedBuilder();
 
             if (result.isPresent()) { // checking if the user is present
