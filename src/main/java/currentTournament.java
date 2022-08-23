@@ -1,5 +1,5 @@
 import chariot.Client;
-import chariot.model.Result;
+import chariot.model.One;
 import chariot.model.Tournament;
 import chariot.model.TournamentStatus;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,7 +17,9 @@ public class currentTournament {
     }
 
     public EmbedBuilder getTournaments(){
-        Result<TournamentStatus> result = this.client.tournaments().currentTournaments();
+
+
+        One<TournamentStatus> result = this.client.tournaments().currentTournaments();
         String startedTournament = "";
         this.embedBuilder = new EmbedBuilder();
         this.embedBuilder.setTitle("Current Lichess Tournaments");
@@ -25,16 +27,14 @@ public class currentTournament {
 
 
         if(result.isPresent()){
-            List<TournamentStatus> tournamentStatuses = result.stream().toList();
+            List<Tournament> tour = result.get().finished();
 
-            for(int i = 0; i < tournamentStatuses.size(); i++){
-                List<Tournament> tour =  tournamentStatuses.get(i).started();
 
                 for(int j =0; j < tour.size(); j++){
                     startedTournament +="\uD83C\uDF96️ " + "**" + tour.get(j).fullName() + "**" + " [Join Now](" + "https://lichess.org/tournament/" + tour.get(j).id() + ")" + "\n\n";
                 }
 
-            }
+
 
            this.embedBuilder.setDescription(startedTournament);
            this.embedBuilder.setColor(Color.cyan);
