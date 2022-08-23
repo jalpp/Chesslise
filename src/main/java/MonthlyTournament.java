@@ -1,7 +1,7 @@
 import chariot.Client;
 import chariot.ClientAuth;
 import chariot.model.Ack;
-import chariot.model.Result;
+
 
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
