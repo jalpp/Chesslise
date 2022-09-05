@@ -11,6 +11,8 @@ public class puzzle {
     private EmbedBuilder embedBuilder;
     private String moveSay = "";
 
+    private String solLink = "";
+
 
 
     public puzzle(){
@@ -20,6 +22,8 @@ public class puzzle {
     public String getRandom()  {
 
         try {
+
+
             String cor = this.dailyPuzzleClient.getRandomDailyPuzzle().getFen();
 
 
@@ -28,9 +32,9 @@ public class puzzle {
             String coordImg = "";
 
             if(split[1].contains("w")){
-                moveSay += "**White To Move**";
+                moveSay += "White To Move";
             }else{
-                moveSay += "**Black To Move**";
+                moveSay += "Black To Move";
             }
 
             if(split[1].contains("w")){
@@ -39,7 +43,16 @@ public class puzzle {
                 coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
             }
 
+
+            this.solLink += "https://lichess.org/analysis/standard/" + cor.replace(" ", "_");
+
+
+
+
+
             return coordImg;
+
+
 
 
 
@@ -58,6 +71,11 @@ public class puzzle {
 
     public String getMoveSay(){
         return moveSay;
+    }
+
+
+    public String getSolLink(){
+        return solLink;
     }
 
 
