@@ -1,7 +1,6 @@
 import chariot.Client;
 import net.dv8tion.jda.api.EmbedBuilder;
 
-import java.awt.*;
 
 public class Game {
 
@@ -14,6 +13,10 @@ public class Game {
     private String white = "";
     private String random = "";
 
+    public Game(){
+
+    }
+
 
 
     public Game(Client client, String variant, String challengeType){
@@ -24,14 +27,49 @@ public class Game {
     }
 
 
+    public void DifferentGameGen(int min, int sec, String type){
+
+        if(type.equals("r")){
+
+            int timeer = min*60;
+
+            Client clientone = Client.basic();
+
+
+            var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).rated(true));
+
+            result.ifPresent(play -> {
+
+                this.black += play.urlBlack();
+                this.white += play.urlWhite();
+                this.random += play.challenge().url();
+            });
+        }else{
+            int timeer = min*60;
+
+            Client clientone = Client.basic();
+
+
+            var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).rated(false));
+
+            result.ifPresent(play -> {
+
+                this.black += play.urlBlack();
+                this.white += play.urlWhite();
+                this.random += play.challenge().url();
+            });
+        }
+
+
+    }
+
+
 
 
 
     public void getNewGame(){
 
         this.embedBuilder = new EmbedBuilder();
-
-
 
 
         if (this.variant.equals("rapid")) {
@@ -124,6 +162,7 @@ public class Game {
 
 
         }
+
 
 
 
