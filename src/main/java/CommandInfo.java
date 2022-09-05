@@ -14,7 +14,7 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Commands For LISEBOT**");
         this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
-        this.embedBuilder.setDescription("**/help** \n to see command information for the LISEBOT" + "\n\n **/view** <Lichess Game Url> view lichess games "+"\n\n **/profile <Lichess username>** \n to see lichess profiles for given username" + "\n\n **/top10 <Lichess variant>** \n see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet" + "\n\n **/streamers** \n Watch current live streamers" + "\n\n **/board <Moves>** Input chess moves to display on chess board!" + "\n\n **/openingdb** View chess openings and their master games!");
+        this.embedBuilder.setDescription("**/help** \n to see command information for the LISEBOT" + "\n\n **/view** <Lichess Game Url> view lichess games "+"\n\n **/profile ** \n to see lichess profiles for given username" + "\n\n **/top10 <Lichess variant>** \n see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet" + "\n\n **/streamers** \n Watch current live streamers" + "\n\n **/board <Moves>** Input chess moves to display on chess board!" + "\n\n **/openingdb** View chess openings and their master games!");
         this.embedBuilder.setFooter("Page 1/4");
 
         return this.embedBuilder;
@@ -33,7 +33,7 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Watch And Play Chess**");
         this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
-        this.embedBuilder.setDescription( "\n\n **/tv** \n Watch Lichess TV!" +"\n\n **/invite** \n invite LiSEBot to your servers" + "\n\n **/play <variant> <rated/casual>** \n created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc>" + "\n\n **/watch <Lichess Username>** \n watch latest Lichess game of the given user in gif!" + "\n\n **/watchmaster** \n watch random master games");
+        this.embedBuilder.setDescription( "\n\n **/tv** \n Watch Lichess TV!" +"\n\n **/invite** \n invite LiSEBot to your servers" + "\n\n **/play ** \n created opnended challenge for users to play with" + "\n\n **/watch>** \n watch latest Lichess game of the given user in gif!" + "\n\n **/watchmaster** \n watch random master games");
         this.embedBuilder.setFooter("Page 3/4");
         return this.embedBuilder;
     }
@@ -50,4 +50,3 @@ public class CommandInfo {
 
 
 }
-
