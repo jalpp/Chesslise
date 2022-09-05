@@ -23,21 +23,22 @@
  2. [Lichess Gifs](https://github.com/lichess-org/lila-gif)
  
 
-# Commands:
+# Lichess Commands:
 | Commands      | Description |
 | ----------- | ----------- |
 | /help      | to see command information for the LISEBOT       |
 | /profile <Lichess username>    | to see lichess profiles for given username       |
-|  /top10 <Lichess variant>     |see the top 10 players list in the variant provided, includes blitz, rapid, classical, bullet, ultrabullet      |
 | /streamers | Watch current live streamers |
-| /board <Moves> | Input chess moves to display on chess board! |
 | /dailypuzzle | see the daily Lichess puzzle and try to solve it! |
 |  /play | created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
 |  /arena <Lichess arena URL>  | see the standings and tournament information for given tournament link|
 | /puzzleracer | play puzzle racer! |
 
 
-
+# Chess.com Commands
+| Commands      | Description |
+| ----------- | ----------- |
+| /puzzle      | Do random Chess.com puzzles     |
  
 
 ## Terms of Service
