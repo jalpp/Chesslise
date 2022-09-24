@@ -40,9 +40,11 @@
 | /puzzle      | Do random Chess.com puzzles     |
 
 ## Create Lichess Games
-[![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-05-at-5.16.48-PM.png)](https://www.linkpicture.com/view.php?img=LPic63166790de4002128286926)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-05-at-5.16.48-PM.png)
 
-[![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-05-at-5.16.56-PM.png)](https://www.linkpicture.com/view.php?img=LPic631667de1ab76857420876)
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-05-at-5.16.56-PM.png)
+
+![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-24-at-5.16.24-PM.png)
  
 
 ## Terms of Service
