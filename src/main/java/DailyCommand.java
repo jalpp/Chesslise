@@ -166,6 +166,10 @@ public class DailyCommand {
         return rating;
     }
 
+     public String getPuzzleLink(){
+        return "https://lichess.org/training/" + client.puzzles().dailyPuzzle().get().puzzle().id();
+    }
+
 
 }
 
