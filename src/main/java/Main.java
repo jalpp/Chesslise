@@ -515,22 +515,17 @@ public class Main extends ListenerAdapter {
 
      }
 
-      if(event.getComponentId().equals("profile")){
-          UserProfile userProfile = new UserProfile(client,this.ButtonUserId);
-          event.editMessage(userProfile.getUserProfile()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA"), Button.danger("userpuzzle","\uD83C\uDF2A️"), Button.primary("userstreaming", "\uD83C\uDF99️"), Button.link("https://lichess.org/@/" + this.ButtonUserId, "♞")).queue();
-
-      }
-
+  
 
 
        if(event.getComponentId().equals("userpuzzle")){
            UserDashboard userDashboard = new UserDashboard(this.ButtonClient, this.ButtonUserId);
-           event.editMessageEmbeds(userDashboard.getUserDashboard().build()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA").asDisabled(), Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
+           event.editMessageEmbeds(userDashboard.getUserDashboard().build()).setActionRow(Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
        }
 
        if(event.getComponentId().equals("userstreaming")){
            UserStreaming userStreaming = new UserStreaming(this.ButtonClient, this.ButtonUserId);
-           event.editMessageEmbeds(userStreaming.getStreamingStatus().build()).setActionRow(Button.primary("userwatch", "\uD83D\uDCFA").asDisabled(), Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
+           event.editMessageEmbeds(userStreaming.getStreamingStatus().build()).setActionRow(Button.danger("userpuzzle","\uD83C\uDF2A️").asDisabled(), Button.primary("userstreaming", "\uD83C\uDF99️").asDisabled()).queue();
        }
 
 
