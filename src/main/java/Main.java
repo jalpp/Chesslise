@@ -185,7 +185,7 @@ public class Main extends ListenerAdapter {
                 break;
             case "dailypuzzle":
                 DailyCommand dailyCommand = new DailyCommand(client);
-                event.reply(dailyCommand.getPuzzleData()).addActionRow(Button.link("https://lichess.org/training/daily", dailyCommand.getMoveSay() + "| " + "Rating: " + dailyCommand.getRating()), Button.primary("sol", "Solution"), Button.success("hint", "Hint")).queue();
+                event.reply(dailyCommand.getPuzzleData()).addActionRow(Button.link(dailyCommand.getPuzzleLink(), dailyCommand.getMoveSay() + "| " + "Rating: " + dailyCommand.getRating()), Button.primary("sol", "Solution"), Button.success("hint", "Hint")).queue();
                 break;
             case "watch":
 
