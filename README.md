@@ -20,6 +20,9 @@
 # Image Generation
  1. [Chess Board Image](https://chessboardimage.com/)
  2. [Lichess Gifs](https://github.com/lichess-org/lila-gif)
+
+# LISEBOT Highlevel Design
+[image](https://www.linkpicture.com/q/autodraw-2022-09-24.png)
  
 
 # Lichess Commands:
