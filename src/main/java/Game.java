@@ -36,7 +36,7 @@ public class Game {
             Client clientone = Client.basic();
 
 
-            var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).rated(true));
+            var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").rated(true));
 
             result.ifPresent(play -> {
 
@@ -50,7 +50,7 @@ public class Game {
             Client clientone = Client.basic();
 
 
-            var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).rated(false));
+            var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").rated(false));
 
             result.ifPresent(play -> {
 
@@ -81,7 +81,7 @@ public class Game {
                 Client clientone = Client.basic();
 
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(300, 5).rated(true));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(300, 5).name("LISEBOT Challenge Created! Please Join the Game!").rated(true));
 
                 result.ifPresent(play -> {
 
@@ -99,7 +99,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(300, 5).rated(false));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(300, 5).name("LISEBOT Challenge Created! Please Join the Game!").rated(false));
 
                 result.ifPresent(play -> {
 
@@ -125,7 +125,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(180, 2).rated(true));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(180, 2).name("LISEBOT Challenge Created! Please Join the Game!").rated(true));
 
                 result.ifPresent(play -> {
 
@@ -146,7 +146,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(180, 2).rated(false));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(180, 2).name("LISEBOT Challenge Created! Please Join the Game!").rated(false));
 
                 result.ifPresent(play -> {
 
@@ -174,7 +174,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  1800 , 20).rated(true));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  1800 , 20).name("LISEBOT Challenge Created! Please Join the Game!").rated(true));
 
                 result.ifPresent(play -> {
 
@@ -195,7 +195,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  1800 , 20).rated(false));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  1800 , 20).name("LISEBOT Challenge Created! Please Join the Game!").rated(false));
 
                 result.ifPresent(play -> {
 
@@ -221,7 +221,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  60 , 0).rated(true));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  60 , 0).name("LISEBOT Challenge Created! Please Join the Game!").rated(true));
 
                 result.ifPresent(play -> {
                     this.black += play.urlBlack();
@@ -239,7 +239,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  60 , 0).rated(false));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  60 , 0).name("LISEBOT Challenge Created! Please Join the Game!").rated(false));
 
                 result.ifPresent(play -> {
                     this.black += play.urlBlack();
@@ -266,7 +266,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  15 , 0).rated(true));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  15 , 0).name("LISEBOT Challenge Created! Please Join the Game!").rated(true));
 
                 result.ifPresent(play -> {
                     this.black += play.urlBlack();
@@ -283,7 +283,7 @@ public class Game {
 
                 var clientone = Client.basic();
 
-                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  15 , 0).rated(false));
+                var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(  15 , 0).name("LISEBOT Challenge Created! Please Join the Game!").rated(false));
 
                 result.ifPresent(play -> {
                     this.black += play.urlBlack();
