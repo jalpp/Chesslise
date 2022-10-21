@@ -61,4 +61,22 @@ LISEBOT Does not and will not store any private user information, all bot comman
 [Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
 
 
+# Running Bot Local
+
+LISSBOT needs Java 17 and Maven to run properly for IDEs Vs code or IntellJ can be used
+git clone Lisebotrepo 
+cd src 
+cd main
+cd java 
+open main.java (code main.java in vs code)
+go to here 
+[Insert Token ](https://github.com/jalpp/LichessSearchEngineBot/blob/master/src/main/java/Main.java#L45)
+Obtain a bot token from Discord dev page
+Insert it in the variable Token
+Invite the bot to your own server from Discord dev page
+Run java main.java or run from IDE
+
+
+
+
 
