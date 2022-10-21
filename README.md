@@ -1,6 +1,7 @@
 ![](https://img.shields.io/badge/Status-Verified%20Discord%20Bot-brightgreen)
 ![](https://img.shields.io/badge/Status-Online-brightgreen)
 ![](https://img.shields.io/badge/Discord%20API-JDA-purple)
+![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory%20-blue)
 # Sources:
 
 # API
