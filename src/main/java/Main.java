@@ -116,16 +116,6 @@ public class Main extends ListenerAdapter {
             case "openingdb":
                 event.reply( "1️⃣ **Italian Opening ~ e4 e5 Nf3 Nf6 Bc4** \n\n 2️⃣ **Queen's Gambit ~ d4 d5 c4** \n\n 3️⃣ **English Opening ~ c4** \n\n 4️⃣ **Zukertort Opening ~ Nf3** \n\n 5️⃣ **Sicilian Defence ~ e4 c5** \n\n ").addActionRow(Button.primary("oneopening", "1️⃣"), Button.primary("twoopening", "2️⃣"), Button.primary("threeopening", "3️⃣"), Button.primary("fouropening", "4️⃣"), Button.primary("fiveopening", "5️⃣")).queue();
                 break;
-            case "view":
-                String gameid = event.getOption("gameurl").getAsString();
-                ViewGame viewGame = new ViewGame(client, gameid);
-                event.replyEmbeds(viewGame.getViewGame().build()).queue();
-                break;
-            case "board":
-                String m = event.getOption("moves").getAsString();
-                Board b = new Board(m);
-                event.replyEmbeds(b.getView().build()).queue();
-                break;
             case "puzzleracer":
                 TextInput puzzletext = TextInput.create("racerauth", "Token Input", TextInputStyle.SHORT)
                         .setPlaceholder("Input Your Lichess Token")
@@ -273,11 +263,6 @@ public class Main extends ListenerAdapter {
                         .build();
                 event.replyModal(modaltour).queue();
                 break;
-            case "stormdash":
-                String stormUser = event.getOption("storm").getAsString();
-                UserDashboard userDashboard = new UserDashboard(client,stormUser);
-                event.replyEmbeds(userDashboard.getUserDashboard().build()).queue();
-                break;
             case "invite":
                 InviteMe inviteMe = new InviteMe();
                 event.replyEmbeds(inviteMe.getInviteInfo().build()).queue();
@@ -301,16 +286,6 @@ public class Main extends ListenerAdapter {
                         .build();
                 event.replyModal(modalmanager).queue();
                 break;
-            case "tv":
-                WatchTv watchTv = new WatchTv(client);
-                event.replyEmbeds(watchTv.getTV().build()).addActionRow(Button.primary("blitztv", "⚡"), Button.primary("bullettv", "\uD83D\uDE85"), Button.primary("rapidtv", "\uD83D\uDC3F")).queue();
-                break;
-            case "liga":
-                 String team = event.getOption("teamname").getAsString();
-                 LigaEmbed ligaEmbed = new LigaEmbed(client, team);
-                 event.reply("Generating Liga Results..").queue();
-                 event.getChannel().sendMessageEmbeds(ligaEmbed.getLigaEmbed().build()).queue();
-                break;
             default:
 
         }
@@ -324,7 +299,7 @@ public class Main extends ListenerAdapter {
         Client client = Client.basic();
         String name = event.getModalId();
 
-        switch (name){
+        switch by (name){
             case "modalplay":
                 AdminLoginChallenge adminLogin = new AdminLoginChallenge(client, event.getValue("challengeauth").getAsString() , event.getValue("challengeauthuser").getAsString());
                 event.replyEmbeds(adminLogin.getChallenge().build()).queue();
@@ -564,16 +539,7 @@ public class Main extends ListenerAdapter {
         }
 
 
-        if(event.getComponentId().equals("blitztv")){
-            event.deferReply(true).queue();
-            event.getChannel().sendMessage(tv.getBlitz()).queueAfter(20, TimeUnit.SECONDS);
-        }else if(event.getComponentId().equals("bullettv")){
-            event.deferReply(true).queue();
-            event.getChannel().sendMessage(tv.getBullet()).queueAfter(20, TimeUnit.SECONDS);
-        }else if(event.getComponentId().equals("rapidtv")){
-            event.deferReply(true).queue();
-            event.getChannel().sendMessage(tv.getRapid()).queueAfter(20, TimeUnit.SECONDS);
-        }
+ 
 
         if(event.getComponentId().equals("next")){
             event.editMessageEmbeds(commandInfo.getPageTwo().build()).setActionRow(Button.primary("nexttwo", "➡️")).queue();
