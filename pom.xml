@@ -38,7 +38,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-alpha.18</version>
+            <version>5.0.0-alpha.21</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>io.github.tors42</groupId>
             <artifactId>chariot</artifactId>
-            <version>0.0.53</version>
+            <version>0.0.54</version>
         </dependency>
         <dependency>
             <groupId>io.github.sornerol</groupId>
