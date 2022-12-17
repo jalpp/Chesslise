@@ -10,7 +10,7 @@ public class UserObject {
 
     public UserObject(Client client, String userParsing){
         this.client = client;
-        this.userID = userParsing.toLowerCase();
+        this.userID = userParsing.toLowerCase().trim();
     }
 
 

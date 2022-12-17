@@ -11,13 +11,14 @@ public class UserGame {
     private String gameID;
     private String gamelinkId = "";
     private String flip = "";
+    private String openingName ="";
 
 
 
 
     public UserGame(Client client, String userID){
         this.client = client;
-        this.getUserID = userID;
+        this.getUserID = userID.toLowerCase().trim();
         this.flip = "";
     }
 
@@ -38,11 +39,13 @@ public class UserGame {
        Game getGame = this.client.games().currentByUserId(this.getUserID).get();
 
 
+
+
             if (isBlack()) {
-                gamelinkId += "https://lichess1.org/game/export/gif/black/" + getGame.id() + ".gif";
+                gamelinkId += "https://lichess1.org/game/export/gif/black/" + getGame.id() + ".gif?theme=canvas&piece=kosal";
 
             } else {
-                gamelinkId += "https://lichess1.org/game/export/gif/white/" + getGame.id() + ".gif";
+                gamelinkId += "https://lichess1.org/game/export/gif/white/" + getGame.id() + ".gif?theme=canvas&piece=kosal";
 
             }
 
@@ -52,6 +55,15 @@ public class UserGame {
 
 
     }
+
+
+    public String getOpeningName(){
+        return this.client.games().currentByUserId(this.getUserID).get().opening().name();
+
+        //return this.openingName;
+    }
+
+
 
 
 

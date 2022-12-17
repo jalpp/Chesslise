@@ -22,6 +22,7 @@ public class UserProfile extends UserObject{
     public String getBlitzRatings(){
         One<PerfStat> userBlitz = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.blitz);
 
+
         String blitzRating = " \uD83D\uDD25 **Blitz**: ?";
 
         if(userBlitz.isPresent() && !userBlitz.get().perf().glicko().provisional()){
@@ -90,6 +91,13 @@ public class UserProfile extends UserObject{
 
             if (userPresent == true) {  // checking if the user is present in the lichess
                 User user = userResult.get();
+                String StatusEmoji = "\uD83D\uDD34";
+                boolean checkOnline = this.getClient().users().statusByIds(this.getUserID()).stream().toList().get(0).online();
+                if(checkOnline){
+                    StatusEmoji = "\uD83D\uDFE2";
+                }
+
+
 
 
                 boolean cheater = user.tosViolation();
@@ -177,7 +185,7 @@ public class UserProfile extends UserObject{
                         }
 
 
-                        this.sayProfile +=  "**Username:** " + " " + sayTitle + " " + name + "\n" +"**All Games**: " + all + "\n" + "** ⚔️ Won:** " +   wins + " ** \uD83D\uDE14 Loss:** " + lose + " ** \uD83E\uDD1D Draw:** " + draw + "\n** ♗ Playing:** " + playing + "\n \uD83D\uDCB9 **Ratings**: \n" + this.getBlitzRatings() + "\n" + this.getRapidRatings() + "\n" + this.getBulletRatings() + "\n" + this.getClassicalRatings()+ embedRewards ;
+                        this.sayProfile +=  sayTitle + " " + name + " " +StatusEmoji + "\n" +"**All Games**: " + all + "\n" + "** ⚔️ Won:** " +   wins + " ** \uD83D\uDE14 Loss:** " + lose + " ** \uD83E\uDD1D Draw:** " + draw + "\n** ♗ Playing:** " + playing + "\n \uD83D\uDCB9 **Ratings**: \n" + this.getBlitzRatings() + "\n" + this.getRapidRatings() + "\n" + this.getBulletRatings() + "\n" + this.getClassicalRatings()+ embedRewards ;
                     }else{
                         return "Please add Bio to Your Profile!";
                     }

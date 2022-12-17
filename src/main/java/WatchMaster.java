@@ -32,10 +32,12 @@ public class WatchMaster {
         List<String> masterGifs = new ArrayList<>();
         Random random = new Random();
 
-        List<ExploreResult.DBGame> gamesE4 = chariot.Client.basic().games().openingExplorerMasters(conf -> conf.play("e2e4")).get().topGames();
-        List<ExploreResult.DBGame> gamesD4 = chariot.Client.basic().games().openingExplorerMasters(conf -> conf.play("d2d4")).get().topGames();
-        List<ExploreResult.DBGame> gamesNf3 = chariot.Client.basic().games().openingExplorerMasters(conf -> conf.play("g1f3")).get().topGames();
-        List<ExploreResult.DBGame> gamesc4 = chariot.Client.basic().games().openingExplorerMasters(conf -> conf.play("c2c4")).get().topGames();
+
+
+        List<ExploreResult.DBGame> gamesE4 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("e2e4")).get().topGames();
+        List<ExploreResult.DBGame> gamesD4 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("d2d4")).get().topGames();
+        List<ExploreResult.DBGame> gamesNf3 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("g1f3")).get().topGames();
+        List<ExploreResult.DBGame> gamesc4 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("c2c4")).get().topGames();
 
 
 
@@ -65,7 +67,7 @@ public class WatchMaster {
 
     public String getOpenings(String moves){
         Random random = new Random();
-        List<ExploreResult.DBGame> games = chariot.Client.basic().games().openingExplorerMasters(conf -> conf.play(moves)).get().topGames();
+        List<ExploreResult.DBGame> games = chariot.Client.basic().openingExplorer().masters(conf -> conf.play(moves)).get().topGames();
         int randomsizer = random.nextInt(games.size());
 
         this.openingGif +=  "https://lichess1.org/game/export/gif/" + games.get(randomsizer).id() + ".gif";

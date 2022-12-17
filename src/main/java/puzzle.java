@@ -9,6 +9,7 @@ public class puzzle {
 
     private DailyPuzzleClient dailyPuzzleClient;
     private EmbedBuilder embedBuilder;
+    private String pgn;
     private String moveSay = "";
 
     private String solLink = "";
@@ -25,6 +26,7 @@ public class puzzle {
 
 
             String cor = this.dailyPuzzleClient.getRandomDailyPuzzle().getFen();
+            this.pgn = this.dailyPuzzleClient.getRandomDailyPuzzle().getPgn();
 
 
             String[] split = cor.split(" ");
@@ -66,6 +68,10 @@ public class puzzle {
 
 
 
+    }
+
+    public String getPgn(){
+        return pgn;
     }
 
 

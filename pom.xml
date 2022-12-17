@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.example</groupId>
-    <artifactId>//SetYourID</artifactId> 
+    <artifactId>LISEBOT</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-alpha.18</version>
+            <version>5.0.0-beta.2</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>io.github.tors42</groupId>
             <artifactId>chariot</artifactId>
-            <version>0.0.53</version>
+            <version>0.0.57</version>
         </dependency>
         <dependency>
             <groupId>io.github.sornerol</groupId>
@@ -60,6 +60,7 @@
             <artifactId>chesslib</artifactId>
             <version>1.3.3</version>
         </dependency>
+      
     </dependencies>
 
 </project>
