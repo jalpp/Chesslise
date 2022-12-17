@@ -46,9 +46,7 @@
 | /dailypuzzlecc | do Chess.com daily puzzle     |
 
 ## Create Lichess Games
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-05-at-5.16.48-PM.png)
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-05-at-5.16.56-PM.png)
 
 ![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-24-at-5.16.24-PM.png)
  
