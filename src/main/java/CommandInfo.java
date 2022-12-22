@@ -15,7 +15,7 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Commands For LISEBOT**");
         this.embedBuilder.setThumbnail(this.logo);
-        this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "**" + Emojis[0] + " /suggest** \n provide feedback to developer"+"\n\n ** " + Emojis[1] +" /dailypuzzlecc** \n view Chess.com daily puzzles" + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers" + "\n\n **" + Emojis[4] + " /openingdb** View chess openings and their master games!");
+        this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "\n\n**" + Emojis[0] + "  /suggest** \n provide feedback to developer"+ "\n\n ** ❓ /setting** \n LISEBOT settings"  +"\n\n ** " + Emojis[1] +" /dailypuzzlecc** \n view Chess.com daily puzzles" + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers" + "\n\n **" + Emojis[4] + " /openingdb** View chess openings and their master games!");
         this.embedBuilder.setFooter("Page 1/3", this.logo);
 
 

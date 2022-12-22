@@ -55,11 +55,21 @@ public class DailyCommand {
 
                 String coordImg = "";
 
-                if(split[1].contains("w")){
-                    coordImg = "https://chessboardimage.com/" + split[0] + ".png";
-                }else{
-                    coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+                if(Main.boardOriginal == true){
+                    //https://lichess1.org/export/fen.gif?fen=3r4%2Fp3k1p1%2F1p3p1p%2F4n3%2F1R2B3%2F4R3%2FP1P3P1%2F3r3K+w+-+-+8+37&color=white&lastMove=d2d1&variant=standard&theme=blue&piece=kosal
+
+                    if(split[1].contains("w")){
+                        coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+                    }else{
+                        coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+                    }
+
+                    return coordImg;
+
+
                 }
+
+                coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&theme=blue&piece=alpha";
 
 
 
@@ -116,11 +126,7 @@ public class DailyCommand {
 
                 String[] split = cor.split(" ");
 
-                if(split[1].contains("b")){
-                    coordImg += "https://chessboardimage.com/" + split[0] + ".png";
-                }else{
-                    coordImg += "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
-                }
+                coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&theme=blue&piece=alpha";
 
 
 

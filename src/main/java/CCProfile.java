@@ -38,6 +38,7 @@ public class CCProfile {
             String say = "";
 
 
+
             PlayerStats player = playerClient.getStatsForPlayer(this.username);
 
             proSay+= " ** Bullet**: " +
