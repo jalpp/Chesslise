@@ -51,12 +51,10 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) {
 
-        String token = "insert token";
+        
 
 
-
-
-        jdaBuilder = JDABuilder.createDefault(token);// string token
+        jdaBuilder = JDABuilder.createDefault(System.getenv("discord_bot_token"));// string token
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.playing("Lichess.org/Chess.com"));
