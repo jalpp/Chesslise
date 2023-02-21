@@ -1,19 +1,19 @@
 import io.github.sornerol.chess.pubapi.client.DailyPuzzleClient;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
-import net.dv8tion.jda.api.EmbedBuilder;
-
-import java.awt.*;
 import java.io.IOException;
+
 
 public class puzzle {
 
     private DailyPuzzleClient dailyPuzzleClient;
-    private EmbedBuilder embedBuilder;
+
     private String pgn;
     private String moveSay = "";
-
+    private String theme = "";
     private String solLink = "";
+    
 
+    
 
 
     public puzzle(){
@@ -22,11 +22,14 @@ public class puzzle {
 
     public String getRandom()  {
 
+
+
         try {
 
 
             String cor = this.dailyPuzzleClient.getRandomDailyPuzzle().getFen();
             this.pgn = this.dailyPuzzleClient.getRandomDailyPuzzle().getPgn();
+            this.theme = this.dailyPuzzleClient.getRandomDailyPuzzle().getTitle();
 
 
             String[] split = cor.split(" ");
@@ -35,27 +38,25 @@ public class puzzle {
 
             if(split[1].contains("w")){
                 moveSay += "White To Move";
+
             }else{
                 moveSay += "Black To Move";
+
             }
+
 
             if(split[1].contains("w")){
-                coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+                coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=blue&piece=cardinal";
             }else{
-                coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+                coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
             }
-
+            
 
             this.solLink += "https://lichess.org/analysis/standard/" + cor.replace(" ", "_");
 
-
-
-
-
+            
             return coordImg;
-
-
-
+            
 
 
         } catch (IOException e) {
@@ -79,17 +80,14 @@ public class puzzle {
         return moveSay;
     }
 
+    public String getTheme() {
+        return theme;
+    }
 
     public String getSolLink(){
         return solLink;
     }
 
 
-
-
-
-
-
-
-
 }
+

@@ -3,8 +3,7 @@ import chariot.model.Enums;
 import chariot.model.One;
 import chariot.model.PerfStat;
 import chariot.model.User;
-import net.dv8tion.jda.api.EmbedBuilder;
-import java.awt.*;
+
 import java.util.Optional;
 
 public class UserProfile extends UserObject{
@@ -16,6 +15,7 @@ public class UserProfile extends UserObject{
         super(client, userParsing);
 
     }
+
 
 
 
@@ -71,8 +71,6 @@ public class UserProfile extends UserObject{
         return calRating;
 
     }
-
-
 
 
 
@@ -136,6 +134,8 @@ public class UserProfile extends UserObject{
 
                         String userUrl = user.url();
 
+
+
                         boolean pat = user.patron();
 
                         String patWings = "";
@@ -178,7 +178,7 @@ public class UserProfile extends UserObject{
 
                         if(!user.trophies().isEmpty()) {
 
-                            embedRewards += "\n\n ** \uD83D\uDCA0 User Trophies:** \n\n" + sayrewards;
+                            embedRewards += "\n\n ** \uD83D\uDCA0 Trophies:** \n\n" + sayrewards;
 
                         }else{
                             embedRewards += "";

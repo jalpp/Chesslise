@@ -22,6 +22,12 @@
  1. [Chess Board Image](https://chessboardimage.com/)
  2. [Lichess Gifs](https://github.com/lichess-org/lila-gif)
 
+
+# Lise Chess Engine
+
+LISEBOT supports built in Chess AI that uses complex move search algorithms for users to play, more details 
+about the AI can be found [here](https://github.com/jalpp/LiseChessEngine)
+
 # LISEBOT Highlevel Design
 ![image](https://www.linkpicture.com/q/autodraw-2022-09-24.png)
  
@@ -35,6 +41,13 @@
 | /dailypuzzle | see the daily Lichess puzzle and try to solve it! |
 |  /play | created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
 |  /arena <Lichess arena URL>  | see the standings and tournament information for given tournament link|
+
+
+# LISE Chess AI Commands
+| Commands      | Description |
+| ----------- | ----------- |
+| /move      | make a chess move to play LISE AI   |
+| /resetboard  | reset the chess game with LISE AI    |
 
 
 

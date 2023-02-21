@@ -10,6 +10,7 @@ public class UserGame {
     private String getUserID;
     private String gameID;
     private String gamelinkId = "";
+
     private String flip = "";
     private String openingName ="";
 
@@ -18,11 +19,12 @@ public class UserGame {
 
     public UserGame(Client client, String userID){
         this.client = client;
-        this.getUserID = userID.toLowerCase().trim();
+        this.getUserID = userID.toLowerCase();
         this.flip = "";
     }
 
     public boolean isBlack(){
+
 
        return this.client.games().currentByUserId(this.getUserID).get().players().black().name().equalsIgnoreCase(this.getUserID);
 
@@ -39,15 +41,29 @@ public class UserGame {
        Game getGame = this.client.games().currentByUserId(this.getUserID).get();
 
 
+          if(Main.boardOriginal == true){
 
+              if (isBlack()) {
+                  gamelinkId += "https://lichess1.org/game/export/gif/black/" + getGame.id() + ".gif?theme=brown&piece=kosal";
+                  
 
-            if (isBlack()) {
-                gamelinkId += "https://lichess1.org/game/export/gif/black/" + getGame.id() + ".gif?theme=canvas&piece=kosal";
+              } else {
+                  gamelinkId += "https://lichess1.org/game/export/gif/white/" + getGame.id() + ".gif?theme=brown&piece=kosal";
+                 
 
-            } else {
-                gamelinkId += "https://lichess1.org/game/export/gif/white/" + getGame.id() + ".gif?theme=canvas&piece=kosal";
+              }
 
-            }
+              return gamelinkId;
+          }
+
+        if (isBlack()) {
+            gamelinkId += "https://lichess1.org/game/export/gif/black/" + getGame.id() + ".gif?theme=green&piece=alpha";
+
+        } else {
+            gamelinkId += "https://lichess1.org/game/export/gif/white/" + getGame.id() + ".gif?theme=green&piece=alpha";
+
+        }
+
 
 
         return gamelinkId;
@@ -58,22 +74,34 @@ public class UserGame {
 
 
     public String getOpeningName(){
-        return this.client.games().currentByUserId(this.getUserID).get().opening().name();
 
-        //return this.openingName;
+        if(this.client.games().currentByUserId(this.getUserID).get().opening() != null){
+            return this.client.games().currentByUserId(this.getUserID).get().opening().name();
+        }else{
+            return "Non-Standard-Opening";
+        }
+
+   
     }
 
 
+    public String getWinner(){
+        if(this.client.games().currentByUserId(this.getUserID).get().winner() != null) {
+            if (this.client.games().currentByUserId(this.getUserID).get().winner().name().equalsIgnoreCase("white")) {
+                return this.client.games().currentByUserId(this.getUserID).get().players().white().name();
+            } else {
+                return this.client.games().currentByUserId(this.getUserID).get().players().black().name();
+            }
+        }else{
+            return "Draw/Live Game";
+        }
+    }
 
+    public String getSpeed(){
+        return this.client.games().currentByUserId(this.getUserID).get().speed();
+    }
 
-
-
-
-  
-
-
-
-
+    
 
 
     public String getUserID(){

@@ -10,11 +10,11 @@ import java.awt.*;
 public class DailyCommand {
 
     private Client client;
-    private EmbedBuilder embedBuilder;
     private String gameID;
     private Board board;
     private String moveSay = "";
     private int rating;
+    private String blindmode = "";
 
 
     public DailyCommand(Client client) {
@@ -51,19 +51,21 @@ public class DailyCommand {
                     moveSay += "White To Move";
                 }else{
                     moveSay += "Black To Move";
+
                 }
 
                 String coordImg = "";
+                
 
                 if(split[1].contains("w")){
-                    coordImg = "https://chessboardimage.com/" + split[0] + ".png";
+                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=blue&piece=cardinal";
+                    
                 }else{
-                    coordImg = "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
+                    
                 }
 
-
-
-
+                
 
                 Puzzle.PuzzleInfo puzzleInfo = puzzle1.puzzle();
 
@@ -88,10 +90,7 @@ public class DailyCommand {
     }
 
     public String getSolution(){
-
-
-
-
+        
 
 
             One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
@@ -116,30 +115,22 @@ public class DailyCommand {
 
                 String[] split = cor.split(" ");
 
+
+
                 if(split[1].contains("b")){
-                    coordImg += "https://chessboardimage.com/" + split[0] + ".png";
+                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=blue&piece=cardinal";
                 }else{
-                    coordImg += "https://chessboardimage.com/" + split[0] + "-flip" + ".png";
+                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
                 }
 
-
-
-
-
+                
 
                 return coordImg;
             }else{
                 return "loading...";
             }
 
-
-
-
-
-
-
-
-
+            
 
     }
 
@@ -170,7 +161,9 @@ public class DailyCommand {
         return "https://lichess.org/training/" + client.puzzles().dailyPuzzle().get().puzzle().id();
     }
 
-
+    public String getBlindmode() {
+        return blindmode;
+    }
 }
 
 
