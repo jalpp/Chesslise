@@ -73,3 +73,6 @@ LISEBOT Does not and will not store any private user information, all bot comman
 # Bot Testing Link
 [Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
 
+## Contribute 
+
+LISEBOT is open to contributors for bug fixes, enhancements, some features are "good first issues" to get started
