@@ -71,7 +71,6 @@ public class Main extends ListenerAdapter {
         }
 
         CommandListUpdateAction commands = jda.updateCommands();
-        commands.addCommands(Commands.slash("watchgame", "watch Lichess game for game link").addOption(OptionType.STRING, "lichess-game-link", "Input Lichess link", true));
         commands.addCommands(Commands.slash("dailypuzzlecc", "do chess.com daily puzzles"));
         commands.addCommands(Commands.slash("community", "Best chess Discord communities!"));
         commands.addCommands(Commands.slash("broadcast", "View Latest OTB/Online Master tournament"));
