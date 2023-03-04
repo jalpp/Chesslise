@@ -27,6 +27,116 @@ public class Game {
     }
 
 
+
+   public void DifferentGameGenVar(int min, int sec, String type, int key){
+
+       switch (key){
+           case 3:
+               if(type.equals("r")){
+
+                   int timeer = min*60;
+
+                   Client clientone = Client.basic();
+
+
+                   var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").variant(provider -> provider.threeCheck()).rated(true));
+
+                   result.ifPresent(play -> {
+
+                       this.black += play.urlBlack();
+                       this.white += play.urlWhite();
+                       this.random += play.challenge().url();
+                   });
+               }else{
+                   int timeer = min*60;
+
+                   Client clientone = Client.basic();
+
+
+                   var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").variant(provider -> provider.threeCheck()).rated(false));
+
+                   result.ifPresent(play -> {
+
+                       this.black += play.urlBlack();
+                       this.white += play.urlWhite();
+                       this.random += play.challenge().url();
+                   });
+               }
+               break;
+
+           case 9:
+               if(type.equals("r")){
+
+                   int timeer = min*60;
+
+                   Client clientone = Client.basic();
+
+
+                   var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").variant(provider -> provider.chess960()).rated(true));
+
+                   result.ifPresent(play -> {
+
+                       this.black += play.urlBlack();
+                       this.white += play.urlWhite();
+                       this.random += play.challenge().url();
+                   });
+               }else{
+                   int timeer = min*60;
+
+                   Client clientone = Client.basic();
+
+
+                   var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").variant(provider -> provider.chess960()).rated(false));
+
+                   result.ifPresent(play -> {
+
+                       this.black += play.urlBlack();
+                       this.white += play.urlWhite();
+                       this.random += play.challenge().url();
+                   });
+               }
+               break;
+           case 2:
+               if(type.equals("r")){
+
+                   int timeer = min*60;
+
+                   Client clientone = Client.basic();
+
+
+                   var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").variant(provider -> provider.atomic()).rated(true));
+
+                   result.ifPresent(play -> {
+
+                       this.black += play.urlBlack();
+                       this.white += play.urlWhite();
+                       this.random += play.challenge().url();
+                   });
+               }else{
+                   int timeer = min*60;
+
+                   Client clientone = Client.basic();
+
+
+                   var result = clientone.challenges().challengeOpenEnded(conf -> conf.clock(timeer, sec).name("LISEBOT Challenge Created! Please Join the Game!").variant(provider -> provider.atomic()).rated(false));
+
+                   result.ifPresent(play -> {
+
+                       this.black += play.urlBlack();
+                       this.white += play.urlWhite();
+                       this.random += play.challenge().url();
+                   });
+               }
+               break;
+
+       }
+
+
+
+
+    }
+
+
     public void DifferentGameGen(int min, int sec, String type){
 
         if(type.equals("r")){

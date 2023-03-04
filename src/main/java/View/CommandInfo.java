@@ -36,17 +36,16 @@ public class CommandInfo {
 
 
 
-    public EmbedBuilder getPageThree(){
+   public EmbedBuilder getPageThree(){
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Watch And Play Chess**");
         this.embedBuilder.setThumbnail(this.logo);
         //this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
-        this.embedBuilder.setDescription(  "\n\n **" +  Emojis[0] +" /invite** \n invite LiSEBot to your servers" + "\n\n **" +Emojis[6]+" /play ** \n Play chess with friends/BOTS on Lichess.org" + "\n\n **" + Emojis[6] + " /community ** \n view chess community"+ "\n\n **" +"\uD83D\uDCFA"+" /watch** \n watch latest Lichess game of the given user in gif!" + "\n\n **" +"\uD83D\uDCFA"+ " /watchgame** \n watch Lichess games for given Lichess link" +"\n\n **" +"\uD83D\uDCFA"+ " /watchmaster** \n watch random master games" + "\n\n **" +Emojis[5]+" /broadcast** \n view current ongoing master OTB/Online tournament"
+        this.embedBuilder.setDescription(  "\n\n **" +  Emojis[0] +" /invite** \n invite LiSEBot to your servers" + "\n\n **" +Emojis[6]+" /play ** \n Play chess with friends/BOTS on Lichess.org" + "\n\n **" +Emojis[6]+" /playvariant ** \n Play chess variants [atomic/3check/960] with friends/BOTS on Lichess.org" + "\n\n **"+ Emojis[6] + " /community ** \n view chess community"+ "\n\n **" +"\uD83D\uDCFA"+" /watch** \n watch latest Lichess game of the given user in gif!" + "\n\n **" +"\uD83D\uDCFA"+ " /watchgame** \n watch Lichess games for given Lichess link" +"\n\n **" +"\uD83D\uDCFA"+ " /watchmaster** \n watch random master games" + "\n\n **" +Emojis[5]+" /broadcast** \n view current ongoing master OTB/Online tournament"
         + "\n\n **" + Emojis[6] + "/move ** \n play chess with Lise chess engine [/resetboard] to start/end the game");
         this.embedBuilder.setFooter("Page 3/3", this.logo);
         return this.embedBuilder;
     }
-
 
 
 

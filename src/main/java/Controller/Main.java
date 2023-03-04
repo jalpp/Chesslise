@@ -85,6 +85,7 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("puzzle", "do puzzles"));
         commands.addCommands(Commands.slash("tourney", "Join Current Lichess Tournaments"));
         commands.addCommands(Commands.slash("help", "View LISEBOT Commands"));
+        commands.addCommands(Commands.slash("playvariant", "Play variant chess (3check, chess960, atomic)"));
         commands.addCommands(Commands.slash("play", "Play Live Chess Games"));
         commands.addCommands(Commands.slash("blog", "Read Lichess Blogs"));
         commands.addCommands(Commands.slash("watch", "Watch Lichess games for given user"));
@@ -378,6 +379,12 @@ public class Main extends ListenerAdapter {
                 event.replyEmbeds(commandInfo.getPageOne().build()).addActionRow(Button.primary("next", "➡️"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
                 break;
           
+            case "playvariant":
+                event.getJDA().getGuildById("965333503367589968").getTextChannelById("1057353653926764554").sendMessage("I joined " + event.getGuild().getName() + " who have members of " + event.getGuild().getMemberCount() + " !" + " **PLAY COMMAND RUN!**" + " By:" + event.getUser().getName()).queue();
+                event.reply("**⚔️ Please Pick Your Game's Mode ⚔️ **" + "\n\n" ).addActionRow(
+                        Button.success("960", "⚙️ Chess 960"), Button.success("3c", "➕ 3 check"), Button.success("atomic", "\uD83D\uDCA3 Atomic")).queue();
+                break;
+
             case "play":
                 event.reply("**⚔️ Please Pick Your Game's Mode **" + "\n\n" ).addActionRow(
                         Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated"), Button.primary("enginemode", "Play BOT"),Button.link("https://lichess.org/login", "Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
@@ -548,6 +555,84 @@ public class Main extends ListenerAdapter {
 
                 break;
 
+             case "modal-3c":
+
+                try {
+
+
+                    int min3c = Integer.parseInt(event.getValue("min-3c").getAsString());
+                    int sec = Integer.parseInt(event.getValue("sec-3c").getAsString());
+                    String bool = event.getValue("bool-3c").getAsString();
+                    Game three = new Game();
+
+                    if(bool.equalsIgnoreCase("y")){
+                        three.DifferentGameGenVar(min3c, sec, "r", 3);
+                        event.reply(three.getRandom()).queue();
+                    }else{
+                        three.DifferentGameGenVar(min3c, sec, "c", 3);
+                        event.reply(three.getRandom()).queue();
+                    }
+
+
+                }catch (Exception e){
+                    event.reply("error! Please provide valid parameters!").setEphemeral(true).queue();
+                }
+
+
+                break;
+
+            case "modal-9":
+
+                try {
+
+
+                    int min9c = Integer.parseInt(event.getValue("min-9").getAsString());
+                    int sec9 = Integer.parseInt(event.getValue("sec-9").getAsString());
+                    String bool = event.getValue("bool-9").getAsString();
+                    Game nine = new Game();
+
+                    if(bool.equalsIgnoreCase("y")){
+                        nine.DifferentGameGenVar(min9c, sec9, "r", 9);
+                        event.reply(nine.getRandom()).queue();
+                    }else{
+                        nine.DifferentGameGenVar(min9c, sec9, "c", 9);
+                        event.reply(nine.getRandom()).queue();
+                    }
+
+
+                }catch (Exception e){
+                    event.reply("error! Please provide valid parameters!").setEphemeral(true).queue();
+                }
+
+
+                break;
+
+            case "modal-a":
+
+                try {
+
+
+                    int min2c = Integer.parseInt(event.getValue("min-a").getAsString());
+                    int sec2 = Integer.parseInt(event.getValue("sec-a").getAsString());
+                    String bool = event.getValue("bool-a").getAsString();
+                    Game two = new Game();
+
+                    if(bool.equalsIgnoreCase("y")){
+                        two.DifferentGameGenVar(min2c, sec2, "r", 2);
+                        event.reply(two.getRandom()).queue();
+                    }else{
+                        two.DifferentGameGenVar(min2c, sec2, "c", 2);
+                        event.reply(two.getRandom()).queue();
+                    }
+
+
+                }catch (Exception e){
+                    event.reply("error! Please provide valid parameters!").setEphemeral(true).queue();
+                }
+
+
+                break;    
+
 
         }
 
@@ -592,6 +677,94 @@ public class Main extends ListenerAdapter {
         WatchMaster watchMaster = new WatchMaster(client);
         CommandInfo commandInfo = new CommandInfo();
         DailyCommand dailyCommand = new DailyCommand(client);
+
+
+         switch (event.getComponentId()){
+            case "3c":
+                TextInput wtext = TextInput.create("min-3c", "Input Time Mins [1 to 10]", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Time Mins [1 to 10]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+                TextInput stext = TextInput.create("sec-3c", "Input Time secs [1 to 10]", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Time secs [1 to 10]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+                TextInput btext = TextInput.create("bool-3c", "is Rated? [Y or N]", TextInputStyle.SHORT)
+                        .setPlaceholder("is Rated? [Y or N]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+
+                Modal wmodal = Modal.create("modal-3c", "Create 3 check games")
+                        .addActionRows(ActionRow.of(wtext))
+                        .addActionRows(ActionRow.of(stext))
+                        .addActionRows(ActionRow.of(btext))
+                        .build();
+                event.replyModal(wmodal).queue();
+                break;
+
+            case "atomic":
+                TextInput awtext = TextInput.create("min-a", "Input Time Mins [1 to 10]", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Time Mins [1 to 10]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+                TextInput astext = TextInput.create("sec-a", "Input Time secs [1 to 10]", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Time secs [1 to 10]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+                TextInput abtext = TextInput.create("bool-a", "is Rated? [Y or N]", TextInputStyle.SHORT)
+                        .setPlaceholder("is Rated? [Y or N]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+
+                Modal amodal = Modal.create("modal-a", "Create Atomic Games")
+                        .addActionRows(ActionRow.of(awtext))
+                        .addActionRows(ActionRow.of(astext))
+                        .addActionRows(ActionRow.of(abtext))
+                        .build();
+                event.replyModal(amodal).queue();
+                break;
+
+            case "960":
+                TextInput ninewtext = TextInput.create("min-9", "Input Time Mins [1 to 10]", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Time Mins [1 to 10]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+                TextInput ninestext = TextInput.create("sec-9", "Input Time secs [1 to 10]", TextInputStyle.SHORT)
+                        .setPlaceholder("Input Time secs [1 to 10]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+                TextInput ninebtext = TextInput.create("bool-9", "is Rated? [Y or N]", TextInputStyle.SHORT)
+                        .setPlaceholder("is Rated? [Y or N]")
+                        .setMinLength(1)
+                        .setMaxLength(2)
+                        .setRequired(true)
+                        .build();
+
+                Modal nmodal = Modal.create("modal-9", "Create Chess960 Games")
+                        .addActionRows(ActionRow.of(ninewtext))
+                        .addActionRows(ActionRow.of(ninestext))
+                        .addActionRows(ActionRow.of(ninebtext))
+                        .build();
+                event.replyModal(nmodal).queue();
+                break;
+        }
+
 
 
 
