@@ -380,7 +380,6 @@ public class Main extends ListenerAdapter {
                 break;
           
             case "playvariant":
-                event.getJDA().getGuildById("965333503367589968").getTextChannelById("1057353653926764554").sendMessage("I joined " + event.getGuild().getName() + " who have members of " + event.getGuild().getMemberCount() + " !" + " **PLAY COMMAND RUN!**" + " By:" + event.getUser().getName()).queue();
                 event.reply("**⚔️ Please Pick Your Game's Mode ⚔️ **" + "\n\n" ).addActionRow(
                         Button.success("960", "⚙️ Chess 960"), Button.success("3c", "➕ 3 check"), Button.success("atomic", "\uD83D\uDCA3 Atomic")).queue();
                 break;
