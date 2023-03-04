@@ -257,40 +257,6 @@ public class Main extends ListenerAdapter {
 
         switch(name) {
 
-            case "watchgame":
-
-                String link = event.getOption("lichess-game-link").getAsString();
-
-                if(!link.contains("https://lichess.org/")){
-                    event.reply("Please provide a Lichess game URL!").queue();
-                }
-
-                String[] spliter = link.split("/");
-
-                String validGameId = "";
-
-                if(spliter[3].length() == 12){
-                    validGameId += spliter[3].substring(0, spliter[3].length() - 4);
-                }else{
-                    validGameId += spliter[3];
-                }
-
-                System.out.println(validGameId);
-
-                System.out.println(spliter[3]);
-
-                if(link.contains("https://lichess.org/") && client.games().byGameId(validGameId).isPresent()){
-
-                    String gameGif = "https://lichess1.org/game/export/gif/" + validGameId + ".gif?theme=blue&piece=kosal";
-                    event.reply(gameGif).queue();
-                }else{
-                    event.reply("Please provide a valid Lichess game!").queue();
-                }
-
-
-                break;
-
-
             case "resetboard":
 
                 this.board.loadFromFen(new Board().getFen());
@@ -465,8 +431,8 @@ public class Main extends ListenerAdapter {
                     event.reply("You have hit max limit! You can only send 24 games in 1 day, try again in 24 hours!").setEphemeral(true).queue();
                 }else {
 
-                    TextInput wtext = TextInput.create("watchuser", "Input Lichess Username", TextInputStyle.SHORT)
-                            .setPlaceholder("Input Lichess Username")
+                    TextInput wtext = TextInput.create("watch_user_or_game", "Input Lichess Username Or Game", TextInputStyle.SHORT)
+                            .setPlaceholder("Input Lichess Username Or Game")
                             .setMinLength(2)
                             .setMaxLength(100)
                             .setRequired(true)
@@ -510,6 +476,28 @@ public class Main extends ListenerAdapter {
 
     }
 
+    private boolean isLink(String link){
+        return link.contains("/") && link.contains(".");
+    }
+    private String getValidGameId(String link){
+        String[] spliter = link.split("/");
+        String validGameId = "";
+
+        if(spliter.length<=3)
+            return null;
+
+        if(spliter[3].length() == 12){
+            validGameId += spliter[3].substring(0, spliter[3].length() - 4);
+        }else{
+            validGameId += spliter[3];
+        }
+
+        if(!(link.contains("https://lichess.org/") && client.games().byGameId(validGameId).isPresent())){
+            return null;
+        }
+
+        return validGameId;
+    }
 
     @Override
     public void onModalInteraction(@NotNull ModalInteractionEvent event) {
@@ -518,17 +506,31 @@ public class Main extends ListenerAdapter {
 
         switch (name){
             case "modalwatch":
-                String gameUserID = event.getValue("watchuser").getAsString().trim();
-                if(client.users().byId(gameUserID).isPresent()) {
-                    UserGame userGame = new UserGame(client, gameUserID);
-                    String link = "https://lichess.org/@/" + gameUserID.toLowerCase() + "/all";
-                    event.deferReply(true).queue();
-                    event.getChannel().sendMessage(userGame.getUserGames()).addActionRow(Button.link(link, "♟️" + userGame.getOpeningName()), Button.link(link, "\uD83C\uDFC6 " + userGame.getWinner()), Button.link(link, "⏰ " + userGame.getSpeed())
-                    ).setActionRow(StringSelectMenu.create("watch-id").addOption("Master Games", "master-id").addOption("Opening Explorer", "op-id").build()).queue();
+                String userInput = event.getValue("watch_user_or_game").getAsString().trim();
 
-                }else{
-                    event.reply("Please Provide A Valid Lichess Username!").queue();
+                // Test if username or gamelink was specified
+                if(isLink(userInput)){
+                    String validGameId = getValidGameId(userInput);
+                    if(validGameId!=null) {
+                        String gameGif = "https://lichess1.org/game/export/gif/" + validGameId + ".gif?theme=blue&piece=kosal";
+                        event.reply(gameGif).queue();
+                    }
+                    else{
+                        event.reply("Please provide a valid Lichess game!").queue();
+                    }
                 }
+                else if (client.users().byId(userInput).isPresent()) {
+                        UserGame userGame = new UserGame(client, userInput);
+                        String link = "https://lichess.org/@/" + userInput.toLowerCase() + "/all";
+                        event.deferReply(true).queue();
+                        event.getChannel().sendMessage(userGame.getUserGames()).addActionRow(Button.link(link, "♟️" + userGame.getOpeningName()), Button.link(link, "\uD83C\uDFC6 " + userGame.getWinner()), Button.link(link, "⏰ " + userGame.getSpeed())
+                        ).setActionRow(StringSelectMenu.create("watch-id").addOption("Master Games", "master-id").addOption("Opening Explorer", "op-id").build()).queue();
+
+                }
+                else {
+                        event.reply("Please Provide A Valid Lichess Username!").queue();
+                }
+
                 break;
 
             case "modalpro":
