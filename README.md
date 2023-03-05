@@ -76,3 +76,6 @@ LISEBOT Does not and will not store any private user information, all bot comman
 ## Contribute 
 
 LISEBOT is open to contributors for bug fixes, enhancements, some features are "good first issues" to get started
+
+## Dev Community 
+Join [LISEBOT community Discord](https://discord.gg/596rYGBDXz) to contribute and test LISEBOT!
