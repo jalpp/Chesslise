@@ -270,10 +270,9 @@ public class Main extends ListenerAdapter {
                 try{
 
 
-
                     LiseChessEngine engine = new LiseChessEngine(this.board);
                     String makemove = event.getOption("play-move").getAsString();
-
+                    EmbedBuilder embedBuilder = new EmbedBuilder();
 
                     if(engine.gameOver()){
                         event.reply("game over!").queue();
@@ -282,15 +281,15 @@ public class Main extends ListenerAdapter {
                     }
 
 
-
                     this.board.doMove(makemove);
 
-                    event.reply("thinking..").setEphemeral(true).queue();
+
                     engine.playRandomLegalMoves();
-
-
-                    event.getChannel().sendMessage(engine.getImageOfCurrentBoard()).queue();
-                    event.getChannel().sendMessage("** Your Turn!** ").queue();
+                    embedBuilder.setColor(Color.green);
+                    embedBuilder.setImage(engine.getImageOfCurrentBoard());
+                    embedBuilder.setFooter("White to move");
+                    event.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+                    event.replyEmbeds(embedBuilder.build()).addActionRow(Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw")).setEphemeral(true).queue();
 
 
 
@@ -426,7 +425,7 @@ public class Main extends ListenerAdapter {
                     event.reply("Check back after 24 hours for next daily puzzle!").setEphemeral(true).queue();
                 }else{
                     DailyCommand dailyCommand = new DailyCommand(client);
-                    event.reply(dailyCommand.getPuzzleData()).addActionRow(Button.link(dailyCommand.getPuzzleLink(), dailyCommand.getMoveSay() + "| " + "Rating: " + dailyCommand.getRating()), Button.primary("sol", "Solution"), Button.success("hint", "Hint")).queue();
+                    event.replyEmbeds(new EmbedBuilder().setColor(Color.cyan).setTitle("Daily Puzzle").setImage(dailyCommand.getPuzzleData()).build()).addActionRow(Button.link(dailyCommand.getPuzzleLink(), dailyCommand.getMoveSay() + "| " + "Rating: " + dailyCommand.getRating()), Button.primary("sol", "Solution"), Button.success("hint", "Hint")).queue();
                 }
                 break;
 
