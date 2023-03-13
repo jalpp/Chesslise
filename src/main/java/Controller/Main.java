@@ -324,7 +324,7 @@ public class Main extends ListenerAdapter {
 
                 break;
             case "dailypuzzlecc":
-                DailyCommandCC daily = new DailyCommandCC(boardOriginal);
+                DailyCommandCC daily = new DailyCommandCC();
                 event.deferReply(true).queue();
                 event.getChannel().sendMessage(daily.getpuzzleImg()).queue();
 
