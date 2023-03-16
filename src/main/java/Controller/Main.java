@@ -867,67 +867,52 @@ public class Main extends ListenerAdapter {
                 break;
         }
 
+        
+
         switch (event.getComponentId()){
             case "ultrafastc":
-                Game ug = new Game(client, "ultrabullet", "casual");
-                ug.getNewGame();
-
+                Game ug = new Game();
+                ug.DifferentGameGen(0,0,"c");
                 event.editMessage(ug.getRandom()).setActionRow(Button.primary("ultrafastc", "Rematch")).queue();
             case "bulletfastc":
-                Game bg = new Game(client, "bullet", "casual");
-                bg.getNewGame();
+                Game bg = new Game();
+                bg.DifferentGameGen(1, 0, "c");
                 event.editMessage(bg.getRandom()).setActionRow(Button.primary("bulletfastc", "Rematch")).queue();
-
 
                 break;
             case "blitzfastc":
-                Game bcg = new Game(client, "blitz", "casual");
-                bcg.getNewGame();
+                Game bcg = new Game();
+                bcg.DifferentGameGen(3,2,"c");
                 event.editMessage(bcg.getRandom()).setActionRow(Button.primary("blitzfastc", "Rematch")).queue();
-
                 break;
             case "rapidfastc":
-                Game rg = new Game(client, "rapid", "casual");
-                rg.getNewGame();
+                Game rg = new Game();
+                rg.DifferentGameGen(5,5, "c");
                 event.editMessage(rg.getRandom()).setActionRow(Button.primary("rapidfastc", "Rematch")).queue();
-
-                break;
-            case "classicalfastc":
-                Game cg = new Game(client, "classical", "casual");
-                cg.getNewGame();
-
-                event.editMessage(cg.getRandom()).setActionRow(Button.primary("classicalfastc", "Rematch")).queue();
-
                 break;
 
         }
 
         switch (event.getComponentId()){
             case "ultrafastr":
-                Game ug = new Game(client, "ultrabullet", "rated");
-                ug.getNewGame();
+                Game ug = new Game();
+                ug.DifferentGameGen(0,0,"r");
                 event.editMessage(ug.getRandom()).setActionRow(Button.primary("ultrafastr", "Rematch")).queue();
             case "bulletfastr":
-                Game bg = new Game(client, "bullet", "rated");
-                bg.getNewGame();
+                Game bg = new Game();
+                bg.DifferentGameGen(1, 0, "r");
                 event.editMessage(bg.getRandom()).setActionRow(Button.primary("bulletfastr", "Rematch")).queue();
                 break;
             case "blitzfastr":
-                Game bcg = new Game(client, "blitz", "rated");
-                bcg.getNewGame();
+                Game bcg = new Game();
+                bcg.DifferentGameGen(3,2,"r");
                 event.editMessage(bcg.getRandom()).setActionRow(Button.primary("blitzfastr", "Rematch")).queue();
                 break;
             case "rapidfastr":
-                Game rg = new Game(client, "rapid", "rated");
-                rg.getNewGame();
+                Game rg = new Game();
+                rg.DifferentGameGen(5,5,"r");
                 event.editMessage(rg.getRandom()).setActionRow(Button.primary("rapidfastr", "Rematch")).queue();
                 break;
-            case "classicalfastr":
-                Game cg = new Game(client, "classical", "rated");
-                cg.getNewGame();
-                event.editMessage(cg.getRandom()).setActionRow(Button.primary("classicalfastr", "Rematch")).queue();
-                break;
-
         }
 
 
