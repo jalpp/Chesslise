@@ -763,54 +763,47 @@ public class Main extends ListenerAdapter {
                 break;
         }
 
-
-
-
-        if(event.getComponentId().equals("playhelp")){
-            EmbedBuilder help = new EmbedBuilder();
-            help.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
-            help.setTitle("Guide for /play");
-            help.setDescription("/play allows you to play LIVE chess with friends and BOTs!, to set up a **Casual game (friendly)/ Rated (gain/lose rating)**  all users need to do is click on **casual/rated** button\n" +
-                    "After you will be prompted to select **Time control**, this option is timecontrol (how long game lasts). \n" +
-                    "**Start the game**: One you have selected mode and time, Bot sends Lichess live URL, where you and your friend can click same time to start a **LIVE Chess game**." +
-                    "\n\n **Login/Register** \n To play rated make sure to Login/Register on Lichess.org to get chess rating, otherwise just play casual games!"+
-                    "\n **Play BOTS** " +
-                    "\n To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!" +
-                    "\n **Need more help?** \n Join our Support server and Developer will help you!");
-            event.replyEmbeds(help.build()).addActionRow(Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).setEphemeral(true).queue();
-        }
-
-
-        if(event.getComponentId().equals("casmode"))   {
-            event.editMessage("**⏱️ Please Pick Your Time Control ⏱️**").setActionRow(
+        switch(event.getComponentId()){
+            case "playhelp":
+                EmbedBuilder help = new EmbedBuilder();
+                help.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
+                help.setTitle("Guide for /play");
+                help.setDescription("/play allows you to play LIVE chess with friends and BOTs!, to set up a **Casual game (friendly)/ Rated (gain/lose rating)**  all users need to do is click on **casual/rated** button\n" +
+                        "After you will be prompted to select **Time control**, this option is timecontrol (how long game lasts). \n" +
+                        "**Start the game**: One you have selected mode and time, Bot sends Lichess live URL, where you and your friend can click same time to start a **LIVE Chess game**." +
+                        "\n\n **Login/Register** \n To play rated make sure to Login/Register on Lichess.org to get chess rating, otherwise just play casual games!"+
+                        "\n **Play BOTS** " +
+                        "\n To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!" +
+                        "\n **Need more help?** \n Join our Support server and Developer will help you!");
+                event.replyEmbeds(help.build()).addActionRow(Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).setEphemeral(true).queue();
+                break;
+            case "casmode":
+                event.editMessage("**⏱️ Please Pick Your Time Control ⏱️**").setActionRow(
                     Button.primary("ultrafastc", "1/4+0"),
                     Button.primary("bulletfastc", "1+0"),
                     Button.primary("blitzfastc", "3+2"),
                     Button.primary("rapidfastc", "5+5"),
                     Button.success("loadc", "\uD83D\uDD04 Load More Time Controls")
             ).queue();
-
-        }
-
-        if(event.getComponentId().equals("ratedmode")){
-            event.editMessage("**⏱️ Please Pick Your Time Control ⏱️**").setActionRow(
+                break;
+            case "ratedmode":
+                event.editMessage("**⏱️ Please Pick Your Time Control ⏱️**").setActionRow(
                     Button.danger("ultrafastr", "1/4+0"),
                     Button.danger("bulletfastr", "1+0"),
                     Button.danger("blitzfastr", "3+2"),
                     Button.danger("rapidfastr", "5+5"),
                     Button.success("loadr", "\uD83D\uDD04 Load More Time Controls")
             ).queue();
-
-        }
-
-        if(event.getComponentId().equals("enginemode")){
-            event.editMessage("** Challenge This BOTs! **").setActionRow(
+                break;
+            case "enginemode":
+                event.editMessage("** Challenge This BOTs! **").setActionRow(
                     Button.link("https://listudy.org/en/play-stockfish", "Stockfish"),
                     Button.link("https://lichess.org/@/leela2200", "LeelaZero"),
                     Button.link("https://lichess.org/@/Dummyette", "Dummyette"),
                     Button.link("https://lichess.org/@/SimplerEval", "SimplerEval")
 
             ).queue();
+                break;
         }
 
         switch (event.getComponentId()){
