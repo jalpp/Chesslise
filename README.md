@@ -29,7 +29,7 @@ LISEBOT supports built in Chess AI that uses complex move search algorithms for 
 about the AI can be found [here](https://github.com/jalpp/LiseChessEngine)
 
 # LISEBOT Highlevel Design
-![image](https://www.linkpicture.com/q/autodraw-2022-09-24.png)
+![image](https://www.linkpicture.com/q/Untitled-Diagram.drawio.png)
  
 
 # Lichess Commands:
