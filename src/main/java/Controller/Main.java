@@ -93,6 +93,15 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("move", "make a move").addOption(OptionType.STRING, "play-move", "input chess move", true));
         commands.addCommands(Commands.slash("resetboard", "reset the board"));
 
+        // Context Menus
+
+        
+        commands.addCommands(Commands.context(Command.Type.MESSAGE, "Lichess Daily Puzzle"));
+        commands.addCommands(Commands.context(Command.Type.MESSAGE, "Play Chess"));
+        commands.addCommands(Commands.context(Command.Type.MESSAGE, "View Lichess Broadcasts"));
+        commands.addCommands(Commands.context(Command.Type.MESSAGE, "Watch GMs"));
+        commands.addCommands(Commands.context(Command.Type.MESSAGE, "Chess.com Daily Puzzle"));
+
 
         commands.queue();
 
@@ -245,6 +254,31 @@ public class Main extends ListenerAdapter {
 
 
     }
+
+
+
+   @Override
+   public void onMessageContextInteraction(MessageContextInteractionEvent event) {
+       if (event.getName().equals("Lichess Daily Puzzle")) {
+           DailyCommand dailyCommand = new DailyCommand(client);
+           event.replyEmbeds(new EmbedBuilder().setColor(Color.cyan).setTitle("Daily Puzzle").setImage(dailyCommand.getPuzzleData()).build()).addActionRow(Button.link(dailyCommand.getPuzzleLink(), dailyCommand.getMoveSay() + "| " + "Rating: " + dailyCommand.getRating()), Button.primary("sol", "Solution"), Button.success("hint", "Hint")).queue();
+       } else if (event.getName().equals("Play Chess")) {
+           event.getJDA().getGuildById("965333503367589968").getTextChannelById("1057353653926764554").sendMessage("I joined " + event.getGuild().getName() + " who have members of " + event.getGuild().getMemberCount() + " !" + " **PLAY COMMAND RUN!**" + " By:" + event.getUser().getName()).queue();
+           event.reply("**⚔️ Please Pick Your Game's Mode **" + "\n\n" ).addActionRow(
+                   Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated"), Button.primary("enginemode", "Play BOT"),Button.link("https://lichess.org/login", "Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
+       } else if (event.getName().equals("View Lichess Broadcasts")) {
+           BroadcastLichess broadcast = new BroadcastLichess(client);
+           event.replyEmbeds(broadcast.getBroadData().build()).queue();
+       } else if (event.getName().equals("Watch GMs")) {
+           WatchMaster watchMaster = new WatchMaster(client);
+           event.deferReply(true).queue();
+           event.getChannel().sendMessage(watchMaster.getMasterGames()).addActionRow(Button.link("https://lichess.org" + watchMaster.getGameId()[1], "Analyze")).queue();
+       } else if (event.getName().equals("Chess.com Daily Puzzle")) {
+           DailyCommandCC daily = new DailyCommandCC(boardOriginal);
+           event.deferReply(true).queue();
+           event.getChannel().sendMessage(daily.getpuzzleImg()).queue();
+       }
+   }
 
 
 
