@@ -277,7 +277,7 @@ public class Main extends ListenerAdapter {
            event.deferReply(true).queue();
            event.getChannel().sendMessage(watchMaster.getMasterGames()).addActionRow(Button.link("https://lichess.org" + watchMaster.getGameId()[1], "Analyze")).queue();
        } else if (event.getName().equals("Chess.com Daily Puzzle")) {
-           DailyCommandCC daily = new DailyCommandCC(boardOriginal);
+           DailyCommandCC daily = new DailyCommandCC();
            event.deferReply(true).queue();
            event.getChannel().sendMessage(daily.getpuzzleImg()).queue();
        }
