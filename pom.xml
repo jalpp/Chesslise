@@ -21,11 +21,6 @@
     </build>
     <repositories>
         <repository>
-            <id>lila-maven</id>
-            <name>lila-maven</name>
-            <url>https://raw.githubusercontent.com/lichess-org/lila-maven/master</url>
-        </repository>
-        <repository>
             <id>jcenter</id>
             <name>jcenter-bintray</name>
             <url>https://jcenter.bintray.com/</url>
@@ -47,11 +42,6 @@
             <version>5.0.0-beta.2</version>
         </dependency>
         <dependency>
-            <groupId>org.lichess</groupId>
-            <artifactId>scalachess_3</artifactId>
-            <version>14.2.2</version>
-        </dependency>
-        <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1</version>
@@ -59,12 +49,12 @@
         <dependency>
             <groupId>io.github.tors42</groupId>
             <artifactId>chariot</artifactId>
-            <version>0.0.62</version>
+            <version>0.0.66</version>
         </dependency>
         <dependency>
             <groupId>io.github.sornerol</groupId>
             <artifactId>chesscom-pubapi-wrapper</artifactId>
-            <version>1.0.0</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.bhlangonijr</groupId>

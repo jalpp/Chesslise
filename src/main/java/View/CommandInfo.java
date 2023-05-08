@@ -16,7 +16,7 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Commands For LISEBOT**");
         this.embedBuilder.setThumbnail(this.logo);
-        this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "\n\n**" + Emojis[0] + "  /suggest** \n provide feedback to developer" + "\n\n**" +Emojis[1] +" /dailypuzzlecc** \n view Chess.com daily puzzles" + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers" + "\n\n **" + Emojis[4] + " /openingdb** \n View chess openings and their master games!" );
+        this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "\n\n**" + Emojis[0] + "  /suggest** \n provide feedback to developer" + "\n\n**" +Emojis[1] +" /dailypuzzlecc** \n view Chess.com daily puzzles" + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers");
         this.embedBuilder.setFooter("Page 1/3", this.logo);
 
 
@@ -29,14 +29,14 @@ public class CommandInfo {
         this.embedBuilder.setTitle("**Puzzles And Tournaments**");
         this.embedBuilder.setThumbnail(this.logo);
         //this.embedBuilder.setThumbnail("https://images.prismic.io/lichess/25a60c33-96ad-4fd1-b9b2-dca8e289961f_lichesslogo.png?auto=compress,format");
-        this.embedBuilder.setDescription("\n\n**" + Emojis[1] +  " /dailypuzzle** \n see the daily Lichess puzzle and try to solve it!" + "\n\n **" + Emojis[1] + " /puzzle** \n Do Random Chess Puzzles"  + "\n\n**" +  Emojis[5] +" /arena <Lichess arena URL>** \n see the standings and tournament information for given tournament link" + "\n\n **" +  Emojis[5] +" /tourney**\n View Current Lichess Tournaments" + "\n\n **" + Emojis[5]+ " /blog** \n Read Lichess blogs" );
+        this.embedBuilder.setDescription("\n\n**" + Emojis[1] +  " /dailypuzzle** \n see the daily Lichess puzzle and try to solve it!" + "\n\n **" + Emojis[1] + " /puzzle** \n Do Random Chess Puzzles"  + "\n\n**" +  Emojis[5] +" /arena <Lichess arena URL>** \n see the standings and tournament information for given tournament link" + "\n\n **" +  Emojis[5] +" /tourney**\n View Current Lichess Tournaments");
         this.embedBuilder.setFooter("Page 2/3", this.logo);
         return this.embedBuilder;
     }
 
 
 
-   public EmbedBuilder getPageThree(){
+    public EmbedBuilder getPageThree(){
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Watch And Play Chess**");
         this.embedBuilder.setThumbnail(this.logo);
@@ -46,6 +46,7 @@ public class CommandInfo {
         this.embedBuilder.setFooter("Page 3/3", this.logo);
         return this.embedBuilder;
     }
+
 
 
 

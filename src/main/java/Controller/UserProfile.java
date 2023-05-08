@@ -9,7 +9,7 @@ import java.util.Optional;
 public class UserProfile extends UserObject{
 
 
-    private String sayProfile = "";
+    private String sayProfile = new String("");
 
     public UserProfile(Client client, String userParsing){
         super(client, userParsing);
@@ -87,7 +87,7 @@ public class UserProfile extends UserObject{
 
 
 
-            if (userPresent == true) {  // checking if the user is present in the lichess
+            if (userPresent == true) {  
                 User user = userResult.get();
                 String StatusEmoji = "\uD83D\uDD34";
                 boolean checkOnline = this.getClient().users().statusByIds(this.getUserID()).stream().toList().get(0).online();
@@ -102,11 +102,11 @@ public class UserProfile extends UserObject{
 
                 boolean closedaccount = user.closed();
 
-                if (cheater == true) { // check if the user is cheater
+                if (cheater == true) {
                    return " This user has violated Lichess Terms of Service";
 
                 }
-                if (closedaccount == true) { // check if user is clossed account
+                if (closedaccount == true) { 
                    return "This account is closed";
 
                 }

@@ -9,9 +9,9 @@ import java.util.List;
 
 public class UserArena {
 
-    private Client client;
+    private final Client client;
     private EmbedBuilder embedBuilder;
-    private String arenaID;
+    private final String arenaID;
 
     public UserArena(Client client, String arenaID) {
         this.client = client;

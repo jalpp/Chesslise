@@ -9,7 +9,7 @@ import java.util.Optional;
 public class LiveStreamers {
 
 
-    private Client client;
+    private final Client client;
     private EmbedBuilder embedBuilder;
 
     public LiveStreamers(Client client){

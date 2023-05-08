@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BroadcastLichess {
 
-    private Client client;
+    private final Client client;
     private EmbedBuilder embedBuilder;
     private String broadURL;
 

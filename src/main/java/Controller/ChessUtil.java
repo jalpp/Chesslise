@@ -4,7 +4,6 @@ import com.github.bhlangonijr.chesslib.Board;
 public class ChessUtil {
 
     private Board board;
-    private chariot.util.Board Chariotboard;
 
     public ChessUtil(){
 

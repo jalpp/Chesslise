@@ -1,43 +1,58 @@
 import io.github.sornerol.chess.pubapi.client.DailyPuzzleClient;
-import io.github.sornerol.chess.pubapi.client.StreamersClient;
-import io.github.sornerol.chess.pubapi.domain.streamers.Streamer;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
-
-import java.awt.*;
-import java.util.*;
 import java.io.IOException;
-import java.util.List;
-
-public class DailyCommandCC {
-
-    private DailyPuzzleClient dailyPuzzleClient = new DailyPuzzleClient();
-    private String ans = "";
-    private String fen = "";
 
 
-    public String getpuzzleImg(){
+public class DailyCommandCC extends ChessPuzzle {
 
 
+    private final DailyPuzzleClient dailyPuzzleClient = this.getDailyPuzzleClient();
+    private String moveSay = new String("");
+    private String solLink = new String("");
+
+
+    public DailyCommandCC(){
+        super();
+    }
+
+    @Override
+    public String getPuzzle() {
         try {
+            String fen = dailyPuzzleClient.getTodaysDailyPuzzle().getFen();
+            String[] split = fen.split(" ");
+            if(split[1].contains("w")){
+                moveSay += "White To Move";
 
-            return dailyPuzzleClient.getTodaysDailyPuzzle().getImageUrl();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ChessComPubApiException e) {
+            }else{
+                moveSay += "Black To Move";
+
+            }
+            this.solLink += "https://lichess.org/analysis/standard/" + fen.replace(" ", "_");
+
+            return "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&theme=blue&piece=alpha";
+
+        } catch (IOException | ChessComPubApiException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String getPGN(){
-
-        try {
-            return dailyPuzzleClient.getTodaysDailyPuzzle().getPgn();
-        } catch (IOException e) {
-            return "error!";
-        } catch (ChessComPubApiException e) {
-            return "error!";
-        }
+    @Override
+    public String getSolution() {
+        return null;
     }
+
+    @Override
+    public String getPuzzleURL() {
+        return solLink;
+    }
+
+    @Override
+    public String getPuzzleSideToMove() {
+        return moveSay;
+    }
+
+
+
 
 
 }

@@ -10,9 +10,9 @@ import java.util.List;
 
 public class SwissResults {
 
-    private Client client;
-    private String link;
-    private EmbedBuilder embedBuilder;
+    private final Client client;
+    private final String link;
+  
     public SwissResults(Client client, String link){
         this.client = client;
         this.link =  link;
@@ -20,7 +20,7 @@ public class SwissResults {
 
 
     public EmbedBuilder getLinkResults(){
-        this.embedBuilder = new EmbedBuilder();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
         String[] emojileaderboard = {"1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "\uD83D\uDD1F"};
         String[] podium = {"\uD83C\uDFC6", "\uD83E\uDD48", "\uD83E\uDD49"};
         String res = "";

@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class WatchMaster {
 
-    private Client client;
+    private final Client client;
     private String masterGif;
     private String openingGif;
 

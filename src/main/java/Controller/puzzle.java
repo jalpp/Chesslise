@@ -3,34 +3,27 @@ import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
 import java.io.IOException;
 
 
-public class puzzle {
+public class puzzle extends ChessPuzzle{
 
-    private DailyPuzzleClient dailyPuzzleClient;
+    private final DailyPuzzleClient dailyPuzzleClient = this.getDailyPuzzleClient();
 
-    private String pgn;
     private String moveSay = "";
-    private String theme = "";
     private String solLink = "";
-    
 
-    
+
+
 
 
     public puzzle(){
-        this.dailyPuzzleClient = new DailyPuzzleClient();
+        super();
     }
 
-    public String getRandom()  {
-
-
-
+    @Override
+    public String getPuzzle() {
         try {
 
 
             String cor = this.dailyPuzzleClient.getRandomDailyPuzzle().getFen();
-            this.pgn = this.dailyPuzzleClient.getRandomDailyPuzzle().getPgn();
-            this.theme = this.dailyPuzzleClient.getRandomDailyPuzzle().getTitle();
-
 
             String[] split = cor.split(" ");
 
@@ -50,44 +43,36 @@ public class puzzle {
             }else{
                 coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
             }
-            
+
 
             this.solLink += "https://lichess.org/analysis/standard/" + cor.replace(" ", "_");
 
-            
+
             return coordImg;
-            
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "loading..";
-        } catch (ChessComPubApiException e) {
+
+        } catch (IOException | ChessComPubApiException e) {
             e.printStackTrace();
             return "loading..";
         }
-
-
-
     }
 
-    public String getPgn(){
-        return pgn;
+    @Override
+    public String getSolution() {
+        return null;
     }
 
-
-    public String getMoveSay(){
-        return moveSay;
-    }
-
-    public String getTheme() {
-        return theme;
-    }
-
-    public String getSolLink(){
+    @Override
+    public String getPuzzleURL() {
         return solLink;
     }
 
+    @Override
+    public String getPuzzleSideToMove() {
+        return moveSay;
+    }
+
+
 
 }
-

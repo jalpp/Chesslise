@@ -19,9 +19,6 @@ public class CCProfile {
 
 
 
-
-
-
     public CCProfile(String username){
         this.username = username.toLowerCase().trim();
     }

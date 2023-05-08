@@ -3,100 +3,33 @@ import chariot.model.One;
 import chariot.model.Puzzle;
 import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.EmbedBuilder;
-
 import java.awt.*;
+import java.util.List;
 
 
-public class DailyCommand {
+public class DailyCommand extends ChessPuzzle {
 
-    private Client client;
-    private String gameID;
-    private Board board;
+
     private String moveSay = "";
     private int rating;
-    private String blindmode = "";
+    Client client = this.getClient();
+    Board board = this.getBoard();
 
 
     public DailyCommand(Client client) {
-        this.client = client;
-        this.gameID = "";
-        this.board = new Board();
+        super(client, new Board());
     }
 
 
 
-    public String getPuzzleData() {
-
-
-            One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
-
-
-            if (dailypuzzle.isPresent()) { // check if the puzzle is present
-                Puzzle puzzle1 = dailypuzzle.get();
-
-
-                String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
-                for (String move : moves) {
-                    board.doMove(move);
-                }
-
-
-
-
-                String cor = board.getFen();
-
-                String[] split = cor.split(" ");
-
-                if(split[1].contains("w")){
-                    moveSay += "White To Move";
-                }else{
-                    moveSay += "Black To Move";
-
-                }
-
-                String coordImg = "";
-                
-
-                if(split[1].contains("w")){
-                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=blue&piece=cardinal";
-                    
-                }else{
-                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
-                    
-                }
-
-                
-
-                Puzzle.PuzzleInfo puzzleInfo = puzzle1.puzzle();
-
-                this.rating = puzzleInfo.rating();
-
-
-
-
-
-
-              return coordImg;
-            }else{
-                return "loading..";
-            }
-
-
-    }
-
-
-    public String getMoveSay(){
-        return moveSay;
-    }
-
+    @Override
     public String getSolution(){
-        
 
 
             One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
 
 
-            if (dailypuzzle.isPresent()) { // check if the puzzle is present
+            if (dailypuzzle.isPresent()) {
                 Puzzle puzzle1 = dailypuzzle.get();
 
 
@@ -105,8 +38,7 @@ public class DailyCommand {
                     board.doMove(move);
 
                 }
-
-                this.board.doMove(puzzle1.puzzle().solution().get(0));
+                board.doMove(puzzle1.puzzle().solution().get(0));
 
 
                 String cor = board.getFen();
@@ -114,7 +46,6 @@ public class DailyCommand {
                 String coordImg = "";
 
                 String[] split = cor.split(" ");
-
 
 
                 if(split[1].contains("b")){
@@ -123,17 +54,76 @@ public class DailyCommand {
                     coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
                 }
 
-                
-
                 return coordImg;
             }else{
                 return "loading...";
             }
 
-            
+
 
     }
 
+    @Override
+    public String getPuzzle() {
+        One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
+
+
+        if (dailypuzzle.isPresent()) { // check if the puzzle is present
+            Puzzle puzzle1 = dailypuzzle.get();
+
+
+            String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
+            for (String move : moves) {
+                board.doMove(move);
+            }
+
+
+            String cor = board.getFen();
+
+            String[] split = cor.split(" ");
+
+            if(split[1].contains("w")){
+                moveSay += "White To Move";
+            }else{
+                moveSay += "Black To Move";
+
+            }
+
+            String coordImg = "";
+
+
+            if(split[1].contains("w")){
+                coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=blue&piece=cardinal";
+                //this.blindmode = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=blue&piece=disguised";
+            }else{
+                coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
+                //this.blindmode = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=disguised";
+
+            }
+
+
+
+            Puzzle.PuzzleInfo puzzleInfo = puzzle1.puzzle();
+
+            this.rating = puzzleInfo.rating();
+
+
+
+
+
+
+            return coordImg;
+        }else{
+            return "loading..";
+        }
+    }
+
+    @Override
+    public String getPuzzleURL() {
+        return "https://lichess.org/training/" + client.puzzles().dailyPuzzle().get().puzzle().id();
+    }
+
+    @Override
     public EmbedBuilder getThemes(){
         EmbedBuilder themes = new EmbedBuilder();
 
@@ -141,10 +131,10 @@ public class DailyCommand {
 
         One<Puzzle> dailypuzzle = client.puzzles().dailyPuzzle();
 
-        String themessay = "";
+        StringBuilder themessay = new StringBuilder();
 
         for(int i = 0; i < dailypuzzle.get().puzzle().themes().size(); i++){
-            themessay += dailypuzzle.get().puzzle().themes().get(i) + " ";
+            themessay.append(dailypuzzle.get().puzzle().themes().get(i)).append(" ");
         }
 
         themes.setDescription( "**"+ themessay + "**");
@@ -152,19 +142,63 @@ public class DailyCommand {
         return themes;
     }
 
+    @Override
+    public String getPuzzleSideToMove() {
+        return moveSay;
+    }
 
+    @Override
     public int getRating(){
         return rating;
     }
 
-     public String getPuzzleLink(){
-        return "https://lichess.org/training/" + client.puzzles().dailyPuzzle().get().puzzle().id();
+    @Override
+    public boolean checkSolution(String answer) {
+        try {
+            Board checker = new Board();
+            String[] moves = chariot.Client.basic().puzzles().dailyPuzzle().get().game().pgn().split(" ");
+            for (String move : moves) {
+                checker.doMove(move);
+            }
+
+            String startFenPuzzle = checker.getFen();
+
+            String[] aMove = answer.split(" ");
+            for (String move : aMove) {
+                checker.doMove(move);
+            }
+
+            String ansFEN = checker.getFen();
+
+            Board checkSolutionBoard = new Board();
+            checkSolutionBoard.loadFromFen(startFenPuzzle);
+
+            List<String> chechSol = chariot.Client.basic().puzzles().dailyPuzzle().get().puzzle().solution();
+
+            System.out.println(chechSol);
+
+            for (String move : chechSol) {
+                checkSolutionBoard.doMove(move);
+            }
+
+            String puzzleEND = checkSolutionBoard.getFen();
+
+            System.out.println(puzzleEND);
+            System.out.println(ansFEN);
+
+            return puzzleEND.equalsIgnoreCase(ansFEN);
+
+        }catch (Exception e){
+            return false;
+        }
+
     }
 
-    public String getBlindmode() {
-        return blindmode;
-    }
+
 }
+
+
+
 
 
 

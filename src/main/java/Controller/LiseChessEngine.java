@@ -1,8 +1,8 @@
-import chariot.Client;
+
 import com.github.bhlangonijr.chesslib.*;
 import com.github.bhlangonijr.chesslib.move.Move;
 import com.github.bhlangonijr.chesslib.move.MoveGenerator;
-import org.jetbrains.annotations.NotNull;
+
 
 
 import java.util.*;
@@ -11,17 +11,7 @@ import java.util.*;
 public class LiseChessEngine {
 
     private Board board;
-    private ArrayList<Board> trainingGames = new ArrayList<>();
-    private String[] openingBook;
-    private List<Move> captures;
-    private List<Move> attackMoves;
-    private chariot.util.Board board1;
 
-
-    private Client client;
-    private Random random;
-    private String movesan;
-    private int movePicker;
 
 
     public LiseChessEngine(Board board){
@@ -30,317 +20,387 @@ public class LiseChessEngine {
 
 
 
-    public boolean doWhiteMove(String move){
-
-
-        Move m = new Move(move, Side.WHITE);
-
-        if(this.board.isMoveLegal(m, true)){
-            return true;
-        }else{
-            return false;
-        }
-
-
-    }
-
-
-    // check game state
-
     public Boolean gameOver(){
         if(this.board.isMated() || this.board.isDraw() || this.board.isStaleMate()){
-            this.trainingGames.add(this.board);
             return true;
         }
 
         return false;
     }
 
-    // Two main opening books
 
 
-
-    public String playFromOpeningBookHippo(int index, boolean side){
-
-        if(side == false) {
-            this.openingBook = new String[]{"move-maker", "e7e6", "g8e7", "g7g6", "f8g7", "e8g8", "d7d6", "b8d7", "b7b6", "c8b7", "a7a6", "h7h6", "c7c6", "d8c7"};
-
-            return this.openingBook[index];
-        }else{
-            String[]white = new String[]{"move-maker", "e2e3", "g1e2", "g2g3", "e1g1", "d2d3", "b1d2", "b2b3", "c1b2", "a2a3", "c2c3", "d1c2", "f1e1", "a1d1"};
-            return white[index];
-        }
-
-
-
-
+    public void playDiscordBotMoves(){
+        this.board.doMove(findBestMove());
     }
 
-
-    public String playFromOpeningBookKIA(int index){
-        this.openingBook = new String[]{"move-maker", "Nf6", "d6", "g6", "Bg7", "O-O", "a6", "Nd7", "b6", "c6", "Re8", "Qc7", "Rb8", "d5"};
-
-        return this.openingBook[index];
-    }
-
-    // calculate and store all valid captures when king is not attacked, if the king is attacked captures are placed with non captures
+    public List<Integer> countPiecesByTypeForSide(String fen, char side) {
+        String[] parts = fen.split(" ");
+        String placement = parts[0];
+        List<Integer> getVal = new ArrayList<>();
 
 
-    public List<Move> getCaptures(){
+        int pawnCount = 0;
+        int knightCount = 0;
+        int bishopCount = 0;
+        int rookCount = 0;
+        int queenCount = 0;
+        int kingCount = 0;
 
-        if(this.board.isKingAttacked()){
-            return this.board.legalMoves();
-        }
+        for (char c : placement.toCharArray()) {
 
-        this.captures = this.board.pseudoLegalCaptures();
-
-        return this.captures;
-    }
-
-
-    // searching for attacking moves in the middlegame, not currently used in main Engine logic, but will be added soon
-
-
-
-
-    public List<Move> searchMiddleGameMoves(){
-
-        for(Move m: this.board.legalMoves()){
-            if(this.board.isAttackedBy(m)){
-                this.attackMoves.add(m);
+            switch (c) {
+                case 'P':
+                    if (Character.isUpperCase(c) == (side == 'w')) {
+                        pawnCount++;
+                    }
+                    break;
+                case 'N':
+                    if (Character.isUpperCase(c) == (side == 'w')) {
+                        knightCount++;
+                    }
+                    break;
+                case 'B':
+                    if (Character.isUpperCase(c) == (side == 'w')) {
+                        bishopCount++;
+                    }
+                    break;
+                case 'R':
+                    if (Character.isUpperCase(c) == (side == 'w')) {
+                        rookCount++;
+                    }
+                    break;
+                case 'Q':
+                    if (Character.isUpperCase(c) == (side == 'w')) {
+                        queenCount++;
+                    }
+                    break;
+                case 'K':
+                    if (Character.isUpperCase(c) == (side == 'w')) {
+                        kingCount++;
+                    }
+                    break;
+                case 'p':
+                    if (Character.isLowerCase(c) == (side == 'b')) {
+                        pawnCount++;
+                    }
+                    break;
+                case 'n':
+                    if (Character.isLowerCase(c) == (side == 'b')) {
+                        knightCount++;
+                    }
+                    break;
+                case 'b':
+                    if (Character.isLowerCase(c) == (side == 'b')) {
+                        bishopCount++;
+                    }
+                    break;
+                case 'r':
+                    if (Character.isLowerCase(c) == (side == 'b')) {
+                        rookCount++;
+                    }
+                    break;
+                case 'q':
+                    if (Character.isLowerCase(c) == (side == 'b')) {
+                        queenCount++;
+                    }
+                    break;
+                case 'k':
+                    if (Character.isLowerCase(c) == (side == 'b')) {
+                        kingCount++;
+                    }
+                    break;
+                default:
+                    break;
             }
-
         }
 
-        if(this.attackMoves.size() > 0){
-            return this.attackMoves;
-        }
+        getVal.add(pawnCount);
+        getVal.add(knightCount);
+        getVal.add(rookCount);
+        getVal.add(queenCount);
+        getVal.add(bishopCount);
 
-        return this.board.legalMoves();
+
+        return getVal;
+
+
+    }
+
+    public int calculatePieceEval(Board board){
+
+        List<Integer> whiteSide = countPiecesByTypeForSide(board.getFen(), 'w');
+        List<Integer> blackSide = countPiecesByTypeForSide(board.getFen(), 'b');
+
+
+
+        int evalwhite = (whiteSide.get(0) * 10) + (whiteSide.get(1) * 30) + (whiteSide.get(2) * 50) + (whiteSide.get(3) * 150) + (whiteSide.get(4) * 30) + (1 * 700);
+        int evalblack = (blackSide.get(0) * 10) + (blackSide.get(1) * 30) + (blackSide.get(2) * 50) + (blackSide.get(3) * 150) + (blackSide.get(4) * 30) + (1 * 700);
+
+        return (evalwhite - evalblack);
+
+
     }
 
 
-    // Opening Engine algo which can be used in Discord, for Lichess sides switch resulting this algo to break
-    // plays best chess move from negamax algo + opening book, if openings don't go as planned well, you just play the best move!
-
-
-    public void abstractedRandomizer(){
-        this.random = new Random();
-        this.movePicker = random.nextInt(this.board.legalMoves().size());
-        this.board.setSideToMove(Side.BLACK);
+    private int evaluateBoard(Board board) {
 
 
 
-        if(this.board.getMoveCounter() <= 13){
+        try {
 
+
+            int BISHOP_VALUE = 6;
+            int KNIGHT_VALUE = BISHOP_VALUE + 2;
+            int PAWN_VALUE = BISHOP_VALUE + 1;
+            int QUEEN_VALUE = 1;
+            int ROOK_VALUE = 1;
+            int KING_VALUE = 0;
+
+            int KING_ATTACKED = 70;
+            int KING_MATED = 500;
+
+            int score = 0;
+            int scoreb = 0;
+            int scorew = 0;
+
+
+            score += (board.legalMoves().size());
+            score += calculatePieceEval(board);
             try {
+                for (int i = 0; i < board.legalMoves().size(); i++) {
+                        if (board.getSideToMove().equals(Side.WHITE)) {
+                            if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.BISHOP)) {
+                                scorew += BISHOP_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.KNIGHT)) {
+                                scorew += KNIGHT_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.PAWN)) {
+                                scorew += PAWN_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.QUEEN)) {
+                                scorew += QUEEN_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.ROOK)) {
+                                scorew += ROOK_VALUE;
+                            } else {
+                                scorew += KING_VALUE;
+                            }
+                    }else if(board.getSideToMove().flip().equals(Side.BLACK)){
+                            if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.BISHOP)) {
+                                scoreb -= BISHOP_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.KNIGHT)) {
+                                scoreb -= KNIGHT_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.PAWN)) {
+                                scoreb -= PAWN_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.QUEEN)) {
+                                scoreb -= QUEEN_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.ROOK)) {
+                                scoreb -= ROOK_VALUE;
+                            } else if (board.getPiece(board.legalMoves().get(i).getFrom()).getPieceType().equals(PieceType.KING)){
+                                scoreb -= KING_VALUE;
+                            }
 
-                Random mover = new Random();
-                int coinFlip = mover.nextInt(2);
-
-                if(coinFlip == 0){
-
-
-                    this.board.doMove(this.playFromOpeningBookHippo(this.board.getMoveCounter(), false));
-
-
-                }else{
-
-                    this.board.doMove(this.playFromOpeningBookKIA(this.board.getMoveCounter()));
-
+                    }
                 }
 
 
-                //this.board.setSideToMove(Side.WHITE);
-            }catch (Exception e){
-                //this.board.undoMove();
 
-                this.board.doMove(findBestMove());
+                if(!board.isKingAttacked()) {
+                    for (int j = 0; j < board.pseudoLegalCaptures().size(); j++) {
+                        if (board.getSideToMove().equals(Side.WHITE)) {
+                            if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.BISHOP)) {
+                                scorew += BISHOP_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.KNIGHT)) {
+                                scorew += KNIGHT_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.PAWN)) {
+                                scorew += PAWN_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.QUEEN)) {
+                                scorew += QUEEN_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.ROOK)) {
+                                scorew += ROOK_VALUE + 1;
+                            } else {
+                                scorew += KING_VALUE + 1;
+                            }
+                        } else if(board.getSideToMove().flip().equals(Side.BLACK)){
+                            if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.BISHOP)) {
+                                scoreb -= BISHOP_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.KNIGHT)) {
+                                scoreb -= KNIGHT_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.PAWN)) {
+                                scoreb -= PAWN_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.QUEEN)) {
+                                scoreb -= QUEEN_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.ROOK)) {
+                                scoreb -= ROOK_VALUE + 1;
+                            } else if (board.getPiece(board.pseudoLegalCaptures().get(j).getFrom()).getPieceType().equals(PieceType.KING)){
+                                scoreb -= KING_VALUE + 1;
+                            }
+
+                        }
+                    }
+                }else{
+                    if(board.getSideToMove().equals(Side.WHITE)){
+                       scorew += board.pseudoLegalCaptures().size() + 1;
+
+                    } else if (board.getSideToMove().equals(Side.BLACK)) {
+                        scoreb -= board.pseudoLegalCaptures().size() - 1;
+                    }
+                }
+
+
+
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
 
-        }
-
-        else{
-
-            //this.board.
-            this.board.doMove(findBestMove());
-        }
-
-    }
-
-
-
-    public void playRandomLegalMoves(){
-
-
-
-        this.board.doMove(findBestMove());
-
-
-
-        // return this.board;
-    }
-
-
-    public Move getKingsRunningSqs(){
-        return this.board.legalMoves().get(this.board.legalMoves().size()-1);
-    }
-
-    public List<Move> getTail(){
-        List<Move> tail = this.board.legalMoves().subList(((this.board.legalMoves().size()-1)/2),this.board.legalMoves().size()-1 );
-
-        return tail;
-    }
-
-
-    // main chess algo for Lichess
-    // find the best chess move according to negamax algo, depth set to 5 for less search fast moves to plat
-
-
-    public Move getBestMove(Board board) {
-        return minimax(board, 0, 4, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getSideToMove());
-    }
-
-    private Move minimax(Board board, int depth, int maxDepth, int alpha, int beta, Side side) {
-        Move bestMove = null;
-
-        if (depth == maxDepth || board.isMated() || board.isStaleMate()) {
-            return null;
-        }
-
-        for (Move move : board.legalMoves()) {
-            board.doMove(move);
-            int score = minimaxScore(board, depth + 1, maxDepth, alpha, beta, side.flip());
-            board.undoMove();
-
-            if (side == Side.WHITE && score > alpha) {
-                alpha = score;
-                bestMove = move;
-            } else if (side == Side.BLACK && score < beta) {
-                beta = score;
-                bestMove = move;
+            if (board.isKingAttacked() && board.getSideToMove().equals(Side.WHITE)) {
+                score += KING_ATTACKED;
+            }else{
+                score -= KING_ATTACKED;
             }
 
-            if (alpha >= beta) {
-                break;
-            }
-        }
-
-        return bestMove;
-    }
-
-    private int minimaxScore(Board board, int depth, int maxDepth, int alpha, int beta, Side side) {
-        if (depth == maxDepth || board.isMated() || board.isStaleMate()) {
-            return evaluateBoard(board);
-        }
-
-        for (Move move : board.legalMoves()) {
-            board.doMove(move);
-            int score = minimaxScore(board, depth + 1, maxDepth, alpha, beta, side.flip());
-            board.undoMove();
-
-            if (side == Side.WHITE && score > alpha) {
-                alpha = score;
-            } else if (side == Side.BLACK && score < beta) {
-                beta = score;
+            if (board.isMated() && board.getSideToMove().equals(Side.WHITE)) {
+                score += KING_MATED;
+            }else{
+                score -= KING_MATED;
             }
 
-            if (alpha >= beta) {
-                break;
+
+            if(board.getSideToMove().equals(Side.WHITE)){
+                return score + (scorew - scoreb);
             }
+
+
+
+            return -1 * score;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
-        return (side == Side.WHITE) ? alpha : beta;
-    }
-
-    private int evaluateBoard(Board board) {
-        int score = 0;
-
-        score += (whitePieceAdvantage() - blackPieceAdvantage());
-
-        // chessboard area eval, less space less eval and vise versa
-
-        score += this.board.legalMoves().size();
-        // Add your own evaluation function here
-        return score;
+        return 0;
     }
 
 
-    public Move generateMoveFromIndexLookUp(Board board){
+    public Move generateHumanPlayFromBlackSide(Board board){
         List<Integer> intPos = new ArrayList<>();
         Random random = new Random();
-        Random movePicker = new Random();
         HashMap<Integer, Move> generator = new HashMap<>();
 
 
-        for(int i = 0; i < board.legalMoves().size(); i++){
+        for (int i = 0; i < board.legalMoves().size(); i++) {
             int indexPicker = random.nextInt(0, 65);
             intPos.add(Integer.valueOf(indexPicker));
         }
 
 
-        for(int j = 0; j < board.legalMoves().size(); j++){
+        for (int j = 0; j < board.legalMoves().size(); j++) {
             generator.put(intPos.get(j), board.legalMoves().get(j));
         }
 
         Collections.shuffle(intPos);
+        Collections.rotate(intPos, 2);
 
-        Move m =  generator.get(intPos.get(new Random().nextInt(intPos.size())));
-        int tableBaseMovePicker = movePicker.nextInt(2);
 
-        if(board.getSideToMove().equals(Side.WHITE)){
-            if(tableBaseMovePicker == 0){
-                return this.playTopTableBaseMove(board);
-            }else {
-                return this.getBestMove(board);
+        return generator.get(intPos.get(new Random().nextInt(intPos.size())));
+    }
+
+
+
+    public Move generateMoveFromIndexLookUp(Board board){
+
+        try {
+
+            if (board.getSideToMove().equals(Side.WHITE)) {
+                for(Move m: board.legalMoves()){
+                    if(board.getContext().isCastleMove(m)){
+                        return m;
+                    }
+                }
+
+            if(board.getSideToMove().equals(Side.WHITE)){
+                Board boardCheckMate = board.clone();
+                for(Move m: board.legalMoves()){
+                    boardCheckMate.doMove(m);
+                    if(boardCheckMate.isMated()){
+                        return m;
+                    }
+                    boardCheckMate.undoMove();
+                }
             }
-        }else{
-            if(tableBaseMovePicker == 0){
-                return playTopTableBaseMove(board);
-            }else{
-                return m;
+
+              return LocalfindBestMove(board, 14);
+            } else if (board.getSideToMove().equals(Side.BLACK)) {
+
+               return generateHumanPlayFromBlackSide(board);
             }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
 
         }
 
-//        if(board.getMoveCounter() <= 10){
-//            if(m.getTo().getFile().name().equalsIgnoreCase("FILE_A") || m.getTo().getFile().name().equalsIgnoreCase("FILE_H")){
-//                List<Move> boardclone = new ArrayList<>();
-//                for(int x = 0; x < board.legalMoves().size(); x++){
-//                    boardclone.add(board.legalMoves().get(x));
-//                }
-//                boardclone.remove(m);
-//                return generator.get(boardclone.get(new Random().nextInt(boardclone.size())));
-//            }
-//            return m;
-//        }
-        //System.out.println(m.getType().toString());
-        //System.out.println(board.isA);
+        return null;
+
+
+    }
+
+
+    public Move LocalfindBestMove(Board board, int depth) {
+
+
+        // Adjust the search depth as needed
+        int bestValue = Integer.MIN_VALUE;
+        Move bestMove = null;
+        for (Move move : board.legalMoves()) {
+            board.doMove(move);
+            int value = negamaxlocal(depth - 1, Integer.MAX_VALUE, Integer.MIN_VALUE, board);
+            board.undoMove();
+            if (value > bestValue) {
+                bestValue = value;
+                bestMove = move;
+            }
+        }
+
+        try {
+
+            return bestMove;
+
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return board.legalMoves().get(0);
+        }
 
 
 
+    }
 
+
+    private int negamaxlocal(int depth, int alpha, int beta, Board board) {
+        if (depth == 0 || board.isMated() || board.isDraw()) {
+
+            return evaluateBoard(board);
+        }
+        int bestValue = Integer.MIN_VALUE;
+        for (Move move : board.legalMoves()) {
+            board.doMove(move);
+            int value = negamaxlocal(depth - 1, -beta, -alpha, board);
+            board.undoMove();
+            bestValue = Math.max(bestValue, value);
+            alpha = Math.max(alpha, value);
+            if (alpha >= beta) {
+                break;
+            }
+        }
+
+
+        return bestValue;
     }
 
 
     public Move findBestMove() {
 
 
-
-        List<Move> tail = this.board.legalMoves().subList(((this.board.legalMoves().size()-1)/2),this.board.legalMoves().size()-1 );
-//        tail.addAll(this.board.pseudoLegalCaptures());
-
-        List<Move> head = this.board.legalMoves().subList(0, (this.board.legalMoves().size()-1)/2);
-
-        if(this.board.isKingAttacked()){
-            return getKingsRunningSqs();
-        }else {
-
-            if(this.board.isKingAttacked()){
-                return getKingsRunningSqs();
-            }
-
-            int depth = 5; // Adjust the search depth as needed
+            int depth = 5;
             int bestValue = Integer.MIN_VALUE;
             Move bestMove = null;
             for (Move move : MoveGenerator.generateLegalMoves(this.board)) {
@@ -353,18 +413,16 @@ public class LiseChessEngine {
                 }
             }
 
-            System.out.println(bestMove);
 
             return bestMove;
-        }
+
     }
 
-    // negamax algo that uses max and min values to determine the best move to find, uses a simple eval function
+
 
     private int negamax(int depth, int alpha, int beta) {
-        List<Move> tail = this.board.legalMoves().subList((this.board.legalMoves().size()-1)/2,this.board.legalMoves().size()-1 );
         if (depth == 0 || this.board.isMated() || this.board.isDraw()) {
-            // Evaluate the current board position and return a score
+
             return evaluate();
         }
         int bestValue = Integer.MIN_VALUE;
@@ -379,127 +437,21 @@ public class LiseChessEngine {
             }
         }
 
-        System.out.println(bestValue);
 
         return bestValue;
     }
 
 
 
-    // piece value function, follows "normal" chess piece values
-    // change piece value from 1 to 100 to 1000 according the higher the value, the better eval function's move findings
-    // for Lise queen and king are same value, to help in endgames
 
-
-
-    private int valueMapping(Piece p){
-        int value = 0;
-        switch (p){
-            case WHITE_PAWN:
-                return 1;
-            case WHITE_BISHOP:
-                return 3;
-
-            case WHITE_KNIGHT:
-                return 4;
-
-            case WHITE_ROOK:
-                return 5;
-
-            case WHITE_QUEEN:
-                return 9;
-
-            case WHITE_KING:
-                return 200;
-
-            case BLACK_PAWN:
-                return 1;
-
-            case BLACK_BISHOP:
-                return 3;
-
-            case BLACK_KNIGHT:
-                return 4;
-
-            case BLACK_ROOK:
-                return 5;
-
-            case BLACK_QUEEN:
-                return 9;
-
-            case BLACK_KING:
-                return 200;
-
-            default:
-                return 0;
-
-        }
-        //return 0;
-    }
-
-
-    public int getBCount(Board board){
-        int count = 0;
-        for (Square square : Square.values()) {
-            if (board.getPiece(square).getPieceType().equals(PieceType.BISHOP)) {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-
-
-    // calculate white piece advantage on number of pieces with the values attached to it
-
-    private int whitePieceAdvantage(){
-        int counter = 0;
-        Random random = new Random();
-        int picker = random.nextInt(2);
-        int pawn = random.nextInt(8);
-
-
-        counter += (picker * valueMapping(Piece.WHITE_BISHOP))+ (pawn * valueMapping(Piece.WHITE_PAWN)) + ( picker * valueMapping(Piece.WHITE_QUEEN)) + (picker  * valueMapping(Piece.WHITE_ROOK)) +
-                (picker * valueMapping(Piece.WHITE_KNIGHT)) + (Piece.WHITE_KING.ordinal() * valueMapping(Piece.WHITE_KING));
-
-        return counter;
-    }
-
-    // calculate black piece advantage on number of pieces with the values attached to it
-
-    private int blackPieceAdvantage(){
-        int blackCounter = 0;
-        blackCounter += (Piece.BLACK_BISHOP.ordinal()* valueMapping(Piece.BLACK_BISHOP)) + (Piece.BLACK_KNIGHT.ordinal() * valueMapping(Piece.BLACK_KNIGHT))+ (Piece.BLACK_QUEEN.ordinal()* valueMapping(Piece.BLACK_QUEEN)) + (Piece.BLACK_ROOK.ordinal()
-                * valueMapping(Piece.BLACK_ROOK))+ (Piece.BLACK_PAWN.ordinal()* valueMapping(Piece.BLACK_PAWN)) + (Piece.BLACK_KING.ordinal() * valueMapping(Piece.BLACK_KING));
-
-        return blackCounter;
-    }
 
     private int evaluate() {
         int score = 0;
-        //Random random = new Random();
-        //score += random.nextInt(64);
-
-        //core += random.nextInt(6400);
-        // material evaluation
-
-        score += (whitePieceAdvantage() - blackPieceAdvantage());
 
         score -= 64;
 
-
-
-        // chessboard area eval, less space less eval and vise versa
-
         score += this.board.legalMoves().size();
 
-//        if(board.getSideToMove().equals(Side.WHITE) && board.isKingAttacked()){
-//            score -= 3000;
-//
-//        }else if(board.getSideToMove().equals(Side.BLACK) && board.isKingAttacked()){
-//            score += 3000;
-//        }
 
         if(board.getSideToMove().equals(Side.WHITE)){
             return score * 1;
@@ -510,71 +462,16 @@ public class LiseChessEngine {
     }
 
 
-    // very basic tactic creator, not used will come in future
-
-    public List<Move> generateCheckTactics() {
-        List<Move> tactics = new ArrayList<>();
-        for (Move move : this.board.legalMoves()) {
-            this.board.doMove(move);
-            if (this.board.isKingAttacked()) {
-                tactics.add(move);
-            }
-            this.board.undoMove();
-        }
-        return tactics;
-    }
-
-
-
-    // still in works, better way to implement an endgame tablebase support
-
-
-
-    public Move playTopTableBaseMove(Board board){
-        Client client1 = Client.basic();
-        String annotation = client1.tablebase().standard(board.getFen()).get().moves().get(0).san();
-        Move move = new Move(annotation, board.getSideToMove());
-        return move;
-    }
-
-
-
-    public void playTablebaseMoves(){
-        // this.board = new Board();
-        this.board.setSideToMove(Side.BLACK);
-        this.client = Client.basic();
-
-        String move = this.client.tablebase().standard(this.board.getFen()).get().moves().get(this.movePicker).san();
-        this.board.doMove(move);
-        this.board.setSideToMove(Side.WHITE);
-
-        //return this.board;
-
-    }
-
-    // Discord helper methods
-
     public void resetBoard(){
         this.board = new Board();
     }
 
-    public String getFenBoard(){
-        return this.board.getFen();
-    }
+
 
     public String getImageOfCurrentBoard(){
         ChessUtil chessUtil = new ChessUtil();
         return chessUtil.getImageFromFEN(this.board.getFen());
     }
-
-
-
-
-
-
-
-
-
 
 
 
