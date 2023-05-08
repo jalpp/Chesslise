@@ -21,6 +21,7 @@ public class SwissResults {
 
     public EmbedBuilder getLinkResults(){
         EmbedBuilder embedBuilder = new EmbedBuilder();
+
         String[] emojileaderboard = {"1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "\uD83D\uDD1F"};
         String[] podium = {"\uD83C\uDFC6", "\uD83E\uDD48", "\uD83E\uDD49"};
         String res = "";
@@ -42,13 +43,13 @@ public class SwissResults {
             for(int i = 0; i < 10 ; i++){
                 res += emojileaderboard[i] + " "+ list.get(i).username() + " " + list.get(i).rating() + " **" + list.get(i).points() + "** " + list.get(i).tieBreak() + "\n";
             }
-            this.embedBuilder.setColor(Color.green);
-            this.embedBuilder.setDescription( info + "\n\n **Podium** \n" + podiumres + "\n\n" + res );
-            this.embedBuilder.setTitle(result.get().name());
+            embedBuilder.setColor(Color.green);
+            embedBuilder.setDescription( info + "\n\n **Podium** \n" + podiumres + "\n\n" + res );
+            embedBuilder.setTitle(result.get().name());
 
         }
 
-        return this.embedBuilder;
+        return embedBuilder;
 
 
     }

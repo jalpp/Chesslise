@@ -20,7 +20,7 @@ public class Main extends ListenerAdapter {
     public static void main(String[] args) {
 
 
-        jdaBuilder = JDABuilder.createDefault(System.get("discord_bot_token"));
+        jdaBuilder = JDABuilder.createDefault(System.getenv("discord_bot_token"));
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
 

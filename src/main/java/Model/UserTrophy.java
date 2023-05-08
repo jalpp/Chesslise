@@ -55,7 +55,7 @@ public class UserTrophy {
         }
 
 
-        return this.ImageLink + " " + this.trophyName;
+        return imageLink+ " " + this.trophyName;
 
 
 
