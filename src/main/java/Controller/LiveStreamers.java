@@ -1,5 +1,5 @@
 import chariot.Client;
-import chariot.model.StreamerStatus;
+import chariot.model.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
@@ -18,7 +18,7 @@ public class LiveStreamers {
 
     public EmbedBuilder getTv(){
 
-        List<StreamerStatus> live = client.users().liveStreamers().stream().toList();
+        List<LiveStreamer> live = client.users().liveStreamers().stream().toList();
 
         this.embedBuilder = new EmbedBuilder();
 
@@ -27,36 +27,26 @@ public class LiveStreamers {
 
         for(int i = 0; i < 3; i++){
 
-            String title = "";
-
-            if(live.get(i).title().isPresent()){
-                title += live.get(i).title().get();
-            }else{
-                title += "";
-            }
+            String title = live.get(i).user().title().orElse("");
 
           String presentlink = "";
           String TwitchLink = "";
           String YoutubeLink = "";
 
             if(live.get(i).stream().service().equals("twitch")){
-               Optional<String> twitchLinks = live.get(i).streamer().twitch();
-               if(twitchLinks.isPresent()){
-                   TwitchLink = twitchLinks.get();
+               if (live.get(i).streamer().twitch() instanceof Some<String> twitch) {
+                   TwitchLink = twitch.value();
                    presentlink += "[**Twitch** \uD83D\uDD2E ](" + TwitchLink + ") " + "**"+ live.get(i).streamer().headline() + "**"+ "\n\n";
-
                }
             }else{
-               Optional<String> youtubelinks = live.get(i).streamer().youTube();
-               if(youtubelinks.isPresent()){
-                   YoutubeLink = youtubelinks.get();
+               if (live.get(i).streamer().youtube() instanceof Some<String> youtube) {
+                   YoutubeLink = youtube.value();
                    presentlink += "[**Youtube** \uD83D\uDD3A ](" + YoutubeLink + ") " + "**"+ live.get(i).streamer().headline() + "**"+ "\n\n";
                }
             }
 
 
-
-            getLivePeople +=" \uD83C\uDF99️ " + title +  " **" +  live.get(i).id() + "**" + " is **Live**! \n " + presentlink;
+            getLivePeople +=" \uD83C\uDF99️ " + title +  " **" +  live.get(i).user().id() + "**" + " is **Live**! \n " + presentlink;
 
 
         }

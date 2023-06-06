@@ -1,9 +1,12 @@
 import chariot.Client;
 import chariot.model.Enums;
 import chariot.model.One;
-import chariot.model.PerfStat;
+import chariot.model.PerformanceStatistics;
+import chariot.model.ProvidedProfile;
+import chariot.model.Some;
 import chariot.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserProfile extends UserObject{
@@ -20,7 +23,7 @@ public class UserProfile extends UserObject{
 
 
     public String getBlitzRatings(){
-        One<PerfStat> userBlitz = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.blitz);
+        One<PerformanceStatistics> userBlitz = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.blitz);
 
 
         String blitzRating = " \uD83D\uDD25 **Blitz**: ?";
@@ -34,7 +37,7 @@ public class UserProfile extends UserObject{
     }
 
     public String getRapidRatings(){
-        One<PerfStat> userRapid = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.rapid);
+        One<PerformanceStatistics> userRapid = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.rapid);
 
         String rapidRating = " \uD83D\uDC07 **Rapid**: ?";
 
@@ -47,7 +50,7 @@ public class UserProfile extends UserObject{
     }
 
     public String getBulletRatings(){
-        One<PerfStat> userBullet = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.bullet);
+        One<PerformanceStatistics> userBullet = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.bullet);
 
         String bulletRating = "\uD83D\uDD2B **Bullet**: ?";
 
@@ -60,7 +63,7 @@ public class UserProfile extends UserObject{
     }
 
     public String getClassicalRatings(){
-        One<PerfStat> usercal = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.classical);
+        One<PerformanceStatistics> usercal = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.classical);
 
         String calRating = "\uD83D\uDC22 **Classical**: ?";
 
@@ -100,7 +103,7 @@ public class UserProfile extends UserObject{
 
                 boolean cheater = user.tosViolation();
 
-                boolean closedaccount = user.closed();
+                boolean closedaccount = user.disabled();
 
                 if (cheater == true) {
                    return " This user has violated Lichess Terms of Service";
@@ -114,25 +117,23 @@ public class UserProfile extends UserObject{
 
                 if (cheater == false && closedaccount == false) {
 
-                    Optional<User.Profile> profile = user.profile();
+                    ProvidedProfile profile = user.profile();
 
-                    if(profile.isPresent()) {
+                    String name = user.id();
 
-                        String name = user.id();
+                    String bio = profile.bio().orElse("");
 
-                        String bio = profile.get().bio();
+                        int wins = user.accountStats().win();
 
-                        int wins = user.count().win();
+                        int lose = user.accountStats().loss();
 
-                        int lose = user.count().loss();
+                        int all = user.accountStats().all();
 
-                        int all = user.count().all();
+                        int draw = user.accountStats().draw();
 
-                        int draw = user.count().draw();
+                        int playing = user.accountStats().playing();
 
-                        int playing = user.count().playing();
-
-                        String userUrl = user.url();
+                        String userUrl = user.url().toURL().toString();
 
 
 
@@ -140,43 +141,22 @@ public class UserProfile extends UserObject{
 
                         String patWings = "";
 
-                        if (user.profile().isEmpty()) {
+                        String sayTitle = user.title().orElse("");
 
-                          return "can't generate profiles for user, not enough profile data";
-                        }
-
-
-
-                        String sayTitle = "";
-
-                        Optional<String> titledPlayer = user.title();
-
-                        Boolean hasTitle;
-
-
-                        if (titledPlayer.isPresent()) {
-                            hasTitle = true;
-                        } else {
-                            hasTitle = false;
-                        }
-
-                        if (hasTitle == true) {
-                            sayTitle += titledPlayer.get();
-                        } else {
-                            sayTitle += "";
-                        }
+                        Boolean hasTitle = user.title() instanceof Some<String>;
 
                         String sayrewards = "";
                         String embedRewards = "";
 
+                        List<chariot.model.Trophy> trophies = user.trophies().orElse(List.of());
 
-                        for (chariot.model.Trophy trophy : user.trophies()) {
+                        for (chariot.model.Trophy trophy : trophies) {
 
                             UserTrophy userTrophy = new UserTrophy(trophy);
                             sayrewards += userTrophy.getImageLink() + "\n";
                         }
 
-                        if(!user.trophies().isEmpty()) {
+                        if(!trophies.isEmpty()) {
 
                             embedRewards += "\n\n ** \uD83D\uDCA0 Trophies:** \n\n" + sayrewards;
 
@@ -186,12 +166,8 @@ public class UserProfile extends UserObject{
 
 
                         this.sayProfile +=  sayTitle + " " + name + " " +StatusEmoji + "\n" +"**All Games**: " + all + "\n" + "** ⚔️ Won:** " +   wins + " ** \uD83D\uDE14 Loss:** " + lose + " ** \uD83E\uDD1D Draw:** " + draw + "\n** ♗ Playing:** " + playing + "\n \uD83D\uDCB9 **Ratings**: \n" + this.getBlitzRatings() + "\n" + this.getRapidRatings() + "\n" + this.getBulletRatings() + "\n" + this.getClassicalRatings()+ embedRewards ;
-                    }else{
-                        return "Please add Bio to Your Profile!";
                     }
-
                 }
-            }
             if (userPresent == false) {
                 return "User Not Present, Please try again";
 
