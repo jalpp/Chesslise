@@ -27,21 +27,11 @@ public class UserDashboard extends UserProfile{
 
 
 
-        if(userResult.isPresent() && !userResult.get().closed() && !userResult.get().tosViolation()){
+        if(userResult.isPresent() && !userResult.get().disabled() && !userResult.get().tosViolation()){
 
             User user = userResult.get();
 
-            String title = "";
-
-            Optional<String> titleplayer = user.title();
-
-            if(titleplayer.isPresent()){
-                title += titleplayer.get();
-            }else{
-                title = "";
-            }
-
-
+            String title = user.title().orElse("");
 
             One<StormDashboard> dash = this.getClient().puzzles().stormDashboard(this.getUserID());
 

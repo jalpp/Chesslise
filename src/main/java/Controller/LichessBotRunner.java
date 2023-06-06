@@ -1,7 +1,10 @@
 import chariot.Client;
 import chariot.model.Enums;
 import chariot.model.Event;
-import chariot.model.GameEvent;
+import chariot.model.GameStateEvent;
+import chariot.model.VariantType;
+import chariot.model.Enums.Speed;
+
 import com.github.bhlangonijr.chesslib.*;
 import com.github.bhlangonijr.chesslib.move.Move;
 
@@ -19,7 +22,7 @@ public class LichessBotRunner {
         var client = Client.auth(System.getenv("lichess_bot_token"));
         var bot = client.bot();
         var events = bot.connect().stream();
-        var username = client.account().profile().get().username().toLowerCase();
+        var username = client.account().profile().get().name().toLowerCase();
         String[] s = {"maia1", "maia5", "maia9", "charibot",  "TurtleBot", "SxRandom", "zeekat", "roundmoundofrebounds", "WorstFish", "pawnrobot", "knucklefish", "LeelaRogue"};
         int picker = s.length;
         int index = new Random().nextInt(picker);
@@ -38,9 +41,9 @@ public class LichessBotRunner {
                 case challenge:
 
                     var challenge = (Event.ChallengeEvent) event;
-                    boolean std = challenge.challenge().variant().name().equalsIgnoreCase("Standard");
-                    boolean non_rated = challenge.challenge().rated();
-                    boolean isCoores = challenge.challenge().speed().equalsIgnoreCase("correspondence");
+                    boolean std = challenge.challenge().gameType().variant() == VariantType.Variant.standard;
+                    boolean non_rated = challenge.challenge().gameType().rated();
+                    boolean isCoores = challenge.challenge().gameType().timeControl().speed() == Speed.correspondence;
                     if(std && !non_rated && !isCoores ){
                         bot.acceptChallenge(event.id());
                     }else if(non_rated){
@@ -69,8 +72,8 @@ public class LichessBotRunner {
                     break;
 
                 case gameFinish:
-                    bot.chat(event.id(), "Thanks for playing me! ggs", provider -> provider.player());
-                    bot.chat(event.id(), "Thanks for watching!", provider -> provider.spectator());
+                    bot.chat(event.id(), "Thanks for playing me! ggs");
+                    bot.chatSpectators(event.id(), "Thanks for watching!");
 
                     break;
 
@@ -84,7 +87,7 @@ public class LichessBotRunner {
 
 
 
-                    bot.chat(event.id(), "omg you are very strong.. I'm scared but hey good luck!!", provider -> provider.player());
+                    bot.chat(event.id(), "omg you are very strong.. I'm scared but hey good luck!!");
 
 
                     
@@ -105,7 +108,7 @@ public class LichessBotRunner {
 
                                 try {
 
-                                    isWhite[0] = ((GameEvent.Full) gameEvent).white().name().toLowerCase().equals(username);
+                                    isWhite[0] = ((GameStateEvent.Full) gameEvent).white().name().toLowerCase().equals(username);
                                     if (isWhite[0]) {
                                         try {
 
@@ -128,7 +131,7 @@ public class LichessBotRunner {
                             case gameState:
                                 try {
 
-                                    var names = ((GameEvent.State) gameEvent).moves().split(" ");
+                                    var names = ((GameStateEvent.State) gameEvent).moves().split(" ");
                                     var whiteTurn = names.length % 2 == 0;
 
                                     if (isWhite[0] == whiteTurn) {
