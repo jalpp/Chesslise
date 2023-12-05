@@ -18,6 +18,21 @@
  3. [Chess.com Java Wrapper](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  4. [Java Chess Lib](https://github.com/bhlangonijr/chesslib)
 
+
+# Contribution details
+
+To set up Lise you need the following
+
+- Java 18
+- Maven
+- Chess.com app useragent details see more in Controller/CCProfile.java
+- Discord Dev app
+- Discord Dev Account
+- Discord Dev app token (Note: select only Send Embeds, Send Msg, Embed links, Use Slash command permissions)
+- JDA 18 knowledge, as Controller/CommandHandler.java is mostly JDA
+- You don't need chess knowledge to contribute
+- if your stuck join the discord server.
+
 # Image Generation
  1. [Chess Board Image](https://chessboardimage.com/)
  2. [Lichess Gifs](https://github.com/lichess-org/lila-gif)

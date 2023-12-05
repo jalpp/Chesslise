@@ -29,10 +29,15 @@ public class CCProfile {
 
 
         try {
+
+
             this.playerClient = new PlayerClient();
+
+            playerClient.setUserAgent("your_app; username: your_username; contact: your_email");
             this.embedBuilder = new EmbedBuilder();
             String proSay = "";
             String say = "";
+
 
 
             PlayerStats player = playerClient.getStatsForPlayer(this.username);

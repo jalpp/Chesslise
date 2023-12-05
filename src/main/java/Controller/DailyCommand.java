@@ -49,9 +49,9 @@ public class DailyCommand extends ChessPuzzle {
 
 
                 if(split[1].contains("b")){
-                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=blue&piece=cardinal";
+                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=white&theme=brown&piece=kosal";
                 }else{
-                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=blue&piece=cardinal";
+                    coordImg = "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&color=black&theme=brown&piece=kosal";
                 }
 
                 return coordImg;

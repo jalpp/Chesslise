@@ -29,7 +29,7 @@ public class DailyCommandCC extends ChessPuzzle {
             }
             this.solLink += "https://lichess.org/analysis/standard/" + fen.replace(" ", "_");
 
-            return "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&theme=blue&piece=alpha";
+            return "https://lichess1.org/export/fen.gif?fen=" + split[0] + "&theme=brown&piece=kosal";
 
         } catch (IOException | ChessComPubApiException e) {
             throw new RuntimeException(e);
