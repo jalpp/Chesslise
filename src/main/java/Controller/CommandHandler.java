@@ -386,22 +386,6 @@ public class CommandHandler extends ListenerAdapter {
     }
 
 
-    @Override
-    public void onStringSelectInteraction(StringSelectInteractionEvent event) {
-
-        String name = event.getComponentId();
-        String val = event.getValues().get(0);
-        WatchMaster watchMaster = new WatchMaster(client);
-
-        if (name.equals("watch-id")) {
-            switch (val) {
-                case "master-id" -> event.editMessage(watchMaster.getMasterGames()).queue();
-                case "op-id" ->
-                        event.editMessage("1️⃣ **Italian Opening ~ e4 e5 Nf3 Nf6 Bc4** \n\n 2️⃣ **Queen's Gambit ~ d4 d5 c4** \n\n 3️⃣ **English Opening ~ c4** \n\n 4️⃣ **Zukertort Opening ~ Nf3** \n\n 5️⃣ **Sicilian Defence ~ e4 c5** \n\n").setActionRow(Button.primary("oneopening", "1️⃣"), Button.primary("twoopening", "2️⃣"), Button.primary("threeopening", "3️⃣"), Button.primary("fouropening", "4️⃣"), Button.primary("fiveopening", "5️⃣")).queue();
-            }
-        }
-
-    }
 
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
