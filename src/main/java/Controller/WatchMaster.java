@@ -65,23 +65,7 @@ public class WatchMaster {
         return masterGif;
     }
 
-    public String getOpenings(String moves){
-        Random random = new Random();
-        List<ExploreResult.DBGame> games = chariot.Client.basic().openingExplorer().masters(conf -> conf.play(moves)).get().topGames();
-        int randomsizer = random.nextInt(games.size());
-
-        this.openingGif +=  "https://lichess1.org/game/export/gif/" + games.get(randomsizer).id() + ".gif";
-
-        return this.openingGif;
-    }
-
-    public String[] getOpeningId(){
-        String[] split = this.openingGif.split(".gif");
-
-        return split;
-    }
-
-
+=
 
 
     public String[] getGameId(){
