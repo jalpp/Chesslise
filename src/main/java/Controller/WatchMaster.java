@@ -65,7 +65,6 @@ public class WatchMaster {
         return masterGif;
     }
 
-=
 
 
     public String[] getGameId(){
