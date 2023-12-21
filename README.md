@@ -9,9 +9,9 @@
  1. [Lichess API](https://lichess.org/api) 
  2. [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  3. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
+ 4. [StockFish API](https://stockfish.online/)
 
 # Libraries
-
 
  1. [Lichess Java Client](https://github.com/tors42/chariot) 
  2. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
@@ -34,8 +34,7 @@ To set up Lise you need the following
 - if your stuck join the discord server.
 
 # Image Generation
- 1. [Chess Board Image](https://chessboardimage.com/)
- 2. [Lichess Gifs](https://github.com/lichess-org/lila-gif)
+- [Lichess Gifs](https://github.com/lichess-org/lila-gif)
 
 
 # Lise Chess Engine
@@ -48,30 +47,15 @@ about the AI can be found [here](https://github.com/jalpp/LiseChessEngine)
  
 
 # Lichess Commands:
-| Commands      | Description |
-| ----------- | ----------- |
-| /help      | to see command information for the LISEBOT       |
-| /profile    | to see lichess profiles for given username       |
-| /streamers | Watch current live streamers |
-| /dailypuzzle | see the daily Lichess puzzle and try to solve it! |
-|  /play | created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
-|  /arena <Lichess arena URL>  | see the standings and tournament information for given tournament link|
-
-
-# LISE Chess AI Commands
-| Commands      | Description |
-| ----------- | ----------- |
-| /move      | make a chess move to play LISE AI   |
-| /resetboard  | reset the chess game with LISE AI    |
 
 
 
 # Chess.com Commands
-| Commands      | Description |
+| Commands     | Description |
 | ----------- | ----------- |
 | /puzzle      | Do random Chess.com puzzles     |
 | /profilecc   | view Chess.com user profile     |
-| /dailypuzzlecc | do Chess.com daily puzzle     |
+
 
 ## Create Lichess Games
 
@@ -94,9 +78,4 @@ LISEBOT Does not and will not store any private user information, all bot comman
 # Bot Testing Link
 [Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
 
-## Contribute 
 
-LISEBOT is open to contributors for bug fixes, enhancements, some features are "good first issues" to get started
-
-## Dev Community 
-Join [LISEBOT community Discord](https://discord.gg/596rYGBDXz) to contribute and test LISEBOT!
