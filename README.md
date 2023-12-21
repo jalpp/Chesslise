@@ -18,6 +18,11 @@
  3. [Chess.com Java Wrapper](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  4. [Java Chess Lib](https://github.com/bhlangonijr/chesslib)
 
+# Engines
+
+- [Lise Chess Engine](https://github.com/jalpp/LiseChessEngine) 
+- [Stockfish](https://stockfishchess.org/)
+
 # Image Generation
 - [Lichess Gifs](https://github.com/lichess-org/lila-gif)
 
