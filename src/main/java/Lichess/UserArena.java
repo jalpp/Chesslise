@@ -1,3 +1,6 @@
+package Lichess;
+
+import Lichess.SwissResults;
 import chariot.Client;
 import chariot.model.Arena;
 import chariot.model.One;
@@ -45,9 +48,7 @@ public class UserArena {
             if (arenaResult1.isPresent() && spliturl[0].startsWith("http") && spliturl[0].contains("lichess")) {
 
                 Arena arena = arenaResult1.get();
-
-
-
+                
                 String name = arena.fullName();
 
                 int numPlayers = arena.nbPlayers();

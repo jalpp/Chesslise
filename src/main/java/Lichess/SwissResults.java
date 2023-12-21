@@ -1,3 +1,5 @@
+package Lichess;
+
 import chariot.Client;
 import chariot.model.Many;
 import chariot.model.One;
