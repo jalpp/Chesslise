@@ -27,7 +27,8 @@
 - [Lichess Gifs](https://github.com/lichess-org/lila-gif)
 
 # LISEBOT High-level Design
-![Lisev10](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/06dde10a-a094-4027-8555-2b68aae341c2)
+![Lisev10B drawio](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/ab1aa349-135b-4f57-a592-bba4e6faf733)
+
 
  
 
@@ -35,11 +36,11 @@
 | Commands                   | Description |
 |----------------------------| ----------- |
 | /help                      | to see command information for the LISEBOT       |
-| /profile                   | to see lichess profiles for given username       |
+| /profile                   | to see Lichess profiles for given username       |
 | /streamers                 | Watch current live streamers |
-| /dailypuzzle               | see the daily Lichess Chesscom.puzzle and try to solve it! |
-| /play                      | created opnended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
-| /arena <Lichess arena URL> | see the standings and tournament information for given tournament link|
+| /dailypuzzle               | See the daily Lichess Chesscom puzzle and try to solve it! |
+| /play                      | created open-ended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
+| /arena <Lichess arena URL> | See the standings and tournament information for the given tournament link|
 | /analyze [fen]             | analyze chess position |
 
 
@@ -57,10 +58,10 @@
  
 
 ## Terms of Service
-User agrees that they will have to use latest updated versions of LISEBOT, User also agrees that some commands may be deleted if developer does not want to maintain those commands in future. User is fully responsible for their discord server and LISEBOT does not have any access to the server information/ management. User also agrees to privacy policy which states that LISEBOT does not and will not store any private information
+The user agrees that they will have to use the latest updated versions of LISEBOT, The User also agrees that some commands may be deleted if the developer does not want to maintain those commands in future. User is fully responsible for their discord server and LISEBOT does not have any access to the server information/ management. The user also agrees to the privacy policy which states that LISEBOT does not and will not store any private information
 
 ## Privacy Policy
-LISEBOT Does not and will not store any private user information, all bot commands are Lichess related and use slash commands to run commands properly. LISEBOT is not responsible for any user actions in their servers.
+LISEBOT Does not and will not store any private user information, all bot commands are Lichess, Chess.com, and Stockfish and use slash commands to run commands properly. LISEBOT is not responsible for any user actions on their servers.
 
 # Bot Testing Link
 [Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
