@@ -2,7 +2,7 @@
 ![](https://img.shields.io/badge/Status-Online-brightgreen)
 ![](https://img.shields.io/badge/Discord%20API-JDA-purple)
 ![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory%20-blue)
-# Sources:
+# Sources
 
 # API
 
@@ -30,39 +30,70 @@
 ![Lisev10B drawio](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/ab1aa349-135b-4f57-a592-bba4e6faf733)
 
 
- 
+# How to add Lise to your Discord server
+- Head over to [App Directory](https://discord.com/application-directory/930544707300393021)
+- Click on "Add to Server"
+- If you are not logged in to Discord you might have to log in
+- You would have to get a server selection list that you own, pick the server you want to install Lise in
+- View Lise's permission and click "Authorize"
+- To check if Lise has joined, go to the server where you installed Lise and run /help or /play and see if the LISEBOT selection menu opens up
+- Your done! Please read the command information below you can also run /help to view it in Discord.
 
 # Lichess Commands:
 | Commands                   | Description |
 |----------------------------| ----------- |
-| /help                      | to see command information for the LISEBOT       |
-| /profile                   | to see Lichess profiles for given username       |
+| /help                      | To see command information for the LISEBOT       |
+| /profile                   | To see Lichess profiles for given username       |
 | /streamers                 | Watch current live streamers |
-| /dailypuzzle               | See the daily Lichess Chesscom puzzle and try to solve it! |
-| /play                      | created open-ended challenge for users to play with, given variant and rated/casual <variant = blitz, rapid, etc> |
-| /arena <Lichess arena URL> | See the standings and tournament information for the given tournament link|
-| /analyze [fen]             | analyze chess position |
+| /puzzle                    | See the daily Lichess Chesscom puzzle and try to solve it! |
+| /play                      | Create an open-ended challenge for Discord users to play with, select time control[1+0,3+0,3+2,5+0,etc] and mode [casual/rated] |
+| /arena                     | See the standings and tournament information for the given tournament link|
+| /watch                     | View the last Lichess game played by a user  |
+| /watchmaster               | View random GM games live in Discord         |
+| /broadcast                 | View broadcast info for the current Lichess broadcast |
+
 
 
 # Chess.com Commands
 | Commands     | Description |
 | ----------- | ----------- |
-| /puzzle      | Do random Chess.com puzzles     |
-| /profilecc   | view Chess.com user profile     |
+| /puzzle      | Do Daily/Random Chess.com puzzles     |
+| /profilecc   | View Chess.com user profile           |
+
+
+# Engine [Stockfish & Lise] Commands
+| Commands     | Description |
+| ----------- | ----------- |
+| /analyze    |  Pass in FEN to analyze with Stockfish     |
+| /move       |  Play Stockfish engine in Discord          |
+| /moveblack  |  Play Lise engine in Discord               |
 
 
 ## Create Lichess Games
 
+![Screen Shot 2023-12-24 at 1 50 54 PM](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/bdf9c7bb-c908-4c57-91c5-165def5cf605)
 
-![image](https://www.linkpicture.com/q/Screen-Shot-2022-09-24-at-5.16.24-PM.png)
- 
+## Demo
+
+https://youtu.be/ChFw8mT7zBo?si=H5lpF9uOjIKDEIGm
 
 ## Terms of Service
-The user agrees that they will have to use the latest updated versions of LISEBOT, The User also agrees that some commands may be deleted if the developer does not want to maintain those commands in future. User is fully responsible for their discord server and LISEBOT does not have any access to the server information/ management. The user also agrees to the privacy policy which states that LISEBOT does not and will not store any private information
+The user agrees that they will have to use the latest updated versions of LISEBOT, The User also agrees that some commands may be deleted if the developer does not want to maintain those commands in future. The user is fully responsible for their discord server, and LISEBOT has no access to the server information/ management. The user also agrees to the privacy policy which states that LISEBOT does not and will not store any private information
 
 ## Privacy Policy
 LISEBOT Does not and will not store any private user information, all bot commands are Lichess, Chess.com, and Stockfish and use slash commands to run commands properly. LISEBOT is not responsible for any user actions on their servers.
 
-# Bot Testing Link
-[Invite me](https://discord.com/oauth2/authorize?client_id=930544707300393021&permissions=8&scope=bot%20applications.commands)
+## App Directory 
+[View More](https://discord.com/application-directory/930544707300393021)
+
+## Discord Support Server
+[Join](https://discord.gg/USVBFg9xRn)
+
+## Authors:
+@jalpp Main maintainer of Lise
+@ddugovic Thanks for setting up the GitHub yaml file!
+@tors42 Thanks for helping with the chariot integration! 
+@pad918 Thanks for helping out with the watch command!
+
+
 
