@@ -26,8 +26,9 @@
 # Image Generation
 - [Lichess Gifs](https://github.com/lichess-org/lila-gif)
 
-# LISEBOT Highlevel Design
-![image](https://www.linkpicture.com/q/autodraw-2022-09-24.png)
+# LISEBOT High-level Design
+![Lisev10](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/06dde10a-a094-4027-8555-2b68aae341c2)
+
  
 
 # Lichess Commands:
