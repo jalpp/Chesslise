@@ -45,7 +45,7 @@ public class UserObject {
     }
 
     public void setUserAgent(){
-        playerClient.setUserAgent("LISEBOT; username: fireineyesloveinheart; contact: programminglessons9@gmail.com");
+        playerClient.setUserAgent("your-app; username: your-username; contact: your-email");
 
     }
 
