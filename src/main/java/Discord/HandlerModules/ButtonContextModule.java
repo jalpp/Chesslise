@@ -297,6 +297,9 @@ public class ButtonContextModule implements ContextHandler {
         }else if(buttonEvent.getComponentId().equals("nexttwo")){
             buttonEvent.editMessageEmbeds(commandInfo.getPageThree().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nextthree", "➡️").asDisabled(), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
         }
+        else if(buttonEvent.getComponentId().equals("Rook")){
+            buttonEvent.editMessageEmbeds(commandInfo.getPageFour().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nextthree", "➡️").asDisabled(), Button.link("https://en.wikipedia.org/wiki/Rook_(chess)", "Support Server")).queue();
+        }
 
 
 

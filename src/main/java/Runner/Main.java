@@ -24,10 +24,9 @@ public class Main extends ListenerAdapter {
     public static void main(String[] args) {
 
 
-        jdaBuilder = JDABuilder.createDefault(System.getenv("DISCORD_TOKEN"));
+        jdaBuilder = JDABuilder.createDefault("MTIwNTkwMTU0NzY3OTEyOTYxMA.GVO7BD.HgWlw27Ys4W0uQq5S0IBD0pxymZmzb5J_AYE2s");
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
-
 
         jdaBuilder.addEventListeners(new Main());
         jdaBuilder.addEventListeners(new CommandHandler());
@@ -56,6 +55,7 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("streamers", "See current Live Streamers"));
         commands.addCommands(Commands.slash("puzzle", "do random/daily puzzles").addOptions(new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random")));
         commands.addCommands(Commands.slash("help", "View LISEBOT Commands"));
+        commands.addCommands(Commands.slash("tech", "Hello learn Basics"));
         commands.addCommands(Commands.slash("play", "Play Live Chess Games"));
         commands.addCommands(Commands.slash("watch", "Watch Lichess games for given user"));
         commands.addCommands(Commands.slash("invite", "Invite me to your servers!"));

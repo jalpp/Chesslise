@@ -25,6 +25,36 @@ public class CommandInfo {
 
         return this.embedBuilder;
     }
+    public EmbedBuilder getPageFour(){
+        this.embedBuilder.setColor(Color.blue);
+        this.embedBuilder.setTitle("**Commands For LISEBOT**");
+        this.embedBuilder.setThumbnail(this.logo);
+        this.embedBuilder.setDescription(
+            "Chess is a two-player strategy board game played on an 8x8 grid. Here are the basics of each chess piece:\n\n" +
+            "**1. King:** The king moves exactly one square horizontally, vertically, or diagonally.\n" +
+            "![King](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpmVRKYr.png)\n\n" +
+        
+            "**2. Queen:** The queen can move any number of squares along a rank, file, or diagonal.\n" +
+            "![Queen](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpmVRKYr.png)\n\n" +
+        
+            "**3. Rook:** The rook can move any number of squares horizontally or vertically.\n" +
+            "![Rook](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpfyINI1.png)\n\n" +
+        
+            "**4. Bishop:** The bishop can move any number of squares diagonally.\n" +
+            "![Bishop](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/php4dzIxh.png)\n\n" +
+        
+            "**5. Knight:** The knight moves to any of the squares immediately adjacent in an 'L' shape.\n" +
+            "![Knight](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpVZb3tN.png)\n\n" +
+        
+            "**6. Pawn:** Pawns move forward but capture diagonally. On their first move, pawns have the option of moving two squares.\n\n" +
+            "The objective of the game is to checkmate your opponent\'s king.\n" +
+            "![Pawn](https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpEH1kWv.png)"
+        );
+        
+
+
+        return this.embedBuilder;
+    }
 
 
     public EmbedBuilder getPageTwo(){
