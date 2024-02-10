@@ -296,7 +296,16 @@ public class ButtonContextModule implements ContextHandler {
             buttonEvent.editMessageEmbeds(commandInfo.getPageTwo().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nexttwo", "➡️"), net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
         }else if(buttonEvent.getComponentId().equals("nexttwo")){
             buttonEvent.editMessageEmbeds(commandInfo.getPageThree().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nextthree", "➡️").asDisabled(), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
+        }else if(buttonEvent.getComponentId().equals("Bishop")){
+            buttonEvent.editMessageEmbeds(commandInfo.getPageFive().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Rook", "⬅️"),net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Knight", "♞"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
+        }else if(buttonEvent.getComponentId().equals("Knight")){
+            buttonEvent.editMessageEmbeds(commandInfo.getPageSix().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Bishop", "⬅️"),net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Queen", "♛"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
+        }else if(buttonEvent.getComponentId().equals("Queen")){
+            buttonEvent.editMessageEmbeds(commandInfo.getPageSeven().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Knight", "⬅️"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
+        }else if(buttonEvent.getComponentId().equals("Rook")){
+            buttonEvent.editMessageEmbeds(commandInfo.getPageFour().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Bishop", "♝"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
         }
+
 
 
 

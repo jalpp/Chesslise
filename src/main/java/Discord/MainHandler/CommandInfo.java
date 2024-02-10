@@ -26,6 +26,91 @@ public class CommandInfo {
         return this.embedBuilder;
     }
 
+    public EmbedBuilder getPageFour(){
+        this.embedBuilder.setColor(Color.blue);
+     //   this.embedBuilder.setTitle("**Commands For LISEBOT**");
+        this.embedBuilder.setThumbnail(this.logo);
+        //this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "\n\n**" + Emojis[0] + "  /suggest** \n provide feedback to developer"  + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers");
+       // this.embedBuilder.setDescription("hello noob");
+// Start with an empty description
+        this.embedBuilder.setDescription("Here are the basic moves of the chess pieces:\n\n");
+
+// Add description and image for Rook
+        this.embedBuilder.appendDescription("**Rook:** Move any number of squares horizontally or vertically.\n\n");
+//        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpfyINI1.png");
+//
+//// Add description and image for Bishop
+//        this.embedBuilder.appendDescription("**Bishop:** Move any number of squares diagonally.\n\n");
+//        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/phpdzgpdQ.png");
+//
+//// Add description and image for Knight
+//        this.embedBuilder.appendDescription("**Knight:** Move in an 'L' shape: two squares in one direction and then one square perpendicular.\n\n");
+//        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpVuLl4W.png");
+//
+//// Add description and image for Queen
+//        this.embedBuilder.appendDescription("**Queen:** Move any number of squares horizontally, vertically, or diagonally.\n\n");
+      //  this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpCQgsYR.png");
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpfyINI1.png");
+
+        return this.embedBuilder;
+    }
+
+    public EmbedBuilder getPageFive(){
+        this.embedBuilder.setColor(Color.blue);
+      //  this.embedBuilder.setTitle("**Commands For LISEBOT**");
+        this.embedBuilder.setThumbnail(this.logo);
+        //this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "\n\n**" + Emojis[0] + "  /suggest** \n provide feedback to developer"  + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers");
+        // this.embedBuilder.setDescription("hello noob");
+// Start with an empty description
+        this.embedBuilder.setDescription("Here are the basic moves of the Bishop:\n\n");
+
+// Add description and image for Bishop
+        this.embedBuilder.appendDescription("**Bishop:** Move any number of squares diagonally.\n\n");
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/phpdzgpdQ.png");
+//
+//// Add description and image for Knight
+//        this.embedBuilder.appendDescription("**Knight:** Move in an 'L' shape: two squares in one direction and then one square perpendicular.\n\n");
+//        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpVuLl4W.png");
+//
+//// Add description and image for Queen
+//        this.embedBuilder.appendDescription("**Queen:** Move any number of squares horizontally, vertically, or diagonally.\n\n");
+//        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpCQgsYR.png");
+
+        return this.embedBuilder;
+    }
+    public EmbedBuilder getPageSix(){
+        this.embedBuilder.setColor(Color.blue);
+      //  this.embedBuilder.setTitle("**Commands For LISEBOT**");
+        this.embedBuilder.setThumbnail(this.logo);
+        //this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "\n\n**" + Emojis[0] + "  /suggest** \n provide feedback to developer"  + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers");
+        // this.embedBuilder.setDescription("hello noob");
+// Start with an empty description
+        this.embedBuilder.setDescription("Here are the basic moves of the Knight:\n\n");
+
+// Add description and image for Knight
+        this.embedBuilder.appendDescription("**Knight:** Move in an 'L' shape: two squares in one direction and then one square perpendicular.\n\n");
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpVuLl4W.png");
+//
+//// Add description and image for Queen
+//        this.embedBuilder.appendDescription("**Queen:** Move any number of squares horizontally, vertically, or diagonally.\n\n");
+//        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpCQgsYR.png");
+
+        return this.embedBuilder;
+    }
+    public EmbedBuilder getPageSeven(){
+        this.embedBuilder.setColor(Color.blue);
+       // this.embedBuilder.setTitle("**Commands For LISEBOT**");
+        this.embedBuilder.setThumbnail(this.logo);
+        //this.embedBuilder.setDescription("**" + Emojis[0] + " /help** \n to see command information for the LISEBOT" + "\n\n**" + Emojis[0] + "  /suggest** \n provide feedback to developer"  + "\n\n **"  + Emojis[2] + " /profilecc** \n view Chess.com profiles" +"\n\n **" + Emojis[2] +" /profile ** \n to see lichess profiles for given username"  + "\n\n **" + Emojis[3] +" /streamers** \n Watch current live streamers");
+        // this.embedBuilder.setDescription("hello noob");
+// Start with an empty description
+        this.embedBuilder.setDescription("Here are the basic moves of the Queen:\n\n");
+// Add description and image for Queen
+        this.embedBuilder.appendDescription("**Queen:** Move any number of squares horizontally, vertically, or diagonally.\n\n");
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpCQgsYR.png");
+
+        return this.embedBuilder;
+    }
 
     public EmbedBuilder getPageTwo(){
         this.embedBuilder.setColor(Color.blue);
@@ -47,9 +132,5 @@ public class CommandInfo {
         this.embedBuilder.setFooter("LISEBOT V10, Date: Dec 20 2023 Page: 3/3", this.logo);
         return this.embedBuilder;
     }
-
-
-
-
 
 }
