@@ -26,7 +26,7 @@ public class BroadcastLichess {
         List<chariot.model.Broadcast> broadcasts = broadcastMany.stream().toList();
         String name = broadcasts.get(0).tour().name();
         String des = broadcasts.get(0).tour().description();
-        this.broadURL = String.valueOf(broadcasts.get(0).tour().url())
+        this.broadURL = String.valueOf(broadcasts.get(0).tour().url());
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.green);
         embedBuilder.setTitle(name);
