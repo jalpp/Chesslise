@@ -209,6 +209,11 @@ public class SlashContextModule implements ContextHandler {
                 slashEvent.replyEmbeds(commandInfo.getPageOne().build()).addActionRow(Button.primary("next", "➡️"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).setEphemeral(true).queue();
             }
 
+            case "teach" -> {
+                CommandInfo commandInfo = new CommandInfo();
+                slashEvent.replyEmbeds(commandInfo.getPageFour().build()).addActionRow(Button.primary("Bishop", "♝"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).setEphemeral(true).queue();
+            }
+
             case "play" -> {
                 slashEvent.reply("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").addActionRow(
                         Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated"), Button.success("enginemode", "Play BOT"), Button.link("https://lichess.org/login", "Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
