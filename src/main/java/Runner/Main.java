@@ -28,7 +28,6 @@ public class Main extends ListenerAdapter {
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
 
-
         jdaBuilder.addEventListeners(new Main());
         jdaBuilder.addEventListeners(new CommandHandler());
 
