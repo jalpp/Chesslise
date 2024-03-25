@@ -32,17 +32,9 @@ public class BroadcastLichess {
         embedBuilder.setTitle(name);
         embedBuilder.setDescription(des);
         embedBuilder.addField("View Tournament:", this.broadURL, true);
+        embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
         embedBuilder.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
         return embedBuilder;
     }
-
-
-
-
-
-
-
-
-
 
 }

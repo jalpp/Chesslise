@@ -25,22 +25,9 @@ import net.dv8tion.jda.api.interactions.modals.Modal;
 import java.awt.*;
 
 public class ButtonContextModule implements ContextHandler {
-
-
-
-
-
-
-
     public ButtonContextModule(){
 
-
-
     }
-
-
-
-
     @Override
     public void handleLogic(MessageContextInteractionEvent context, SlashCommandInteractionEvent slashEvent, ButtonInteractionEvent buttonEvent, ModalInteractionEvent eventModal, Client client, Board board, Board blackboard, AntiSpam spam, AntiSpam dailyspam, AntiSpam watchlimit) {
 
@@ -186,7 +173,7 @@ public class ButtonContextModule implements ContextHandler {
                     "\n **Play BOTS** " +
                     "\n To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!" +
                     "\n **Need more help?** \n Join our Support server and Developer will help you!");
-            buttonEvent.replyEmbeds(help.build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).setEphemeral(true).queue();
+            buttonEvent.replyEmbeds(help.build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://discord.gg/uncmhknmYg", "Join our server")).setEphemeral(true).queue();
         }
 
 
@@ -291,7 +278,6 @@ public class ButtonContextModule implements ContextHandler {
 
         }
 
-
         if(buttonEvent.getComponentId().equals("next")){
             buttonEvent.editMessageEmbeds(commandInfo.getPageTwo().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nexttwo", "➡️"), net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
         }else if(buttonEvent.getComponentId().equals("nexttwo")){
@@ -305,7 +291,6 @@ public class ButtonContextModule implements ContextHandler {
         }else if(buttonEvent.getComponentId().equals("Rook")){
             buttonEvent.editMessageEmbeds(commandInfo.getPageFour().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Bishop", "♝"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
         }
-
 
 
 
@@ -324,16 +309,11 @@ public class ButtonContextModule implements ContextHandler {
         b.loadFromFen(fen);
             sf.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
             sf.setImage(util.getImageFromFEN(fen, !fen.contains("w"), "brown", "kosal"));
-            sf.setDescription(StockFish.getStockFishTextExplanation(13, fen));
+            sf.setDescription(StockFish.getStockFishTextExplanation(15, fen) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
             sf.setColor(Color.green);
-            b.doMove(StockFish.getBestMove(13, fen));
+            b.doMove(StockFish.getBestMove(15, fen));
             StockFish.getUserFen.put(buttonEvent.getUser().getId(), b.getFen());
             buttonEvent.editMessageEmbeds(sf.build()).setActionRow(Button.secondary("sf", "Play move")).queue();
     }
-
-
-
-
-
 
 }

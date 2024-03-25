@@ -1,6 +1,6 @@
 package Discord.HandlerModules;
 
-import Abstraction.ChessPuzzle;
+
 import Abstraction.ChessUtil;
 import Abstraction.Context.ContextHandler;
 import Chesscom.DailyCommandCC;
@@ -32,15 +32,6 @@ public class SlashContextModule implements ContextHandler {
         String name = slashEvent.getName();
         switch (name) {
 
-            case "answer" -> {
-                DailyCommand puzzleC = new DailyCommand(client);
-                String s = puzzleC.getPuzzle();
-                if (puzzleC.checkSolution(slashEvent.getOption("daily-Chesscom.puzzle-answer").getAsString())) {
-                    slashEvent.reply("You have solved daily Chesscom.puzzle! for Full solution view **Analysis Board** Below!").addActionRow(Button.link( puzzleC.getPuzzleURL(), "View On Lichess")).setEphemeral(true).queue();
-                } else {
-                    slashEvent.reply("You failed solving daily Chesscom.puzzle try again!").addActionRow(Button.primary("sol", "View Solution")).setEphemeral(true).queue();
-                }
-            }
             case "resetboard" -> {
                 board.loadFromFen(new Board().getFen());
                 blackboard.loadFromFen(new Board().getFen());
@@ -49,7 +40,6 @@ public class SlashContextModule implements ContextHandler {
             case "move" -> {
                 try {
 
-                    //LiseChessEngine engine = new LiseChessEngine(board);
                     String makemove = slashEvent.getOption("play-move").getAsString();
                     EmbedBuilder embedBuilder = new EmbedBuilder();
                     ChessUtil util = new ChessUtil();
@@ -61,12 +51,12 @@ public class SlashContextModule implements ContextHandler {
 
                     board.doMove(makemove);
 
-                    board.doMove(StockFish.getBestMove(3,board.getFen()));
+                    board.doMove(StockFish.getBestMove(13,board.getFen()));
                     embedBuilder.setTitle("White to move");
                     embedBuilder.setColor(Color.green);
                     embedBuilder.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
+                    embedBuilder.setDescription("\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
                     embedBuilder.setImage(util.getImageFromFEN(board.getFen(), false, "brown", "kosal"));
-                    embedBuilder.setFooter("Your playing Stockfish engine");
                     slashEvent.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
                     slashEvent.replyEmbeds(embedBuilder.build()).addActionRow(Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw")).setEphemeral(true).queue();
 
@@ -95,7 +85,7 @@ public class SlashContextModule implements ContextHandler {
                         engine.playDiscordBotMoves();
                         embedBuilder.setColor(Color.green);
                         embedBuilder.setImage(engine.getImageOfCurrentBoard(true));
-                        embedBuilder.setFooter("Black to move");
+                        embedBuilder.setDescription("\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
                         slashEvent.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
                         slashEvent.replyEmbeds(embedBuilder.build()).addActionRow(Button.danger("bot-lose-black", "Resign"), Button.secondary("bot-draw-black", "Draw")).setEphemeral(true).queue();
                     }
@@ -103,6 +93,7 @@ public class SlashContextModule implements ContextHandler {
                     LiseChessEngine engine = new LiseChessEngine(blackboard);
                     String makemove = slashEvent.getOption("play-move").getAsString();
                     EmbedBuilder embedBuilder = new EmbedBuilder();
+                    embedBuilder.setDescription("\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
 
                     if (engine.gameOver()) {
                         slashEvent.reply("game over!").queue();
@@ -114,7 +105,6 @@ public class SlashContextModule implements ContextHandler {
                     engine.playDiscordBotMoves();
                     embedBuilder.setColor(Color.green);
                     embedBuilder.setImage(engine.getImageOfCurrentBoard(true));
-                    embedBuilder.setFooter("Black to move");
                     slashEvent.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
                     slashEvent.replyEmbeds(embedBuilder.build()).addActionRow(Button.danger("bot-lose-black", "Resign"), Button.secondary("bot-draw-black", "Draw")).setEphemeral(true).queue();
 
@@ -138,7 +128,7 @@ public class SlashContextModule implements ContextHandler {
                 embedBuilder.setTitle("Best Chess Community To Learn/Play Chess");
                 embedBuilder.setColor(Color.blue);
                 embedBuilder.setDescription("**lichess.org**  [**Join**](https://discord.gg/lichess)" + "\n\n **Chess.com** [**Join**](https://discord.gg/chesscom)" +
-                        "\n\n **The Pawn Zone**  [**Join**](https://discord.gg/6aKNP3t) \n\n **The Moon Club** [**Join**](https://discord.gg/hK8Ru57SKd)");
+                        "\n\n **The Pawn Zone**  [**Join**](https://discord.gg/6aKNP3t) \n\n **The Moon Club** [**Join**](https://discord.gg/hK8Ru57SKd)" + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
                 slashEvent.replyEmbeds(embedBuilder.build()).queue();
             }
 
@@ -148,10 +138,7 @@ public class SlashContextModule implements ContextHandler {
                 BroadcastLichess broadcast = new BroadcastLichess(client);
                 slashEvent.replyEmbeds(broadcast.getBroadData().build()).queue();
             }
-            case "dailypuzzlecc" -> {
-                slashEvent.reply("this command has moved to /puzzle with the new update!").setEphemeral(true).queue();
 
-            }
             case "service" -> {
                 EmbedBuilder embedBuildertos = new EmbedBuilder();
                 embedBuildertos.setColor(Color.blue);
@@ -161,7 +148,7 @@ public class SlashContextModule implements ContextHandler {
                         "\n" +
                         "User agrees that they will have to use latest updated versions of LISEBOT, User also agrees that some commands may be deleted if developer does not want to maintain those commands in future. User is fully responsible for their discord server and LISEBOT does not have any access to the server information/ management. User also agrees to privacy policy which states that LISEBOT does not and will not store any private information \n\n What information does LISEBOT store about me? What is the privacy policy?\n" +
                         "\n" +
-                        "LISEBOT Does not and will not store any private user information, all bot commands are Lichess related so auth commands need Lichess token to operate for those commands (which the bot does not store)");
+                        "LISEBOT Does not and will not store any private user information, all bot commands are Lichess related so auth commands need Lichess token to operate for those commands (which the bot does not store)" + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
                 slashEvent.replyEmbeds(embedBuildertos.build()).queue();
             }
 
@@ -172,17 +159,12 @@ public class SlashContextModule implements ContextHandler {
             }
             case "puzzle" -> {
                 switch (slashEvent.getOptionsByName("pick-puzzle").get(0).getAsString()){
-                    case "lip" -> {
-                        if (dailyspam.checkSpam(slashEvent)) {
-                            slashEvent.reply("Check back after 24 hours for next daily Chesscom.puzzle!").setEphemeral(true).queue();
-                        } else {
-                            DailyCommand.getLichessDailyPuzzle(client, slashEvent, context, true);
-                        }
-                    }
+                    case "lip" -> DailyCommand.getLichessDailyPuzzle(client, slashEvent, context, true);
 
                     case "cpp" -> {
                         DailyCommandCC daily = new DailyCommandCC();
-                        slashEvent.replyEmbeds(new EmbedBuilder().setColor(Color.magenta).setTitle("Chess.com Daily Puzzle").setDescription(StockFish.getStockFishTextExplanation(13, daily.getFEN()) + "\n\n " + daily.defineSideToMove(new ChessUtil(), daily.getFEN())).setImage(daily.getPuzzle()).setFooter("run /analyze [fen] to view the moves in action!").build()).queue();
+                        slashEvent.deferReply(true).queue();
+                        slashEvent.getChannel().sendMessageEmbeds(new EmbedBuilder().setColor(Color.GREEN).setTitle("Chess.com Daily Puzzle").setThumbnail("https://static.wikia.nocookie.net/logopedia/images/4/4a/Chess.com_2019_%28App_Icon%29.png/revision/latest/scale-to-width-down/250?cb=20221006103032").setDescription(StockFish.getStockFishTextExplanation(15, daily.getFEN()) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setFooter("use /analyze [fen] to further analyze/check your answer").setImage(daily.getPuzzle()).build()).addActionRow(Button.link("https://www.chess.com/home", daily.defineSideToMove(new ChessUtil(), daily.getFEN())).asDisabled()).queue();
                     }
 
                     case "random" -> {
@@ -190,10 +172,11 @@ public class SlashContextModule implements ContextHandler {
                     slashEvent.reply("Only 1 Chesscom puzzle request within 5 mins! Please take your time to solve the Chesscom puzzle!").setEphemeral(true).queue();
                 } else {
                     try {
+                        slashEvent.deferReply(true).queue();
                         puzzle puzzle = new puzzle();
                         String s = puzzle.getPuzzle();
                         String fen = puzzle.getFEN();
-                        slashEvent.replyEmbeds(new EmbedBuilder().setColor(Color.green).setTitle("Chess.com Random Puzzle").setImage(s).setDescription(StockFish.getStockFishTextExplanation(13, fen) + "\n\n " + puzzle.defineSideToMove(new ChessUtil(), fen)).setFooter("run /analyze [fen] to view the moves in action!").build()).queue();
+                        slashEvent.getChannel().sendMessageEmbeds(new EmbedBuilder().setColor(Color.green).setTitle("Chess.com Random Puzzle").setImage(s).setThumbnail("https://static.wikia.nocookie.net/logopedia/images/4/4a/Chess.com_2019_%28App_Icon%29.png/revision/latest/scale-to-width-down/250?cb=20221006103032").setDescription(StockFish.getStockFishTextExplanation(15, fen) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setFooter("use /analyze [fen] to further analyze/check your answer").build()).addActionRow(Button.link("https://www.chess.com/home", puzzle.defineSideToMove(new ChessUtil(), fen)).asDisabled()).queue();
                     } catch (Exception e) {
                         slashEvent.getChannel().sendMessage("An error occurred.. Please contact Dev, or wait for few mins to rerun the command").queue();
                     }
@@ -206,18 +189,17 @@ public class SlashContextModule implements ContextHandler {
 
             case "help" -> {
                 CommandInfo commandInfo = new CommandInfo();
-                slashEvent.replyEmbeds(commandInfo.getPageOne().build()).addActionRow(Button.primary("next", "➡️"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).setEphemeral(true).queue();
+                slashEvent.replyEmbeds(commandInfo.getPageOne().build()).addActionRow(Button.primary("next", "➡️"), Button.link("https://discord.gg/uncmhknmYg", "Join our server")).setEphemeral(true).queue();
             }
 
-            case "teach" -> {
+            case "learnchess" -> {
                 CommandInfo commandInfo = new CommandInfo();
-                slashEvent.replyEmbeds(commandInfo.getPageFour().build()).addActionRow(Button.primary("Bishop", "♝"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).setEphemeral(true).queue();
+                slashEvent.replyEmbeds(commandInfo.getPageFour().build()).addActionRow(Button.primary("Bishop", "♝"), Button.link("https://discord.gg/uncmhknmYg", "Join our server")).setEphemeral(true).queue();
             }
 
-            case "play" -> {
-                slashEvent.reply("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").addActionRow(
-                        Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated"), Button.success("enginemode", "Play BOT"), Button.link("https://lichess.org/login", "Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
-            }
+
+            case "play" -> slashEvent.reply("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").addActionRow(
+                    Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated"), Button.link("https://discord.gg/uncmhknmYg", "Join our server!"), Button.link("https://lichess.org/login", "Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
             case "profile" -> {
                 TextInput ptext = TextInput.create("profileuser", "Input Lichess Username", TextInputStyle.SHORT)
                         .setPlaceholder("Input Lichess Username")
@@ -244,17 +226,13 @@ public class SlashContextModule implements ContextHandler {
                 LiveStreamers liveStreamers = new LiveStreamers(client);
                 slashEvent.replyEmbeds(liveStreamers.getTv().build()).queue();
             }
-            case "dailypuzzle" -> {
-                slashEvent.reply("this command has moved to /puzzle with the new update!").setEphemeral(true).queue();
 
-
-            }
             case "watch" -> {
                 if (watchlimit.checkSpam(slashEvent)) {
                     slashEvent.reply("You have hit max limit! You can only send 24 games in 1 day, try again in 24 hours!").setEphemeral(true).queue();
                 } else {
 
-                    TextInput wtext = TextInput.create("watch_user_or_game", "Input Lichess Username Or Lichess.Game", TextInputStyle.SHORT)
+                    TextInput wtext = TextInput.create("watch_user_or_game", "Input Lichess Username Or Lichess Game", TextInputStyle.SHORT)
                             .setPlaceholder("Input Lichess Username Or Lichess.Game")
                             .setMinLength(2)
                             .setMaxLength(100)
@@ -274,9 +252,7 @@ public class SlashContextModule implements ContextHandler {
                 slashEvent.deferReply(true).queue();
                 slashEvent.getChannel().sendMessageEmbeds(userArena.getUserArena().build()).queue();
             }
-            case "invite" -> {
-                slashEvent.replyEmbeds(new EmbedBuilder().setTitle("Invite me").setDescription("\uD83D\uDC4B [Click here for invite me](https://discord.com/api/oauth2/authorize?client_id=930544707300393021&permissions=277025704000&scope=bot%20applications.commands) \n\n \uD83D\uDC4D [Vote me on top.gg](https://top.gg/bot/930544707300393021/vote) \n\n \uD83D\uDEE0️ [Join Support Server](https://discord.com/invite/6GdGqwxBdW) ").build()).queue();
-            }
+            case "invite" -> slashEvent.replyEmbeds(new EmbedBuilder().setTitle("Invite me").setDescription("\uD83D\uDC4B [Click here for invite me](https://discord.com/api/oauth2/authorize?client_id=930544707300393021&permissions=277025704000&scope=bot%20applications.commands) \n\n \uD83D\uDC4D [Vote me on top.gg](https://top.gg/bot/930544707300393021/vote) \n\n \uD83D\uDEE0️ \n  [Join our Server](https://discord.gg/uncmhknmYg)").build()).queue();
 
         }
     }
@@ -290,12 +266,12 @@ public class SlashContextModule implements ContextHandler {
         b.loadFromFen(fen);
         sf.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
         sf.setImage(util.getImageFromFEN(fen, !fen.contains("w"), "brown", "kosal"));
-        sf.setDescription(StockFish.getStockFishTextExplanation(13, fen));
+        sf.setDescription(StockFish.getStockFishTextExplanation(15, fen) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
         sf.setColor(Color.green);
-        b.doMove(StockFish.getBestMove(13, fen));
-
+        b.doMove(StockFish.getBestMove(15, fen));
         StockFish.getUserFen.put(slashEvent.getUser().getId(), b.getFen());
-        slashEvent.replyEmbeds(sf.build()).addActionRow(Button.secondary("sf", "Play move")).queue();
+        slashEvent.deferReply().setEphemeral(true).queue();
+        slashEvent.getChannel().sendMessageEmbeds(sf.build()).addActionRow(Button.secondary("sf", "Play move")).queue();
     }
 
 

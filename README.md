@@ -2,6 +2,13 @@
 ![](https://img.shields.io/badge/Status-Online-brightgreen)
 ![](https://img.shields.io/badge/Discord%20API-JDA-purple)
 ![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory%20-blue)
+
+<p align="center">
+  <img src="./src/main/java/images/liseanime.png" >
+</p>
+
+Chesslise is open source Chess based Discord bot, which allows users to play, learn, watch chess in their Discord server
+
 # Sources
 
 # API
@@ -26,11 +33,11 @@
 # Image Generation
 - [Lichess Gifs](https://github.com/lichess-org/lila-gif)
 
-# LISEBOT High-level Design
+# Chesslise High-level Design
 ![Lisev10B drawio](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/ab1aa349-135b-4f57-a592-bba4e6faf733)
 
 
-# How to add Lise to your Discord server
+# How to add Chesslise to your Discord server
 - Head over to [App Directory](https://discord.com/application-directory/930544707300393021)
 - Click on "Add to Server"
 - If you are not logged in to Discord you might have to log in
@@ -38,6 +45,16 @@
 - View Lise's permission and click "Authorize"
 - To check if Lise has joined, go to the server where you installed Lise and run /help or /play and see if the LISEBOT selection menu opens up
 - Your done! Please read the command information below you can also run /help to view it in Discord.
+
+# How to setup lise locally?
+
+- To set up lise you need to have java 17+, intellJ, and maven
+- git clone the project
+- use any IDE (IntellJ recommended)
+- configure ``` DISCORD_TOKEN ``` for your own bots Discord token
+- configure ``` LICHESS_TOKEN ``` if you also want to run lise on Lichess
+- you are ready to run the bot with ``` java Main.java ```
+- Please note you need to follow same steps as adding Chesslise for your own local bot
 
 # Lichess Commands:
 | Commands                   | Description |
@@ -84,20 +101,23 @@ The user agrees that they will have to use the latest updated versions of LISEBO
 LISEBOT Does not and will not store any private user information, all bot commands are Lichess, Chess.com, and Stockfish and use slash commands to run commands properly. LISEBOT is not responsible for any user actions on their servers.
 
 ## License 
-Lise is non-commercial software made for chess lovers to use their loved sites/features in Discord, this software is licensed under GPL-v3, please read the license section to understand license agreements.
+Lise is non-commercial software made for chess lovers to use their loved sites/features in Discord, this software is licensed under MIT, please read the license for more details. LISEBOT will never charge users for its service, users may get the option to donate to devs if they want.
 
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
 
 ## Discord Support Server
-[Join](https://discord.gg/USVBFg9xRn)
+[Join](https://discord.gg/uncmhknmYg)
+
+## Version number: 11
 
 ## Authors:
-@jalpp Main maintainer of Lise
-@ddugovic Thanks for setting up the GitHub yaml file!
-@tors42 Thanks for helping with the chariot integration! 
-@pad918 Thanks for helping out with the watch command!
-@BreakTos thanks for helping with teach command!
+- @jalpp Main maintainer of Chesslise 
+- @ddugovic Thanks for setting up the GitHub yaml file!
+- @tors42 Thanks for helping with the chariot integration! 
+- @pad918 Thanks for helping out with the watch command!
+- @BreakTos Thanks for /learnchess command!
+
 
 
 

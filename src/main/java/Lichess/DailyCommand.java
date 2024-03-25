@@ -178,24 +178,23 @@ public class DailyCommand extends ChessPuzzle implements Abstraction.Puzzle {
 
 
 
-
-
-
     public static void getLichessDailyPuzzle(Client client, SlashCommandInteraction slashEvent, MessageContextInteractionEvent msgEvent, boolean isSlashContext){
+
+        String hostimg = "https://upload.wikimedia.org/wikipedia/commons/4/47/Lichess_logo_2019.png";
 
         if(isSlashContext){
             DailyCommand dailyCommand = new DailyCommand(client);
             String s = dailyCommand.getPuzzle();
-            slashEvent.replyEmbeds(new EmbedBuilder().setDescription(StockFish.getStockFishTextExplanation(13, getDailyPuzzleFEN(client))).setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setImage(s).setFooter("Use /answer to check your solution or click on URL for analysis board, run /analyze [fen] to view the moves in action!").build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link(dailyCommand.getPuzzleURL(), dailyCommand.getPuzzleSideToMove() + "| " + "Rating: " + dailyCommand.getRating()), net.dv8tion.jda.api.interactions.components.buttons.Button.success("hint", "Hint")).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.success("re-load", " \uD83D\uDD04 Change View"), Button.primary("puzzlecc", "\uD83C\uDFC1 Bonus Puzzle")).queue();
+            slashEvent.deferReply().setEphemeral(true).queue();
+            slashEvent.getChannel().sendMessageEmbeds(new EmbedBuilder().setDescription(StockFish.getStockFishTextExplanation(15, getDailyPuzzleFEN(client)) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setFooter("use /analyze [fen] to further analyze/check your answer").setImage(s).setThumbnail(hostimg).build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link(dailyCommand.getPuzzleURL(), dailyCommand.getPuzzleSideToMove() + "| " + "Rating: " + dailyCommand.getRating()), net.dv8tion.jda.api.interactions.components.buttons.Button.success("hint", "Hint")).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.success("re-load", " \uD83D\uDD04 Change View"), Button.primary("puzzlecc", "\uD83C\uDFC1 Bonus Puzzle")).queue();
         }else{
             DailyCommand dailyCommand = new DailyCommand(client);
-            msgEvent.reply("Connecting...").queue();
-            Objects.requireNonNull(msgEvent.getChannel()).sendMessageEmbeds(new EmbedBuilder().setDescription(StockFish.getStockFishTextExplanation(13, getDailyPuzzleFEN(client))).setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setImage(dailyCommand.getPuzzle()).setFooter("Use /answer to check your solution, run /analyze [fen] to view the moves in action!").build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link(dailyCommand.getPuzzleURL(), dailyCommand.getPuzzleSideToMove() + "| " + "Rating: " + dailyCommand.getRating()), net.dv8tion.jda.api.interactions.components.buttons.Button.success("hint", "Hint")).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.success("re-load", " \uD83D\uDD04 Change View"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("puzzlecc", "\uD83C\uDFC1 Bonus Puzzle")).queue();
+            msgEvent.deferReply().setEphemeral(true).queue();
+            Objects.requireNonNull(msgEvent.getChannel()).sendMessageEmbeds(new EmbedBuilder().setDescription(StockFish.getStockFishTextExplanation(15, getDailyPuzzleFEN(client)) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setFooter("use /analyze [fen] to further analyze/check your answer").setImage(dailyCommand.getPuzzle()).setThumbnail(hostimg).build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link(dailyCommand.getPuzzleURL(), dailyCommand.getPuzzleSideToMove() + "| " + "Rating: " + dailyCommand.getRating()), net.dv8tion.jda.api.interactions.components.buttons.Button.success("hint", "Hint")).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.success("re-load", " \uD83D\uDD04 Change View"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("puzzlecc", "\uD83C\uDFC1 Bonus Puzzle")).queue();
         }
 
 
     }
-
 
 
 

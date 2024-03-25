@@ -61,10 +61,8 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("invite", "Invite me to your servers!"));
         commands.addCommands(Commands.slash("analyze", "Analyze a chess position with Stockfish 16").addOption(OptionType.STRING, "fen", "FEN for the position", true));
         commands.addCommands(Commands.slash("move", "make a move").addOption(OptionType.STRING, "play-move", "input chess move", true));
+        commands.addCommands(Commands.slash("learnchess", "Learn basic chess moves"));
         commands.addCommands(Commands.slash("resetboard", "reset the board"));
-        commands.addCommands(Commands.slash("answer", "check solution for daily puzzle").addOption(OptionType.STRING, "daily-puzzle-answer", "Answer daily puzzle with chess notation", true));
-
-
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Lichess Daily Puzzle"));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Play Chess"));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "View Lichess Broadcasts"));
@@ -85,7 +83,7 @@ public class Main extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("Guilds: " + guildCount));
+        jda.getPresence().setActivity(Activity.watching("V11 Author @nmp, Servers: " + guildCount));
     }
 
 

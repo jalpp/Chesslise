@@ -13,11 +13,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class StockFish {
-
-
+    private static final String API_ENDPOINT = "https://stockfish.online/api/s/v2.php";
 
     public StockFish(){
 
+    }
+
+
+    public static void main(String[] args) {
+       System.out.println(getStockFishTextExplanation(15, "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"));
     }
 
     public static HashMap<String, String> getUserFen = new HashMap<>();
@@ -27,16 +31,12 @@ public class StockFish {
 
     public static String getTopEngineLine(int depth, String fen){
         try {
-            String apiUrl = "https://stockfish.online/api/stockfish.php";
 
-            String mode = "lines";
-
-            String queryString = String.format("fen=%s&depth=%d&mode=%s",
+            String queryString = String.format("fen=%s&depth=%d",
                     URLEncoder.encode(fen, StandardCharsets.UTF_8),
-                    depth,
-                    URLEncoder.encode(mode, StandardCharsets.UTF_8));
+                    depth);
 
-            URL url = new URL(apiUrl + "?" + queryString);
+            URL url = new URL(API_ENDPOINT + "?" + queryString);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -57,11 +57,11 @@ public class StockFish {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(response.toString());
 
-                JsonNode dataNode = jsonNode.get("data");
+                JsonNode dataNode = jsonNode.get("continuation");
                 if (dataNode != null) {
                     return dataNode.asText();
                 } else {
-                    System.out.println("No 'data' field found in the response.");
+                    System.out.println("No 'continuation' field found in the response.");
                 }
             } else {
                 System.out.println("Failed to make API request. Response Code: " + responseCode);
@@ -80,18 +80,12 @@ public class StockFish {
     public static String getEvalForFEN(int depth, String fen){
         try {
 
-            String apiUrl = "https://stockfish.online/api/stockfish.php";
-
-            String mode = "eval";
-
-
-            String queryString = String.format("fen=%s&depth=%d&mode=%s",
+            String queryString = String.format("fen=%s&depth=%d",
                     URLEncoder.encode(fen, StandardCharsets.UTF_8),
-                    depth,
-                    URLEncoder.encode(mode, StandardCharsets.UTF_8));
+                    depth);
 
 
-            URL url = new URL(apiUrl + "?" + queryString);
+            URL url = new URL(API_ENDPOINT + "?" + queryString);
 
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -114,7 +108,7 @@ public class StockFish {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(response.toString());
 
-                JsonNode dataNode = jsonNode.get("data");
+                JsonNode dataNode = jsonNode.get("evaluation");
                 if (dataNode != null) {
                     return dataNode.toString();
                 } else {
@@ -139,18 +133,12 @@ public class StockFish {
     public static String getBestMove(int depth, String fen){
         try {
 
-            String apiUrl = "https://stockfish.online/api/stockfish.php";
-
-            String mode = "bestmove";
-
-
-            String queryString = String.format("fen=%s&depth=%d&mode=%s",
+            String queryString = String.format("fen=%s&depth=%d",
                     URLEncoder.encode(fen, StandardCharsets.UTF_8),
-                    depth,
-                    URLEncoder.encode(mode, StandardCharsets.UTF_8));
+                    depth);
 
 
-            URL url = new URL(apiUrl + "?" + queryString);
+            URL url = new URL(API_ENDPOINT + "?" + queryString);
 
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -175,7 +163,7 @@ public class StockFish {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(response.toString());
 
-                JsonNode dataNode = jsonNode.get("data");
+                JsonNode dataNode = jsonNode.get("bestmove");
                 if (dataNode != null) {
                     return Arrays.stream(dataNode.asText().split(" ")).toList().get(1);
                 } else {
@@ -202,6 +190,10 @@ public class StockFish {
                 "**FEN:** " + fen + "\n\n **Depth: ** " + depth;
     }
 
+
+
+
+}
 
 
 
