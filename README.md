@@ -101,7 +101,7 @@ The user agrees that they will have to use the latest updated versions of LISEBO
 LISEBOT Does not and will not store any private user information, all bot commands are Lichess, Chess.com, and Stockfish and use slash commands to run commands properly. LISEBOT is not responsible for any user actions on their servers.
 
 ## License 
-Lise is non-commercial software made for chess lovers to use their loved sites/features in Discord, this software is licensed under MIT, please read the license for more details. LISEBOT will never charge users for its service, users may get the option to donate to devs if they want.
+Lise is non-commercial software made for chess lovers to use their loved sites/features in Discord, this software is licensed under GPL, please read the license for more details. LISEBOT will never charge users for its service, users may get the option to donate to devs if they want.
 
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
