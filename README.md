@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory%20-blue)
 
 <p align="center">
-  <img src="./src/main/java/images/liseanime.png" >
+  <img src="./src/main/java/Images/liseanime.png">
 </p>
 
 Chesslise is open source Chess based Discord bot, which allows users to play, learn, watch chess in their Discord server
