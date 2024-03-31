@@ -3,11 +3,7 @@
 ![](https://img.shields.io/badge/Discord%20API-JDA-purple)
 ![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory%20-blue)
 
-<p align="center">
-  <img src="./src/main/java/Images/liseanime.png">
-</p>
-
-Chesslise is open source Chess based Discord bot, which allows users to play, learn, watch chess in their Discord server
+Chesslise is open source Chess based Discord bot, which allows users to play, learn, and watch chess on their Discord server
 
 # Sources
 
@@ -101,7 +97,7 @@ The user agrees that they will have to use the latest updated versions of LISEBO
 LISEBOT Does not and will not store any private user information, all bot commands are Lichess, Chess.com, and Stockfish and use slash commands to run commands properly. LISEBOT is not responsible for any user actions on their servers.
 
 ## License 
-Lise is non-commercial software made for chess lovers to use their loved sites/features in Discord, this software is licensed under GPL, please read the license for more details. LISEBOT will never charge users for its service, users may get the option to donate to devs if they want.
+Lise is a non-commercial software made for chess lovers to use their loved sites/features in Discord, this software is licensed under GPL, please read the license for more details. LISEBOT will never charge users for its service, users may get the option to donate to devs if they want.
 
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
