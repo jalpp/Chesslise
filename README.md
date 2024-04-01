@@ -51,6 +51,7 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
 - configure ``` LICHESS_TOKEN ``` if you also want to run lise on Lichess
 - you are ready to run the bot with ``` java Main.java ```
 - Please note you need to follow same steps as adding Chesslise for your own local bot
+- build the project
 
 # Lichess Commands:
 | Commands                   | Description |
@@ -105,7 +106,12 @@ Lise is a non-commercial software made for chess lovers to use their loved sites
 ## Discord Support Server
 [Join](https://discord.gg/uncmhknmYg)
 
-## Version number: 11
+## Version number: 12
+
+## Road map for chesslise
+- add chessxplain api
+- add puzzle solving features
+- better profile cards 
 
 ## Authors:
 - @jalpp Main maintainer of Chesslise 
