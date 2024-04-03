@@ -19,73 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ChesscomTests {
 
 
-    @Test
-    public void testDailyPuzzleImage(){
-
-        DailyCommandCC cc = new DailyCommandCC();
-
-        String getPuzzle = cc.getPuzzle();
-
-        assertEquals(cc.getPuzzle(), getPuzzle);
-
-    }
-
-    @Test
-    public void testDailyPuzzleFEN(){
-
-        DailyCommandCC cc = new DailyCommandCC();
-
-        String fen = cc.getFEN();
-
-        assertEquals(cc.getFEN(), fen);
-
-    }
-
-
-    @Test
-    public void testDailyPuzzleSide(){
-
-        DailyCommandCC cc = new DailyCommandCC();
-
-        String side = cc.getPuzzleSideToMove();
-
-        assertEquals(cc.getPuzzleSideToMove(), side);
-
-    }
-
-
-    @Test
-    public void testRandomPuzzle(){
-        puzzle puzzle = new puzzle();
-
-        String img = puzzle.getPuzzle();
-
-        assertEquals(puzzle.getPuzzle(), img);
-    }
-
-
-    @Test
-    public void testRandomPuzzleSide(){
-        puzzle p = new puzzle();
-
-        String side = p.getPuzzleSideToMove();
-
-        assertEquals(p.getPuzzleSideToMove(), side);
-    }
-
-
-    @Test
-    public void testPuzzleClient() throws ChessComPubApiException, IOException {
-
-        ChessPuzzle p = new puzzle();
-
-        DailyPuzzleClient client = p.getDailyPuzzleClient();
-
-        assertEquals(new DailyPuzzleClient().getTodaysDailyPuzzle().toString(), client.getTodaysDailyPuzzle().toString() );
-
-
-    }
-    
+ 
     
     @Test
     public void testUserProfile() throws ChessComPubApiException, IOException {

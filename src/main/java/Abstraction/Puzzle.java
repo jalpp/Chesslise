@@ -1,16 +1,23 @@
 package Abstraction;
 
 import Abstraction.ChessUtil;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 public interface Puzzle {
 
-    public String renderImage(ChessUtil util, String fen);
+    String renderImage(ChessUtil util, String fen);
 
 
-    public String defineSideToMove(ChessUtil util, String fen);
+    String defineSideToMove(ChessUtil util, String fen);
 
 
-    public String defineAnalysisBoard(ChessUtil util, String fen);
+    String defineAnalysisBoard(ChessUtil util, String fen);
+
+    ChessUtil defineUtil();
+
+    String definePuzzleFen();
+
+    EmbedBuilder defineCommandCard();
 
 
 }

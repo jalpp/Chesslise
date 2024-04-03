@@ -1,6 +1,5 @@
 package Discord.HelperModules;
 
-import Abstraction.ChessUtil;
 import Chesscom.DailyCommandCC;
 import Discord.MainHandler.CommandInfo;
 import Lichess.DailyCommand;
@@ -159,15 +158,10 @@ public class ButtonHelperContextModule {
 
 
     public void handlePuzzleButtons(ButtonInteractionEvent buttonEvent, Client client, DailyCommand dailyCommand){
-
-        if(buttonEvent.getComponentId().equalsIgnoreCase("re-load")){
-            ChessUtil util = new ChessUtil();
-            buttonEvent.replyEmbeds(new EmbedBuilder().setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setImage(util.getImageFromFEN(DailyCommand.getDailyPuzzleFEN(client), DailyCommand.getDailyPuzzleFEN(client).contains("b"), "blue", "chessnut")).setFooter("Use /answer to check your solution").build()).setEphemeral(true).queue();
-        }
-
+        DailyCommandCC daily = new DailyCommandCC();
         if(buttonEvent.getComponentId().equalsIgnoreCase("puzzlecc")){
-            DailyCommandCC daily = new DailyCommandCC();
-            buttonEvent.replyEmbeds(new EmbedBuilder().setColor(Color.magenta).setTitle("Chess.com Daily Puzzle").setImage(daily.getPuzzle()).setFooter("Click on URL for solution").build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link(daily.getPuzzleURL(), daily.getPuzzleSideToMove())).setEphemeral(true).queue();
+
+            buttonEvent.replyEmbeds(dailyCommand.defineCommandCard().build()).setEphemeral(true).queue();
         }
 
         if(buttonEvent.getComponentId().equals("hint")){
@@ -192,6 +186,6 @@ public class ButtonHelperContextModule {
         }
     }
 
-    
+
 
 }

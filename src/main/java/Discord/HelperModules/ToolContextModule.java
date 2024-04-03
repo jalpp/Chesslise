@@ -1,18 +1,13 @@
 package Discord.HelperModules;
 
-import Abstraction.ChessUtil;
 import Chesscom.DailyCommandCC;
 import Chesscom.puzzle;
 import Discord.MainHandler.AntiSpam;
-import Engine.StockFish;
 import Lichess.*;
 import chariot.Client;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-
-import java.awt.*;
 import java.util.Objects;
 
 public class ToolContextModule {
@@ -51,17 +46,26 @@ public class ToolContextModule {
     }
 
     public void sendSlashLichesspuzzleCommand(SlashCommandInteractionEvent slashEvent, Client client, MessageContextInteractionEvent context, boolean isSlash){
-        DailyCommand.getLichessDailyPuzzle(client, slashEvent, context, isSlash);
+        if(isSlash){
+            DailyCommand dailyCommand = new DailyCommand(client);
+            slashEvent.deferReply(true).queue();
+            slashEvent.getChannel().sendMessageEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.defineUtil(), dailyCommand.definePuzzleFen()), "Rating: " + dailyCommand.getRating()), Button.success("hint", "Hint")).addActionRow(Button.primary("puzzlecc", "\uD83C\uDFC1 Bonus Puzzle")).queue();
+        }else{
+            DailyCommand dailyCommand = new DailyCommand(client);
+            context.deferReply().setEphemeral(true).queue();
+            Objects.requireNonNull(context.getChannel()).sendMessageEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.defineUtil(), dailyCommand.definePuzzleFen()), "Rating: " + dailyCommand.getRating()), Button.success("hint", "Hint")).addActionRow(Button.primary("puzzlecc", "\uD83C\uDFC1 Bonus Puzzle")).queue();
+
+        }
     }
     public void sendDailyPuzzleChessComCommand(SlashCommandInteractionEvent slashEvent, MessageContextInteractionEvent context, boolean isSlash){
         if(isSlash) {
             DailyCommandCC daily = new DailyCommandCC();
             slashEvent.deferReply(true).queue();
-            slashEvent.getChannel().sendMessageEmbeds(new EmbedBuilder().setColor(Color.GREEN).setTitle("Chess.com Daily Puzzle").setThumbnail("https://static.wikia.nocookie.net/logopedia/images/4/4a/Chess.com_2019_%28App_Icon%29.png/revision/latest/scale-to-width-down/250?cb=20221006103032").setDescription(StockFish.getStockFishTextExplanation(15, daily.getFEN()) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setFooter("use /analyze [fen] to further analyze/check your answer").setImage(daily.getPuzzle()).build()).addActionRow(Button.link("https://www.chess.com/home", daily.defineSideToMove(new ChessUtil(), daily.getFEN())).asDisabled()).queue();
+            slashEvent.getChannel().sendMessageEmbeds(daily.defineCommandCard().build()).queue();
         }else {
             DailyCommandCC daily = new DailyCommandCC();
             context.deferReply(true).queue();
-            Objects.requireNonNull(context.getChannel()).sendMessageEmbeds(new EmbedBuilder().setColor(Color.magenta).setTitle("Chess.com Daily Puzzle").setDescription(StockFish.getStockFishTextExplanation(13, daily.getFEN()) + "\n\n " + daily.defineSideToMove(new ChessUtil(), daily.getFEN())).setImage(daily.getPuzzle()).setFooter("run /analyze [fen] to view the moves in action!").build()).queue();
+            Objects.requireNonNull(context.getChannel()).sendMessageEmbeds(daily.defineCommandCard().build()).queue();
         }
     }
 
@@ -72,9 +76,7 @@ public class ToolContextModule {
             try {
                 slashEvent.deferReply(true).queue();
                 puzzle puzzle = new puzzle();
-                String s = puzzle.getPuzzle();
-                String fen = puzzle.getFEN();
-                slashEvent.getChannel().sendMessageEmbeds(new EmbedBuilder().setColor(Color.green).setTitle("Chess.com Random Puzzle").setImage(s).setThumbnail("https://static.wikia.nocookie.net/logopedia/images/4/4a/Chess.com_2019_%28App_Icon%29.png/revision/latest/scale-to-width-down/250?cb=20221006103032").setDescription(StockFish.getStockFishTextExplanation(15, fen) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setFooter("use /analyze [fen] to further analyze/check your answer").build()).addActionRow(Button.link("https://www.chess.com/home", puzzle.defineSideToMove(new ChessUtil(), fen)).asDisabled()).queue();
+                slashEvent.getChannel().sendMessageEmbeds(puzzle.defineCommandCard().build()).queue();
             } catch (Exception e) {
                 slashEvent.getChannel().sendMessage("An error occurred.. Please contact Dev, or wait for few mins to rerun the command").queue();
             }
@@ -117,5 +119,5 @@ public class ToolContextModule {
     }
 
 
-    
+
 }
