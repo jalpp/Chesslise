@@ -1,6 +1,5 @@
 package Tests;
 
-import Abstraction.ChessPuzzle;
 import Abstraction.Puzzle;
 import Chesscom.CCProfile;
 import Chesscom.DailyCommandCC;
