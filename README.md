@@ -52,7 +52,7 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
 - you are ready to run the bot with ``` mvn clean ```
 - finally, compile the code ``` mvn compile ```
 - Please note you need to follow the same steps as adding Chesslise for your own local bot
-- build the project ``` mvn build ```
+- build the project ``` mvn package ```
 
 # Lichess Commands:
 | Commands                   | Description |
