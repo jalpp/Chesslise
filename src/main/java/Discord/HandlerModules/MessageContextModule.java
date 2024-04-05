@@ -1,3 +1,5 @@
+package Discord.HandlerModules;
+
 import Discord.HelperModules.ToolContextModule;
 import Discord.MainHandler.AntiSpam;
 import chariot.Client;
