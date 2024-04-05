@@ -1,6 +1,7 @@
 package Discord.HandlerModules;
 
 import Discord.HelperModules.ToolContextModule;
+import Abstraction.Context.ContextHandler;
 import Discord.MainHandler.AntiSpam;
 import chariot.Client;
 import com.github.bhlangonijr.chesslib.Board;
