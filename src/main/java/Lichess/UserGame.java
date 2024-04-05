@@ -5,27 +5,25 @@ import chariot.Client;
 import chariot.model.Game;
 
 
-
 public class UserGame extends UserObject {
 
 
-
-    public UserGame(Client client, String userID){
+    public UserGame(Client client, String userID) {
         super(client, userID);
 
     }
 
-    public boolean isBlack(){
+    public boolean isBlack() {
 
-       return this.getClient().games().currentByUserId(this.getUserID()).get().players().black().name().equalsIgnoreCase(getUserID());
+        return this.getClient().games().currentByUserId(this.getUserID()).get().players().black().name().equalsIgnoreCase(getUserID());
 
     }
 
 
     public String getUserGames() {
 
-       String gamelinkId = "";
-       Game getGame = this.getClient().games().currentByUserId(getUserID()).get();
+        String gamelinkId = "";
+        Game getGame = this.getClient().games().currentByUserId(getUserID()).get();
 
 
         if (isBlack()) {
@@ -41,11 +39,5 @@ public class UserGame extends UserObject {
     }
 
 
-
-
-
-
-
-
-
 }
+

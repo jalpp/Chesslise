@@ -1,15 +1,17 @@
 package Chesscom;
+
 import Abstraction.Player.UserObject;
 import io.github.sornerol.chess.pubapi.domain.player.stats.PlayerStats;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
 import net.dv8tion.jda.api.EmbedBuilder;
+
 import java.awt.*;
 import java.io.IOException;
 
 public class CCProfile extends UserObject {
 
-    public CCProfile(String username){
-       super(username);
+    public CCProfile(String username) {
+        super(username);
     }
 
     public EmbedBuilder getCCProfile() {
@@ -40,10 +42,6 @@ public class CCProfile extends UserObject {
         return embedBuilder;
 
     }
-
-
-
-
 
 
 }

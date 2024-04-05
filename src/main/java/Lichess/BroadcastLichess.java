@@ -1,7 +1,6 @@
 package Lichess;
 
 import chariot.Client;
-import chariot.model.Broadcast;
 import chariot.model.Many;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -36,5 +35,7 @@ public class BroadcastLichess {
         embedBuilder.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
         return embedBuilder;
     }
+
+
 
 }

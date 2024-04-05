@@ -1,6 +1,5 @@
 package Lichess;
 
-import Lichess.SwissResults;
 import chariot.Client;
 import chariot.model.Arena;
 import chariot.model.One;
@@ -12,16 +11,14 @@ import java.util.List;
 
 public class UserArena {
 
-    private Client client;
+    private final Client client;
     private EmbedBuilder embedBuilder;
-    private String arenaID;
+    private final String arenaID;
 
     public UserArena(Client client, String arenaID) {
         this.client = client;
         this.arenaID = arenaID;
     }
-
-
 
 
     public EmbedBuilder getUserArena() {
@@ -42,13 +39,12 @@ public class UserArena {
             }
 
 
-
             One<Arena> arenaResult1 = client.tournaments().arenaById(touryID);
 
             if (arenaResult1.isPresent() && spliturl[0].startsWith("http") && spliturl[0].contains("lichess")) {
 
                 Arena arena = arenaResult1.get();
-                
+
                 String name = arena.fullName();
 
                 int numPlayers = arena.nbPlayers();
@@ -66,13 +62,11 @@ public class UserArena {
                 Arena.Standing standing = arena.standing();
 
 
-
-
                 List<Arena.Standing.Player> players = standing.players();
 
                 for (int i = 0; i < 3; i++) {
 
-                    standPodium +=  podium[i] + " " + players.get(i).name() + "  " + players.get(i).rating() + "  **" + players.get(i).score() + "** " + players.get(i).team() + "\n ";
+                    standPodium += podium[i] + " " + players.get(i).name() + "  " + players.get(i).rating() + "  **" + players.get(i).score() + "** " + players.get(i).team() + "\n ";
 
 
                 }
@@ -80,7 +74,7 @@ public class UserArena {
 
                 for (int i = 0; i < players.size(); i++) {
 
-                    stand +=  emojileaderboard[i] + " " + players.get(i).name() + "  " + players.get(i).rating() + "  **" + players.get(i).score() + "** " + players.get(i).team() + "\n ";
+                    stand += emojileaderboard[i] + " " + players.get(i).name() + "  " + players.get(i).rating() + "  **" + players.get(i).score() + "** " + players.get(i).team() + "\n ";
 
 
                 }
@@ -88,11 +82,11 @@ public class UserArena {
 
                 this.embedBuilder = new EmbedBuilder();
                 this.embedBuilder.setColor(Color.green);
-                this.embedBuilder.setTitle( "\uD83C\uDF96️ " + name  + " \uD83C\uDF96️");
-                this.embedBuilder.setDescription("** Tournament Name:** " + name + "\n **Variant:** " + perfname  + "\n **Time Duration :** " + timeLeft + " mins" + "\n **Total Players:** " + numPlayers + "\n **Standings:**" + "\n  **Rank**  **Username**  **Rating:**  **Score** \n \n " + " **Podium** \n " + standPodium + "\n\n **Leaderboard** \n" + stand + "\n" + "[View on Lichess](" + this.arenaID + ")");
+                this.embedBuilder.setTitle("\uD83C\uDF96️ " + name + " \uD83C\uDF96️");
+                this.embedBuilder.setDescription("** Tournament Name:** " + name + "\n **Variant:** " + perfname + "\n **Time Duration :** " + timeLeft + " mins" + "\n **Total Players:** " + numPlayers + "\n **Standings:**" + "\n  **Rank**  **Username**  **Rating:**  **Score** \n \n " + " **Podium** \n " + standPodium + "\n\n **Leaderboard** \n" + stand + "\n" + "[View on Lichess](" + this.arenaID + ")");
 
 
-            }else{
+            } else {
                 this.embedBuilder = new EmbedBuilder();
                 String[] splitswiss = this.arenaID.split("swiss/");
 
@@ -107,7 +101,7 @@ public class UserArena {
 
                 One<Swiss> swissResult = this.client.tournaments().swissById(touryIDSwiss);
 
-                if(swissResult.isPresent()){
+                if (swissResult.isPresent()) {
                     SwissResults swissResults = new SwissResults(client, touryIDSwiss);
                     return swissResults.getLinkResults();
                 }
@@ -115,7 +109,7 @@ public class UserArena {
                 return this.embedBuilder.setDescription("Error occurred, please provide valid Lichess URL");
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             this.embedBuilder = new EmbedBuilder();
             return this.embedBuilder.setDescription("Error occurred, please provide valid Lichess arena url");

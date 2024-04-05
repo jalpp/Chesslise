@@ -1,42 +1,27 @@
 package Discord.MainHandler;
 
-import Chesscom.*;
 import Discord.HandlerModules.ButtonContextModule;
 import Discord.HandlerModules.MessageContextModule;
 import Discord.HandlerModules.ModalContextModule;
 import Discord.HandlerModules.SlashContextModule;
-import Lichess.*;
-import Engine.*;
 import chariot.Client;
 import com.github.bhlangonijr.chesslib.Board;
-import com.github.bhlangonijr.chesslib.Side;
 import lombok.SneakyThrows;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import net.dv8tion.jda.api.interactions.components.text.TextInput;
-import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
-import net.dv8tion.jda.api.interactions.modals.Modal;
 import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
 
 public class CommandHandler extends ListenerAdapter {
 
+    private static final Client client = Client.basic(conf -> conf.retries(0));
     private final AntiSpam spam = new AntiSpam(300000, 1);
     private final AntiSpam dailySpam = new AntiSpam(86400000, 2);
     private final AntiSpam watchLimit = new AntiSpam(86400000, 24);
-    private Board board = new Board();
-    private Board blackboard = new Board();
-    private Client ButtonClient;
-    private static final Client client = Client.basic(conf -> conf.retries(0));
-
+    private final Board board = new Board();
+    private final Board blackboard = new Board();
     private final MessageContextModule msgContext = new MessageContextModule();
     private final SlashContextModule slashContext = new SlashContextModule();
 
@@ -44,7 +29,7 @@ public class CommandHandler extends ListenerAdapter {
 
     private final ButtonContextModule buttonContext = new ButtonContextModule();
 
-    public CommandHandler(){
+    public CommandHandler() {
 
     }
 
@@ -55,7 +40,7 @@ public class CommandHandler extends ListenerAdapter {
 
 
     @SneakyThrows
-    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event){
+    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         slashContext.handleLogic(null, event, null, null, client, board, blackboard, spam, dailySpam, watchLimit);
     }
 
@@ -70,9 +55,13 @@ public class CommandHandler extends ListenerAdapter {
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
 
-     buttonContext.handleLogic(null, null, event,null, client, board, blackboard, null, null, null);
+        buttonContext.handleLogic(null, null, event, null, client, board, blackboard, null, null, null);
 
     }
+
+
+}
+
 
 
 

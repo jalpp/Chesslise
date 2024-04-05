@@ -11,10 +11,8 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 public interface ContextHandler {
 
 
-    public void handleLogic(MessageContextInteractionEvent context, SlashCommandInteractionEvent slashEvent, ButtonInteractionEvent buttonEvent, ModalInteractionEvent eventModal, Client client , Board board, Board blackboard
-    , AntiSpam spam, AntiSpam dailyspam, AntiSpam watchlimit);
-
-
+    void handleLogic(MessageContextInteractionEvent context, SlashCommandInteractionEvent slashEvent, ButtonInteractionEvent buttonEvent, ModalInteractionEvent eventModal, Client client, Board board, Board blackboard
+            , AntiSpam spam, AntiSpam dailyspam, AntiSpam watchlimit);
 
 
 }

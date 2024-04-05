@@ -4,7 +4,7 @@ import chariot.Client;
 import io.github.sornerol.chess.pubapi.client.PlayerClient;
 import io.github.sornerol.chess.pubapi.domain.player.stats.PlayerStats;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
-import net.dv8tion.jda.api.EmbedBuilder;
+
 
 import java.io.IOException;
 
@@ -12,26 +12,25 @@ public class UserObject {
 
     private Client client = Client.basic();
     private final String userID;
-
     private final PlayerClient playerClient = new PlayerClient();
 
 
-    public UserObject(Client client, String userParsing){
+    public UserObject(Client client, String userParsing) {
         this.client = client;
         this.userID = userParsing.toLowerCase().trim();
     }
 
 
-    public UserObject(String username){
+    public UserObject(String username) {
         this.userID = username.toLowerCase().trim();
     }
 
 
-    public Client getClient(){
+    public Client getClient() {
         return this.client;
     }
 
-    public String getUserID(){
+    public String getUserID() {
         return this.userID;
     }
 
@@ -44,8 +43,8 @@ public class UserObject {
         return getPlayerClient().getStatsForPlayer(this.userID);
     }
 
-    public void setUserAgent(){
-        playerClient.setUserAgent("your-app; username: your-username; contact: your-email");
+    public void setUserAgent() {
+        playerClient.setUserAgent("bot; username: username; contact: email");
 
     }
 

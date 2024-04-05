@@ -10,12 +10,12 @@ import java.util.Random;
 
 public class WatchMaster {
 
-    private Client client;
+    private final Client client;
     private String masterGif;
-    private String openingGif;
+    private final String openingGif;
 
 
-    public WatchMaster(Client client){
+    public WatchMaster(Client client) {
         this.client = client;
         this.masterGif = "";
         this.openingGif = "";
@@ -23,7 +23,7 @@ public class WatchMaster {
     }
 
 
-    public String getMasterGames(){
+    public String getMasterGames() {
 
         String e4games = "";
         String d4games = "";
@@ -33,12 +33,10 @@ public class WatchMaster {
         Random random = new Random();
 
 
-
         List<ExploreResult.DBGame> gamesE4 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("e2e4")).get().topGames();
         List<ExploreResult.DBGame> gamesD4 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("d2d4")).get().topGames();
         List<ExploreResult.DBGame> gamesNf3 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("g1f3")).get().topGames();
         List<ExploreResult.DBGame> gamesc4 = chariot.Client.basic().openingExplorer().masters(conf -> conf.play("c2c4")).get().topGames();
-
 
 
         int randome4size = random.nextInt(gamesE4.size());
@@ -66,12 +64,10 @@ public class WatchMaster {
     }
 
 
-
-    public String[] getGameId(){
+    public String[] getGameId() {
         String[] split = this.masterGif.split(".gif");
-        return  split;
+        return split;
     }
-
 
 
 }

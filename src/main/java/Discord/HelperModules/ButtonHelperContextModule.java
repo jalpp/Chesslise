@@ -16,12 +16,12 @@ import java.awt.*;
 public class ButtonHelperContextModule {
 
 
-    public ButtonHelperContextModule(){
+    public ButtonHelperContextModule() {
 
     }
 
 
-    public void handlePlayingEngineFlow(ButtonInteractionEvent buttonEvent, Board board, Board blackboard){
+    public void handlePlayingEngineFlow(ButtonInteractionEvent buttonEvent, Board board, Board blackboard) {
         switch (buttonEvent.getComponentId()) {
             case "bot-lose" -> {
                 board.loadFromFen(new Board().getFen());
@@ -50,7 +50,7 @@ public class ButtonHelperContextModule {
         }
     }
 
-    public void handlePlayCommandFlow(ButtonInteractionEvent buttonEvent, Game generateChallenge, Client client){
+    public void handlePlayCommandFlow(ButtonInteractionEvent buttonEvent, Game generateChallenge, Client client) {
         switch (buttonEvent.getComponentId()) {
             case "load-again" ->
                     buttonEvent.editMessage("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").setActionRow(
@@ -78,14 +78,14 @@ public class ButtonHelperContextModule {
         }
 
 
-        if(buttonEvent.getComponentId().equals("playhelp")){
+        if (buttonEvent.getComponentId().equals("playhelp")) {
             EmbedBuilder help = new EmbedBuilder();
             help.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
             help.setTitle("Guide for /play");
             help.setDescription("/play allows you to play LIVE chess with friends and BOTs!, to set up a **Casual game (friendly)/ Rated (gain/lose rating)**  all users need to do is click on **casual/rated** button\n" +
                     "After you will be prompted to select **Time control**, this option is timecontrol (how long game lasts). \n" +
                     "**Start the game**: One you have selected mode and time, Bot sends Lichess live URL, where you and your friend can click same time to start a **LIVE Chess game**." +
-                    "\n\n **Login/Register** \n To play rated make sure to Login/Register on Lichess.org to get chess rating, otherwise just play casual games!"+
+                    "\n\n **Login/Register** \n To play rated make sure to Login/Register on Lichess.org to get chess rating, otherwise just play casual games!" +
                     "\n **Play BOTS** " +
                     "\n To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!" +
                     "\n **Need more help?** \n Join our Support server and Developer will help you!");
@@ -93,8 +93,8 @@ public class ButtonHelperContextModule {
         }
     }
 
-    public void handlePlayCommandUI(ButtonInteractionEvent buttonEvent){
-        if(buttonEvent.getComponentId().equals("casmode"))   {
+    public void handlePlayCommandUI(ButtonInteractionEvent buttonEvent) {
+        if (buttonEvent.getComponentId().equals("casmode")) {
             buttonEvent.editMessage("## Please Pick Your Time Control ⏱️").setActionRow(
                     net.dv8tion.jda.api.interactions.components.buttons.Button.primary("ultrafastc", "1/4+0"),
                     net.dv8tion.jda.api.interactions.components.buttons.Button.primary("bulletfastc", "1+0"),
@@ -105,7 +105,7 @@ public class ButtonHelperContextModule {
 
         }
 
-        if(buttonEvent.getComponentId().equals("ratedmode")){
+        if (buttonEvent.getComponentId().equals("ratedmode")) {
             buttonEvent.editMessage("## Please Pick Your Time Control ⏱️").setActionRow(
                     net.dv8tion.jda.api.interactions.components.buttons.Button.danger("ultrafastr", "1/4+0"),
                     net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bulletfastr", "1+0"),
@@ -115,7 +115,7 @@ public class ButtonHelperContextModule {
             ).queue();
         }
 
-        if(buttonEvent.getComponentId().equals("enginemode")){
+        if (buttonEvent.getComponentId().equals("enginemode")) {
             buttonEvent.editMessage("** Challenge This BOTs! **").setActionRow(
                     net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://listudy.org/en/play-stockfish", "Stockfish"),
                     net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://lichess.org/@/leela2200", "LeelaZero"),
@@ -128,7 +128,7 @@ public class ButtonHelperContextModule {
     }
 
 
-    public void handleMoreTimeControls(ButtonInteractionEvent buttonEvent, Game generateChallenge, Client client){
+    public void handleMoreTimeControls(ButtonInteractionEvent buttonEvent, Game generateChallenge, Client client) {
 
         BotContextModule contextModule = new BotContextModule();
 
@@ -157,35 +157,34 @@ public class ButtonHelperContextModule {
     }
 
 
-    public void handlePuzzleButtons(ButtonInteractionEvent buttonEvent, Client client, DailyCommand dailyCommand){
+    public void handlePuzzleButtons(ButtonInteractionEvent buttonEvent, Client client, DailyCommand dailyCommand) {
         DailyCommandCC daily = new DailyCommandCC();
-        if(buttonEvent.getComponentId().equalsIgnoreCase("puzzlecc")){
+        if (buttonEvent.getComponentId().equalsIgnoreCase("puzzlecc")) {
 
             buttonEvent.replyEmbeds(dailyCommand.defineCommandCard().build()).setEphemeral(true).queue();
         }
 
-        if(buttonEvent.getComponentId().equals("hint")){
+        if (buttonEvent.getComponentId().equals("hint")) {
             buttonEvent.replyEmbeds(dailyCommand.getThemes().build()).setEphemeral(true).queue();
         }
     }
 
 
-    public void handleLearnCommand(ButtonInteractionEvent buttonEvent, CommandInfo commandInfo){
-        if(buttonEvent.getComponentId().equals("next")){
+    public void handleLearnCommand(ButtonInteractionEvent buttonEvent, CommandInfo commandInfo) {
+        if (buttonEvent.getComponentId().equals("next")) {
             buttonEvent.editMessageEmbeds(commandInfo.getPageTwo().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nexttwo", "➡️"), net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
-        }else if(buttonEvent.getComponentId().equals("nexttwo")){
+        } else if (buttonEvent.getComponentId().equals("nexttwo")) {
             buttonEvent.editMessageEmbeds(commandInfo.getPageThree().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nextthree", "➡️").asDisabled(), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
-        }else if(buttonEvent.getComponentId().equals("Bishop")){
-            buttonEvent.editMessageEmbeds(commandInfo.getPageFive().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Rook", "⬅️"),net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Knight", "♞"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
-        }else if(buttonEvent.getComponentId().equals("Knight")){
-            buttonEvent.editMessageEmbeds(commandInfo.getPageSix().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Bishop", "⬅️"),net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Queen", "♛"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
-        }else if(buttonEvent.getComponentId().equals("Queen")){
+        } else if (buttonEvent.getComponentId().equals("Bishop")) {
+            buttonEvent.editMessageEmbeds(commandInfo.getPageFive().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Rook", "⬅️"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Knight", "♞"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
+        } else if (buttonEvent.getComponentId().equals("Knight")) {
+            buttonEvent.editMessageEmbeds(commandInfo.getPageSix().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Bishop", "⬅️"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Queen", "♛"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
+        } else if (buttonEvent.getComponentId().equals("Queen")) {
             buttonEvent.editMessageEmbeds(commandInfo.getPageSeven().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Knight", "⬅️"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
-        }else if(buttonEvent.getComponentId().equals("Rook")){
+        } else if (buttonEvent.getComponentId().equals("Rook")) {
             buttonEvent.editMessageEmbeds(commandInfo.getPageFour().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Bishop", "♝"), Button.link("https://discord.gg/K2NKarM5KV", "Support Server")).queue();
         }
     }
-
 
 
 }

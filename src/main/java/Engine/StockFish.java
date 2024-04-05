@@ -12,24 +12,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 
+
 public class StockFish {
     private static final String API_ENDPOINT = "https://stockfish.online/api/s/v2.php";
-
-    public StockFish(){
-
-    }
-
-
-    public static void main(String[] args) {
-       System.out.println(getStockFishTextExplanation(15, "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"));
-    }
-
     public static HashMap<String, String> getUserFen = new HashMap<>();
 
 
+    public StockFish() {
 
+    }
 
-    public static String getTopEngineLine(int depth, String fen){
+    public static void main(String[] args) {
+        System.out.println(getStockFishTextExplanation(15, "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"));
+    }
+
+    public static String getTopEngineLine(int depth, String fen) {
         try {
 
             String queryString = String.format("fen=%s&depth=%d",
@@ -61,7 +58,7 @@ public class StockFish {
                 if (dataNode != null) {
                     return dataNode.asText();
                 } else {
-                    System.out.println("No 'continuation' field found in the response.");
+                    System.out.println("No 'data' field found in the response.");
                 }
             } else {
                 System.out.println("Failed to make API request. Response Code: " + responseCode);
@@ -76,8 +73,7 @@ public class StockFish {
     }
 
 
-
-    public static String getEvalForFEN(int depth, String fen){
+    public static String getEvalForFEN(int depth, String fen) {
         try {
 
             String queryString = String.format("fen=%s&depth=%d",
@@ -129,8 +125,7 @@ public class StockFish {
     }
 
 
-
-    public static String getBestMove(int depth, String fen){
+    public static String getBestMove(int depth, String fen) {
         try {
 
             String queryString = String.format("fen=%s&depth=%d",
@@ -182,8 +177,7 @@ public class StockFish {
     }
 
 
-
-    public static String getStockFishTextExplanation(int depth, String fen){
+    public static String getStockFishTextExplanation(int depth, String fen) {
         return "**StockFish's Analysis** \n\n**Best move:** || " + StockFish.getBestMove(depth, fen) + "|| \n\n" +
                 "**Eval:** || " + StockFish.getEvalForFEN(depth, fen) + "|| \n\n" +
                 "**Top engine line: ** ||" + StockFish.getTopEngineLine(depth, fen) + "|| \n\n" +
@@ -191,9 +185,4 @@ public class StockFish {
     }
 
 
-
-
 }
-
-
-

@@ -1,23 +1,24 @@
 package Lichess;
 
 import chariot.Client;
-import chariot.model.*;
+import chariot.model.LiveStreamer;
+import chariot.model.Some;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Optional;
+
 
 public class LiveStreamers {
 
 
     private final Client client;
 
-    public LiveStreamers(Client client){
+    public LiveStreamers(Client client) {
         this.client = client;
     }
 
-    public EmbedBuilder getTv(){
+    public EmbedBuilder getTv() {
 
         List<LiveStreamer> live = client.users().liveStreamers().stream().toList();
 
@@ -26,7 +27,7 @@ public class LiveStreamers {
         StringBuilder getLivePeople = new StringBuilder();
 
 
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
 
             String title = live.get(i).user().title().orElse("");
 
@@ -34,15 +35,15 @@ public class LiveStreamers {
             String TwitchLink = "";
             String YoutubeLink = "";
 
-            if(live.get(i).stream().service().equals("twitch")){
+            if (live.get(i).stream().service().equals("twitch")) {
                 if (live.get(i).streamer().twitch() instanceof Some<String> twitch) {
                     TwitchLink = twitch.value();
-                    presentlink += "[**Twitch** \uD83D\uDD2E ](" + TwitchLink + ") " + "**"+ live.get(i).streamer().headline() + "**"+ "\n\n";
+                    presentlink += "[**Twitch** \uD83D\uDD2E ](" + TwitchLink + ") " + "**" + live.get(i).streamer().headline() + "**" + "\n\n";
                 }
-            }else{
+            } else {
                 if (live.get(i).streamer().youtube() instanceof Some<String> youtube) {
                     YoutubeLink = youtube.value();
-                    presentlink += "[**Youtube** \uD83D\uDD3A ](" + YoutubeLink + ") " + "**"+ live.get(i).streamer().headline() + "**"+ "\n\n";
+                    presentlink += "[**Youtube** \uD83D\uDD3A ](" + YoutubeLink + ") " + "**" + live.get(i).streamer().headline() + "**" + "\n\n";
                 }
             }
 
@@ -60,8 +61,6 @@ public class LiveStreamers {
 
 
     }
-
-
 
 
 }

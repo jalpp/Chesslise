@@ -18,6 +18,7 @@ public class BotContextModule {
 
     }
 
+
     public void resetBoardCommand(SlashCommandInteractionEvent slashEvent, Board boardwhite, Board boardblack) {
         boardwhite.loadFromFen(new Board().getFen());
         boardblack.loadFromFen(new Board().getFen());

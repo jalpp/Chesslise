@@ -1,9 +1,9 @@
 package Chesscom;
-import Abstraction.*;
+
+import Abstraction.ChessUtil;
 import Abstraction.Puzzle;
 import Engine.StockFish;
 import io.github.sornerol.chess.pubapi.client.DailyPuzzleClient;
-import io.github.sornerol.chess.pubapi.domain.puzzle.DailyPuzzle;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -17,14 +17,14 @@ public class puzzle implements Puzzle {
     private final String randomCachedFen;
 
 
-   public puzzle(){
-       try {
-           DailyPuzzleClient dailyPuzzleClient = new DailyPuzzleClient();
-           this.randomCachedFen = dailyPuzzleClient.getRandomDailyPuzzle().getFen();
-       } catch (IOException | ChessComPubApiException e) {
-           throw new RuntimeException(e);
-       }
-   }
+    public puzzle() {
+        try {
+            DailyPuzzleClient dailyPuzzleClient = new DailyPuzzleClient();
+            this.randomCachedFen = dailyPuzzleClient.getRandomDailyPuzzle().getFen();
+        } catch (IOException | ChessComPubApiException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     @Override
@@ -49,11 +49,11 @@ public class puzzle implements Puzzle {
 
     @Override
     public String definePuzzleFen() {
-       return randomCachedFen;
+        return randomCachedFen;
     }
 
     @Override
     public EmbedBuilder defineCommandCard() {
-        return new EmbedBuilder().setColor(Color.green).setTitle("Chess.com Random Puzzle").setImage(renderImage(defineUtil(),definePuzzleFen())).setThumbnail("https://static.wikia.nocookie.net/logopedia/images/4/4a/Chess.com_2019_%28App_Icon%29.png/revision/latest/scale-to-width-down/250?cb=20221006103032").setDescription(StockFish.getStockFishTextExplanation(15, definePuzzleFen()) + "\n\n " + defineSideToMove(defineUtil(), definePuzzleFen()) +  "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setFooter("use /analyze [fen] to further analyze/check your answer");
+        return new EmbedBuilder().setColor(Color.green).setTitle("Chess.com Random Puzzle").setImage(renderImage(defineUtil(), definePuzzleFen())).setThumbnail("https://static.wikia.nocookie.net/logopedia/images/4/4a/Chess.com_2019_%28App_Icon%29.png/revision/latest/scale-to-width-down/250?cb=20221006103032").setDescription(StockFish.getStockFishTextExplanation(15, definePuzzleFen()) + "\n\n " + defineSideToMove(defineUtil(), definePuzzleFen()) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setFooter("use /analyze [fen] to further analyze/check your answer");
     }
 }

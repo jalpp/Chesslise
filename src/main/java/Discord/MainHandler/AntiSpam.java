@@ -1,19 +1,20 @@
 package Discord.MainHandler;
 
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 public class AntiSpam {
 
     // Map to store user IDs and their last request timestamp
-    private Map<String, Long> userRequestMap;
+    private final Map<String, Long> userRequestMap;
 
     // Time frame for rate limiting (in milliseconds)
-    private long timeFrame;
+    private final long timeFrame;
 
     // Maximum number of requests allowed within the time frame
-    private int maxRequests;
+    private final int maxRequests;
 
     public AntiSpam(long timeFrame, int maxRequests) {
         userRequestMap = new HashMap<>();

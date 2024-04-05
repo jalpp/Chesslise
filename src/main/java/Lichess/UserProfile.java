@@ -15,19 +15,19 @@ public class UserProfile extends UserObject {
 
     private String sayProfile = "";
 
-    public UserProfile(Client client, String userParsing){
+    public UserProfile(Client client, String userParsing) {
         super(client, userParsing);
 
     }
 
 
-    public String getBlitzRatings(){
+    public String getBlitzRatings() {
         One<PerformanceStatistics> userBlitz = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.blitz);
 
 
         String blitzRating = " \uD83D\uDD25 **Blitz**: ?";
 
-        if(userBlitz.isPresent() && !userBlitz.get().perf().glicko().provisional()){
+        if (userBlitz.isPresent() && !userBlitz.get().perf().glicko().provisional()) {
             return " \uD83D\uDD25 **Blitz**:  " + userBlitz.get().perf().glicko().rating().intValue();
         }
 
@@ -35,12 +35,12 @@ public class UserProfile extends UserObject {
 
     }
 
-    public String getRapidRatings(){
+    public String getRapidRatings() {
         One<PerformanceStatistics> userRapid = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.rapid);
 
         String rapidRating = " \uD83D\uDC07 **Rapid**: ?";
 
-        if(userRapid.isPresent() && !userRapid.get().perf().glicko().provisional()){
+        if (userRapid.isPresent() && !userRapid.get().perf().glicko().provisional()) {
             return "\uD83D\uDC07 **Rapid**:  " + userRapid.get().perf().glicko().rating().intValue();
         }
 
@@ -48,26 +48,26 @@ public class UserProfile extends UserObject {
 
     }
 
-    public String getBulletRatings(){
+    public String getBulletRatings() {
         One<PerformanceStatistics> userBullet = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.bullet);
 
         String bulletRating = "\uD83D\uDD2B **Bullet**: ?";
 
-        if(userBullet.isPresent() && !userBullet .get().perf().glicko().provisional()){
-            return "\uD83D\uDD2B **Bullet**:  " + userBullet .get().perf().glicko().rating().intValue();
+        if (userBullet.isPresent() && !userBullet.get().perf().glicko().provisional()) {
+            return "\uD83D\uDD2B **Bullet**:  " + userBullet.get().perf().glicko().rating().intValue();
         }
 
         return bulletRating;
 
     }
 
-    public String getClassicalRatings(){
+    public String getClassicalRatings() {
         One<PerformanceStatistics> usercal = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), Enums.PerfType.classical);
 
         String calRating = "\uD83D\uDC22 **Classical**: ?";
 
-        if(usercal.isPresent() && !usercal.get().perf().glicko().provisional()){
-            return "\uD83D\uDC22 **Classical**:  " +usercal.get().perf().glicko().rating().intValue();
+        if (usercal.isPresent() && !usercal.get().perf().glicko().provisional()) {
+            return "\uD83D\uDC22 **Classical**:  " + usercal.get().perf().glicko().rating().intValue();
         }
 
         return calRating;
@@ -75,9 +75,7 @@ public class UserProfile extends UserObject {
     }
 
 
-
-
-    public String getUserProfile(){
+    public String getUserProfile() {
 
         try {
 
@@ -89,7 +87,7 @@ public class UserProfile extends UserObject {
                 User user = userResult.get();
                 String StatusEmoji = "\uD83D\uDD34";
                 boolean checkOnline = this.getClient().users().statusByIds(this.getUserID()).stream().toList().get(0).online();
-                if(checkOnline){
+                if (checkOnline) {
                     StatusEmoji = "\uD83D\uDFE2";
                 }
 
@@ -131,23 +129,23 @@ public class UserProfile extends UserObject {
                     sayrewards.append(userTrophy.getImageLink()).append("\n");
                 }
 
-                if(!trophies.isEmpty()) {
+                if (!trophies.isEmpty()) {
 
                     embedRewards += "\n\n ** \uD83D\uDCA0 Trophies:** \n\n" + sayrewards;
 
-                }else{
+                } else {
                     embedRewards += "";
                 }
 
 
-                this.sayProfile +=  sayTitle + " " + name + " " +StatusEmoji + "\n" +"**All Games**: " + all + "\n" + "** ⚔️ Won:** " +   wins + " ** \uD83D\uDE14 Loss:** " + lose + " ** \uD83E\uDD1D Draw:** " + draw + "\n** ♗ Playing:** " + playing + "\n \uD83D\uDCB9 **Ratings**: \n" + this.getBlitzRatings() + "\n" + this.getRapidRatings() + "\n" + this.getBulletRatings() + "\n" + this.getClassicalRatings()+ embedRewards ;
+                this.sayProfile += sayTitle + " " + name + " " + StatusEmoji + "\n" + "**All Games**: " + all + "\n" + "** ⚔️ Won:** " + wins + " ** \uD83D\uDE14 Loss:** " + lose + " ** \uD83E\uDD1D Draw:** " + draw + "\n** ♗ Playing:** " + playing + "\n \uD83D\uDCB9 **Ratings**: \n" + this.getBlitzRatings() + "\n" + this.getRapidRatings() + "\n" + this.getBulletRatings() + "\n" + this.getClassicalRatings() + embedRewards;
             }
             if (!userPresent) {
                 return "User Not Present, Please try again";
 
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "Unknown Error..";
         }
@@ -156,11 +154,6 @@ public class UserProfile extends UserObject {
 
 
     }
-
-
-
-
-
 
 
 }

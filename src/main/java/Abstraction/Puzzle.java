@@ -1,6 +1,5 @@
 package Abstraction;
 
-import Abstraction.ChessUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 public interface Puzzle {

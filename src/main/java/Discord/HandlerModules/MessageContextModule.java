@@ -1,6 +1,3 @@
-package Discord.HandlerModules;
-
-import Abstraction.Context.ContextHandler;
 import Discord.HelperModules.ToolContextModule;
 import Discord.MainHandler.AntiSpam;
 import chariot.Client;
@@ -13,8 +10,8 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 public class MessageContextModule implements ContextHandler {
 
-    
-    public MessageContextModule(){
+
+    public MessageContextModule() {
 
     }
 
@@ -26,13 +23,13 @@ public class MessageContextModule implements ContextHandler {
         switch (context.getName()) {
             case "Lichess Daily Puzzle" -> tools.sendSlashLichesspuzzleCommand(slashEvent, client, context, isSlash);
 
-            case "Play Chess" -> tools.sendPlayChallengeCommand(slashEvent,context,isSlash);
+            case "Play Chess" -> tools.sendPlayChallengeCommand(slashEvent, context, isSlash);
 
-            case "View Lichess Broadcasts" -> tools.sendBroadcastCommand(slashEvent,client,context,isSlash);
+            case "View Lichess Broadcasts" -> tools.sendBroadcastCommand(slashEvent, client, context, isSlash);
 
-            case "Watch GMs" -> tools.sendBroadcastMasterCommand(slashEvent,client,context,isSlash);
+            case "Watch GMs" -> tools.sendBroadcastMasterCommand(slashEvent, client, context, isSlash);
 
-            case "Chess.com Daily Puzzle" -> tools.sendDailyPuzzleChessComCommand(slashEvent,context,isSlash);
+            case "Chess.com Daily Puzzle" -> tools.sendDailyPuzzleChessComCommand(slashEvent, context, isSlash);
         }
     }
 }
