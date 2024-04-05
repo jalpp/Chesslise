@@ -50,7 +50,7 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
 - configure ``` DISCORD_TOKEN ``` for your own bots Discord token
 - configure ``` LICHESS_TOKEN ``` if you also want to run lise on Lichess
 - you are ready to run the bot with ``` mvn clean ```
-- finally compile the code ``` mvn build ```
+- finally compile the code ``` mvn compile ```
 - Please note you need to follow same steps as adding Chesslise for your own local bot
 - build the project ``` mvn build ```
 
