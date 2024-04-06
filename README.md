@@ -79,9 +79,9 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
 # Engine [Stockfish & Lise] Commands
 | Commands     | Description |
 | ----------- | ----------- |
-| /analyze    |  Pass in FEN to analyze with Stockfish     |
+| /analyze    |  Pass in FEN to analyze with Stockfish in Discord    |
 | /move       |  Play Stockfish engine in Discord          |
-| /moveblack  |  Play Lise engine in Discord               |
+
 
 
 ## Create Lichess Games
