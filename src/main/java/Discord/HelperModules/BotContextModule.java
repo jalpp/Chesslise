@@ -51,13 +51,18 @@ public class BotContextModule {
 
 
         } catch (Exception e) {
-            slashEvent.reply("Not valid move! \n\n **If you are trying to castle use Captial letters (O-O & O-O-O)** \n\n (If you are running this command first time) The game is already on in other server, please reset the board with **/resetboard**! If you want to play black side use **/moveblack**").setEphemeral(true).queue();
+            slashEvent.reply("Not valid move! \n\n **If you are trying to castle use Captial letters (O-O & O-O-O)** \n\n (If you are running this command first time) The game is already on in other server, please reset the board with **/resetboard**!").setEphemeral(true).queue();
         }
     }
 
 
-    public void runAnalyzeCommand(SlashCommandInteractionEvent slashEvent) {
-        getStockfishSearchCommand(Objects.requireNonNull(slashEvent.getOption("fen")).getAsString(), slashEvent, false, null);
+     public void runAnalyzeCommand(SlashCommandInteractionEvent slashEvent) {
+        try {
+            slashEvent.deferReply(true).queue();
+            getStockfishSearchCommand(Objects.requireNonNull(slashEvent.getOption("fen")).getAsString(), slashEvent, false, null);
+        }catch (Exception e){
+            slashEvent.reply("Error! Provide valid FEN!").queue();
+        }
     }
 
     public void runAnalyzeButton(ButtonInteractionEvent event) {
@@ -89,8 +94,7 @@ public class BotContextModule {
             sf.setColor(Color.green);
             b.doMove(StockFish.getBestMove(13, fen));
             StockFish.getUserFen.put(buttonEvent.getUser().getId(), b.getFen());
-            buttonEvent.deferReply(true).queue();
-            buttonEvent.replyEmbeds(sf.build()).setActionRow(Button.secondary("sf", "Play move")).queue();
+            buttonEvent.editMessageEmbeds(sf.build()).setActionRow(Button.secondary("sf", "Play move")).queue();
         }
     }
 
