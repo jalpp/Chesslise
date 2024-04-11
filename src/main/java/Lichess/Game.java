@@ -1,6 +1,7 @@
 package Lichess;
 
 import chariot.Client;
+import java.util.Random;
 
 import java.util.concurrent.atomic.AtomicReference;
 
