@@ -43,6 +43,7 @@ public class ButtonContextModule implements ContextHandler {
 
         helper.handlePlayingEngineFlow(buttonEvent, board, blackboard);
 
+        helper.handlePlayCommandFriendChallenge(buttonEvent);
     }
 
 

@@ -2,15 +2,19 @@ package Discord.HelperModules;
 
 import Chesscom.CCProfile;
 import Discord.MainHandler.AntiSpam;
+import Lichess.Game;
 import Lichess.UserGame;
 import Lichess.UserProfile;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
+
+import java.util.Objects;
 
 public class ModalHelperContextModule {
 
@@ -18,6 +22,8 @@ public class ModalHelperContextModule {
     public ModalHelperContextModule() {
 
     }
+
+
 
 
     private void buildInputForm(SlashCommandInteractionEvent slashEvent, String inputid, String label, String placeholder, String modalid, String modaltitle) {
@@ -31,6 +37,31 @@ public class ModalHelperContextModule {
                 .addActionRows(ActionRow.of(ptext))
                 .build();
         slashEvent.replyModal(pmodal).queue();
+    }
+
+    private void buildButtonInputForm(ButtonInteractionEvent buttonEvent, String inputid, String label, String placeholder, String modalid, String modaltitle) {
+        TextInput ptext = TextInput.create(inputid, label, TextInputStyle.SHORT)
+                .setPlaceholder(placeholder)
+                .setMinLength(2)
+                .setMaxLength(100)
+                .setRequired(true)
+                .build();
+
+        TextInput targettext = TextInput.create(inputid + "tar-user", "Enter Your Friend Lichess Username", TextInputStyle.SHORT)
+                .setPlaceholder("Enter Your Friend Lichess Username")
+                .setMinLength(2)
+                .setMaxLength(100)
+                .setRequired(true)
+                .build();
+        Modal pmodal = Modal.create(modalid, modaltitle)
+                .addActionRows(ActionRow.of(ptext), ActionRow.of(targettext))
+                .build();
+        buttonEvent.replyModal(pmodal).queue();
+    }
+
+
+    public void sendSelfUserInputForm(ButtonInteractionEvent buttonEvent){
+        buildButtonInputForm(buttonEvent,"self-user","Input Your Lichess Username", "Input Your Lichess Username", "modal-self-user", "Challenge Friend ");
     }
 
 
@@ -48,6 +79,19 @@ public class ModalHelperContextModule {
         } else {
             buildInputForm(slashEvent, "watch_user_or_game", "Input Lichess Username Or Lichess Game", "Input Lichess Username Or Lichess Game", "modalwatch", "Watch Live Or Recent Lichess Games!");
         }
+    }
+
+    public void handlePlayFriendChallenge(ModalInteractionEvent eventModal, Client client, Game game){
+        String selfUser = Objects.requireNonNull(eventModal.getValue("self-user")).getAsString().trim().toLowerCase();
+        String target = Objects.requireNonNull(eventModal.getValue("self-usertar-user")).getAsString().trim().toLowerCase();
+
+        if(client.users().byId(selfUser).isPresent() && client.users().byId(target).isPresent()){
+            eventModal.reply(game.generateOpenChallengeForTwoUsers(selfUser, target, client)).queue();
+
+        }else{
+            eventModal.reply("Self user or Friend user not present! Please type them properly, or ask your friend for the right Lichess.org username!").setEphemeral(true).queue();
+        }
+
     }
 
 

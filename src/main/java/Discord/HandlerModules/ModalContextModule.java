@@ -22,6 +22,7 @@ public class ModalContextModule implements ContextHandler {
             case "modalwatch" -> modalHelper.handleGameInputOnFormSubmit(eventModal, client);
             case "modalpro" -> modalHelper.handleLichessProfileOnFormSubmit(eventModal, client);
             case "modalproc" -> modalHelper.handleChessComProfileOnFormSubmit(eventModal);
+            case "modal-self-user" -> modalHelper.handlePlayFriendChallenge(eventModal, client, new Game());
         }
     }
 

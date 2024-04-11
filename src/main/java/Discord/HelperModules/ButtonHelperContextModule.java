@@ -53,16 +53,16 @@ public class ButtonHelperContextModule {
     public void handlePlayCommandFlow(ButtonInteractionEvent buttonEvent, Game generateChallenge, Client client) {
         switch (buttonEvent.getComponentId()) {
             case "load-again" ->
-                    buttonEvent.editMessage("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").setActionRow(
-                            Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated"), Button.success("enginemode", "Play BOT"), Button.link("https://lichess.org/login", "Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
+                    buttonEvent.reply("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").addActionRow(
+                            Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1\uFE0F Play Friend")).addActionRow(Button.link("https://discord.gg/uncmhknmYg", "\uD83D\uDC4B Join our server!"), Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
             case "loadr" ->
-                    buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.danger("3+0r", "3+0")
-                            , Button.danger("5+0r", "5+0")
-                            , Button.danger("10+0r", "10+0"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.danger("3+0r", "\uD83D\uDD25 3+0")
+                            , Button.danger("5+0r", "\uD83D\uDD25 5+0")
+                            , Button.danger("10+0r", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩\uFE0F Home")).queue();
             case "loadc" ->
-                    buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.primary("3+0c", "3+0")
-                            , Button.primary("5+0c", "5+0")
-                            , Button.primary("10+0c", "10+0"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.primary("3+0c", " \uD83D\uDD253+0")
+                            , Button.primary("5+0c", "\uD83D\uDD25 5+0")
+                            , Button.primary("10+0c", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩\uFE0F Home")).queue();
             case "3+0r" ->
                     buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 0, true, client)).setActionRow(Button.primary("3+0r", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
             case "5+0r" ->
@@ -78,6 +78,8 @@ public class ButtonHelperContextModule {
         }
 
 
+
+
         if (buttonEvent.getComponentId().equals("playhelp")) {
             EmbedBuilder help = new EmbedBuilder();
             help.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
@@ -86,8 +88,9 @@ public class ButtonHelperContextModule {
                     "After you will be prompted to select **Time control**, this option is timecontrol (how long game lasts). \n" +
                     "**Start the game**: One you have selected mode and time, Bot sends Lichess live URL, where you and your friend can click same time to start a **LIVE Chess game**." +
                     "\n\n **Login/Register** \n To play rated make sure to Login/Register on Lichess.org to get chess rating, otherwise just play casual games!" +
-                    "\n **Play BOTS** " +
-                    "\n To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!" +
+                    "\n\n **Play BOTS** " +
+                    "\n\n To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!" +
+                    "\n\n **Challenge Friend** \n play your friend by entering your and your friend's Lichess user, ready for challenge? The time control is randomly generated for fun games!" +
                     "\n **Need more help?** \n Join our Support server and Developer will help you!");
             buttonEvent.replyEmbeds(help.build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://discord.gg/uncmhknmYg", "Join our server")).setEphemeral(true).queue();
         }
@@ -96,10 +99,10 @@ public class ButtonHelperContextModule {
     public void handlePlayCommandUI(ButtonInteractionEvent buttonEvent) {
         if (buttonEvent.getComponentId().equals("casmode")) {
             buttonEvent.editMessage("## Please Pick Your Time Control ⏱️").setActionRow(
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("ultrafastc", "1/4+0"),
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("bulletfastc", "1+0"),
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("blitzfastc", "3+2"),
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("rapidfastc", "5+5"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("ultrafastc", "\uD83D\uDE85 1/4+0"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("bulletfastc", "\uD83D\uDE85 1+0"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("blitzfastc", "\uD83D\uDD25 3+2"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.primary("rapidfastc", "\uD83D\uDD25 5+5"),
                     net.dv8tion.jda.api.interactions.components.buttons.Button.success("loadc", "\uD83D\uDD04 Load More Time Controls")
             ).queue();
 
@@ -107,10 +110,10 @@ public class ButtonHelperContextModule {
 
         if (buttonEvent.getComponentId().equals("ratedmode")) {
             buttonEvent.editMessage("## Please Pick Your Time Control ⏱️").setActionRow(
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("ultrafastr", "1/4+0"),
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bulletfastr", "1+0"),
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("blitzfastr", "3+2"),
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("rapidfastr", "5+5"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("ultrafastr", "\uD83D\uDE85 1/4+0"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bulletfastr", "\uD83D\uDE85 1+0"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("blitzfastr", "\uD83D\uDD25 3+2"),
+                    net.dv8tion.jda.api.interactions.components.buttons.Button.danger("rapidfastr", "\uD83D\uDD25 5+5"),
                     net.dv8tion.jda.api.interactions.components.buttons.Button.success("loadr", "\uD83D\uDD04 Load More Time Controls")
             ).queue();
         }
@@ -124,6 +127,15 @@ public class ButtonHelperContextModule {
                     , Button.success("load-again", "↩\uFE0F Home")
 
             ).queue();
+        }
+    }
+
+    public void handlePlayCommandFriendChallenge(ButtonInteractionEvent buttonEvent){
+
+        ModalHelperContextModule modalHelper = new ModalHelperContextModule();
+
+        if (buttonEvent.getComponentId().equals("friend")) {
+            modalHelper.sendSelfUserInputForm(buttonEvent);
         }
     }
 
@@ -188,3 +200,4 @@ public class ButtonHelperContextModule {
 
 
 }
+
