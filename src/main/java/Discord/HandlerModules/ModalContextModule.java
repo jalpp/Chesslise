@@ -4,6 +4,7 @@ import Abstraction.Context.ContextHandler;
 import Discord.HelperModules.ModalHelperContextModule;
 import Discord.MainHandler.AntiSpam;
 import chariot.Client;
+import Lichess.Game;
 import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
