@@ -85,7 +85,7 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
 # Puzzles
 | Commands     | Description |
 | ----------- | ----------- |
-| /puzzlesolv    |  Pass in FEN to trigger a puzzle solver module   |
+| /puzzlesolve    |  Pass in FEN to trigger a puzzle solver module   |
 | /puzzle      |  solve Lichess/Chess.com puzzles live in Discord        |
 | /solve    |  solve live puzzles using chess moves        |
 
