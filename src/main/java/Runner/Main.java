@@ -48,7 +48,11 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("watchmaster", "Watch GM Games in gif"));
         commands.addCommands(Commands.slash("profile", "See Lichess Profile of given user"));
         commands.addCommands(Commands.slash("streamers", "See current Live Streamers"));
-        commands.addCommands(Commands.slash("puzzle", "do random/daily puzzles").addOptions(new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random")));
+        commands.addCommands(Commands.slash("puzzle", "do random/daily puzzles").addOptions(new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random")).addOptions(
+                new OptionData(OptionType.STRING, "pick-mode", "pick interaction mode", true)
+                        .addChoice("Post to Community!", "post")
+                        .addChoice("Solve it live!", "live")
+        ));
         commands.addCommands(Commands.slash("help", "View LISEBOT Commands"));
         commands.addCommands(Commands.slash("play", "Play Live Chess Games"));
         commands.addCommands(Commands.slash("watch", "Watch Lichess games for given user"));
@@ -57,6 +61,8 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("move", "make a move").addOption(OptionType.STRING, "play-move", "input chess move", true));
         commands.addCommands(Commands.slash("resetboard", "reset the board"));
         commands.addCommands(Commands.slash("learnchess", "Learn basic chess moves"));
+        commands.addCommands(Commands.slash("puzzlesolve", "Trigger a puzzle solver module for given FEN").addOption(OptionType.STRING, "fen", "Input a puzzle's FEN", true));
+        commands.addCommands(Commands.slash("solve", "Solve puzzle by inputting moves").addOption(OptionType.STRING, "sol-answer", "Input chess move in chess notation (e4 or e2e4)", true));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Lichess Daily Puzzle"));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Play Chess"));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "View Lichess Broadcasts"));
@@ -67,7 +73,7 @@ public class Main extends ListenerAdapter {
         commands.queue();
 
 
-        LichessBotRunner.main(args);
+       // LichessBotRunner.main(args); // sun set of Liquid Chess Engine (turn it on if you want to run locally)
 
 
     }
@@ -77,7 +83,7 @@ public class Main extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("V12 Servers: " + guildCount));
+        jda.getPresence().setActivity(Activity.watching("V13 Servers: " + guildCount));
     }
 
 

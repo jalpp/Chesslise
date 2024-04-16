@@ -82,6 +82,12 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
 | /analyze    |  Pass in FEN to analyze with Stockfish in Discord    |
 | /move       |  Play Stockfish engine in Discord          |
 
+# Puzzles
+| Commands     | Description |
+| ----------- | ----------- |
+| /puzzlesolv    |  Pass in FEN to trigger a puzzle solver module   |
+| /puzzle      |  solve Lichess/Chess.com puzzles live in Discord        |
+| /solve    |  solve live puzzles using chess moves        |
 
 
 ## Create Lichess Games
@@ -107,11 +113,10 @@ Lise is a non-commercial software made for chess lovers to use their loved sites
 ## Discord Support Server
 [Join](https://discord.gg/uncmhknmYg)
 
-## Version number: 12
+## Version number: 13
 
 ## Road map for chesslise
 - add chessxplain API
-- add puzzle solving features
 - better profile cards 
 
 ## Authors:

@@ -9,9 +9,13 @@ import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionE
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ToolContextModule {
+
+    private static final HashMap<String, PuzzleSolverContextModule> solverMapper = new HashMap<>();
+
 
 
     public ToolContextModule() {
@@ -86,14 +90,63 @@ public class ToolContextModule {
 
     public void sendPuzzleMenuCommand(SlashCommandInteractionEvent slashEvent, Client client, MessageContextInteractionEvent context, AntiSpam spam) {
         switch (slashEvent.getOptionsByName("pick-puzzle").get(0).getAsString()) {
-            case "lip" -> sendSlashLichesspuzzleCommand(slashEvent, client, context, true);
+            case "lip" -> {
+                switch (slashEvent.getOptionsByName("pick-mode").get(0).getAsString()){
+                    case "post" ->  sendSlashLichesspuzzleCommand(slashEvent, client, context, true);
+                    case "live" -> sendLiveLichesspuzzleCommand(slashEvent, client);
+                }
+            }
 
-            case "cpp" -> sendDailyPuzzleChessComCommand(slashEvent, context, true);
+            case "cpp" -> {
+                switch (slashEvent.getOptionsByName("pick-mode").get(0).getAsString()){
+                    case "post" ->  sendDailyPuzzleChessComCommand(slashEvent, context, true);
+                    case "live" -> sendLiveChessComDailyCommand(slashEvent);
+                }
+            }
 
-            case "random" -> sendRandomPuzzleChessComCommand(slashEvent, spam);
+            case "random" -> {
+                switch (slashEvent.getOptionsByName("pick-mode").get(0).getAsString()){
+                    case "post" ->  sendRandomPuzzleChessComCommand(slashEvent, spam);
+                    case "live" -> sendLiveChessComRandomCommand(slashEvent);
+                }
+            }
+        }
+    }
+
+
+    public void sendLiveLichesspuzzleCommand(SlashCommandInteractionEvent slashEvent, Client client){
+       sendLivePuzzleBuilder(slashEvent, new DailyCommand(client).definePuzzleFen());
+    }
+
+
+    public void sendLiveChessComDailyCommand(SlashCommandInteractionEvent slashEvent){
+        sendLivePuzzleBuilder(slashEvent, new DailyCommandCC().definePuzzleFen());
+    }
+
+    public void sendLiveChessComRandomCommand(SlashCommandInteractionEvent slashEvent){
+        sendLivePuzzleBuilder(slashEvent, new puzzle().definePuzzleFen());
+    }
+
+    public void sendLivePuzzleBuilder(SlashCommandInteractionEvent slashEvent, String fen){
+        PuzzleSolverContextModule solver = new PuzzleSolverContextModule(
+                slashEvent.getUser().getId(),
+                fen
+        );
+
+        solverMapper.put(slashEvent.getUser().getId(), solver);
+        solver.getPuzzleSolverCard(slashEvent);
+    }
+
+    public void sendPuzzleSolverTrigger(SlashCommandInteractionEvent slashEvent){
+        try {
+            PuzzleSolverContextModule solver = solverMapper.get(slashEvent.getUser().getId());
+            solver.getSolverCard(slashEvent);
+        }catch (Exception e){
+            slashEvent.reply("You have not created a puzzle challenge! please use /puzzle!").queue();
         }
 
     }
+
 
     public void sendPlayChallengeCommand(SlashCommandInteractionEvent slashEvent, MessageContextInteractionEvent context, boolean isSlash) {
         if (isSlash) {
@@ -117,6 +170,8 @@ public class ToolContextModule {
         slashEvent.deferReply(true).queue();
         slashEvent.getChannel().sendMessageEmbeds(userArena.getUserArena().build()).queue();
     }
+
+
 
 
 }

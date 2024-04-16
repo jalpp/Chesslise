@@ -13,8 +13,11 @@ import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionE
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
+import java.util.Objects;
+
 
 public class SlashContextModule implements ContextHandler {
+
 
 
     @Override
@@ -60,8 +63,11 @@ public class SlashContextModule implements ContextHandler {
 
             case "invite" -> info_sender.sendInviteMeCommand(slashEvent);
 
+            case "puzzlesolve" -> tools.sendLivePuzzleBuilder(slashEvent, Objects.requireNonNull(slashEvent.getOption("fen")).getAsString());
+
+            case "solve" -> tools.sendPuzzleSolverTrigger(slashEvent);
+
         }
     }
 
 }
-
