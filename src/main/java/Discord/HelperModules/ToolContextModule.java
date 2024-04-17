@@ -171,7 +171,7 @@ public class ToolContextModule {
         slashEvent.getChannel().sendMessageEmbeds(userArena.getUserArena().build()).queue();
     }
 
-    public void sendTop10FideEmbed(SlashCommandInteraction slashEvent){
+    public void sendTop10FideEmbed(SlashCommandInteractionEvent slashEvent){
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle("FIDE Top10 Players");
         builder.setThumbnail("https://upload.wikimedia.org/wikipedia/en/thumb/5/5b/Fidelogo.svg/1200px-Fidelogo.svg.png");
