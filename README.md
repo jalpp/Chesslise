@@ -13,6 +13,7 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
  2. [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  3. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
  4. [StockFish API](https://stockfish.online/)
+ 5. [Fide API](https://github.com/lenguyenthanh/fide?tab=readme-ov-file)
 
 # Libraries
 
