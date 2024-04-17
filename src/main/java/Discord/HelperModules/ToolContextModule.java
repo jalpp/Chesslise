@@ -3,12 +3,17 @@ package Discord.HelperModules;
 import Chesscom.DailyCommandCC;
 import Chesscom.puzzle;
 import Discord.MainHandler.AntiSpam;
+import Fide.FideClient;
 import Lichess.*;
 import chariot.Client;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Objects;
 
