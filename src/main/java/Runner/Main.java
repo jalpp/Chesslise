@@ -40,6 +40,7 @@ public class Main extends ListenerAdapter {
 
 
         CommandListUpdateAction commands = jda.updateCommands();
+        // <--------- SLASH COMMANDS -------------->
         commands.addCommands(Commands.slash("community", "Best chess Discord communities!"));
         commands.addCommands(Commands.slash("broadcast", "View Latest OTB/Online Master tournament"));
         commands.addCommands(Commands.slash("profilecc", "view cc profiles"));
@@ -63,6 +64,9 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("learnchess", "Learn basic chess moves"));
         commands.addCommands(Commands.slash("puzzlesolve", "Trigger a puzzle solver module for given FEN").addOption(OptionType.STRING, "fen", "Input a puzzle's FEN", true));
         commands.addCommands(Commands.slash("solve", "Solve puzzle by inputting moves").addOption(OptionType.STRING, "sol-answer", "Input chess move in chess notation (e4 or e2e4)", true));
+        commands.addCommands(Commands.slash("fide", "View top10 FIDE players"));
+
+        // <------- MESSAGE COMMANDS ---------->
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Lichess Daily Puzzle"));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Play Chess"));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "View Lichess Broadcasts"));

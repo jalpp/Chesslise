@@ -67,6 +67,8 @@ public class SlashContextModule implements ContextHandler {
 
             case "solve" -> tools.sendPuzzleSolverTrigger(slashEvent);
 
+            case "fide"  -> tools.sendTop10FideEmbed(slashEvent);
+
         }
     }
 

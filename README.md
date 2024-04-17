@@ -89,6 +89,12 @@ Chesslise is open source Chess based Discord bot, which allows users to play, le
 | /puzzle      |  solve Lichess/Chess.com puzzles live in Discord        |
 | /solve    |  solve live puzzles using chess moves        |
 
+# FIDE
+| Commands     | Description |
+| ----------- | ----------- |
+| /fide   |  View top10 FIDE chess players  |
+
+
 
 ## Create Lichess Games
 
