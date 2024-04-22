@@ -2,6 +2,8 @@
 ![](https://img.shields.io/badge/Status-Online-brightgreen)
 ![](https://img.shields.io/badge/Discord%20API-JDA-purple)
 ![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory%20-blue)
+![GitHub License](https://img.shields.io/github/license/jalpp/Chesslise)
+
 
 Chesslise is open source Chess based Discord application, which allows users to play, learn, and watch chess on their Discord server
 
@@ -30,8 +32,6 @@ Chesslise is open source Chess based Discord application, which allows users to 
 # Image Generation
 - [Lichess Gifs](https://github.com/lichess-org/lila-gif)
 
-# Chesslise High-level Design
-![Lisev10B drawio](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/ab1aa349-135b-4f57-a592-bba4e6faf733)
 
 # Popular Commands
 | Commands     | Description |
@@ -39,8 +39,6 @@ Chesslise is open source Chess based Discord application, which allows users to 
 | /puzzle      | Do Lichess/Chess.com puzzles    |
 | /analyze   | analyze positions           |
 | /play      | create live chess games in Discord                           |
-
-
 
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)

@@ -19,3 +19,30 @@
 - Please note you need to follow the same steps as adding Chesslise for your own local bot
 - build the project ``` mvn package ```
 - run the application ``` java -jar /target/Chesslise-13.5-SNAPSHOT-jar-with-dependencies.jar ```
+
+
+# API
+
+ 1. [Lichess API](https://lichess.org/api) 
+ 2. [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
+ 3. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
+ 4. [StockFish API](https://stockfish.online/)
+ 5. [Fide API](https://github.com/lenguyenthanh/fide?tab=readme-ov-file)
+
+# Libraries
+
+ 1. [Lichess Java Client](https://github.com/tors42/chariot) 
+ 2. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
+ 3. [Chess.com Java Wrapper](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
+ 4. [Java Chess Lib](https://github.com/bhlangonijr/chesslib)
+
+# Engines
+
+- [Lise Chess Engine](https://github.com/jalpp/LiseChessEngine) 
+- [Stockfish](https://stockfishchess.org/)
+
+# Image Generation
+- [Lichess Gifs](https://github.com/lichess-org/lila-gif)
+
+# Chesslise High-level Design
+![Lisev10B drawio](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/ab1aa349-135b-4f57-a592-bba4e6faf733)
