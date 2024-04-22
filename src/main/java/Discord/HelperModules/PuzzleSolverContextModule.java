@@ -31,8 +31,8 @@ public class PuzzleSolverContextModule {
         puzzleBuilder.setDescription("Its **" + util.getWhichSideToMove(getUserPuzzleFEN.get(slashEvent.getUser().getId())) +
                 "** Find the best move! ** use /solve [move ex: e4]** to solve the puzzle! \uD83E\uDDE9 ");
         puzzleBuilder.setImage(util.getImageFromFEN(getUserPuzzleFEN.get(slashEvent.getUser().getId()), false, "green", "alpha"));
-        slashEvent.reply("thinking..").setEphemeral(true).queue();
-        slashEvent.getChannel().sendMessageEmbeds(puzzleBuilder.build()).queue();
+        slashEvent.deferReply(false).queue();
+        slashEvent.getHook().sendMessageEmbeds(puzzleBuilder.build()).queue();
     }
 
     public void determineTheFinishLine(SlashCommandInteractionEvent slashEvent){
@@ -52,57 +52,57 @@ public class PuzzleSolverContextModule {
             getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 1);
         }
 
-        
+
     }
 
     public void getSolverCard(SlashCommandInteractionEvent slashEvent){
 
-       try{
-          if(getUserFinishLine.get(slashEvent.getUser().getId()) < getUserPuzzleHitRate.get(slashEvent.getUser().getId())){
-              String userAnswer = Objects.requireNonNull(slashEvent.getOption("sol-answer")).getAsString();
+        try{
+            if(getUserFinishLine.get(slashEvent.getUser().getId()) < getUserPuzzleHitRate.get(slashEvent.getUser().getId())){
+                String userAnswer = Objects.requireNonNull(slashEvent.getOption("sol-answer")).getAsString();
 
-              Board checker = new Board();
+                Board checker = new Board();
 
-              checker.loadFromFen(getUserPuzzleFEN.get(slashEvent.getUser().getId()));
+                checker.loadFromFen(getUserPuzzleFEN.get(slashEvent.getUser().getId()));
 
-              checker.doMove(userAnswer);
+                checker.doMove(userAnswer);
 
-              Board realAnswer = new Board();
+                Board realAnswer = new Board();
 
-              realAnswer.loadFromFen(getUserPuzzleFEN.get(slashEvent.getUser().getId()));
+                realAnswer.loadFromFen(getUserPuzzleFEN.get(slashEvent.getUser().getId()));
 
-              String bestmove = StockFish.getBestMove(13, getUserPuzzleFEN.get(slashEvent.getUser().getId()));
+                String bestmove = StockFish.getBestMove(13, getUserPuzzleFEN.get(slashEvent.getUser().getId()));
 
-              realAnswer.doMove(bestmove);
-
-
-              if(checker.getFen().equalsIgnoreCase(realAnswer.getFen())){
-                  if(checker.isMated() || checker.isStaleMate() || checker.isDraw() || checker.isRepetition()){
-                      getUserFinishLine.put(slashEvent.getUser().getId(), 0);
-                      slashEvent.reply("You have solved the puzzle!").queue();
-                  }else{
-                      getUserPuzzleFEN.put(slashEvent.getUser().getId(), realAnswer.getFen());
-                      String nextMove = StockFish.getBestMove(13, getUserPuzzleFEN.get(slashEvent.getUser().getId()));
-                      realAnswer.doMove(nextMove);
-                      getUserPuzzleFEN.put(slashEvent.getUser().getId(),realAnswer.getFen());
-                      determineTheFinishLine(slashEvent);
-                      getPuzzleSolverCard(slashEvent);
-                  }
-              }else{
-                  slashEvent.reply("Incorrect move! Please try again ").queue();
-              }
-          }else{
-              getUserPuzzleFEN.put(slashEvent.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-              getUserFinishLine.put(slashEvent.getUser().getId(), 0);
-              getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 1);
-              slashEvent.reply("You have solved the puzzle!").queue();
-          }
+                realAnswer.doMove(bestmove);
 
 
-       }catch (Exception e){
-           slashEvent.reply("You entered an illegal move! Please try again!").queue();
-           System.out.println(e.getMessage());
-       }
+                if(checker.getFen().equalsIgnoreCase(realAnswer.getFen())){
+                    if(checker.isMated() || checker.isStaleMate() || checker.isDraw() || checker.isRepetition()){
+                        getUserFinishLine.put(slashEvent.getUser().getId(), 0);
+                        slashEvent.reply("You have solved the puzzle!").queue();
+                    }else{
+                        getUserPuzzleFEN.put(slashEvent.getUser().getId(), realAnswer.getFen());
+                        String nextMove = StockFish.getBestMove(13, getUserPuzzleFEN.get(slashEvent.getUser().getId()));
+                        realAnswer.doMove(nextMove);
+                        getUserPuzzleFEN.put(slashEvent.getUser().getId(),realAnswer.getFen());
+                        determineTheFinishLine(slashEvent);
+                        getPuzzleSolverCard(slashEvent);
+                    }
+                }else{
+                    slashEvent.reply("Incorrect move! Please try again ").queue();
+                }
+            }else{
+                getUserPuzzleFEN.put(slashEvent.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+                getUserFinishLine.put(slashEvent.getUser().getId(), 0);
+                getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 1);
+                slashEvent.reply("You have solved the puzzle!").queue();
+            }
+
+
+        }catch (Exception e){
+            slashEvent.reply("You entered an illegal move! Please try again!").queue();
+            System.out.println(e.getMessage());
+        }
 
 
 

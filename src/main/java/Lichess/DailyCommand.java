@@ -1,7 +1,6 @@
 package Lichess;
 
 import Abstraction.ChessUtil;
-import Engine.StockFish;
 import chariot.Client;
 import chariot.model.One;
 import chariot.model.Puzzle;
@@ -26,7 +25,7 @@ public class DailyCommand implements Abstraction.Puzzle {
 
     @Override
     public String renderImage(ChessUtil util, String fen) {
-        return util.getImageFromFEN(fen, fen.contains("b"), "brown", "kosal");
+        return util.getImageFromFEN(fen, fen.contains("b"), "green", "alpha");
     }
 
     @Override
@@ -56,7 +55,8 @@ public class DailyCommand implements Abstraction.Puzzle {
 
     @Override
     public EmbedBuilder defineCommandCard() {
-        return new EmbedBuilder().setDescription(StockFish.getStockFishTextExplanation(15, definePuzzleFen()) + "\n\n " + defineSideToMove(defineUtil(), definePuzzleFen()) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setFooter("use /analyze [fen] to further analyze/check your answer, use /puzzle [solve it live] to solve the puzzle live!").setImage(renderImage(defineUtil(), definePuzzleFen())).setThumbnail(hostimg);
+        String fen = definePuzzleFen();
+        return new EmbedBuilder().setDescription("**Turn: **" + defineSideToMove(defineUtil(), fen) + "\n **Rating: **" + getRating() + "\n**FEN: **" + fen + "\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setFooter("use /analyze [fen] to further analyze/check your answer, use /puzzle [solve it live] to solve the puzzle live!").setImage(renderImage(defineUtil(), definePuzzleFen())).setThumbnail(hostimg);
     }
 
 
@@ -85,6 +85,7 @@ public class DailyCommand implements Abstraction.Puzzle {
 
 
 }
+
 
 
 

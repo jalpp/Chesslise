@@ -27,6 +27,7 @@ public class SlashContextModule implements ContextHandler {
         CommandInfo info_sender = new CommandInfo();
         ToolContextModule tools = new ToolContextModule();
         ModalHelperContextModule form_tools = new ModalHelperContextModule();
+
         switch (name) {
 
             case "resetboard" -> botCommands.resetBoardCommand(slashEvent, board, blackboard);
@@ -73,3 +74,4 @@ public class SlashContextModule implements ContextHandler {
     }
 
 }
+

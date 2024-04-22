@@ -1,6 +1,9 @@
 package Discord.HandlerModules;
 
 import Abstraction.Context.ContextHandler;
+import Chesscom.DailyCommandCC;
+import Chesscom.puzzle;
+import Discord.HelperModules.BotContextModule;
 import Discord.HelperModules.ButtonHelperContextModule;
 import Discord.MainHandler.AntiSpam;
 import Discord.MainHandler.CommandInfo;
@@ -21,11 +24,15 @@ public class ButtonContextModule implements ContextHandler {
 
     @Override
     public void handleLogic(MessageContextInteractionEvent context, SlashCommandInteractionEvent slashEvent, ButtonInteractionEvent buttonEvent, ModalInteractionEvent eventModal, Client client, Board board, Board blackboard, AntiSpam spam, AntiSpam dailyspam, AntiSpam watchlimit) {
-
+        BotContextModule fish = new BotContextModule();
 
         CommandInfo commandInfo = new CommandInfo();
 
         DailyCommand dailyCommand = new DailyCommand(client);
+
+        DailyCommandCC commandCC = new DailyCommandCC();
+
+        puzzle Random_puzzle = new puzzle();
 
         Game generateChallenge = new Game();
 
@@ -33,7 +40,7 @@ public class ButtonContextModule implements ContextHandler {
 
         helper.handleLearnCommand(buttonEvent, commandInfo);
 
-        helper.handlePuzzleButtons(buttonEvent, client, dailyCommand);
+        helper.handlePuzzleButtons(buttonEvent, dailyCommand, commandCC, Random_puzzle, fish, client);
 
         helper.handlePlayCommandUI(buttonEvent);
 
@@ -43,7 +50,6 @@ public class ButtonContextModule implements ContextHandler {
 
         helper.handlePlayingEngineFlow(buttonEvent, board, blackboard);
 
-        helper.handlePlayCommandFriendChallenge(buttonEvent);
     }
 
 

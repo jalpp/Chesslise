@@ -14,7 +14,6 @@ public class SwissResults {
 
     private final Client client;
     private final String link;
-    private EmbedBuilder embedBuilder;
 
     public SwissResults(Client client, String link) {
         this.client = client;
@@ -23,12 +22,12 @@ public class SwissResults {
 
 
     public EmbedBuilder getLinkResults() {
-        this.embedBuilder = new EmbedBuilder();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
         String[] emojileaderboard = {"1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "\uD83D\uDD1F"};
         String[] podium = {"\uD83C\uDFC6", "\uD83E\uDD48", "\uD83E\uDD49"};
-        String res = "";
+        StringBuilder res = new StringBuilder();
         String info = "";
-        String podiumres = "";
+        StringBuilder podiumres = new StringBuilder();
 
 
         Many<SwissResult> swissResultResult = this.client.tournaments().resultsBySwissId(this.link);
@@ -38,19 +37,19 @@ public class SwissResults {
             info += "**Total Players:** " + result.get().nbPlayers() + "\n" + "**Total Rounds:** " + result.get().nbRounds() + "\n **Name Rating Score Tiebreak**\n\n";
             List<SwissResult> list = swissResultResult.stream().toList();
             for (int i = 0; i < 3; i++) {
-                podiumres += podium[i] + " " + list.get(i).username() + " " + list.get(i).rating() + " **" + list.get(i).points() + "** " + list.get(i).tieBreak() + "\n";
+                podiumres.append(podium[i]).append(" ").append(list.get(i).username()).append(" ").append(list.get(i).rating()).append(" **").append(list.get(i).points()).append("** ").append(list.get(i).tieBreak()).append("\n");
             }
 
             for (int i = 0; i < 10; i++) {
-                res += emojileaderboard[i] + " " + list.get(i).username() + " " + list.get(i).rating() + " **" + list.get(i).points() + "** " + list.get(i).tieBreak() + "\n";
+                res.append(emojileaderboard[i]).append(" ").append(list.get(i).username()).append(" ").append(list.get(i).rating()).append(" **").append(list.get(i).points()).append("** ").append(list.get(i).tieBreak()).append("\n");
             }
-            this.embedBuilder.setColor(Color.green);
-            this.embedBuilder.setDescription(info + "\n\n **Podium** \n" + podiumres + "\n\n" + res);
-            this.embedBuilder.setTitle(result.get().name());
+            embedBuilder.setColor(Color.green);
+            embedBuilder.setDescription(info + "\n\n **Podium** \n" + podiumres + "\n\n" + res);
+            embedBuilder.setTitle(result.get().name());
 
         }
 
-        return this.embedBuilder;
+        return embedBuilder;
 
 
     }

@@ -87,7 +87,7 @@ public class Main extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("V13 Servers: " + guildCount));
+        jda.getPresence().setActivity(Activity.watching("V13.5 Servers: " + guildCount));
     }
 
 

@@ -1,8 +1,8 @@
 package Lichess;
 
 import chariot.Client;
-import java.util.Random;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -18,22 +18,22 @@ public class Game {
 
             if (min == 0) {
                 int ultra = 15;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(ultra, sec).name("LISEBOT Challenge Created! Please Join the Lichess.Game!").rated(true));
+                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(ultra, sec).name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(true));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             } else {
                 int clock = min * 60;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(clock, sec).name("LISEBOT Challenge Created! Please Join the Lichess.Game!").rated(true));
+                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(clock, sec).name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(true));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             }
         } else {
             if (min == 0) {
                 int ultraC = 15;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(ultraC, sec).name("LISEBOT Challenge Created! Please Join the Lichess.Game!").rated(false));
+                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(ultraC, sec).name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(false));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             }
             {
                 int clock = min * 60;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(clock, sec).name("LISEBOT Challenge Created! Please Join the Lichess.Game!").rated(false));
+                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(clock, sec).name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(false));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             }
         }
@@ -41,9 +41,10 @@ public class Game {
         return "## Both Players Join The Live Chess Challenge  \n ↪\uFE0F " + URL.get() + " \n **Note:** Challenge expires after 24 hours!";
     }
 
+
+
     public String generateOpenChallengeForTwoUsers(String self_user, String target_user, Client client){
         AtomicReference<String> URL = new AtomicReference<>("");
-
         int min = new Random().nextInt(1, 10) * 60;
         int sec = new Random().nextInt(1, 5);
 
@@ -53,6 +54,11 @@ public class Game {
         return "## Random Challenge Mode! \uD83C\uDFB2 \n \n" + self_user + " VS " + target_user + "\n ↪\uFE0F " + URL.get() + " \n **Note:** Challenge expires after 24 hours!";
 
     }
+
+
+
+
+
 
 
 }

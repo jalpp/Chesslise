@@ -1,6 +1,7 @@
 package Discord.HelperModules;
 
 import Abstraction.ChessUtil;
+import Abstraction.Puzzle;
 import Engine.StockFish;
 import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -47,7 +48,7 @@ public class BotContextModule {
             embedBuilder.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
             embedBuilder.setDescription("\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
             embedBuilder.setImage(util.getImageFromFEN(board.getFen(), false, "brown", "kosal"));
-            slashEvent.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+            slashEvent.getHook().sendMessageEmbeds(embedBuilder.build()).queue();
 
 
         } catch (Exception e) {
@@ -56,9 +57,8 @@ public class BotContextModule {
     }
 
 
-     public void runAnalyzeCommand(SlashCommandInteractionEvent slashEvent) {
+    public void runAnalyzeCommand(SlashCommandInteractionEvent slashEvent) {
         try {
-            slashEvent.deferReply(true).queue();
             getStockfishSearchCommand(Objects.requireNonNull(slashEvent.getOption("fen")).getAsString(), slashEvent, false, null);
         }catch (Exception e){
             slashEvent.reply("Error! Provide valid FEN!").queue();
@@ -68,6 +68,12 @@ public class BotContextModule {
     public void runAnalyzeButton(ButtonInteractionEvent event) {
         getStockfishSearchCommand(StockFish.getUserFen.get(event.getUser().getId()), null, true, event);
     }
+
+    public void runAnalyzeOnPuzzleCommand(ButtonInteractionEvent event, Puzzle puzzleCommand){
+        event.reply(StockFish.getStockFishTextExplanation(13, puzzleCommand.definePuzzleFen())).setEphemeral(true).queue();
+    }
+
+
 
     public void getStockfishSearchCommand(String fen, SlashCommandInteractionEvent slashEvent, boolean isButton, ButtonInteractionEvent buttonEvent) {
         if (!isButton) {
@@ -81,8 +87,8 @@ public class BotContextModule {
             sf.setColor(Color.green);
             b.doMove(StockFish.getBestMove(13, fen));
             StockFish.getUserFen.put(slashEvent.getUser().getId(), b.getFen());
-            slashEvent.deferReply(true).queue();
-            slashEvent.getChannel().sendMessageEmbeds(sf.build()).addActionRow(Button.secondary("sf", "Play move")).queue();
+            slashEvent.reply("Analyzing .... ").setEphemeral(false).queue();
+            slashEvent.getHook().sendMessageEmbeds(sf.build()).addActionRow(Button.secondary("sf", "Play move")).setEphemeral(false).queue();
         } else {
             ChessUtil util = new ChessUtil();
             EmbedBuilder sf = new EmbedBuilder();
@@ -97,6 +103,7 @@ public class BotContextModule {
             buttonEvent.editMessageEmbeds(sf.build()).setActionRow(Button.secondary("sf", "Play move")).queue();
         }
     }
+
 
 
 }
