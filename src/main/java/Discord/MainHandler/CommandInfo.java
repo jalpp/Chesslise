@@ -88,6 +88,55 @@ public class CommandInfo {
         return this.embedBuilder;
     }
 
+    public EmbedBuilder getPageEight() {
+        this.embedBuilder.setColor(Color.blue);
+        this.embedBuilder.setThumbnail(this.logo);
+        this.embedBuilder.setDescription("Here are the basic moves of the King:\n\n");
+        this.embedBuilder.appendDescription("""
+                **King:** Move 1 square at a time horizontally, vertically, or diagonally.
+                """);
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpmVRKYr.png");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        return this.embedBuilder;
+    }
+
+    public EmbedBuilder getPageNine() {
+        this.embedBuilder.setColor(Color.blue);
+        this.embedBuilder.setThumbnail(this.logo);
+        this.embedBuilder.setDescription("King Special move: castling, when king and rook gets space between his king and the rooks and no piece are present he can castle that way:\n\n");
+        this.embedBuilder.setImage("https://www.chessbazaar.com/blog/wp-content/uploads/2014/11/castling.gif");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        return this.embedBuilder;
+    }
+
+    public EmbedBuilder getPageTen() {
+        this.embedBuilder.setColor(Color.blue);
+        this.embedBuilder.setThumbnail(this.logo);
+        this.embedBuilder.setDescription("Pawn Move: can only go up the board and capture on the flank side:\n\n");
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/php8nbVYg.gif");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        return this.embedBuilder;
+    }
+
+    public EmbedBuilder getPageEleven() {
+        this.embedBuilder.setColor(Color.blue);
+        this.embedBuilder.setThumbnail(this.logo);
+        this.embedBuilder.setDescription("Pawn Special Move: en-passant capture when opposing side moves side pawn beside your pawn :\n\n");
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpZmdTyW.gif");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        return this.embedBuilder;
+    }
+
+    public EmbedBuilder getPage12() {
+        this.embedBuilder.setColor(Color.blue);
+        this.embedBuilder.setThumbnail(this.logo);
+        this.embedBuilder.setDescription("Pawn Special Move: Promotion, when your pawn reaches the 8th rank you can promote to queen,rook,bishop, or a night :\n\n");
+        this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpFSZHst.gif");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        return this.embedBuilder;
+    }
+
+
 
     public void sendCommunityCommand(SlashCommandInteractionEvent slashEvent) {
         EmbedBuilder embedBuilder = new EmbedBuilder();
