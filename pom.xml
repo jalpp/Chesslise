@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.example</groupId>
     <artifactId>ChessLise</artifactId>
-    <version>13.5-SNAPSHOT</version>
+    <version>13.6-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-beta.22</version>
+            <version>5.0.0-beta.23</version>
         </dependency>
 
         <dependency>
