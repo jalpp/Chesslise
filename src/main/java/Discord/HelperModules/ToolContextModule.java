@@ -3,7 +3,6 @@ package Discord.HelperModules;
 import Chesscom.DailyCommandCC;
 import Chesscom.puzzle;
 import Discord.MainHandler.AntiSpam;
-import Fide.FideClient;
 import Lichess.*;
 import chariot.Client;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -170,7 +169,18 @@ public class ToolContextModule {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle("FIDE Top10 Players");
         builder.setThumbnail("https://upload.wikimedia.org/wikipedia/en/thumb/5/5b/Fidelogo.svg/1200px-Fidelogo.svg.png");
-        builder.setDescription(FideClient.getTopNInString("standard", 10));
+        builder.setDescription("""
+                    1) GM Carlsen, Magnus, standard: (2830)
+                    2) GM Kasparov, Garry, standard: (2812)
+                    3) GM Caruana, Fabiano, standard: (2805)
+                    4) GM Nakamura, Hikaru, standard: (2794)
+                    5) GM Nepomniachtchi, Ian, standard: (2770)
+                    6) GM Abdusattorov, Nodirbek, standard: (2765)
+                    7) GM Gukesh D, standard: (2763)
+                    8) GM Ding, Liren, standard: (2762)
+                    9) GM Erigaisi Arjun, standard: (2761)
+                    10) GM So, Wesley, standard: (2757)
+                """);
         builder.setColor(Color.WHITE);
         slashEvent.replyEmbeds(builder.build()).queue();
     }
