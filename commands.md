@@ -12,7 +12,6 @@
 | /broadcast                 | View broadcast info for the current Lichess broadcast |
 
 
-
 # Chess.com Commands
 | Commands     | Description |
 | ----------- | ----------- |
@@ -33,7 +32,3 @@
 | /puzzle      |  solve Lichess/Chess.com puzzles live in Discord        |
 | /solve    |  solve live puzzles using chess moves        |
 
-# FIDE
-| Commands     | Description |
-| ----------- | ----------- |
-| /fide   |  View top10 FIDE chess players  |

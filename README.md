@@ -15,7 +15,7 @@ Chesslise is open source Chess based Discord application, which allows users to 
  2. [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  3. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
  4. [StockFish API](https://stockfish.online/)
- 5. [Fide API](https://github.com/lenguyenthanh/fide?tab=readme-ov-file)
+ 
 
 # Libraries
 
@@ -37,7 +37,7 @@ Chesslise is open source Chess based Discord application, which allows users to 
 | Commands     | Description |
 | ----------- | ----------- |
 | /puzzle      | Do Lichess/Chess.com puzzles    |
-| /analyze   | analyze positions           |
+| /solve   | solve chess puzzles in Discord           |
 | /play      | create live chess games in Discord                           |
 
 ## App Directory 
@@ -46,7 +46,7 @@ Chesslise is open source Chess based Discord application, which allows users to 
 ## Discord Support Server
 [Join](https://discord.gg/uncmhknmYg)
 
-## Version number: 13.5
+## Version number: 13.6
 
 ## Road map for chesslise
 - add chessxplain API
