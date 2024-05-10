@@ -46,7 +46,7 @@ Chesslise is open source Chess based Discord application, which allows users to 
 ## Discord Support Server
 [Join](https://discord.gg/uncmhknmYg)
 
-## Version number: 13.6
+## Version number: 13.7
 
 ## Road map for chesslise
 - add chessxplain API

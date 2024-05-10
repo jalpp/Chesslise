@@ -47,7 +47,7 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("service", "Read our Terms of Service"));
         commands.addCommands(Commands.slash("arena", "See Swiss/Arena standings").addOption(OptionType.STRING, "arenaid", "Input Lichess arena link", true));
         commands.addCommands(Commands.slash("watchmaster", "Watch GM Games in gif"));
-        commands.addCommands(Commands.slash("profile", "See Lichess Profile of given user"));
+        commands.addCommands(Commands.slash("profile", "See Lichess Profile of given user").addOptions(new OptionData(OptionType.STRING, "search-user", "Search Lichess username", true).setAutoComplete(true).setRequired(true)));
         commands.addCommands(Commands.slash("streamers", "See current Live Streamers"));
         commands.addCommands(Commands.slash("puzzle", "do random/daily puzzles").addOptions(new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random")).addOptions(
                 new OptionData(OptionType.STRING, "pick-mode", "pick interaction mode", true)
@@ -87,7 +87,7 @@ public class Main extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("V13.5 Servers: " + guildCount));
+        jda.getPresence().setActivity(Activity.watching("V13.7 Servers: " + guildCount));
     }
 
 

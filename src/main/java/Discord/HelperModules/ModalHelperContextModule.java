@@ -4,7 +4,6 @@ import Chesscom.CCProfile;
 import Discord.MainHandler.AntiSpam;
 import Lichess.Game;
 import Lichess.UserGame;
-import Lichess.UserProfile;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -22,9 +21,6 @@ public class ModalHelperContextModule {
     public ModalHelperContextModule() {
 
     }
-
-
-
 
     private void buildInputForm(SlashCommandInteractionEvent slashEvent, String inputid, String label, String placeholder, String modalid, String modaltitle) {
         TextInput ptext = TextInput.create(inputid, label, TextInputStyle.SHORT)
@@ -63,11 +59,7 @@ public class ModalHelperContextModule {
     public void sendSelfUserInputForm(ButtonInteractionEvent buttonEvent){
         buildButtonInputForm(buttonEvent,"self-user","Input Your Lichess Username", "Input Your Lichess Username", "modal-self-user", "Challenge Friend ");
     }
-
-
-    public void sendLichessUserProfileInputForm(SlashCommandInteractionEvent slashCommandInteractionEvent) {
-        buildInputForm(slashCommandInteractionEvent, "profileuser", "Input Lichess Username", "Input Lichess Username", "modalpro", "View Lichess Profiles!");
-    }
+    
 
     public void sendChessComUserProfileInputForm(SlashCommandInteractionEvent slashCommandInteractionEvent) {
         buildInputForm(slashCommandInteractionEvent, "profileusercc", "Input Chess.com Username", "Input Chess.com Username", "modalproc", "View Chess.com Profiles!");
@@ -114,14 +106,6 @@ public class ModalHelperContextModule {
         } else {
             eventModal.reply("Please Provide A Valid Lichess Username!").queue();
         }
-    }
-
-
-    public void handleLichessProfileOnFormSubmit(ModalInteractionEvent eventModal, Client client) {
-        String userID = eventModal.getValue("profileuser").getAsString().trim();
-        UserProfile userProfile = new UserProfile(client, userID);
-        eventModal.deferReply(true).queue();
-        eventModal.getChannel().sendMessage(userProfile.getUserProfile()).queue();
     }
 
     public void handleChessComProfileOnFormSubmit(ModalInteractionEvent eventModal) {

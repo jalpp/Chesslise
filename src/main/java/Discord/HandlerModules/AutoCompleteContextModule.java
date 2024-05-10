@@ -1,8 +1,7 @@
 package Discord.HandlerModules;
 
-
 import Abstraction.Context.ContextHandler;
-import Discord.HelperModules.ToolContextModule;
+import Discord.HelperModules.AutoCompleteHelperModule;
 import Discord.MainHandler.AntiSpam;
 import chariot.Client;
 import com.github.bhlangonijr.chesslib.Board;
@@ -12,29 +11,18 @@ import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionE
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
+public class AutoCompleteContextModule implements ContextHandler {
 
-public class MessageContextModule implements ContextHandler {
-
-
-    public MessageContextModule() {
-
-    }
 
     @Override
     public void handleLogic(MessageContextInteractionEvent context, SlashCommandInteractionEvent slashEvent, ButtonInteractionEvent buttonEvent, ModalInteractionEvent eventModal, CommandAutoCompleteInteractionEvent autoEvent, Client client, Board board, Board blackboard, AntiSpam spam, AntiSpam dailyspam, AntiSpam watchlimit) {
 
-        ToolContextModule tools = new ToolContextModule();
-        boolean isSlash = false;
-        switch (context.getName()) {
-            case "Lichess Daily Puzzle" -> tools.sendSlashLichesspuzzleCommand(slashEvent, client, context, isSlash);
+        AutoCompleteHelperModule autoHelper = new AutoCompleteHelperModule();
 
-            case "Play Chess" -> tools.sendPlayChallengeCommand(slashEvent, context, isSlash);
-
-            case "View Lichess Broadcasts" -> tools.sendBroadcastCommand(slashEvent, client, context, isSlash);
-
-            case "Watch GMs" -> tools.sendBroadcastMasterCommand(slashEvent, client, context, isSlash);
-
-            case "Chess.com Daily Puzzle" -> tools.sendDailyPuzzleChessComCommand(slashEvent, context, isSlash);
+        if(autoEvent.getName().equalsIgnoreCase("profile")){
+            autoHelper.onLichessProfileAutoComplete(autoEvent, client);
         }
+
+
     }
 }
