@@ -1,13 +1,11 @@
 package Discord.MainHandler;
 
-import Discord.HandlerModules.ButtonContextModule;
-import Discord.HandlerModules.MessageContextModule;
-import Discord.HandlerModules.ModalContextModule;
-import Discord.HandlerModules.SlashContextModule;
+import Discord.HandlerModules.*;
 import chariot.Client;
 import com.github.bhlangonijr.chesslib.Board;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -24,10 +22,10 @@ public class CommandHandler extends ListenerAdapter {
     private final Board blackboard = new Board();
     private final MessageContextModule msgContext = new MessageContextModule();
     private final SlashContextModule slashContext = new SlashContextModule();
-
     private final ModalContextModule modalContext = new ModalContextModule();
-
     private final ButtonContextModule buttonContext = new ButtonContextModule();
+    
+    private final AutoCompleteContextModule autoContext = new AutoCompleteContextModule();
 
     public CommandHandler() {
 
@@ -35,33 +33,40 @@ public class CommandHandler extends ListenerAdapter {
 
     @Override
     public void onMessageContextInteraction(@NotNull MessageContextInteractionEvent event) {
-        msgContext.handleLogic(event, null, null, null, client, null, null, null, null, null);
+        msgContext.handleLogic(event, null, null, null,null ,client, null, null, null, null, null);
     }
 
 
     @SneakyThrows
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        slashContext.handleLogic(null, event, null, null, client, board, blackboard, spam, dailySpam, watchLimit);
+        slashContext.handleLogic(null, event, null, null, null, client, board, blackboard, spam, dailySpam, watchLimit);
     }
 
     @Override
     public void onModalInteraction(@NotNull ModalInteractionEvent event) {
 
-        modalContext.handleLogic(null, null, null, event, client, null, null, null, null, null);
+        modalContext.handleLogic(null, null, null, event, null ,client, null, null, null, null, null);
 
     }
-
 
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
 
-        buttonContext.handleLogic(null, null, event, null, client, board, blackboard, null, null, null);
+        buttonContext.handleLogic(null, null, event, null, null ,client, board, blackboard, null, null, null);
+
+    }
+
+    @Override
+    public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
+
+        autoContext.handleLogic(null, null, null, null, event, client, null, null, null, null, null);
 
     }
 
 
-}
 
+
+}
 
 
 
