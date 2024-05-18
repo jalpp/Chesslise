@@ -21,7 +21,6 @@ public class Main extends ListenerAdapter {
 
     public static void main(String[] args) {
 
-
         JDABuilder jdaBuilder = JDABuilder.createDefault(System.getenv("DISCORD_TOKEN"));
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
