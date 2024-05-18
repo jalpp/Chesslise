@@ -30,10 +30,6 @@ public class MessageContextModule implements ContextHandler {
 
             case "Play Chess" -> tools.sendPlayChallengeCommand(slashEvent, context, isSlash);
 
-            case "View Lichess Broadcasts" -> tools.sendBroadcastCommand(slashEvent, client, context, isSlash);
-
-            case "Watch GMs" -> tools.sendBroadcastMasterCommand(slashEvent, client, context, isSlash);
-
             case "Chess.com Daily Puzzle" -> tools.sendDailyPuzzleChessComCommand(slashEvent, context, isSlash);
         }
     }

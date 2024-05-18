@@ -41,14 +41,8 @@ public class Main extends ListenerAdapter {
 
         CommandListUpdateAction commands = jda.updateCommands();
         // <--------- SLASH COMMANDS -------------->
-        commands.addCommands(Commands.slash("community", "Best chess Discord communities!"));
-        commands.addCommands(Commands.slash("broadcast", "View Latest OTB/Online Master tournament"));
         commands.addCommands(Commands.slash("profilecc", "view cc profiles"));
-        commands.addCommands(Commands.slash("service", "Read our Terms of Service"));
-        commands.addCommands(Commands.slash("arena", "See Swiss/Arena standings").addOption(OptionType.STRING, "arenaid", "Input Lichess arena link", true));
-        commands.addCommands(Commands.slash("watchmaster", "Watch GM Games in gif"));
         commands.addCommands(Commands.slash("profile", "See Lichess Profile of given user").addOptions(new OptionData(OptionType.STRING, "search-user", "Search Lichess username", true).setAutoComplete(true).setRequired(true)));
-        commands.addCommands(Commands.slash("streamers", "See current Live Streamers"));
         commands.addCommands(Commands.slash("puzzle", "do random/daily puzzles").addOptions(new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random")).addOptions(
                 new OptionData(OptionType.STRING, "pick-mode", "pick interaction mode", true)
                         .addChoice("Post to Community!", "post")
@@ -57,14 +51,12 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("help", "View LISEBOT Commands"));
         commands.addCommands(Commands.slash("play", "Play Live Chess Games"));
         commands.addCommands(Commands.slash("watch", "Watch Lichess games for given user"));
-        commands.addCommands(Commands.slash("invite", "Invite me to your servers!"));
-        commands.addCommands(Commands.slash("analyze", "Analyze a chess position with Stockfish 16").addOption(OptionType.STRING, "fen", "FEN for the position", true));
         commands.addCommands(Commands.slash("move", "make a move").addOption(OptionType.STRING, "play-move", "input chess move", true));
         commands.addCommands(Commands.slash("resetboard", "reset the board"));
         commands.addCommands(Commands.slash("learnchess", "Learn basic chess moves"));
         commands.addCommands(Commands.slash("puzzlesolve", "Trigger a puzzle solver module for given FEN").addOption(OptionType.STRING, "fen", "Input a puzzle's FEN", true));
         commands.addCommands(Commands.slash("solve", "Solve puzzle by inputting moves").addOption(OptionType.STRING, "sol-answer", "Input chess move in chess notation (e4 or e2e4)", true));
-        commands.addCommands(Commands.slash("fide", "View top10 FIDE players"));
+        
 
         // <------- MESSAGE COMMANDS ---------->
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Lichess Daily Puzzle"));
@@ -87,7 +79,7 @@ public class Main extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("V13.7 Servers: " + guildCount));
+        jda.getPresence().setActivity(Activity.watching("V13.8 Servers: " + guildCount));
     }
 
 

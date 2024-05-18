@@ -57,14 +57,6 @@ public class BotContextModule {
     }
 
 
-    public void runAnalyzeCommand(SlashCommandInteractionEvent slashEvent) {
-        try {
-            getStockfishSearchCommand(Objects.requireNonNull(slashEvent.getOption("fen")).getAsString(), slashEvent, false, null);
-        }catch (Exception e){
-            slashEvent.reply("Error! Provide valid FEN!").queue();
-        }
-    }
-
     public void runAnalyzeButton(ButtonInteractionEvent event) {
         getStockfishSearchCommand(StockFish.getUserFen.get(event.getUser().getId()), null, true, event);
     }

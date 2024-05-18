@@ -5,11 +5,9 @@ import Chesscom.puzzle;
 import Discord.MainHandler.AntiSpam;
 import Lichess.*;
 import chariot.Client;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-import java.awt.*;
 import java.util.HashMap;
 
 public class ToolContextModule {
@@ -17,34 +15,7 @@ public class ToolContextModule {
     private static final HashMap<String, PuzzleSolverContextModule> solverMapper = new HashMap<>();
 
 
-
     public ToolContextModule() {
-
-    }
-
-
-    public void sendBroadcastCommand(SlashCommandInteractionEvent slashEvent, Client client, MessageContextInteractionEvent context, boolean isSlash) {
-
-
-        if (isSlash) {
-            BroadcastLichess broadcast = new BroadcastLichess(client);
-            slashEvent.replyEmbeds(broadcast.getBroadData().build()).queue();
-
-        } else {
-            BroadcastLichess broadcast = new BroadcastLichess(client);
-            context.replyEmbeds(broadcast.getBroadData().build()).queue();
-        }
-    }
-
-
-    public void sendBroadcastMasterCommand(SlashCommandInteractionEvent slashEvent, Client client, MessageContextInteractionEvent context, boolean isSlash) {
-        if (isSlash) {
-            WatchMaster watchMaster = new WatchMaster(client);
-            slashEvent.reply(watchMaster.getMasterGames()).addActionRow(Button.link("https://lichess.org" + watchMaster.getGameId()[1], "Analyze")).queue();
-        } else {
-            WatchMaster watchMaster = new WatchMaster(client);
-            context.reply(watchMaster.getMasterGames()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://lichess.org" + watchMaster.getGameId()[1], "Analyze")).queue();
-        }
 
     }
 
@@ -154,39 +125,5 @@ public class ToolContextModule {
     }
 
 
-    public void sendStreamerCommand(SlashCommandInteractionEvent slashEvent, Client client) {
-        LiveStreamers liveStreamers = new LiveStreamers(client);
-        slashEvent.replyEmbeds(liveStreamers.getTv().build()).queue();
-    }
-
-    public void sendLichessArenaURLCommand(SlashCommandInteractionEvent slashEvent, Client client) {
-        String arenaLink = slashEvent.getOption("arenaid").getAsString().trim();
-        UserArena userArena = new UserArena(client, arenaLink);
-        slashEvent.replyEmbeds(userArena.getUserArena().build()).queue();
-    }
-
-    public void sendTop10FideEmbed(SlashCommandInteractionEvent slashEvent){
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle("FIDE Top10 Players");
-        builder.setThumbnail("https://upload.wikimedia.org/wikipedia/en/thumb/5/5b/Fidelogo.svg/1200px-Fidelogo.svg.png");
-        builder.setDescription("""
-                    1) GM Carlsen, Magnus, standard: (2830)
-                    2) GM Kasparov, Garry, standard: (2812)
-                    3) GM Caruana, Fabiano, standard: (2805)
-                    4) GM Nakamura, Hikaru, standard: (2794)
-                    5) GM Nepomniachtchi, Ian, standard: (2770)
-                    6) GM Abdusattorov, Nodirbek, standard: (2765)
-                    7) GM Gukesh D, standard: (2763)
-                    8) GM Ding, Liren, standard: (2762)
-                    9) GM Erigaisi Arjun, standard: (2761)
-                    10) GM So, Wesley, standard: (2757)
-                """);
-        builder.setColor(Color.WHITE);
-        slashEvent.replyEmbeds(builder.build()).queue();
-    }
-
-
-
 
 }
-

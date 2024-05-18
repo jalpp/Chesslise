@@ -59,7 +59,7 @@ public class ModalHelperContextModule {
     public void sendSelfUserInputForm(ButtonInteractionEvent buttonEvent){
         buildButtonInputForm(buttonEvent,"self-user","Input Your Lichess Username", "Input Your Lichess Username", "modal-self-user", "Challenge Friend ");
     }
-    
+
 
     public void sendChessComUserProfileInputForm(SlashCommandInteractionEvent slashCommandInteractionEvent) {
         buildInputForm(slashCommandInteractionEvent, "profileusercc", "Input Chess.com Username", "Input Chess.com Username", "modalproc", "View Chess.com Profiles!");

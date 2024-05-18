@@ -37,16 +37,6 @@ public class SlashContextModule implements ContextHandler {
 
             case "move" -> botCommands.whiteSideMoveCommand(slashEvent, board);
 
-            case "community" -> info_sender.sendCommunityCommand(slashEvent);
-
-            case "analyze" -> botCommands.runAnalyzeCommand(slashEvent);
-
-            case "broadcast" -> tools.sendBroadcastCommand(slashEvent, client, context, true);
-
-            case "service" -> info_sender.sendServiceCommand(slashEvent);
-
-            case "watchmaster" -> tools.sendBroadcastMasterCommand(slashEvent, client, context, true);
-
             case "puzzle" -> tools.sendPuzzleMenuCommand(slashEvent, client, context, spam);
 
             case "help" -> info_sender.sendInfoCommand(slashEvent);
@@ -59,23 +49,15 @@ public class SlashContextModule implements ContextHandler {
 
             case "profilecc" -> form_tools.sendChessComUserProfileInputForm(slashEvent);
 
-            case "streamers" -> tools.sendStreamerCommand(slashEvent, client);
-
             case "watch" -> form_tools.sendLichessWatchGameCommand(slashEvent, watchlimit);
-
-            case "arena" -> tools.sendLichessArenaURLCommand(slashEvent, client);
-
-            case "invite" -> info_sender.sendInviteMeCommand(slashEvent);
 
             case "puzzlesolve" -> tools.sendLivePuzzleBuilder(slashEvent, Objects.requireNonNull(slashEvent.getOption("fen")).getAsString());
 
             case "solve" -> tools.sendPuzzleSolverTrigger(slashEvent);
 
-            case "fide"  -> tools.sendTop10FideEmbed(slashEvent);
 
         }
     }
 
 }
-
 

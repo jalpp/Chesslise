@@ -175,9 +175,8 @@ public class ButtonHelperContextModule {
 
     public void handleLearnCommand(ButtonInteractionEvent buttonEvent, CommandInfo commandInfo) {
 
+
         switch (buttonEvent.getComponentId()) {
-            case "next" -> buttonEvent.editMessageEmbeds(commandInfo.getPageTwo().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nexttwo", "➡️")).queue();
-            case "nexttwo" -> buttonEvent.editMessageEmbeds(commandInfo.getPageThree().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("nextthree", "➡️").asDisabled()).queue();
             case "Bishop" -> buttonEvent.editMessageEmbeds(commandInfo.getPageFive().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Rook", "⬅️"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Knight", "♞")).queue();
             case "Knight" -> buttonEvent.editMessageEmbeds(commandInfo.getPageSix().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Bishop", "⬅️"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Queen", "♛")).queue();
             case "Queen" -> buttonEvent.editMessageEmbeds(commandInfo.getPageSeven().build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.primary("Knight", "⬅️"), Button.primary("King", "♚")).queue();
@@ -195,4 +194,3 @@ public class ButtonHelperContextModule {
 
 
 }
-
