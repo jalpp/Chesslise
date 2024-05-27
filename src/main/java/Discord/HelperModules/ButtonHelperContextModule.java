@@ -56,40 +56,51 @@ public class ButtonHelperContextModule {
 
         switch (buttonEvent.getComponentId()) {
             case "load-again" ->
-                    buttonEvent.reply("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").addActionRow(
-                            Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1\uFE0F Play Friend")).addActionRow(Button.link("https://discord.gg/uncmhknmYg", "\uD83D\uDC4B Join our server!"), Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
+                    buttonEvent.reply("""
+                            ## Please Pick Your Lichess Game's Mode ⚔️\s
+
+                            """).addActionRow(
+                            Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend")).addActionRow(Button.link("https://discord.gg/uncmhknmYg", "\uD83D\uDC4B Join our server!"), Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
             case "loadr" ->
                     buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.danger("3+0r", "\uD83D\uDD25 3+0")
                             , Button.danger("5+0r", "\uD83D\uDD25 5+0")
-                            , Button.danger("10+0r", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                            , Button.danger("10+0r", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩️ Home")).queue();
             case "loadc" ->
                     buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.primary("3+0c", " \uD83D\uDD253+0")
                             , Button.primary("5+0c", "\uD83D\uDD25 5+0")
-                            , Button.primary("10+0c", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                            , Button.primary("10+0c", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩️ Home")).queue();
             case "3+0r" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 0, true, client)).setActionRow(Button.primary("3+0r", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 0, true, client)).setActionRow(Button.primary("3+0r", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "5+0r" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 0, true, client)).setActionRow(Button.primary("5+0r", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 0, true, client)).setActionRow(Button.primary("5+0r", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "10+0r" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(10, 0, true, client)).setActionRow(Button.primary("10+0r", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(10, 0, true, client)).setActionRow(Button.primary("10+0r", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "3+0c" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 0, false, client)).setActionRow(Button.primary("3+0c", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 0, false, client)).setActionRow(Button.primary("3+0c", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "5+0c" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 0, false, client)).setActionRow(Button.primary("5+0c", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 0, false, client)).setActionRow(Button.primary("5+0c", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "10+0c" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(10, 0, false, client)).setActionRow(Button.primary("10+0c", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(10, 0, false, client)).setActionRow(Button.primary("10+0c", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "playhelp" -> {
                 EmbedBuilder help = new EmbedBuilder();
                 help.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
                 help.setTitle("Guide for /play");
-                help.setDescription("/play allows you to play LIVE chess with friends and BOTs!, to set up a **Casual game (friendly)/ Rated (gain/lose rating)**  all users need to do is click on **casual/rated** button\n" +
-                        "After you will be prompted to select **Time control**, this option is timecontrol (how long game lasts). \n" +
-                        "**Start the game**: One you have selected mode and time, Bot sends Lichess live URL, where you and your friend can click same time to start a **LIVE Chess game**." +
-                        "\n\n **Login/Register** \n To play rated make sure to Login/Register on Lichess.org to get chess rating, otherwise just play casual games!" +
-                        "\n\n **Play BOTS** " +
-                        "\n\n To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!" +
-                        "\n\n **Challenge Friend** \n play your friend by entering your and your friend's Lichess user, ready for challenge? The time control is randomly generated for fun games!" +
-                        "\n **Need more help?** \n Join our Support server and Developer will help you!");
+                help.setDescription("""
+                        /play allows you to play LIVE chess with friends and BOTs!, to set up a **Casual game (friendly)/ Rated (gain/lose rating)**  all users need to do is click on **casual/rated** button
+                        After you will be prompted to select **Time control**, this option is timecontrol (how long game lasts).\s
+                        **Start the game**: One you have selected mode and time, Bot sends Lichess live URL, where you and your friend can click same time to start a **LIVE Chess game**.
+
+                         **Login/Register**\s
+                         To play rated make sure to Login/Register on Lichess.org to get chess rating, otherwise just play casual games!
+
+                         **Play BOTS**\s
+
+                         To play BOTS click on **Play BOTS**, to play live computer click on **Stockfish** to play BOTS on Lichess click on other options!
+
+                         **Challenge Friend**\s
+                         play your friend by entering your and your friend's Lichess user, ready for challenge? The time control is randomly generated for fun games!
+                         **Need more help?**\s
+                         Join our Support server and Developer will help you!""");
                 buttonEvent.replyEmbeds(help.build()).addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://discord.gg/uncmhknmYg", "Join our server")).setEphemeral(true).queue();
             }
           case "friend" -> modalHelper.sendSelfUserInputForm(buttonEvent);
@@ -121,7 +132,7 @@ public class ButtonHelperContextModule {
                     net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://lichess.org/@/leela2200", "LeelaZero"),
                     net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://lichess.org/@/Dummyette", "Dummyette"),
                     net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://lichess.org/@/SimplerEval", "SimplerEval")
-                    , Button.success("load-again", "↩\uFE0F Home")
+                    , Button.success("load-again", "↩️ Home")
 
             ).queue();
 
@@ -136,24 +147,24 @@ public class ButtonHelperContextModule {
 
         switch (buttonEvent.getComponentId()) {
             case "ultrafastc" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(0, 0, false, client)).setActionRow(Button.primary("ultrafastc", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(0, 0, false, client)).setActionRow(Button.primary("ultrafastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "bulletfastc" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(1, 0, false, client)).setActionRow(Button.primary("bulletfastc", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(1, 0, false, client)).setActionRow(Button.primary("bulletfastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "blitzfastc" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 2, false, client)).setActionRow(Button.primary("blitzfastc", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 2, false, client)).setActionRow(Button.primary("blitzfastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "rapidfastc" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 5, false, client)).setActionRow(Button.primary("rapidfastc", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 5, false, client)).setActionRow(Button.primary("rapidfastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
         }
 
         switch (buttonEvent.getComponentId()) {
             case "ultrafastr" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(0, 0, true, client)).setActionRow(Button.primary("ultrafastr", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(0, 0, true, client)).setActionRow(Button.primary("ultrafastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "bulletfastr" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(1, 0, true, client)).setActionRow(Button.primary("bulletfastr", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(1, 0, true, client)).setActionRow(Button.primary("bulletfastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "blitzfastr" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 2, true, client)).setActionRow(Button.primary("blitzfastr", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(3, 2, true, client)).setActionRow(Button.primary("blitzfastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "rapidfastr" ->
-                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 5, true, client)).setActionRow(Button.primary("rapidfastr", "Rematch"), Button.success("load-again", "↩\uFE0F Home")).queue();
+                    buttonEvent.editMessage(generateChallenge.generateOpenEndedChallengeURLs(5, 5, true, client)).setActionRow(Button.primary("rapidfastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
             case "sf" -> contextModule.runAnalyzeButton(buttonEvent);
         }
     }

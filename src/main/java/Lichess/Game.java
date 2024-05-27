@@ -38,7 +38,7 @@ public class Game {
             }
         }
 
-        return "## Both Players Join The Live Chess Challenge  \n ↪\uFE0F " + URL.get() + " \n **Note:** Challenge expires after 24 hours!";
+        return "## Both Players Join The Live Chess Challenge  \n ↪️ " + URL.get() + " \n **Note:** Challenge expires after 24 hours!";
     }
 
 
@@ -51,7 +51,7 @@ public class Game {
         var result = client.challenges().challengeOpenEnded(conf -> conf.clock(min, sec).name("LISEBOT Challenge Created! \n " + self_user + " VS " + target_user).users(self_user, target_user).rated(false));
         result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
 
-        return "## Random Challenge Mode! \uD83C\uDFB2 \n \n" + self_user + " VS " + target_user + "\n ↪\uFE0F " + URL.get() + " \n **Note:** Challenge expires after 24 hours!";
+        return "## Random Challenge Mode! \uD83C\uDFB2 \n \n" + self_user + " VS " + target_user + "\n ↪️ " + URL.get() + " \n **Note:** Challenge expires after 24 hours!";
 
     }
 

@@ -20,21 +20,19 @@ public class ToolContextModule {
     }
 
     public void sendSlashLichesspuzzleCommand(SlashCommandInteractionEvent slashEvent, Client client, MessageContextInteractionEvent context, boolean isSlash) {
+        DailyCommand dailyCommand = new DailyCommand(client);
         if (isSlash) {
-            DailyCommand dailyCommand = new DailyCommand(client);
             slashEvent.replyEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.primary("hint", "hint"), Button.success("fishaz-li", "Stockfish Analysis"), Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.defineUtil(), dailyCommand.definePuzzleFen()), "Analysis Board")).queue();
         } else {
-            DailyCommand dailyCommand = new DailyCommand(client);
             context.replyEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.primary("hint", "hint"), Button.success("fishaz-li", "Stockfish Analysis"), Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.defineUtil(), dailyCommand.definePuzzleFen()), "Analysis Board")).queue();
         }
     }
 
     public void sendDailyPuzzleChessComCommand(SlashCommandInteractionEvent slashEvent, MessageContextInteractionEvent context, boolean isSlash) {
+        DailyCommandCC daily = new DailyCommandCC();
         if (isSlash) {
-            DailyCommandCC daily = new DailyCommandCC();
             slashEvent.replyEmbeds(daily.defineCommandCard().build()).addActionRow(Button.success("fishaz-cc", "Stockfish Analysis"), Button.link(daily.defineAnalysisBoard(daily.defineUtil(), daily.definePuzzleFen()), "Analysis Board")).queue();
         } else {
-            DailyCommandCC daily = new DailyCommandCC();
             context.deferReply(false).queue();
             context.replyEmbeds(daily.defineCommandCard().build()).addActionRow(Button.success("fishaz-cc", "Stockfish Analysis"), Button.link(daily.defineAnalysisBoard(daily.defineUtil(), daily.definePuzzleFen()), "Analysis Board")).queue();
         }
@@ -116,10 +114,16 @@ public class ToolContextModule {
 
     public void sendPlayChallengeCommand(SlashCommandInteractionEvent slashEvent, MessageContextInteractionEvent context, boolean isSlash) {
         if (isSlash) {
-            slashEvent.reply("## Please Pick Your Lichess Game's Mode ⚔️ " + "\n\n").addActionRow(
-                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1\uFE0F Play Friend")).addActionRow(Button.link("https://discord.gg/uncmhknmYg", "\uD83D\uDC4B Join our server!"), Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
+            slashEvent.reply("""
+                    ## Please Pick Your Lichess Game's Mode ⚔️\s
+
+                    """).addActionRow(
+                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend")).addActionRow(Button.link("https://discord.gg/uncmhknmYg", "\uD83D\uDC4B Join our server!"), Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
         } else {
-            context.reply("**⚔️ Please Pick Your Lichess.Game's Mode **" + "\n\n").addActionRow(
+            context.reply("""
+                    **⚔️ Please Pick Your Lichess.Game's Mode **
+
+                    """).addActionRow(
                     net.dv8tion.jda.api.interactions.components.buttons.Button.success("casmode", "Casual"), net.dv8tion.jda.api.interactions.components.buttons.Button.danger("ratedmode", "Rated"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("enginemode", "Play BOT"), net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://lichess.org/login", "Login/Register"), net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("playhelp", "❓ Help")).queue();
         }
     }

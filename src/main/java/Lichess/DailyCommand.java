@@ -56,7 +56,7 @@ public class DailyCommand implements Abstraction.Puzzle {
     @Override
     public EmbedBuilder defineCommandCard() {
         String fen = definePuzzleFen();
-        return new EmbedBuilder().setDescription("**Turn: **" + defineSideToMove(defineUtil(), fen) + "\n **Rating: **" + getRating() + "\n**FEN: **" + fen + "\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)").setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setFooter("use /analyze [fen] to further analyze/check your answer, use /puzzle [solve it live] to solve the puzzle live!").setImage(renderImage(defineUtil(), definePuzzleFen())).setThumbnail(hostimg);
+        return new EmbedBuilder().setDescription("**Turn: **" + defineSideToMove(defineUtil(), fen) + "\n **Rating: **" + getRating() + "\n**FEN: **" + fen + "\n [Join our Server ♟️](https://discord.gg/uncmhknmYg)").setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setFooter("use /analyze [fen] to further analyze/check your answer, use /puzzle [solve it live] to solve the puzzle live!").setImage(renderImage(defineUtil(), definePuzzleFen())).setThumbnail(hostimg);
     }
 
 

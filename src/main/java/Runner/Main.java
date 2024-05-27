@@ -1,7 +1,6 @@
 package Runner;
 
 import Discord.MainHandler.CommandHandler;
-import Engine.LichessBotRunner;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -68,7 +67,7 @@ public class Main extends ListenerAdapter {
         commands.queue();
 
 
-       // LichessBotRunner.main(args); // sun set of Liquid Chess Engine (turn it on if you want to run locally)
+       // LichessBotRunner.main(args); // sun set of Liquid Chess Engine (turn it on if you want to run locally) and import the Engine module
 
 
     }
@@ -78,7 +77,7 @@ public class Main extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("V13.8 Servers: " + guildCount));
+        jda.getPresence().setActivity(Activity.watching("V14 Servers: " + guildCount));
     }
 
 

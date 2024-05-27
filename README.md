@@ -16,6 +16,8 @@ Chesslise is open source Chess based Discord application, which allows users to 
  3. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
  4. [StockFish API](https://stockfish.online/)
  
+ # Tech Stack
+ 1. Java 21, Maven, AWS
 
 # Libraries
 
@@ -46,7 +48,7 @@ Chesslise is open source Chess based Discord application, which allows users to 
 ## Discord Support Server
 [Join](https://discord.gg/uncmhknmYg)
 
-## Version number: 13.8
+## Version number: 14
 
 ## Authors:
 - @jalpp Main maintainer of Chesslise 

@@ -39,16 +39,16 @@ public class CommandInfo {
                 
                 **/profilecc** View user Chess.com profile from given username search
                 
-                **/watch** View a user's newest Lichess game in Live GIF format 
+                **/watch** View a user's newest Lichess game in Live GIF format\s
                 
                 **/move** start a game against Stockfish Chess engine, and make a move by entering a move in chess notation (UCI or SAN
                 
-                **/resetboard** Reset the game against the Engine, so others can play the engine 
+                **/resetboard** Reset the game against the Engine, so others can play the engine\s
                 
                 [**View ChessLise TOS/Privacy Policy**](https://github.com/jalpp/Chesslise/blob/master/tos-privacy-policy.md)
                 [**Feature Request? Join our support server**](https://discord.gg/ez3QVsNmuy)
                   
-                **Version: 13.8**
+                **Version: 14**
                 """);
         return this.embedBuilder;
     }
@@ -58,7 +58,11 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("Here are the basic moves of the chess pieces:\n\n");
-        this.embedBuilder.appendDescription("**Rook:** Move any number of squares horizontally or vertically.\n\n" + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
+        this.embedBuilder.appendDescription("""
+                **Rook:** Move any number of squares horizontally or vertically.
+
+
+                 [Join our Server ♟️](https://discord.gg/uncmhknmYg)""");
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpfyINI1.png");
 
         return this.embedBuilder;
@@ -68,9 +72,12 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("Here are the basic moves of the Bishop:\n\n");
-        this.embedBuilder.appendDescription("**Bishop:** Move any number of squares diagonally.\n\n" + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
+        this.embedBuilder.appendDescription("""
+                **Bishop:** Move any number of squares diagonally.
+
+                 [Join our Server ♟️](https://discord.gg/uncmhknmYg)""");
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/phpdzgpdQ.png");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 
@@ -78,9 +85,12 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("Here are the basic moves of the Knight:\n\n");
-        this.embedBuilder.appendDescription("**Knight:** Move in an 'L' shape: two squares in one direction and then one square perpendicular.\n\n" + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
+        this.embedBuilder.appendDescription("""
+                **Knight:** Move in an 'L' shape: two squares in one direction and then one square perpendicular.
+
+                 [Join our Server ♟️](https://discord.gg/uncmhknmYg)""");
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpVuLl4W.png");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 
@@ -88,9 +98,12 @@ public class CommandInfo {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("Here are the basic moves of the Queen:\n\n");
-        this.embedBuilder.appendDescription("**Queen:** Move any number of squares horizontally, vertically, or diagonally.\n\n" + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
+        this.embedBuilder.appendDescription("""
+                **Queen:** Move any number of squares horizontally, vertically, or diagonally.
+
+                 [Join our Server ♟️](https://discord.gg/uncmhknmYg)""");
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpCQgsYR.png");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 
@@ -102,7 +115,7 @@ public class CommandInfo {
                 **King:** Move 1 square at a time horizontally, vertically, or diagonally.
                 """);
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpmVRKYr.png");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 
@@ -111,7 +124,7 @@ public class CommandInfo {
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("King Special move: castling, when king and rook gets space between his king and the rooks and no piece are present he can castle that way:\n\n");
         this.embedBuilder.setImage("https://www.chessbazaar.com/blog/wp-content/uploads/2014/11/castling.gif");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 
@@ -120,7 +133,7 @@ public class CommandInfo {
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("Pawn Move: can only go up the board and capture on the flank side:\n\n");
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/php8nbVYg.gif");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 
@@ -129,7 +142,7 @@ public class CommandInfo {
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("Pawn Special Move: en-passant capture when opposing side moves side pawn beside your pawn :\n\n");
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpZmdTyW.gif");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 
@@ -138,7 +151,7 @@ public class CommandInfo {
         this.embedBuilder.setThumbnail(this.logo);
         this.embedBuilder.setDescription("Pawn Special Move: Promotion, when your pawn reaches the 8th rank you can promote to queen,rook,bishop, or a night :\n\n");
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpFSZHst.gif");
-        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟\uFE0F");
+        this.embedBuilder.setFooter("Join our Server - https://discord.gg/uncmhknmYg ♟️");
         return this.embedBuilder;
     }
 

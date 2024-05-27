@@ -30,34 +30,34 @@ public class ModalHelperContextModule {
                 .setRequired(true)
                 .build();
         Modal pmodal = Modal.create(modalid, modaltitle)
-                .addActionRows(ActionRow.of(ptext))
+                .addComponents(ActionRow.of(ptext))
                 .build();
         slashEvent.replyModal(pmodal).queue();
     }
 
-    private void buildButtonInputForm(ButtonInteractionEvent buttonEvent, String inputid, String label, String placeholder, String modalid, String modaltitle) {
-        TextInput ptext = TextInput.create(inputid, label, TextInputStyle.SHORT)
-                .setPlaceholder(placeholder)
+    private void buildButtonInputForm(ButtonInteractionEvent buttonEvent) {
+        TextInput ptext = TextInput.create("self-user", "Input Your Lichess Username", TextInputStyle.SHORT)
+                .setPlaceholder("Input Your Lichess Username")
                 .setMinLength(2)
                 .setMaxLength(100)
                 .setRequired(true)
                 .build();
 
-        TextInput targettext = TextInput.create(inputid + "tar-user", "Enter Your Friend Lichess Username", TextInputStyle.SHORT)
+        TextInput targettext = TextInput.create("self-user" + "tar-user", "Enter Your Friend Lichess Username", TextInputStyle.SHORT)
                 .setPlaceholder("Enter Your Friend Lichess Username")
                 .setMinLength(2)
                 .setMaxLength(100)
                 .setRequired(true)
                 .build();
-        Modal pmodal = Modal.create(modalid, modaltitle)
-                .addActionRows(ActionRow.of(ptext), ActionRow.of(targettext))
+        Modal pmodal = Modal.create("modal-self-user", "Challenge Friend ")
+                .addComponents(ActionRow.of(ptext), ActionRow.of(targettext))
                 .build();
         buttonEvent.replyModal(pmodal).queue();
     }
 
 
     public void sendSelfUserInputForm(ButtonInteractionEvent buttonEvent){
-        buildButtonInputForm(buttonEvent,"self-user","Input Your Lichess Username", "Input Your Lichess Username", "modal-self-user", "Challenge Friend ");
+        buildButtonInputForm(buttonEvent);
     }
 
 
@@ -99,7 +99,6 @@ public class ModalHelperContextModule {
             }
         } else if (client.users().byId(userInput).isPresent()) {
             UserGame userGame = new UserGame(client, userInput);
-            String link = "https://lichess.org/@/" + userInput.toLowerCase() + "/all";
             eventModal.deferReply(true).queue();
             eventModal.getChannel().sendMessage(userGame.getUserGames()).queue();
 

@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 import java.awt.*;
-import java.util.Objects;
+
 
 public class BotContextModule {
 
@@ -46,7 +46,7 @@ public class BotContextModule {
             embedBuilder.setTitle("White to move");
             embedBuilder.setColor(Color.green);
             embedBuilder.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
-            embedBuilder.setDescription("\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
+            embedBuilder.setDescription("\n\n [Join our Server ♟️](https://discord.gg/uncmhknmYg)");
             embedBuilder.setImage(util.getImageFromFEN(board.getFen(), false, "brown", "kosal"));
             slashEvent.getHook().sendMessageEmbeds(embedBuilder.build()).queue();
 
@@ -75,7 +75,7 @@ public class BotContextModule {
             b.loadFromFen(fen);
             sf.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
             sf.setImage(util.getImageFromFEN(fen, !fen.contains("w"), "brown", "kosal"));
-            sf.setDescription(StockFish.getStockFishTextExplanation(13, fen) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
+            sf.setDescription(StockFish.getStockFishTextExplanation(13, fen) + "\n\n [Join our Server ♟️](https://discord.gg/uncmhknmYg)");
             sf.setColor(Color.green);
             b.doMove(StockFish.getBestMove(13, fen));
             StockFish.getUserFen.put(slashEvent.getUser().getId(), b.getFen());
@@ -88,7 +88,7 @@ public class BotContextModule {
             b.loadFromFen(fen);
             sf.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
             sf.setImage(util.getImageFromFEN(fen, !fen.contains("w"), "brown", "kosal"));
-            sf.setDescription(StockFish.getStockFishTextExplanation(13, fen) + "\n\n [Join our Server ♟\uFE0F](https://discord.gg/uncmhknmYg)");
+            sf.setDescription(StockFish.getStockFishTextExplanation(13, fen) + "\n\n [Join our Server ♟️](https://discord.gg/uncmhknmYg)");
             sf.setColor(Color.green);
             b.doMove(StockFish.getBestMove(13, fen));
             StockFish.getUserFen.put(buttonEvent.getUser().getId(), b.getFen());

@@ -42,11 +42,7 @@ public class UserObject {
     public PlayerStats getChessComStats() throws ChessComPubApiException, IOException {
         return getPlayerClient().getStatsForPlayer(this.userID);
     }
-
-    public void setUserAgent() {
-        playerClient.setUserAgent("bot; username: username; contact: email");
-
-    }
+    
 
 
 }

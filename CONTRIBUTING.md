@@ -9,7 +9,7 @@
 
 # How to set up lise locally?
 
-- To set up lise you need to have Java 17+, IntelliJ, and Maven
+- To set up lise you need to have Java 21, IntelliJ, and Maven
 - git clone the project
 - use any IDE (IntelliJ recommended)
 - configure ``` DISCORD_TOKEN ``` for your own bots' Discord token
@@ -18,7 +18,7 @@
 - finally, compile the code ``` mvn compile ```
 - Please note you need to follow the same steps as adding Chesslise for your own local bot
 - build the project ``` mvn package ```
-- run the application ``` java -jar /target/Chesslise-13.5-SNAPSHOT-jar-with-dependencies.jar ```
+- run the application ``` java -jar /target/Chesslise-14-SNAPSHOT-jar-with-dependencies.jar ```
 
 
 # API
