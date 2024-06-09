@@ -106,7 +106,11 @@ public class ToolContextModule {
             PuzzleSolverContextModule solver = solverMapper.get(slashEvent.getUser().getId());
             solver.getSolverCard(slashEvent);
         }catch (Exception e){
-            slashEvent.reply("You have not created a puzzle challenge! please use /puzzle!").queue();
+            if(e instanceof NullPointerException){
+                slashEvent.reply("You have not created a puzzle challenge! please use /puzzle!").setEphemeral(true).queue();
+            }else{
+                slashEvent.reply("Internal Stockfish Error! Seems like engine is not working, why don't you run **/puzzle <post to community>** while devs solve this!").setEphemeral(true).queue();
+            }
         }
 
     }

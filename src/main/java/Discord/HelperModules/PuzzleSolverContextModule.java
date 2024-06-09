@@ -2,7 +2,9 @@ package Discord.HelperModules;
 
 import Abstraction.ChessUtil;
 import Engine.StockFish;
+import Engine.StockFishInternalErrorException;
 import com.github.bhlangonijr.chesslib.Board;
+import com.github.bhlangonijr.chesslib.move.MoveConversionException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
@@ -25,31 +27,39 @@ public class PuzzleSolverContextModule {
 
 
     public void getPuzzleSolverCard(SlashCommandInteractionEvent slashEvent){
-        ChessUtil util = new ChessUtil();
-        EmbedBuilder puzzleBuilder = new EmbedBuilder();
-        puzzleBuilder.setTitle(slashEvent.getUser().getName() + "'s Puzzle Challenge!");
-        puzzleBuilder.setDescription("Its **" + util.getWhichSideToMove(getUserPuzzleFEN.get(slashEvent.getUser().getId())) +
-                "** Find the best move! ** use /solve [move ex: e4]** to solve the puzzle! \uD83E\uDDE9 ");
-        puzzleBuilder.setImage(util.getImageFromFEN(getUserPuzzleFEN.get(slashEvent.getUser().getId()), false, "green", "alpha"));
-        slashEvent.deferReply(false).queue();
-        slashEvent.getHook().sendMessageEmbeds(puzzleBuilder.build()).queue();
+        try {
+            ChessUtil util = new ChessUtil();
+            EmbedBuilder puzzleBuilder = new EmbedBuilder();
+            puzzleBuilder.setTitle(slashEvent.getUser().getName() + "'s Puzzle Challenge!");
+            puzzleBuilder.setDescription("Its **" + util.getWhichSideToMove(getUserPuzzleFEN.get(slashEvent.getUser().getId())) +
+                    "** Find the best move! ** use /solve [move ex: e4]** to solve the puzzle! \uD83E\uDDE9 ");
+            puzzleBuilder.setImage(util.getImageFromFEN(getUserPuzzleFEN.get(slashEvent.getUser().getId()), false, "green", "alpha"));
+            slashEvent.deferReply(false).queue();
+            slashEvent.getHook().sendMessageEmbeds(puzzleBuilder.build()).queue();
+        }catch (Exception e){
+            slashEvent.reply("Internal server error! Please contact the dev by joining the support server in /help").setEphemeral(true).queue();
+        }
     }
 
-    public void determineTheFinishLine(SlashCommandInteractionEvent slashEvent){
-        Board hookBoard = new Board();
-        hookBoard.loadFromFen(getUserPuzzleFEN.get(slashEvent.getUser().getId()));
+    public void determineTheFinishLine(SlashCommandInteractionEvent slashEvent) throws StockFishInternalErrorException {
+        try {
+            Board hookBoard = new Board();
+            hookBoard.loadFromFen(getUserPuzzleFEN.get(slashEvent.getUser().getId()));
 
-        double eval = Double.parseDouble(StockFish.getEvalForFEN(15, getUserPuzzleFEN.get(slashEvent.getUser().getId())));
+            double eval = Double.parseDouble(StockFish.getEvalForFEN(15, getUserPuzzleFEN.get(slashEvent.getUser().getId())));
 
-        if(eval >= -0.99 && eval <= 0.99){
-            getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 4);
-            getUserFinishLine.put(slashEvent.getUser().getId(), getUserFinishLine.get(slashEvent.getUser().getId()) + 1);
-        }else if (eval >= -2.99 && eval <= 2.99){
-            getUserFinishLine.put(slashEvent.getUser().getId(), getUserFinishLine.get(slashEvent.getUser().getId()) + 1);
-            getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 2);
-        }else{
-            getUserFinishLine.put(slashEvent.getUser().getId(), getUserFinishLine.get(slashEvent.getUser().getId()) + 1);
-            getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 1);
+            if (eval >= -0.99 && eval <= 0.99) {
+                getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 4);
+                getUserFinishLine.put(slashEvent.getUser().getId(), getUserFinishLine.get(slashEvent.getUser().getId()) + 1);
+            } else if (eval >= -2.99 && eval <= 2.99) {
+                getUserFinishLine.put(slashEvent.getUser().getId(), getUserFinishLine.get(slashEvent.getUser().getId()) + 1);
+                getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 2);
+            } else {
+                getUserFinishLine.put(slashEvent.getUser().getId(), getUserFinishLine.get(slashEvent.getUser().getId()) + 1);
+                getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 1);
+            }
+        }catch (Exception e){
+            throw new StockFishInternalErrorException("eval not working");
         }
 
 
@@ -95,13 +105,16 @@ public class PuzzleSolverContextModule {
                 getUserPuzzleFEN.put(slashEvent.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
                 getUserFinishLine.put(slashEvent.getUser().getId(), 0);
                 getUserPuzzleHitRate.put(slashEvent.getUser().getId(), 1);
-                slashEvent.reply("You have solved the puzzle!").queue();
+                slashEvent.reply("You have solved the puzzle!").queue ();
             }
 
 
-        }catch (Exception e){
-            slashEvent.reply("You entered an illegal move! Please try again!").queue();
-            System.out.println(e.getMessage());
+        }catch (MoveConversionException | StockFishInternalErrorException e ){
+              if(e instanceof MoveConversionException){
+                  slashEvent.reply("You entered an illegal move! Please try again!").queue();
+              }else {
+                  slashEvent.reply("Internal Stockfish Error! Seems like engine is not working, why don't you run **/puzzle <post to community>** while devs solve this!").queue();
+              }
         }
 
 
@@ -110,23 +123,7 @@ public class PuzzleSolverContextModule {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 }
+
