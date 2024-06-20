@@ -2,6 +2,8 @@ package Chesscom;
 
 import Abstraction.Player.UserObject;
 import io.github.sornerol.chess.pubapi.domain.player.stats.PlayerStats;
+import io.github.sornerol.chess.pubapi.domain.player.stats.PuzzleRushStats;
+import io.github.sornerol.chess.pubapi.domain.player.stats.RatingPoolStats;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -24,13 +26,13 @@ public class CCProfile extends UserObject {
             PlayerStats player = this.getChessComStats();
 
             proSay += "**Bullet**: " +
-                    player.getChessBullet().getLast().getRating() +
+                    getRatingOrDefault(player.getChessBullet()) +
                     "\n **Rapid:**  " +
-                    player.getChessRapid().getLast().getRating() +
+                    getRatingOrDefault(player.getChessRapid()) +
                     "\n **Blitz:** " +
-                    player.getChessBlitz().getLast().getRating() +
+                    getRatingOrDefault(player.getChessBlitz()) +
                     "\n **PuzzleRush:** " +
-                    player.getPuzzleRush().getBest().getScore();
+                    getStatsOrDefault(player.getPuzzleRush());
             embedBuilder.setThumbnail(this.getPlayerClient().getPlayerByUsername(getUserID()).getAvatarUrl()).setTitle(this.getUserID() + "'s Chess.com Profile").setDescription(proSay).setColor(Color.green);
 
         } catch (IOException e) {
@@ -40,8 +42,13 @@ public class CCProfile extends UserObject {
         }
 
         return embedBuilder;
-
     }
 
+    private String getRatingOrDefault(RatingPoolStats rating) {
+        return rating != null ? rating.getLast().getRating().toString() : "?";
+    }
 
+    private String getStatsOrDefault(PuzzleRushStats stats) {
+        return stats != null ? stats.getBest().getScore().toString() : "?";
+    }
 }
