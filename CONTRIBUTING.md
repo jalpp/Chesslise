@@ -18,7 +18,7 @@
 - finally, compile the code ``` mvn compile ```
 - Please note you need to follow the same steps as adding Chesslise for your own local bot
 - build the project ``` mvn package ```
-- run the application ``` java -jar /target/Chesslise-14-SNAPSHOT-jar-with-dependencies.jar ```
+- run the application ``` java -jar /target/Chesslise-14.3-SNAPSHOT-jar-with-dependencies.jar ```
 
 
 # API
