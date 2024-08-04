@@ -51,7 +51,7 @@ Chesslise is open source Chess based Discord application, which allows users to 
 
 ## Version number: 14
 
-## ChessLise Sunset
+## ChessLise Sunset (Aug 4, 2024)
 
 Chesslise will no longer be maintained or updated due to main dev @jalpp not having the time to maintain/update.
 
