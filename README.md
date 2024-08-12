@@ -51,17 +51,7 @@ Chesslise is open source Chess based Discord application, which allows users to 
 
 ## Version number: 14
 
-## ChessLise Sunset (Aug 4, 2024)
 
-Chesslise will no longer be maintained or updated due to main dev @jalpp not having the time to maintain/update.
-
-If you would like to run a local bot, feel free by following the dev steps in contributing.md, the bot's license is 
-
-also changed to MIT, if you would like to host the bot and make it public.
-
-Thanks to users who installed and use the bot, and special thanks to other contributors for helping out.
-
-Have a great day!
 
 
 
