@@ -5,7 +5,7 @@ import chariot.model.Enums;
 import chariot.model.Enums.Speed;
 import chariot.model.Event;
 import chariot.model.GameStateEvent;
-import chariot.model.VariantType;
+import chariot.model.Variant;
 import com.github.bhlangonijr.chesslib.*;
 import com.github.bhlangonijr.chesslib.move.Move;
 
@@ -50,7 +50,7 @@ public class LichessBotRunner {
                     var challenge = (Event.ChallengeEvent) event;
                     System.out.println(challenge);
                     boolean isPlaying = Client.basic().users().byId("LISEBOT").get().accountStats().playing() > 1;
-                    boolean std = challenge.challenge().gameType().variant() == VariantType.Variant.standard;
+                    boolean std = challenge.challenge().gameType().variant() == Variant.Basic.standard;
                     boolean isRated = challenge.challenge().gameType().rated();
                     isRapid = challenge.challenge().gameType().timeControl().speed().name().equalsIgnoreCase("rapid");
                     isBlitz = challenge.challenge().gameType().timeControl().speed().name().equalsIgnoreCase("blitz");
