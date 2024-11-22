@@ -5,51 +5,57 @@
 ![GitHub License](https://img.shields.io/github/license/jalpp/Chesslise)
 
 
-Chesslise is open source Chess based Discord application, which allows users to play, learn, and watch chess on their Discord server
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jalpp/DojoIcons/dd7365ea7d768fe17056d9b14ee6740c2bf4e261/oldIcons/Black%20Blue%20White%20Tactical%20eSports%20Discord%20Logo.png" alt="ChessLise" width=20% height=20% />
+</p>
 
+Chesslise is community driven open source Chess based Discord application, which allows users to play, learn, and watch chess on their discord server, install it on their Discord accounts to
+play chess in Group DMs/friend chat rooms. Chesslise is 3rd best chess Discord bot in Discord's offical App directory, being used in more than 1k servers.
 
-# Sources
 
 # API
 
- 1. [Lichess API](https://lichess.org/api) 
+ 1. [lichess API](https://lichess.org/api) 
  2. [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
- 3. [JDA 5 Discord API](https://github.com/DV8FromTheWorld/JDA)
+ 3. [JDA 5 discord API](https://github.com/DV8FromTheWorld/JDA)
  4. [StockFish API](https://stockfish.online/)
+5. [Chessdb cn](https://chessdb.cn/cloudbookc_info_en.html)
  
  # Tech Stack
- 1. Java 21, Maven, AWS
+Java 21, Maven, AWS
 
 # Libraries
 
- 1. [Lichess Java Client](https://github.com/tors42/chariot) 
+ 1. [lichess Java Client](https://github.com/tors42/chariot) 
  2. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
  3. [Chess.com Java Wrapper](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
  4. [Java Chess Lib](https://github.com/bhlangonijr/chesslib)
 
 # Engines
 
-- [Lise Chess Engine](https://github.com/jalpp/LiseChessEngine) 
+- [Lise Chess engine](https://github.com/jalpp/LiseChessEngine) 
 - [Stockfish](https://stockfishchess.org/)
 
 # Image Generation
-- [Lichess Gifs](https://github.com/lichess-org/lila-gif)
+- [lichess Gifs](https://github.com/lichess-org/lila-gif)
+
+# Contribution
+read more in `CONTRIBUTING.md` on how to setup lise on Discord and server to run it locally
 
 
 # Popular Commands
 | Commands     | Description |
 | ----------- | ----------- |
-| /puzzle      | Do Lichess/Chess.com puzzles    |
-| /solve   | solve chess puzzles in Discord           |
-| /play      | create live chess games in Discord                           |
+| /puzzle      | Do lichess/Chess.com puzzles    |
+| /solve   | solve chess puzzles in discord           |
+| /play      | create live chess games in discord                           |
+
+see more commands in `commands.md`
 
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
 
-## Discord Support Server
-[Join](https://discord.gg/uncmhknmYg)
 
-## Version number: 14
 
 
 
