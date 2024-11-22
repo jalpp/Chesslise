@@ -12,7 +12,8 @@
 - To set up lise you need to have Java 21, IntelliJ, and Maven
 - git clone the project
 - use any IDE (IntelliJ recommended)
-- configure ``` DISCORD_TOKEN ``` for your own bots' discord token in `.env` 
+- configure `ENV_BETA` to either true or false to use the current working env, ideally for development use `DISCORD_BETA_TOKEN`
+- configure ``` DISCORD_{ENV}_TOKEN ``` for your own bots' discord token in `.env` 
 - configure ``` LICHESS_TOKEN ``` if you also want to run lise on lichess
 - you are ready to run the bot with ``` mvn clean ```
 - finally, compile the code ``` mvn compile ```
