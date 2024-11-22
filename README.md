@@ -9,8 +9,7 @@
   <img src="https://raw.githubusercontent.com/jalpp/DojoIcons/dd7365ea7d768fe17056d9b14ee6740c2bf4e261/oldIcons/Black%20Blue%20White%20Tactical%20eSports%20Discord%20Logo.png" alt="ChessLise" width=20% height=20% />
 </p>
 
-Chesslise is community driven open source Chess based Discord application, which allows users to play, learn, and watch chess on their discord server, install it on their Discord accounts to
-play chess in Group DMs/friend chat rooms. Chesslise is 3rd best chess Discord bot in Discord's offical App directory, being used in more than 1k servers.
+Chesslise is a community-driven open-source Chess-based Discord application, that allows users to play, learn, and watch chess on their Discord server, and install it on their Discord accounts to play chess in Group DMs/friend chat rooms. Chesslise is 3rd best chess Discord bot in Discord's official App directory, being used in more than 1k servers.
 
 
 # API
