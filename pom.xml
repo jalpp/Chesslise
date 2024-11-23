@@ -73,7 +73,7 @@
         <dependency>
             <groupId>io.github.tors42</groupId>
             <artifactId>chariot</artifactId>
-            <version>0.1.9</version>
+            <version>0.1.10</version>
         </dependency>
         <dependency>
             <groupId>io.github.sornerol</groupId>
