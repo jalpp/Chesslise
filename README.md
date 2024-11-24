@@ -50,6 +50,7 @@ read more in `CONTRIBUTING.md` on how to setup lise on Discord and server to run
 | /play      | create live chess games in discord                           |
 
 see more commands in `commands.md`
+to see entire demo of Chesslise read the lichess blog guide [here](https://lichess.org/@/Noobmasterplayer123/blog/chesslise-breaks-free/ywQIrVDo)
 
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
