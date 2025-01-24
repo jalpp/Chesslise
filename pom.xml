@@ -76,6 +76,11 @@
             <version>0.1.11</version>
         </dependency>
         <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>io.github.sornerol</groupId>
             <artifactId>chesscom-pubapi-wrapper</artifactId>
             <version>1.7.0</version>
