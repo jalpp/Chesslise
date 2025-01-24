@@ -21,6 +21,10 @@
 - build the project ``` mvn package ```
 - run the application ``` java -jar /target/Chesslise-15.0-SNAPSHOT-jar-with-dependencies.jar ```
 
+# How to set up CSSN locally?
+- you would need MongoDB database provide `CONNECTION_STRING` `DB_NAME` `DB_Collection_names` for player and network collection names
+
+
 
 # API
 
@@ -30,6 +34,8 @@
  4. [StockFish API](https://stockfish.online/)
 5. [Chessdb cn](https://chessdb.cn/cloudbookc_info_en.html)
 
+# Database
+- MongoDB
 # Libraries
 
  1. [lichess Java Client](https://github.com/tors42/chariot) 

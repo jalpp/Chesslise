@@ -43,12 +43,64 @@ public class CommandInfo {
                 
                 **/resetboard** Reset the game against the Engine, so others can play the engine\s
                 
+                  **/connect**
+                connect into Chesslise Social Network Server, or connect back if you went offline
+                
+                **/disconnect**
+                go offline and not receive auto friend requests and challenges
+                
+                **/setpreference**
+                change friend finding preferences and challenge finding preferences
+                
+                **/mychallenges**
+                view your challenges in the network
+                
+                **/pairchallenge**
+                attempt to find a challenge in global pool
+                
+                **/pairchallengenetwork**
+                attempt to send a challenge in your friend network
+                
+                **/seekchallenge**
+                create a challenge and seek for others to accept it
+                
+                **/cancelchallenge**
+                cancel a challenge by challenge ID
+                
+                **/completechallenge**
+                complete a challenge by challenge ID
+                
+                **/findfriend**
+                find a new friend within your network or globally
+                
+                **/sendfriendrequest**
+                send friend request by providing target username
+                
+                **/acceptfriendrequest**
+                accept friend request by providing target friend discord id
+                
+                **/cancelfriendrequest**
+                cancel an incomming friend request by providing discord id
+                
+                **/removefriend**
+                remove a friend from friend list by providing discord username
+                
+                **/blockfriend**
+                block a friend who has not being friendly by providing discord username
+                
+                **/viewfriends**
+                view various friend requests and friend list
+                
+                **/networkhelp**
+                view Chesslise network commands
+                
+                
                 [**View ChessLise TOS/Privacy Policy**](https://github.com/jalpp/Chesslise/blob/master/tos-privacy-policy.md)
                 [**Feature Request? Join our support server**](https://discord.gg/ez3QVsNmuy)
                 [**Source Code**](https://github.com/jalpp/Chesslise)
                 [**Donate link**](https://buy.stripe.com/00g15p6ID7wOcykfZ6)
                   
-                **Version: 15**
+                **Version: 16**
                 """);
         return this.embedBuilder;
     }
@@ -149,7 +201,6 @@ public class CommandInfo {
         this.embedBuilder.setImage("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpFSZHst.gif");
         return this.embedBuilder;
     }
-
 
 
     public void sendInfoCommand(SlashCommandInteractionEvent slashEvent) {

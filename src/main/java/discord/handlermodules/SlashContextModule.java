@@ -1,10 +1,7 @@
 package discord.handlermodules;
 
 import abstraction.Context.ContextHandler;
-import discord.helpermodules.AutoCompleteHelperModule;
-import discord.helpermodules.BotContextModule;
-import discord.helpermodules.ModalHelperContextModule;
-import discord.helpermodules.ToolContextModule;
+import discord.helpermodules.*;
 import discord.mainhandler.AntiSpam;
 import discord.mainhandler.CommandInfo;
 import chariot.Client;
@@ -28,6 +25,7 @@ public class SlashContextModule implements ContextHandler {
         ToolContextModule tools = new ToolContextModule();
         ModalHelperContextModule form_tools = new ModalHelperContextModule();
         AutoCompleteHelperModule autoHelper = new AutoCompleteHelperModule();
+        NetworkContextModule network = new NetworkContextModule(slashEvent);
 
         switch (name) {
 
@@ -50,6 +48,38 @@ public class SlashContextModule implements ContextHandler {
             case "watch" -> form_tools.sendLichessWatchGameCommand(slashEvent, watchlimit);
 
             case "chessdb" -> tools.sendChessDBInfo(slashEvent);
+
+            case "connect" -> network.sendConnect();
+
+            case "disconnect" -> network.sendDisconnect();
+
+            case "setpreference" -> network.sendSetPreference();
+
+            case "mychallenges" -> network.sendMyChallenge();
+
+            case "pairchallenge" -> network.sendChallengeGlobal();
+
+            case "pairchallengenetwork" -> network.sendChallengeSelf();
+
+            case "seekchallenge" -> network.sendSeekChallenge();
+
+            case "cancelchallenge" -> network.sendCancelChallenge();
+
+            case "completechallenge" -> network.sendCompleteChallenge();
+
+            case "sendfriendrequest" -> network.sendSendFriendRequest();
+
+            case "acceptfriendrequest" -> network.sendAcceptFriendRequest();
+
+            case "cancelfriendrequest" -> network.sendcancelFriendRequest();
+
+            case "findfriend" -> network.sendFriendFinderNetwork();
+
+            case "removefriend" -> network.sendRemoveFriendRequest();
+
+            case "blockfriend" -> network.sendBlockFriendRequest();
+
+            case "viewfriends" -> network.sendViewFriendRequest();
 
 
         }

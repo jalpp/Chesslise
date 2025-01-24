@@ -11,6 +11,9 @@
 
 Chesslise is a community-driven open-source Chess-based Discord application, that allows users to play, learn, and watch chess on their Discord server, and install it on their Discord accounts to play chess in Group DMs/friend chat rooms. Chesslise is 3rd best chess Discord bot in Discord's official App directory, being used in more than 1k servers.
 
+Chesslise also has inbuilt CSSN (Chesslise Social Server Network) that allows players to find new friends, find new challenges from their friend networks and open networks
+
+
 
 # API
 
@@ -43,22 +46,19 @@ read more in `CONTRIBUTING.md` on how to setup lise on Discord and server to run
 
 
 # Popular Commands
-| Commands     | Description |
-| ----------- | ----------- |
-| /puzzle      | Do lichess/Chess.com puzzles    |
-| /solve   | solve chess puzzles in discord           |
-| /play      | create live chess games in discord                           |
+| Commands              | Description                          |
+|-----------------------|--------------------------------------|
+| /puzzle               | Do lichess/Chess.com puzzles         |
+| /solve                | solve chess puzzles in discord       |
+| /play                 | create live chess games in discord   |
+ | /pairchallengenetwork | challenge a player from CSSN network |
+| /pairchallenge        | find a challenge globally            |
 
 see more commands in `commands.md`
 to see entire demo of Chesslise read the lichess blog guide [here](https://lichess.org/@/Noobmasterplayer123/blog/chesslise-breaks-free/ywQIrVDo)
 
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
-
-## Chesslise @ BlueSky
-[Source code](https://github.com/jalpp/ChessliseSky)
-[Chesslise profile](https://bsky.app/profile/chesslise.bsky.social)
-
 
 
 

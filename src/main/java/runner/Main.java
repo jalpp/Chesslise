@@ -1,5 +1,7 @@
 package runner;
 
+import com.mongodb.client.MongoCollection;
+import database.MongoConnect;
 import discord.mainhandler.CommandHandler;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
@@ -10,23 +12,30 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.IntegrationType;
 import net.dv8tion.jda.api.interactions.InteractionContextType;
-import net.dv8tion.jda.api.interactions.InteractionType;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import network.user.PreferenceFr;
+import network.user.PreferencePl;
+import network.user.PreferenceTc;
+import org.bson.Document;
 
 
 public class Main extends ListenerAdapter {
 
     private static JDA jda;
 
+    public static final Dotenv dotenv = Dotenv.load();
+
+    private static MongoCollection<Document> networkPlayers;
+
+    private static MongoCollection<Document> networkChallenges;
+
     public static void main(String[] args) {
 
-        Dotenv dotenv = Dotenv.load();
-
-        JDABuilder jdaBuilder = JDABuilder.createDefault(dotenv.get("ENV_BETA").equalsIgnoreCase("true") ? dotenv.get("DISCORD_BETA_TOKEN") : dotenv.get("DISCORD_PROD_TOKEN") );
+        JDABuilder jdaBuilder = JDABuilder.createDefault(dotenv.get("ENV_BETA").equalsIgnoreCase("true") ? dotenv.get("DISCORD_BETA_TOKEN") : dotenv.get("DISCORD_PROD_TOKEN"));
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
 
@@ -37,7 +46,9 @@ public class Main extends ListenerAdapter {
 
         try {
             jda = jdaBuilder.build();
-
+            MongoConnect.main(args);
+            networkChallenges = MongoConnect.getNetworkChallenges();
+            networkPlayers = MongoConnect.getNetworkPlayers();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -55,6 +66,48 @@ public class Main extends ListenerAdapter {
         commands.addCommands(Commands.slash("learnchess", "Learn basic chess moves").setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
         commands.addCommands(Commands.slash("chessdb", "View chessdb eval of a position useful for openings/middelgame fens").setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL).addOption(OptionType.STRING, "paste-fen", "Enter fen to be analyzed", true));
 
+        // <--------- Slash Network Commands -------------->
+
+
+        commands.addCommands(Commands.slash("connect", "join the Chesslise network to find players")
+                .addOptions(PreferencePl.getOptionData())
+                .addOptions(PreferenceTc.getOptionData())
+                .addOptions(PreferenceFr.getPlayerOptionData())
+                .addOptions(PreferenceFr.getOpeningOptionData())
+                .addOptions(PreferenceFr.getPieceOptionData())
+                .addOptions(PreferenceFr.getStyleOptionData())
+        );
+
+        commands.addCommands(Commands.slash("disconnect", "disconnect from Chesslise network and not get paired"));
+
+        commands.addCommands(Commands.slash("setpreference", "join the Chesslise network to find players and friends")
+                .addOptions(PreferencePl.getOptionData())
+                .addOptions(PreferenceTc.getOptionData())
+                .addOptions(PreferenceFr.getPlayerOptionData())
+                .addOptions(PreferenceFr.getOpeningOptionData())
+                .addOptions(PreferenceFr.getPieceOptionData())
+                .addOptions(PreferenceFr.getStyleOptionData())
+        );
+
+        commands.addCommands(Commands.slash("mychallenges", "View your challenges in the Chesslise network").addOptions(new OptionData(OptionType.STRING, "chalstatus", "Select the view configuration of the status", true).addChoice("pending", "pending")
+                .addChoice("accepted", "accepted").addChoice("cancelled", "cancelled").addChoice("completed", "completed")));
+        commands.addCommands(Commands.slash("pairchallenge", "Attempt to find a challenge in Chesslise network"));
+        commands.addCommands(Commands.slash("pairchallengenetwork", "Attempt to send a challenge in your friend network"));
+        commands.addCommands(Commands.slash("seekchallenge", "Create a challenge and seek for others to accept it"));
+        commands.addCommands(Commands.slash("cancelchallenge", "Cancel a challenge by challenge ID").addOption(OptionType.STRING, "challid", "provide the challenge id", true));
+        commands.addCommands(Commands.slash("completechallenge", "Complete a challenge by challenge ID").addOption(OptionType.STRING, "cchallid", "provide the challenge id", true));
+        commands.addCommands(Commands.slash("findfriend", "find a new friend within your network or globally"));
+        commands.addCommands(Commands.slash("sendfriendrequest", "Send friend request by providing target username").addOption(OptionType.STRING, "frienduser", "provide target username", true));
+        commands.addCommands(Commands.slash("acceptfriendrequest", "Accept friend request by providing target friend discord id").addOption(OptionType.STRING, "friendid", "provide target discord id", true));
+        commands.addCommands(Commands.slash("cancelfriendrequest", "Cancel an incomming friend request by providing discord id").addOption(OptionType.STRING, "cancelid", "provide target discord id", true));
+        commands.addCommands(Commands.slash("removefriend", "Remove a friend from friend list by providing discord id").addOption(OptionType.STRING, "removeid", "provide friend discord username", true));
+        commands.addCommands(Commands.slash("blockfriend", "Block a friend who has not being friendly by providing discord id").addOption(OptionType.STRING, "blockid", "provide friend discord username", true));
+        commands.addCommands(Commands.slash("viewfriends", "View various friend requests and friend list").addOptions(new OptionData(OptionType.STRING, "requesttype", "Select request type", true).addChoice("friendlist", "flist")
+                .addChoice("incomming", "fin").addChoice("outgoing", "fout")));
+
+
+
+
         // <------- MESSAGE COMMANDS ---------->
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Lichess Daily Puzzle"));
         commands.addCommands(Commands.context(Command.Type.MESSAGE, "Play Chess"));
@@ -66,9 +119,17 @@ public class Main extends ListenerAdapter {
         commands.queue();
 
 
-       // LichessBotRunner.main(args); // sun set of Liquid Chess Engine (turn it on if you want to run locally) and import the Engine module
+        // LichessBotRunner.main(args); // sun set of Liquid Chess Engine (turn it on if you want to run locally) and import the Engine module
 
 
+    }
+
+    public static MongoCollection<Document> getNetworkChallenges() {
+        return networkChallenges;
+    }
+
+    public static MongoCollection<Document> getNetworkPlayers() {
+        return networkPlayers;
     }
 
     @Override
@@ -76,7 +137,7 @@ public class Main extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("V15 Servers: " + guildCount));
+        jda.getPresence().setActivity(Activity.watching("V16 Servers: " + guildCount + " Join CSSN!"));
     }
 
 

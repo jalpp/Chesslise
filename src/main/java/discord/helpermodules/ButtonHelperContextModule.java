@@ -20,8 +20,6 @@ public class ButtonHelperContextModule {
     public ButtonHelperContextModule() {
 
     }
-
-
     public void handlePlayingEngineFlow(ButtonInteractionEvent buttonEvent, Board board, Board blackboard) {
         switch (buttonEvent.getComponentId()) {
             case "bot-lose" -> {
@@ -199,7 +197,6 @@ public class ButtonHelperContextModule {
             case "Pawn-pro" -> buttonEvent.editMessageEmbeds(commandInfo.getPage12().build()).setActionRow(Button.primary("Pawn-pro", "All set for chess!").asDisabled()).queue();
 
         }
-
 
     }
 
