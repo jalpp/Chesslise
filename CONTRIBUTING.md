@@ -22,7 +22,10 @@
 - run the application ``` java -jar /target/Chesslise-15.0-SNAPSHOT-jar-with-dependencies.jar ```
 
 # How to set up CSSN locally?
-- you would need MongoDB database provide `CONNECTION_STRING` `DB_NAME` `DB_Collection_names` for player and network collection names
+- you would need MongoDB database provide `CONNECTION_STRING` `DB_NAME` `DB_Collection_names` for player and network collection names, make sure to have seperate beta and prod collections
+
+# CSSN test cases
+you run run cssn test cases if you made any changes to the cssn pairing algo espically the Pairing class
 
 
 
