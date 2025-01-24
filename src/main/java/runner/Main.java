@@ -69,7 +69,9 @@ public class Main extends ListenerAdapter {
         // <--------- Slash Network Commands -------------->
 
 
+       
         commands.addCommands(Commands.slash("connect", "join the Chesslise network to find players")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
                 .addOptions(PreferencePl.getOptionData())
                 .addOptions(PreferenceTc.getOptionData())
                 .addOptions(PreferenceFr.getPlayerOptionData())
@@ -78,9 +80,11 @@ public class Main extends ListenerAdapter {
                 .addOptions(PreferenceFr.getStyleOptionData())
         );
 
-        commands.addCommands(Commands.slash("disconnect", "disconnect from Chesslise network and not get paired"));
+        commands.addCommands(Commands.slash("disconnect", "disconnect from Chesslise network and not get paired")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
 
         commands.addCommands(Commands.slash("setpreference", "join the Chesslise network to find players and friends")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
                 .addOptions(PreferencePl.getOptionData())
                 .addOptions(PreferenceTc.getOptionData())
                 .addOptions(PreferenceFr.getPlayerOptionData())
@@ -89,20 +93,43 @@ public class Main extends ListenerAdapter {
                 .addOptions(PreferenceFr.getStyleOptionData())
         );
 
-        commands.addCommands(Commands.slash("mychallenges", "View your challenges in the Chesslise network").addOptions(new OptionData(OptionType.STRING, "chalstatus", "Select the view configuration of the status", true).addChoice("pending", "pending")
+        commands.addCommands(Commands.slash("mychallenges", "View your challenges in the Chesslise network")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOptions(new OptionData(OptionType.STRING, "chalstatus", "Select the view configuration of the status", true).addChoice("pending", "pending")
                 .addChoice("accepted", "accepted").addChoice("cancelled", "cancelled").addChoice("completed", "completed")));
-        commands.addCommands(Commands.slash("pairchallenge", "Attempt to find a challenge in Chesslise network"));
-        commands.addCommands(Commands.slash("pairchallengenetwork", "Attempt to send a challenge in your friend network"));
-        commands.addCommands(Commands.slash("seekchallenge", "Create a challenge and seek for others to accept it"));
-        commands.addCommands(Commands.slash("cancelchallenge", "Cancel a challenge by challenge ID").addOption(OptionType.STRING, "challid", "provide the challenge id", true));
-        commands.addCommands(Commands.slash("completechallenge", "Complete a challenge by challenge ID").addOption(OptionType.STRING, "cchallid", "provide the challenge id", true));
-        commands.addCommands(Commands.slash("findfriend", "find a new friend within your network or globally"));
-        commands.addCommands(Commands.slash("sendfriendrequest", "Send friend request by providing target username").addOption(OptionType.STRING, "frienduser", "provide target username", true));
-        commands.addCommands(Commands.slash("acceptfriendrequest", "Accept friend request by providing target friend discord id").addOption(OptionType.STRING, "friendid", "provide target discord id", true));
-        commands.addCommands(Commands.slash("cancelfriendrequest", "Cancel an incomming friend request by providing discord id").addOption(OptionType.STRING, "cancelid", "provide target discord id", true));
-        commands.addCommands(Commands.slash("removefriend", "Remove a friend from friend list by providing discord id").addOption(OptionType.STRING, "removeid", "provide friend discord username", true));
-        commands.addCommands(Commands.slash("blockfriend", "Block a friend who has not being friendly by providing discord id").addOption(OptionType.STRING, "blockid", "provide friend discord username", true));
-        commands.addCommands(Commands.slash("viewfriends", "View various friend requests and friend list").addOptions(new OptionData(OptionType.STRING, "requesttype", "Select request type", true).addChoice("friendlist", "flist")
+        commands.addCommands(Commands.slash("pairchallenge", "Attempt to find a challenge in Chesslise network")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
+        commands.addCommands(Commands.slash("pairchallengenetwork", "Attempt to send a challenge in your friend network")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
+        commands.addCommands(Commands.slash("seekchallenge", "Create a challenge and seek for others to accept it")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
+        commands.addCommands(Commands.slash("cancelchallenge", "Cancel a challenge by challenge ID")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOption(OptionType.STRING, "challid", "provide the challenge id", true));
+        commands.addCommands(Commands.slash("completechallenge", "Complete a challenge by challenge ID")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOption(OptionType.STRING, "cchallid", "provide the challenge id", true));
+        commands.addCommands(Commands.slash("findfriend", "find a new friend within your network or globally")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
+        commands.addCommands(Commands.slash("sendfriendrequest", "Send friend request by providing target username")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOption(OptionType.STRING, "frienduser", "provide target username", true));
+        commands.addCommands(Commands.slash("acceptfriendrequest", "Accept friend request by providing target friend discord id")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOption(OptionType.STRING, "friendid", "provide target discord id", true));
+        commands.addCommands(Commands.slash("cancelfriendrequest", "Cancel an incomming friend request by providing discord id")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOption(OptionType.STRING, "cancelid", "provide target discord id", true));
+        commands.addCommands(Commands.slash("removefriend", "Remove a friend from friend list by providing discord id")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOption(OptionType.STRING, "removeid", "provide friend discord username", true)
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
+        commands.addCommands(Commands.slash("blockfriend", "Block a friend who has not being friendly by providing discord id")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOption(OptionType.STRING, "blockid", "provide friend discord username", true));
+        commands.addCommands(Commands.slash("viewfriends", "View various friend requests and friend list")
+                .setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL)
+                .addOptions(new OptionData(OptionType.STRING, "requesttype", "Select request type", true).addChoice("friendlist", "flist")
                 .addChoice("incomming", "fin").addChoice("outgoing", "fout")));
 
 
