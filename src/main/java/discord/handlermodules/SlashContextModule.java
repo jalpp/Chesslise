@@ -12,74 +12,89 @@ import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionE
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
-
+/**
+ * SlashContextModule class to handle the slash context
+ */
 public class SlashContextModule implements ContextHandler {
 
-
-
+    /**
+     * Handle the logic for the slash context
+     *
+     * @param context     the message context
+     * @param slashEvent  the slash command event
+     * @param buttonEvent the button event
+     * @param eventModal  the modal event
+     * @param autoEvent   the autocomplete event
+     * @param client      the client
+     * @param board       the board
+     * @param blackboard  the blackboard
+     * @param spam        the spam
+     * @param dailyspam   the daily spam
+     * @param watchlimit  the watch limit
+     */
     @Override
     public void handleLogic(MessageContextInteractionEvent context, SlashCommandInteractionEvent slashEvent, ButtonInteractionEvent buttonEvent, ModalInteractionEvent eventModal, CommandAutoCompleteInteractionEvent autoEvent, Client client, Board board, Board blackboard, AntiSpam spam, AntiSpam dailyspam, AntiSpam watchlimit) {
         String name = slashEvent.getName();
-        BotContextModule botCommands = new BotContextModule();
-        CommandInfo info_sender = new CommandInfo();
-        ToolContextModule tools = new ToolContextModule();
-        ModalHelperContextModule form_tools = new ModalHelperContextModule();
-        AutoCompleteHelperModule autoHelper = new AutoCompleteHelperModule();
-        NetworkContextModule network = new NetworkContextModule(slashEvent);
+        EngineHelperModule engineTool = new EngineHelperModule(slashEvent, board, blackboard);
+        CommandInfo infoTool = new CommandInfo(slashEvent);
+        ChessSlashHelperModule chessTool = new ChessSlashHelperModule(slashEvent);
+        AutoCompleteHelperModule autoTool = new AutoCompleteHelperModule(autoEvent, client, slashEvent);
+        NetworkHelperModule networkTool = new NetworkHelperModule(slashEvent);
+        DoubleContextHelperModule twoContextTool = new DoubleContextHelperModule(slashEvent, context, spam, client, true);
 
         switch (name) {
 
-            case "resetboard" -> botCommands.resetBoardCommand(slashEvent, board, blackboard);
+            case "resetboard" -> engineTool.sendresetBoardCommand();
 
-            case "move" -> botCommands.whiteSideMoveCommand(slashEvent, board);
+            case "move" -> engineTool.sendwhiteSideMoveCommand();
 
-            case "puzzle" -> tools.sendPuzzleMenuCommand(slashEvent, client, context, spam);
+            case "puzzle" -> twoContextTool.sendPuzzleMenuCommand();
 
-            case "help" -> info_sender.sendInfoCommand(slashEvent);
+            case "help" -> infoTool.sendInfoCommand();
 
-            case "learnchess" -> info_sender.sendLearnCommand(slashEvent);
+            case "learnchess" -> infoTool.sendLearnCommand();
 
-            case "play" -> tools.sendPlayChallengeCommand(slashEvent, context, true);
+            case "play" -> twoContextTool.sendPlayChallengeCommand();
 
-            case "profile" -> autoHelper.onSelectLichessUserNameHandleRequest(slashEvent, client);
+            case "profile" -> autoTool.sendSelectLichessUserNameHandleRequest();
 
-            case "profilecc" -> form_tools.sendChessComUserProfileInputForm(slashEvent);
+            case "profilecc" -> chessTool.sendChessComUserProfileInputForm();
 
-            case "watch" -> form_tools.sendLichessWatchGameCommand(slashEvent, watchlimit);
+            case "watch" -> chessTool.sendLichessWatchGameCommand();
 
-            case "chessdb" -> tools.sendChessDBInfo(slashEvent);
+            case "chessdb" -> chessTool.sendChessDBInfo();
 
-            case "connect" -> network.sendConnect();
+            case "connect" -> networkTool.sendConnect();
 
-            case "disconnect" -> network.sendDisconnect();
+            case "disconnect" -> networkTool.sendDisconnect();
 
-            case "setpreference" -> network.sendSetPreference();
+            case "setpreference" -> networkTool.sendSetPreference();
 
-            case "mychallenges" -> network.sendMyChallenge();
+            case "mychallenges" -> networkTool.sendMyChallenge();
 
-            case "pairchallenge" -> network.sendChallengeGlobal();
+            case "pairchallenge" -> networkTool.sendChallengeGlobal();
 
-            case "pairchallengenetwork" -> network.sendChallengeSelf();
+            case "pairchallengenetwork" -> networkTool.sendChallengeSelf();
 
-            case "seekchallenge" -> network.sendSeekChallenge();
+            case "seekchallenge" -> networkTool.sendSeekChallenge();
 
-            case "cancelchallenge" -> network.sendCancelChallenge();
+            case "cancelchallenge" -> networkTool.sendCancelChallenge();
 
-            case "completechallenge" -> network.sendCompleteChallenge();
+            case "completechallenge" -> networkTool.sendCompleteChallenge();
 
-            case "sendfriendrequest" -> network.sendSendFriendRequest();
+            case "sendfriendrequest" -> networkTool.sendSendFriendRequest();
 
-            case "acceptfriendrequest" -> network.sendAcceptFriendRequest();
+            case "acceptfriendrequest" -> networkTool.sendAcceptFriendRequest();
 
-            case "cancelfriendrequest" -> network.sendcancelFriendRequest();
+            case "cancelfriendrequest" -> networkTool.sendcancelFriendRequest();
 
-            case "findfriend" -> network.sendFriendFinderNetwork();
+            case "findfriend" -> networkTool.sendFriendFinderNetwork();
 
-            case "removefriend" -> network.sendRemoveFriendRequest();
+            case "removefriend" -> networkTool.sendRemoveFriendRequest();
 
-            case "blockfriend" -> network.sendBlockFriendRequest();
+            case "blockfriend" -> networkTool.sendBlockFriendRequest();
 
-            case "viewfriends" -> network.sendViewFriendRequest();
+            case "viewfriends" -> networkTool.sendViewFriendRequest();
 
 
         }

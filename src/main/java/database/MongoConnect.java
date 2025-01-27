@@ -13,7 +13,7 @@ import org.bson.Document;
 import runner.Main;
 
 /**
- * The type Mongo connect.
+ * Class to connect to the MongoDB database
  */
 public class MongoConnect {
 
@@ -23,7 +23,6 @@ public class MongoConnect {
     private static MongoCollection<Document> networkChallenges;
 
 
-
     /**
      * Instantiates a new Mongo connect.
      */
@@ -31,9 +30,9 @@ public class MongoConnect {
     }
 
     /**
-     * Connect.
+     * start the connection to the MongoDB database
      */
-    public static void connect(){
+    public static void connect() {
         String connectionString = Main.dotenv.get("CONNECTION_STRING");
         String dbname = Main.dotenv.get("DB_NAME");
         String playerColName = Main.dotenv.get("DB_PLAYER_COL");
@@ -51,9 +50,9 @@ public class MongoConnect {
 
         MongoDatabase database = mongoClient.getDatabase(dbname);
 
-        networkChallenges = database.getCollection(challengeColName);
+        networkChallenges = database.getCollection(Main.dotenv.get("ENV_BETA").equalsIgnoreCase("true") ? challengeColName + "beta" : challengeColName);
 
-        networkPlayers = database.getCollection(playerColName);
+        networkPlayers = database.getCollection(Main.dotenv.get("ENV_BETA").equalsIgnoreCase("true") ? playerColName + "beta" : playerColName);
     }
 
     /**
@@ -65,10 +64,20 @@ public class MongoConnect {
         connect();
     }
 
+    /**
+     * Get the network players collection
+     *
+     * @return the network players collection
+     */
     public static MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
     }
 
+    /**
+     * Get the network challenges collection
+     *
+     * @return the network challenges collection
+     */
     public static MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
     }

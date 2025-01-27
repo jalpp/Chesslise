@@ -4,7 +4,9 @@ import com.mongodb.client.MongoCollection;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bson.Document;
 
-
+/**
+ * SendFriendRequest class to handle the send friend request
+ */
 public class SendFriendRequest extends Request {
 
 
@@ -13,6 +15,11 @@ public class SendFriendRequest extends Request {
 
     }
 
+    /**
+     * Send the friend request
+     *
+     * @param event the slash command event
+     */
     public void sendFriendReq(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -21,6 +28,13 @@ public class SendFriendRequest extends Request {
         event.getHook().sendMessage(friendRequest).queue();
     }
 
+    /**
+     * Add the friend
+     *
+     * @param discordId            the discord id
+     * @param targetFriendusername the target friend username
+     * @return the message for adding the friend
+     */
     public String addFriend(String discordId, String targetFriendusername) {
         Document current = this.getNetworkPlayers().find(new Document("id", discordId)).first();
         Document friend = this.getNetworkPlayers().find(new Document("username", targetFriendusername)).first();
@@ -33,7 +47,7 @@ public class SendFriendRequest extends Request {
             return "Targeted user not found in Chesslise network! Please ask them to run install Chesslise from app store [here](https://discord.com/discovery/applications/930544707300393021) and run /connect, finally they can accept your friend request running /acceptfriendrequest " + discordId;
         }
 
-        if(current.getString("username").equalsIgnoreCase(friend.getString("username"))){
+        if (current.getString("username").equalsIgnoreCase(friend.getString("username"))) {
             return "You can't send friend request to yourself!";
         }
 

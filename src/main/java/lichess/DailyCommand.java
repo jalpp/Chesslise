@@ -9,7 +9,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 
-
+/**
+ * Class to handle the daily puzzle for Lichess
+ */
 public class DailyCommand implements abstraction.Puzzle {
 
 

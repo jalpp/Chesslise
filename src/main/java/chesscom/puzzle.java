@@ -9,7 +9,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
 import java.io.IOException;
 
-
+/**
+ * Chess.com Daily Puzzle Command class
+ */
 public class puzzle implements Puzzle {
 
 

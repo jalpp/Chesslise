@@ -4,6 +4,9 @@ package network.user;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
+/**
+ * PreferencePl enum to handle the platform preferences
+ */
 public enum PreferencePl {
 
     LICHESS,
@@ -12,9 +15,14 @@ public enum PreferencePl {
 
     ALL;
 
-
-    public String toMongo(){
-        switch (this){
+    /**
+     * Build the platform preference
+     *
+     * @param tag the tag for the platform
+     * @return the platform preference to MongoDb document field
+     */
+    public String toMongo() {
+        switch (this) {
             case LICHESS -> {
                 return "lichess";
             }
@@ -31,12 +39,14 @@ public enum PreferencePl {
         return null;
     }
 
-    public static OptionData getOptionData(){
-        return new OptionData(OptionType.STRING, "platform", "choose platform", true).addChoice( "Lichess.org Authenticated", "lichess").addChoice( "Lichess.org Anon", "unauthlichess").addChoice( "All Platforms", "allplatform");
+    /**
+     * Get the platform preference
+     *
+     * @return the platform preference Discord OptionData
+     */
+    public static OptionData getOptionData() {
+        return new OptionData(OptionType.STRING, "platform", "choose platform", true).addChoice("Lichess.org Authenticated", "lichess").addChoice("Lichess.org Anon", "unauthlichess").addChoice("All Platforms", "allplatform");
     }
-
-
-
 
 
 }

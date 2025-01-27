@@ -4,8 +4,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bson.Document;
-// TODO: remove the usernames from the friend viewing list
 
+/**
+ * RemoveFriendRequest class to handle the remove friend request
+ */
 public class RemoveFriendRequest extends Request {
 
 
@@ -13,7 +15,11 @@ public class RemoveFriendRequest extends Request {
         super(players);
     }
 
-
+    /**
+     * Remove the friend request
+     *
+     * @param event the slash command event
+     */
     public void removeFriendRequest(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -22,7 +28,13 @@ public class RemoveFriendRequest extends Request {
         event.getHook().sendMessage(removedFked).queue();
     }
 
-
+    /**
+     * Remove the friend
+     *
+     * @param discordid             the discord id
+     * @param incomingFriendRequest the incoming friend request
+     * @return the message for removing the friend
+     */
     public String removeFriend(String discordid, String incomingFriendRequest) {
         Document current = this.getNetworkPlayers().find(new Document("id", discordid)).first();
         Document remove = this.getNetworkPlayers().find(new Document("username", incomingFriendRequest)).first();

@@ -1,5 +1,8 @@
 package network.challenge;
 
+/**
+ * Status enum to handle the status of the challenge
+ */
 public enum Status {
 
 
@@ -11,8 +14,13 @@ public enum Status {
 
     COMPLETED;
 
-    public String toMongo(){
-        switch (this){
+    /**
+     * Convert the status to a string
+     *
+     * @return the string for MongoDB Document field
+     */
+    public String toMongo() {
+        switch (this) {
             case PENDING -> {
                 return "pending";
             }
@@ -32,10 +40,6 @@ public enum Status {
 
         return null;
     }
-
-
-
-
 
 
 }

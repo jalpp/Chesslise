@@ -10,40 +10,48 @@ import java.net.http.HttpResponse;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * ChessDBQuery class to query the ChessDB API
+ */
 public class ChessDBQuery {
-
+    /**
+     * Get the top 3 best moves for the given FEN position
+     *
+     * @param fen the FEN position
+     * @return the top 3 best moves
+     */
     public String getTop3BestMove(String fen) {
         StringBuilder builder = new StringBuilder();
 
-        // Properly encode the FEN string
+
         String encodedFen = URLEncoder.encode(fen, StandardCharsets.UTF_8);
         String apiUrl = "https://www.chessdb.cn/cdb.php?action=queryall&board=" + encodedFen + "&json=1";
 
         try {
-            // Create HttpClient
+
             HttpClient client = HttpClient.newHttpClient();
 
-            // Create a GET request
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(apiUrl))
                     .GET()
                     .build();
 
-            // Send the request and get a response
+
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                // Parse the JSON response
+
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode = objectMapper.readTree(response.body());
 
-                // Check the status field
+
                 String status = rootNode.path("status").asText();
                 if (!"ok".equals(status)) {
-                    return "API returned a non-OK status: " + status;
+                    return "Seems like this position eval isnt in Chess DB right now!" + status;
                 }
 
-                // Get moves
+
                 JsonNode moves = rootNode.path("moves");
                 if (moves.isArray()) {
                     int count = 0;

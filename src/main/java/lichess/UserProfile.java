@@ -10,12 +10,23 @@ import chariot.model.User;
 
 import java.util.List;
 
+/**
+ * UserProfile class to handle the user profile for Lichess
+ */
 public class UserProfile extends UserObject {
 
     public UserProfile(Client client, String userParsing) {
         super(client, userParsing);
     }
 
+    /**
+     * Get the rating for the user
+     *
+     * @param perfType the performance type
+     * @param emoji    the emoji
+     * @param typeName the type name
+     * @return the rating
+     */
     private String getRating(Enums.PerfType perfType, String emoji, String typeName) {
         One<PerformanceStatistics> performance = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), perfType);
 
@@ -25,22 +36,47 @@ public class UserProfile extends UserObject {
         return emoji + " **" + typeName + "**: ?";
     }
 
+    /**
+     * Get the blitz ratings
+     *
+     * @return the blitz ratings
+     */
     public String getBlitzRatings() {
         return getRating(Enums.PerfType.blitz, "🔥", "Blitz");
     }
 
+    /**
+     * Get the rapid ratings
+     *
+     * @return the rapid ratings
+     */
     public String getRapidRatings() {
         return getRating(Enums.PerfType.rapid, "🐇", "Rapid");
     }
 
+    /**
+     * Get the bullet ratings
+     *
+     * @return the bullet ratings
+     */
     public String getBulletRatings() {
         return getRating(Enums.PerfType.bullet, "🔫", "Bullet");
     }
 
+    /**
+     * Get the classical ratings
+     *
+     * @return the classical ratings
+     */
     public String getClassicalRatings() {
         return getRating(Enums.PerfType.classical, "🐢", "Classical");
     }
 
+    /**
+     * Get the user profile
+     *
+     * @return the user profile
+     */
     public String getUserProfile() {
         try {
             One<User> userResult = this.getClient().users().byId(this.getUserID(), params -> params.withTrophies(true));
@@ -84,7 +120,7 @@ public class UserProfile extends UserObject {
                     ? "\n\n🎖️ **Trophies:**\n" + trophiesBuilder
                     : "";
 
-            // Formatted Profile
+
             return String.format(
                     "%s %s %s\n" +
                             "**All Games:** %d\n" +

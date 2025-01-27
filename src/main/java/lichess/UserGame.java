@@ -4,7 +4,9 @@ import abstraction.Player.UserObject;
 import chariot.Client;
 import chariot.model.Game;
 
-
+/**
+ * UserGame class to handle the user game
+ */
 public class UserGame extends UserObject {
 
 
@@ -13,13 +15,22 @@ public class UserGame extends UserObject {
 
     }
 
+    /**
+     * Check if the user is black in the game
+     *
+     * @return true if the user is black
+     */
     public boolean isBlack() {
 
         return this.getClient().games().currentByUserId(this.getUserID()).get().players().black().name().equalsIgnoreCase(getUserID());
 
     }
 
-
+    /**
+     * Get the user games
+     *
+     * @return the game link id
+     */
     public String getUserGames() {
 
         String gamelinkId = "";

@@ -6,14 +6,22 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 
 import org.bson.Document;
 
-public class AcceptFriendRequest extends Request{
+/**
+ * AcceptFriendRequest class to handle the accept friend request
+ */
+public class AcceptFriendRequest extends Request {
 
 
-    public AcceptFriendRequest(MongoCollection<Document> players){
+    public AcceptFriendRequest(MongoCollection<Document> players) {
         super(players);
     }
 
-    public void acceptFriendRequest(SlashCommandInteractionEvent event){
+    /**
+     * Accept the friend request
+     *
+     * @param event the slash command event
+     */
+    public void acceptFriendRequest(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
         String acceptFriendMessage = acceptFriend(event.getUser().getId(), event.getOption("friendid").getAsString());
@@ -22,10 +30,11 @@ public class AcceptFriendRequest extends Request{
     }
 
     /**
+     * Accept the friend request
      *
-     * @param discordid
-     * @param incomingFriendRequest
-     * @return
+     * @param discordid             the discord id
+     * @param incomingFriendRequest the incoming friend request
+     * @return the message for accepting the friend
      */
 
     public String acceptFriend(String discordid, String incomingFriendRequest) {
@@ -61,6 +70,7 @@ public class AcceptFriendRequest extends Request{
 
         return "Successfully accepted the friend " + incomingFriendRequest + "! You can also view the status of the friendship in /viewfriends, you can send them a friend request via Discord to connect and start playing (recommended)";
     }
+
 
     @Override
     public String toString() {

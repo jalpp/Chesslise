@@ -6,6 +6,9 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import network.user.friends.FriendPrefBuilder;
 import org.bson.Document;
 
+/**
+ * PreferenceUpdate class to handle the update preference
+ */
 public class PreferenceUpdate {
 
     private final MongoCollection<Document> networkPlayers;
@@ -14,6 +17,11 @@ public class PreferenceUpdate {
         this.networkPlayers = networkPlayers;
     }
 
+    /**
+     * Update the preference
+     *
+     * @param event the slash command event
+     */
     public void update(SlashCommandInteractionEvent event) {
 
         PreferenceFr player = PreferenceBuilder.playerBuilder(event.getOptionsByName("player").get(0).getAsString());
@@ -33,6 +41,15 @@ public class PreferenceUpdate {
     }
 
 
+    /**
+     * Update the preference
+     *
+     * @param discordid the discord id
+     * @param pl        the platform
+     * @param tc        the time control
+     * @param builder   the friend preference builder
+     * @return the message for updating the preference
+     */
     public String updatePreference(String discordid, PreferencePl pl, PreferenceTc tc, FriendPrefBuilder builder) {
         Document query = new Document("id", discordid);
         Document preferencedoc = this.networkPlayers.find(query).first();

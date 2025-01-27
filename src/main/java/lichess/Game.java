@@ -5,14 +5,16 @@ import chariot.Client;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-
+/**
+ * Game class to handle the game creation on Lichess
+ */
 public class Game {
 
     public Game() {
 
     }
 
-    public String generateOpenEndedChallengeURLs(int min, int sec, Boolean isRated, Client client) {
+    public static String generateOpenEndedChallengeURLs(int min, int sec, Boolean isRated, Client client) {
         AtomicReference<String> URL = new AtomicReference<>("");
         if (isRated) {
 
@@ -42,8 +44,7 @@ public class Game {
     }
 
 
-
-    public String generateOpenChallengeForTwoUsers(String self_user, String target_user, Client client){
+    public static String generateOpenChallengeForTwoUsers(String self_user, String target_user, Client client) {
         AtomicReference<String> URL = new AtomicReference<>("");
         int min = new Random().nextInt(1, 10) * 60;
         int sec = new Random().nextInt(1, 5);
@@ -55,10 +56,30 @@ public class Game {
 
     }
 
+    public static boolean isLink(String link) {
+        return link.contains("/") && link.contains(".");
+    }
 
 
+    public static String getValidGameId(String link) {
+        String[] spliter = link.split("/");
+        String validGameId = "";
 
+        if (spliter.length <= 3)
+            return null;
 
+        if (spliter[3].length() == 12) {
+            validGameId += spliter[3].substring(0, spliter[3].length() - 4);
+        } else {
+            validGameId += spliter[3];
+        }
+
+        if (!(link.contains("https://lichess.org/") && Client.basic().games().byGameId(validGameId).isPresent())) {
+            return null;
+        }
+
+        return validGameId;
+    }
 
 
 }

@@ -26,7 +26,6 @@ class ConnectTest {
     private static Connect connect;
 
 
-
     @BeforeAll
     static void setUp() {
         String connectionString = Main.dotenv.get("CONNECTION_STRING");
@@ -46,13 +45,12 @@ class ConnectTest {
 
         MongoDatabase database = mongoClient.getDatabase(dbname);
 
-        networkChallenges = database.getCollection(challengeColName);
+        networkChallenges = database.getCollection(challengeColName + "beta");
 
-        networkPlayers = database.getCollection(playerColName);
+        networkPlayers = database.getCollection(playerColName + "beta");
 
         connect = new Connect(networkPlayers);
     }
-
 
 
     @Test
@@ -66,7 +64,7 @@ class ConnectTest {
 
     @Test
     @Order(2)
-    void insertuser2(){
+    void insertuser2() {
 
         String msg2 = connect.insertEntry("12123423123", "user2", PreferencePl.UNAUTH_LICHESS, PreferenceTc.BLITZ, new FriendPrefBuilder(PreferenceFr.MAGNUS, PreferenceFr.KNIGHT, PreferenceFr.SICILIAN, PreferenceFr.AGGRESSIVE));
         System.out.println(msg2);
@@ -75,7 +73,7 @@ class ConnectTest {
 
     @Test
     @Order(3)
-    void insertuser3(){
+    void insertuser3() {
 
         String msg2 = connect.insertEntry("111111111111", "user3", PreferencePl.UNAUTH_LICHESS, PreferenceTc.BLITZ, new FriendPrefBuilder(PreferenceFr.GUKESH, PreferenceFr.KING, PreferenceFr.QUEENS_GAMBIT, PreferenceFr.AGGRESSIVE));
         System.out.println(msg2);
@@ -84,7 +82,7 @@ class ConnectTest {
 
     @Test
     @Order(4)
-    void insertuser4(){
+    void insertuser4() {
         String msg2 = connect.insertEntry("11111111112", "user4", PreferencePl.UNAUTH_LICHESS, PreferenceTc.BLITZ, new FriendPrefBuilder(PreferenceFr.GUKESH, PreferenceFr.KING, PreferenceFr.QUEENS_GAMBIT, PreferenceFr.AGGRESSIVE));
         System.out.println(msg2);
         Assertions.assertEquals("user4 joined the network!", msg2);
@@ -92,14 +90,15 @@ class ConnectTest {
 
     @Test
     @Order(5)
-    void insertuser5(){
+    void insertuser5() {
         String msg2 = connect.insertEntry("11111111113", "user5", PreferencePl.UNAUTH_LICHESS, PreferenceTc.BLITZ, new FriendPrefBuilder(PreferenceFr.GUKESH, PreferenceFr.KING, PreferenceFr.QUEENS_GAMBIT, PreferenceFr.AGGRESSIVE));
         System.out.println(msg2);
         Assertions.assertEquals("user5 joined the network!", msg2);
     }
+
     @Test
     @Order(6)
-    void insertuserNotAfriend(){
+    void insertuserNotAfriend() {
         String msg2 = connect.insertEntry("1111111111001", "user8", PreferencePl.UNAUTH_LICHESS, PreferenceTc.BLITZ, new FriendPrefBuilder(PreferenceFr.GUKESH, PreferenceFr.KING, PreferenceFr.QUEENS_GAMBIT, PreferenceFr.TACTICAL));
         System.out.println(msg2);
         Assertions.assertEquals("user8 joined the network!", msg2);
@@ -108,7 +107,7 @@ class ConnectTest {
 
     @Test
     @Order(7)
-    void insertuser6(){
+    void insertuser6() {
         String msg2 = connect.insertEntry("11111111112", "user4", PreferencePl.UNAUTH_LICHESS, PreferenceTc.BLITZ, new FriendPrefBuilder(PreferenceFr.FABI, PreferenceFr.PAWN, PreferenceFr.QUEENS_GAMBIT, PreferenceFr.AGGRESSIVE));
         System.out.println(msg2);
         Assertions.assertEquals("You have already connected your account!", msg2);
@@ -116,7 +115,7 @@ class ConnectTest {
 
     @Test
     @Order(8)
-    void insertUser7(){
+    void insertUser7() {
         String msg2 = connect.insertEntry("1111112121", "user6", PreferencePl.LICHESS, PreferenceTc.CLASSICAL, new FriendPrefBuilder(PreferenceFr.MAGNUS, PreferenceFr.KNIGHT, PreferenceFr.SICILIAN, PreferenceFr.AGGRESSIVE));
         Disconnect disconnect = new Disconnect(networkChallenges, networkPlayers);
         String msg3 = disconnect.goOffline("1111112121");
@@ -127,7 +126,7 @@ class ConnectTest {
 
     @Test
     @Order(9)
-    void sendfriendrequest1(){
+    void sendfriendrequest1() {
         SendFriendRequest request = new SendFriendRequest(networkPlayers);
         ViewFriendRequest view = new ViewFriendRequest(networkPlayers);
         String messg = request.addFriend("12345213123", "user2");
@@ -136,23 +135,23 @@ class ConnectTest {
         System.out.println(accept.acceptFriend("12123423123", "12345213123"));
         view.viewRequests("12345213123", ViewTypeFriend.LIST_FRIEND);
         System.out.println(request.addFriend("12123423123", "user3"));
-        System.out.println( accept.acceptFriend("111111111111", "12123423123"));
-        System.out.println( request.addFriend("111111111111", "user4"));
+        System.out.println(accept.acceptFriend("111111111111", "12123423123"));
+        System.out.println(request.addFriend("111111111111", "user4"));
         System.out.println(accept.acceptFriend("11111111112", "111111111111"));
-        System.out.println(  request.addFriend("11111111112", "user5"));
+        System.out.println(request.addFriend("11111111112", "user5"));
         System.out.println(accept.acceptFriend("11111111113", "11111111112"));
     }
 
     @Test
     @Order(10)
-    void viewFriendRequest(){
+    void viewFriendRequest() {
         ViewFriendRequest request = new ViewFriendRequest(networkPlayers);
         System.out.println(request.viewRequests("11111111113", ViewTypeFriend.LIST_FRIEND));
     }
 
     @Test
     @Order(11)
-    void sendChallengeSelfNetwork(){
+    void sendChallengeSelfNetwork() {
         // user 5 sends challenge to open/network
         Create create = new Create(networkChallenges, networkPlayers);
         create.createChallenge("12123423123", "user2", "blitz", "unauthlichess", "pending");
@@ -166,7 +165,7 @@ class ConnectTest {
 
     @Test
     @Order(12)
-    void sendNormalChallenge(){
+    void sendNormalChallenge() {
         Create create = new Create(networkChallenges, networkPlayers);
         create.createChallenge("11111111113", "user5", "blitz", "unauthlichess", "pending");
         Pairing pairing = new Pairing(networkChallenges, networkPlayers, PairingNetworkType.PAIR_NETWORK_FRIEND);
@@ -178,16 +177,15 @@ class ConnectTest {
 
     @Test
     @Order(13)
-    void findFriend(){
+    void findFriend() {
         Pairing pairing = new Pairing(networkChallenges, networkPlayers, PairingNetworkType.PAIR_NETWORK_FRIEND);
 
     }
 
 
-
     @AfterAll
     static void tearDown() {
-       networkChallenges.deleteMany(new Document());
-       networkPlayers.deleteMany(new Document());
+        networkChallenges.deleteMany(new Document());
+        networkPlayers.deleteMany(new Document());
     }
 }

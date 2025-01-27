@@ -3,6 +3,9 @@ package network.user;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
+/**
+ * PreferenceFr enum to handle the friend preferences
+ */
 public enum PreferenceFr {
 
 
@@ -45,8 +48,14 @@ public enum PreferenceFr {
     KID;
 
 
-    public String toMongoPlayer(){
-        switch (this){
+    /**
+     * Get the player preference
+     *
+     * @param discord the discord option
+     * @return the player preference MongoDB field
+     */
+    public String toMongoPlayer() {
+        switch (this) {
             case MAGNUS -> {
                 return "mag";
             }
@@ -66,8 +75,14 @@ public enum PreferenceFr {
         return null;
     }
 
-    public String toMongoPiece(){
-        switch (this){
+    /**
+     * Get the piece preference
+     *
+     * @param discord the discord option
+     * @return the piece preference MongoDB field
+     */
+    public String toMongoPiece() {
+        switch (this) {
             case PAWN -> {
                 return "paw";
             }
@@ -95,8 +110,14 @@ public enum PreferenceFr {
         return null;
     }
 
-    public String toMongoOpening(){
-        switch (this){
+    /**
+     * Get the opening preference
+     *
+     * @param discord the discord option
+     * @return the opening preference MongoDB field
+     */
+    public String toMongoOpening() {
+        switch (this) {
             case QUEENS_GAMBIT -> {
                 return "qge";
             }
@@ -116,8 +137,14 @@ public enum PreferenceFr {
         return null;
     }
 
-    public String toMongoStyle(){
-        switch (this){
+    /**
+     * Get the style preference
+     *
+     * @param discord the discord option
+     * @return the style preference MongoDB field
+     */
+    public String toMongoStyle() {
+        switch (this) {
             case POSITIONAL -> {
                 return "pos";
             }
@@ -138,27 +165,46 @@ public enum PreferenceFr {
     }
 
 
-    public static OptionData getPlayerOptionData(){
+    /**
+     * Get the player preference
+     *
+     * @return the player preference Discord OptionData
+     */
+    public static OptionData getPlayerOptionData() {
         return new OptionData(OptionType.STRING, "player", "choose your fav player", true).addChoice("Magnus Carlsen", "mag").addChoice("Hikaru Nakamura", "hik")
                 .addChoice("Fabiano Caruana", "fab").addChoice("Ding Liren", "din").addChoice("Gukesh D", "guk");
     }
 
 
-    public static OptionData getPieceOptionData(){
+    /**
+     * Get the piece preference
+     *
+     * @return the piece preference Discord OptionData
+     */
+    public static OptionData getPieceOptionData() {
         return new OptionData(OptionType.STRING, "piece", "choose your fav piece", true).addChoice("Pawn", "paw").addChoice("King", "kin")
                 .addChoice("Queen", "que").addChoice("Bishop", "bis").addChoice("Knight", "kni").addChoice("Rook", "roo");
     }
 
-    public static OptionData getOpeningOptionData(){
+    /**
+     * Get the opening preference
+     *
+     * @return the opening preference Discord OptionData
+     */
+    public static OptionData getOpeningOptionData() {
         return new OptionData(OptionType.STRING, "opening", "choose your fav opening", true).addChoice("Queens Gambit", "qge").addChoice("Kings Gambit", "kgi")
                 .addChoice("Sicilian", "sic").addChoice("Kings Indian Defense", "kid");
     }
 
-    public static OptionData getStyleOptionData(){
+    /**
+     * Get the style preference
+     *
+     * @return the style preference Discord OptionData
+     */
+    public static OptionData getStyleOptionData() {
         return new OptionData(OptionType.STRING, "style", "choose your chess style", true).addChoice("Positional", "pos").addChoice("Tactical", "tac")
                 .addChoice("Defensive", "def").addChoice("Aggressive", "agg");
     }
-
 
 
 }

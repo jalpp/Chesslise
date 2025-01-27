@@ -1,14 +1,8 @@
 package discord.handlermodules;
 
 import abstraction.Context.ContextHandler;
-import chesscom.DailyCommandCC;
-import chesscom.puzzle;
-import discord.helpermodules.BotContextModule;
-import discord.helpermodules.ButtonHelperContextModule;
+import discord.helpermodules.ButtonHelperModule;
 import discord.mainhandler.AntiSpam;
-import discord.mainhandler.CommandInfo;
-import lichess.DailyCommand;
-import lichess.Game;
 import chariot.Client;
 import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
@@ -17,40 +11,46 @@ import net.dv8tion.jda.api.events.interaction.command.MessageContextInteractionE
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
-
+/**
+ * ButtonContextModule class to handle the button context
+ */
 public class ButtonContextModule implements ContextHandler {
 
     public ButtonContextModule() {
 
     }
 
+    /**
+     * Handle the logic for the button context
+     *
+     * @param context     the message context
+     * @param slashEvent  the slash command event
+     * @param buttonEvent the button event
+     * @param eventModal  the modal event
+     * @param autoEvent   the autocomplete event
+     * @param client      the client
+     * @param board       the board
+     * @param blackboard  the blackboard
+     * @param spam        the spam
+     * @param dailyspam   the daily spam
+     * @param watchlimit  the watch limit
+     */
     @Override
     public void handleLogic(MessageContextInteractionEvent context, SlashCommandInteractionEvent slashEvent, ButtonInteractionEvent buttonEvent, ModalInteractionEvent eventModal, CommandAutoCompleteInteractionEvent autoEvent, Client client, Board board, Board blackboard, AntiSpam spam, AntiSpam dailyspam, AntiSpam watchlimit) {
-        BotContextModule fish = new BotContextModule();
 
-        CommandInfo commandInfo = new CommandInfo();
+        ButtonHelperModule buttonTool = new ButtonHelperModule(buttonEvent, board, blackboard, client);
 
-        DailyCommand dailyCommand = new DailyCommand(client);
+        buttonTool.sendLearnCommand();
 
-        DailyCommandCC commandCC = new DailyCommandCC();
+        buttonTool.sendPuzzleButtons();
 
-        puzzle Random_puzzle = new puzzle();
+        buttonTool.sendPlayCommandUI();
 
-        Game generateChallenge = new Game();
+        buttonTool.sendPlayCommandFlow();
 
-        ButtonHelperContextModule helper = new ButtonHelperContextModule();
+        buttonTool.sendMoreTimeControls();
 
-        helper.handleLearnCommand(buttonEvent, commandInfo);
-
-        helper.handlePuzzleButtons(buttonEvent, dailyCommand, commandCC, Random_puzzle, fish, client);
-
-        helper.handlePlayCommandUI(buttonEvent);
-
-        helper.handlePlayCommandFlow(buttonEvent, generateChallenge, client);
-
-        helper.handleMoreTimeControls(buttonEvent, generateChallenge, client);
-
-        helper.handlePlayingEngineFlow(buttonEvent, board, blackboard);
+        buttonTool.sendPlayingEngineFlow();
 
     }
 

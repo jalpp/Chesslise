@@ -1,5 +1,8 @@
 package network.challenge;
 
+/**
+ * PairingNetworkType enum to handle the pairing network type
+ */
 public enum PairingNetworkType {
 
 
