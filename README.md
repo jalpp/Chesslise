@@ -14,7 +14,6 @@ Chesslise is a community-driven open-source Chess-based Discord application, tha
 Chesslise also has inbuilt CSSN (Chesslise Social Server Network) that allows players to find new friends, find new challenges from their friend networks and open networks
 
 
-
 # API
 
  1. [lichess API](https://lichess.org/api) 
@@ -24,7 +23,7 @@ Chesslise also has inbuilt CSSN (Chesslise Social Server Network) that allows pl
 5. [Chessdb cn](https://chessdb.cn/cloudbookc_info_en.html)
  
  # Tech Stack
-Java 21, Maven, AWS
+Java 21, Maven, AWS, MongoDB
 
 # Libraries
 
@@ -35,7 +34,6 @@ Java 21, Maven, AWS
 
 # Engines
 
-- [Lise Chess engine](https://github.com/jalpp/LiseChessEngine) 
 - [Stockfish](https://stockfishchess.org/)
 
 # Image Generation

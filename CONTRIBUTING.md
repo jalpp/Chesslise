@@ -14,15 +14,12 @@
 - use any IDE (IntelliJ recommended)
 - configure `ENV_BETA` to either true or false to use the current working env, ideally for development use `DISCORD_BETA_TOKEN`
 - configure ``` DISCORD_{ENV}_TOKEN ``` for your own bots' discord token in `.env` 
-- configure ``` LICHESS_TOKEN ``` if you also want to run lise on lichess
+- configure ``CONNECTION_STRING`` the MongoDB connection String, ``DB_NAME`` The Database name `DB_PLAYER_COLL` the name for player collection (production) ``DB_PLAYER_COLL_Beta`` the name for player collection (Beta) ``DB_CHALL_COLL`` the name for network collection (production) ``DB_CHALL_COLL_Beta`` the network collection (Beta)
 - you are ready to run the bot with ``` mvn clean ```
 - finally, compile the code ``` mvn compile ```
 - Please note you need to follow the same steps as adding Chesslise for your own local bot
 - build the project ``` mvn package ```
 - run the application ``` java -jar /target/Chesslise-15.0-SNAPSHOT-jar-with-dependencies.jar ```
-
-# How to set up CSSN locally?
-- you would need MongoDB database provide `CONNECTION_STRING` `DB_NAME` `DB_Collection_names` for player and network collection names, make sure to have seperate beta and prod collections
 
 # CSSN test cases
 you run run cssn test cases if you made any changes to the cssn pairing algo espically the Pairing class
@@ -48,7 +45,6 @@ you run run cssn test cases if you made any changes to the cssn pairing algo esp
 
 # Engines
 
-- [Lise Chess engine](https://github.com/jalpp/LiseChessEngine) 
 - [Stockfish](https://stockfishchess.org/)
 
 # Image Generation
