@@ -102,6 +102,7 @@ public class ButtonHelperModule {
             case "playhelp" -> {
                 buttonEvent.replyEmbeds(getPlayCommandInfo().build()).setEphemeral(true).queue();
             }
+            case "cssnhelp" -> buttonEvent.replyEmbeds(getCSSNHelpInfo().build()).setEphemeral(true).queue();
             case "friend" -> sendSelfUserInputForm();
         }
 
@@ -277,6 +278,34 @@ public class ButtonHelperModule {
                  play your friend by entering your and your friend's Lichess user, ready for challenge? The time control is randomly generated for fun games!
                  **Need more help?**\s
                  Join our Support server and Developer will help you!""");
+        return help;
+    }
+    /**
+     * Get the CSSN help guide
+     */
+
+    public EmbedBuilder getCSSNHelpInfo(){
+        EmbedBuilder help = new EmbedBuilder();
+        help.setThumbnail(logo);
+        help.setTitle("Guide for playing in your network CSSN");
+        help.setDescription("""
+                You can find new chess friends and find chess challenges with CSSN! 
+                
+                to get started run **/connect** you would be asked your playing preferences and friend preferences, after connecting you can run 
+                
+                **/seekchallenge** to post the challenge in global network to pair run **/pairchallenge**, you can also play within your mutual friends network (once you have enough friends)
+                
+                by running **/pairchallengenetwork** to find like minded chess friends run **/findfriend** to view status of challenges and friendships 
+                
+                run **/mychallenges** and **/viewfriends** you can send friend request from paired from challenges or from finding a friend by running **/sendfriendrequest** <Username>
+                
+                The network just opened up so having you join CSSN will be a pleasure! 😊 Please join and find various new chess friends/challenges in one place!
+                
+                you can see the full guide [here](https://lichess.org/@/Noobmasterplayer123/blog/the-chesslise-social-server-network-cssn/iirHzk9R)
+                
+                got stuck? No worries let our developer explain to you! 
+                [Join Chesslise Server](https://discord.gg/d2EHaw27hn)
+                """);
         return help;
     }
 

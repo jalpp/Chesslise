@@ -49,7 +49,7 @@ public class CommandInfo {
      * Send the info command to the user
      */
     public void sendInfoCommand() {
-        event.replyEmbeds(getPageOne().build()).setEphemeral(true).queue();
+        event.replyEmbeds(getPageOne().build()).addActionRow(Button.success("cssnhelp", "❓ CSSN Network Help")).setEphemeral(true).queue();
     }
 
     /**
