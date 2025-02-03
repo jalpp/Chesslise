@@ -19,7 +19,7 @@
 - finally, compile the code ``` mvn compile ```
 - Please note you need to follow the same steps as adding Chesslise for your own local bot
 - build the project ``` mvn package ```
-- run the application ``` java -jar /target/Chesslise-15.0-SNAPSHOT-jar-with-dependencies.jar ```
+- run the application ``` java -jar /target/Chesslise-16.0-SNAPSHOT-jar-with-dependencies.jar ```
 
 # CSSN test cases
 you run run cssn test cases if you made any changes to the cssn pairing algo espically the Pairing class
