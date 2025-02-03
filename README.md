@@ -58,6 +58,9 @@ to see entire demo of Chesslise read the lichess blog guide [here](https://liche
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
 
+## Dev Discord
+[Discord](https://discord.gg/T2eH3tQjKC)
+
 
 
 

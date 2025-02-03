@@ -24,6 +24,9 @@
 # CSSN test cases
 you run run cssn test cases if you made any changes to the cssn pairing algo espically the Pairing class
 
+## Dev Discord
+Join the dev Discord if you are helping with a issue or just want to hangout
+[Discord](https://discord.gg/T2eH3tQjKC)
 
 
 # API
