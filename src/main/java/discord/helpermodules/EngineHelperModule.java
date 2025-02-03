@@ -38,7 +38,7 @@ public class EngineHelperModule {
      */
     public void sendwhiteSideMoveCommand() {
         try {
-
+            event.deferReply(true).queue();
             String makemove = event.getOption("play-move").getAsString();
             EmbedBuilder embedBuilder = new EmbedBuilder();
             ChessUtil util = new ChessUtil();
@@ -50,11 +50,11 @@ public class EngineHelperModule {
 
             whiteBoard.doMove(makemove);
             whiteBoard.doMove(StockFish.getBestMove(15, whiteBoard.getFen()));
-            event.reply("Game Manager Tab \n **resign** to end the game \n **draw** to draw the game!").addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw")).setEphemeral(true).queue();
+            event.getHook().sendMessage("Game Manager Tab \n **resign** to end the game \n **draw** to draw the game!").addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw")).setEphemeral(true).queue();
             embedBuilder.setTitle("White to move");
             embedBuilder.setColor(Color.green);
             embedBuilder.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
-            embedBuilder.setImage(util.getImageFromFEN(whiteBoard.getFen(), false, "brown", "kosal"));
+            embedBuilder.setImage(util.getImageFromFEN(whiteBoard.getFen(), "brown", "kosal"));
             event.getHook().sendMessageEmbeds(embedBuilder.build()).queue();
 
         } catch (Exception e) {

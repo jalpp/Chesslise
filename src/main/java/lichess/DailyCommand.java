@@ -1,6 +1,7 @@
 package lichess;
 
 import abstraction.ChessUtil;
+import abstraction.PuzzleView;
 import chariot.Client;
 import chariot.model.One;
 import chariot.model.Puzzle;
@@ -12,7 +13,7 @@ import java.awt.*;
 /**
  * Class to handle the daily puzzle for Lichess
  */
-public class DailyCommand implements abstraction.Puzzle {
+public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
 
 
     String hostimg = "https://upload.wikimedia.org/wikipedia/commons/4/47/Lichess_logo_2019.png";
@@ -24,26 +25,6 @@ public class DailyCommand implements abstraction.Puzzle {
 
     }
 
-
-    @Override
-    public String renderImage(ChessUtil util, String fen) {
-        return util.getImageFromFEN(fen, fen.contains("b"), "green", "alpha");
-    }
-
-    @Override
-    public String defineSideToMove(ChessUtil util, String fen) {
-        return util.getWhichSideToMove(fen);
-    }
-
-    @Override
-    public String defineAnalysisBoard(ChessUtil util, String fen) {
-        return util.getAnalysisBoard(fen);
-    }
-
-    @Override
-    public ChessUtil defineUtil() {
-        return new ChessUtil();
-    }
 
     @Override
     public String definePuzzleFen() {
@@ -58,7 +39,7 @@ public class DailyCommand implements abstraction.Puzzle {
     @Override
     public EmbedBuilder defineCommandCard() {
         String fen = definePuzzleFen();
-        return new EmbedBuilder().setDescription("**Turn: **" + defineSideToMove(defineUtil(), fen) + "\n **Rating: **" + getRating() + "\n**FEN: **" + fen).setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setImage(renderImage(defineUtil(), definePuzzleFen())).setThumbnail(hostimg);
+        return new EmbedBuilder().setDescription("**Turn: **" + defineSideToMove(fen) + "\n **Rating: **" + getRating() + "\n**FEN: **" + fen).setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setImage(renderImage(definePuzzleFen())).setThumbnail(hostimg);
     }
 
 
@@ -87,7 +68,6 @@ public class DailyCommand implements abstraction.Puzzle {
 
 
 }
-
 
 
 

@@ -2,7 +2,6 @@ package discord.helpermodules;
 
 import abstraction.ChessUtil;
 import chessdb.ChessDBQuery;
-import discord.mainhandler.AntiSpam;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -14,7 +13,6 @@ import net.dv8tion.jda.api.interactions.modals.Modal;
 /**
  * ChessSlashHelperModule class to handle the chess slash helper module
  */
-
 public class ChessSlashHelperModule {
 
     private final SlashCommandInteractionEvent event;
@@ -37,6 +35,11 @@ public class ChessSlashHelperModule {
             {"Pawn-pro", "Pawn Special Move: Promotion, when your pawn reaches the 8th rank you can promote to queen,rook,bishop, or a night:", "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpFSZHst.gif"}
     };
 
+    /**
+     * Instantiates a new Chess slash helper module.
+     *
+     * @param event the event
+     */
     public ChessSlashHelperModule(SlashCommandInteractionEvent event) {
         this.event = event;
     }
@@ -53,7 +56,7 @@ public class ChessSlashHelperModule {
         String info = query.getTop3BestMove(fen);
 
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setImage(chessUtil.getImageFromFEN(fen, fen.contains("b"), "green", "kosal"));
+        builder.setImage(chessUtil.getImageFromFEN(fen, "green", "kosal"));
         builder.setTitle("ChessDB CN Analysis");
         builder.setDescription(info);
         builder.setFooter("Analysis by ChessDB CN see more here https://chessdb.cn/cloudbookc_info_en.html");

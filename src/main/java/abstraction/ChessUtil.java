@@ -24,7 +24,7 @@ public class ChessUtil {
      * @param pieceType  the piece type
      * @return the image link
      */
-    public String getImageFromFEN(String fen, boolean isBlack, String boardColor, String pieceType) {
+    public String getImageFromFEN(String fen, String boardColor, String pieceType) {
         try {
             String img;
             this.board.loadFromFen(fen);

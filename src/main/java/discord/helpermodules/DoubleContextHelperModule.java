@@ -34,9 +34,9 @@ public class DoubleContextHelperModule {
     public void sendSlashLichesspuzzleCommand() {
         DailyCommand dailyCommand = new DailyCommand(client);
         if (isSlash) {
-            slashEvent.replyEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.primary("hint", "hint"), Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.defineUtil(), dailyCommand.definePuzzleFen()), "Analysis Board")).queue();
+            slashEvent.replyEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.primary("hint", "hint"), Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.definePuzzleFen()), "Analysis Board")).queue();
         } else {
-            context.replyEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.primary("hint", "hint"), Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.defineUtil(), dailyCommand.definePuzzleFen()), "Analysis Board")).queue();
+            context.replyEmbeds(dailyCommand.defineCommandCard().build()).addActionRow(Button.primary("hint", "hint"), Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.definePuzzleFen()), "Analysis Board")).queue();
         }
     }
 
@@ -46,10 +46,10 @@ public class DoubleContextHelperModule {
     public void sendDailyPuzzleChessComCommand() {
         DailyCommandCC daily = new DailyCommandCC();
         if (isSlash) {
-            slashEvent.replyEmbeds(daily.defineCommandCard().build()).addActionRow(Button.link(daily.defineAnalysisBoard(daily.defineUtil(), daily.definePuzzleFen()), "Analysis Board")).queue();
+            slashEvent.replyEmbeds(daily.defineCommandCard().build()).addActionRow(Button.link(daily.defineAnalysisBoard(daily.definePuzzleFen()), "Analysis Board")).queue();
         } else {
             context.deferReply(false).queue();
-            context.replyEmbeds(daily.defineCommandCard().build()).addActionRow(Button.link(daily.defineAnalysisBoard(daily.defineUtil(), daily.definePuzzleFen()), "Analysis Board")).queue();
+            context.replyEmbeds(daily.defineCommandCard().build()).addActionRow(Button.link(daily.defineAnalysisBoard(daily.definePuzzleFen()), "Analysis Board")).queue();
         }
     }
 
@@ -62,7 +62,7 @@ public class DoubleContextHelperModule {
         } else {
             try {
                 puzzle puzzle = new puzzle();
-                slashEvent.replyEmbeds(puzzle.defineCommandCard().build()).addActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.defineUtil(), puzzle.definePuzzleFen()), "Analysis Board")).queue();
+                slashEvent.replyEmbeds(puzzle.defineCommandCard().build()).addActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).queue();
             } catch (Exception e) {
                 slashEvent.getChannel().sendMessage("An error occurred.. Please contact Dev, or wait for few mins to rerun the command").queue();
             }
@@ -91,14 +91,20 @@ public class DoubleContextHelperModule {
             slashEvent.reply("""
                     ## Please Pick Your Lichess Game's Mode ⚔️\s
                     
-                    """).addActionRow(
-                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend")).addActionRow(Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
-        } else {
-            context.reply("""
-                    **⚔️ Please Pick Your Lichess.Game's Mode **
+                    ⚔️ You can now join Chesslise's own chess server! Find new chess friends, new challenges,
+                    read more by clicking on the ❓ **CSSN Network Help**
                     
                     """).addActionRow(
-                    net.dv8tion.jda.api.interactions.components.buttons.Button.success("casmode", "Casual"), net.dv8tion.jda.api.interactions.components.buttons.Button.danger("ratedmode", "Rated"), net.dv8tion.jda.api.interactions.components.buttons.Button.primary("enginemode", "Play BOT"), net.dv8tion.jda.api.interactions.components.buttons.Button.link("https://lichess.org/login", "Login/Register"), net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("playhelp", "❓ Help")).queue();
+                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend")).addActionRow(Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help"), Button.success("cssnhelp", "❓ CSSN Network Help")).queue();
+        } else {
+            context.reply("""
+                    **⚔️ Please Pick Your Lichess Game's Mode **
+                    
+                     ⚔️ You can now join Chesslise's own chess server! Find new chess friends, new challenges,
+                    read more by clicking on the ❓ **CSSN Network Help**
+                    
+                    """).addActionRow(
+                    Button.success("casmode", "Casual"), Button.danger("ratedmode", "Rated"), Button.link("https://lichess.org/login", "Login/Register"), Button.secondary("playhelp", "❓ Help"), Button.success("cssnhelp", "❓ CSSN Network Help")).queue();
         }
     }
 
