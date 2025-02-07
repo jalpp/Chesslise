@@ -64,6 +64,8 @@ public class SlashContextModule implements ContextHandler {
 
             case "chessdb" -> chessTool.sendChessDBInfo();
 
+            case "fen" -> chessTool.sendChessFEN();
+
             case "connect" -> networkTool.sendConnect();
 
             case "disconnect" -> networkTool.sendDisconnect();

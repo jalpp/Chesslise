@@ -65,6 +65,21 @@ public class ChessSlashHelperModule {
     }
 
     /**
+     * send view fen embed for /fen
+     */
+    public void sendChessFEN(){
+        ChessUtil util = new ChessUtil();
+
+        event.deferReply().queue();
+        String fen = event.getOption("input-fen").getAsString();
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setImage(util.getImageFromFEN(fen, "green", "kosal"));
+        builder.setColor(Color.PINK);
+
+        event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.link(util.getAnalysisBoard(fen), "Analysis Board")).queue();
+    }
+
+    /**
      * Send the input form for Watch command and Chess.com user profile
      *
      * @param inputid     the input id

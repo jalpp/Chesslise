@@ -35,6 +35,7 @@ public class CommandBuilder {
     private static final String[][] COMMAND_SINGLE_OPTION = {
             {"chessdb", "View chessdb eval of a position useful for openings/middelgame fens", "paste-fen", "Enter fen to be analyzed"},
             {"move", "make a move against engine", "play-move", "input chess move"},
+            {"fen", "view a chess position by providing the FEN", "input-fen", "Input chess fen"},
             {"cancelchallenge", "cancel a challenge with id", "challid", "provide the challenge id"},
             {"completechallenge", "complete a challenge with id", "cchallid", "provide completed challenge id"},
             {"sendfriendrequest", "Send friend request by providing target username", "frienduser", "provide target username"},
