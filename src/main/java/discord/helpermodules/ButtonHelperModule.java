@@ -1,5 +1,7 @@
 package discord.helpermodules;
 
+import abstraction.ChessUtil;
+import chessdb.ChessDBQuery;
 import discord.mainhandler.CommandInfo;
 import lichess.DailyCommand;
 import lichess.Game;
