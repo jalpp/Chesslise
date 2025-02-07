@@ -9,6 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,13 +98,14 @@ public class ChessDBQuery {
         List<String> moves = new ArrayList<>();
 
         while (matcher.find()) {
-            moves.add(matcher.group(1)); 
+            moves.add(matcher.group(1));
         }
 
         return moves;
     }
 
-}
 
+
+}
 
 
