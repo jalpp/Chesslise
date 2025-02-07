@@ -51,19 +51,14 @@ public class ChessSlashHelperModule {
      */
     public void sendChessDBInfo() {
         ChessDBQuery query = new ChessDBQuery();
-        ChessUtil chessUtil = new ChessUtil();
 
         event.deferReply().queue();
         String fen = event.getOption("paste-fen").getAsString();
         String info = query.getTop3BestMove(fen);
 
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setImage(chessUtil.getImageFromFEN(fen, "green", "kosal"));
-        builder.setTitle("ChessDB CN Analysis");
-        builder.setDescription(info);
-        builder.setFooter("Analysis by ChessDB CN see more here https://chessdb.cn/cloudbookc_info_en.html");
+        EmbedBuilder builder = ButtonHelperModule.getChessDBEmbed(info, fen);
 
-        event.getHook().sendMessageEmbeds(builder.build()).queue();
+        event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.success("onemove", "Play 1st move"), Button.success("twomove", "Play 2nd move"), Button.success("threemove", "Play 3rd move")).queue();
     }
 
     /**

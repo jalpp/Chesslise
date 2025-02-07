@@ -135,6 +135,39 @@ public class ButtonHelperModule {
     }
 
     /**
+     * the button handler for chessdb button view
+     */
+
+    public void sendChessDBButtonView(){
+
+        switch (buttonEvent.getComponentId()){
+            case "onemove" -> sendChessDBMove(0);
+            case "twomove" -> sendChessDBMove(1);
+            case "threemove" -> sendChessDBMove(2);
+        }
+    }
+
+
+    /**
+     * Helper method to send embed based on current move number
+     * @param moveNumber the move number index
+     */
+    private void sendChessDBMove(int moveNumber){
+        buttonEvent.deferEdit().queue();
+        ChessDBQuery query = new ChessDBQuery();
+
+        String fen = buttonEvent.getMessage().getEmbeds().get(0).getFields().get(0).getValue();
+        String move = ChessDBQuery.getTop3Moves(buttonEvent.getMessage().getEmbeds().get(0).getDescription()).get(moveNumber);
+        Board position = new Board();
+        position.loadFromFen(fen);
+        position.doMove(move);
+        String newInfo = query.getTop3BestMove(position.getFen());
+        EmbedBuilder chessDBView = getChessDBEdited(newInfo, position.getFen(), move);
+
+        buttonEvent.getHook().editOriginalEmbeds(chessDBView.build()).setActionRow(Button.success("onemove", "Play 1st move"), Button.success("twomove", "Play 2nd move"), Button.success("threemove", "Play 3rd move")).queue();
+    }
+
+    /**
      * Handle the logic for more time controls for /play
      */
     public void sendMoreTimeControls() {
@@ -307,6 +340,43 @@ public class ButtonHelperModule {
                 [Join Chesslise Server](https://discord.gg/d2EHaw27hn)
                 """);
         return help;
+    }
+
+    /**
+     * Get the chessdb embed
+     * @param moveDesc the move description
+     * @param fen the current fen
+     * @return the ChessDB embed
+     */
+    public static EmbedBuilder getChessDBEmbed(String moveDesc, String fen){
+        ChessUtil chessUtil = new ChessUtil();
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setImage(chessUtil.getImageFromFEN(fen, "green", "kosal"));
+        builder.setTitle("ChessDB CN Analysis");
+        builder.setDescription(moveDesc);
+        builder.addField("fen", fen, true);
+        builder.setFooter("Analysis by ChessDB CN see more here https://chessdb.cn/cloudbookc_info_en.html");
+
+        return builder;
+    }
+
+    /**
+     * Get the next move edited version of the embed
+     * @param moveDesc the move description
+     * @param fen the fen
+     * @param move the lastmove
+     * @return the edited Embed
+     */
+    public EmbedBuilder getChessDBEdited(String moveDesc, String fen, String move){
+        ChessUtil chessUtil = new ChessUtil();
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setImage(chessUtil.getChessDBImage(fen, "green", "kosal", move));
+        builder.setTitle("ChessDB CN Analysis");
+        builder.setDescription(moveDesc);
+        builder.addField("fen", fen, true);
+        builder.setFooter("Analysis by ChessDB CN see more here https://chessdb.cn/cloudbookc_info_en.html");
+
+        return builder;
     }
 
 

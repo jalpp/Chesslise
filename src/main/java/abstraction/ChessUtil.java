@@ -43,6 +43,24 @@ public class ChessUtil {
         }
     }
 
+      /**
+     * Get the image for given lastMove
+     * @param fen the fen
+     * @param boardColor board colour
+     * @param pieceType pieceType
+     * @param lastMove the last move
+     * @return the image
+     */
+    public String getChessDBImage(String fen, String boardColor, String pieceType, String lastMove){
+        String img = getImageFromFEN(fen, boardColor, pieceType);
+
+        if(!img.equalsIgnoreCase("please provide a valid fen!")){
+            return img + "&lastMove=" + lastMove;
+        }
+
+        return img;
+    }
+
     /**
      * Get which side to move
      *
