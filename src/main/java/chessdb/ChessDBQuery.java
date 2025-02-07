@@ -81,6 +81,25 @@ public class ChessDBQuery {
         }
     }
 
+
+    /**
+     * Get the top 3 cloud chessdb moves in a form of list
+     * @param parseView the incoming string view
+     * @return the top 3 moves
+     */
+    public static List<String> getTop3Moves(String parseView){
+        Pattern pattern = Pattern.compile("\\d\\)\\s([a-h][1-8][a-h][1-8])");
+        Matcher matcher = pattern.matcher(parseView);
+
+        List<String> moves = new ArrayList<>();
+
+        while (matcher.find()) {
+            moves.add(matcher.group(1)); 
+        }
+
+        return moves;
+    }
+
 }
 
 
