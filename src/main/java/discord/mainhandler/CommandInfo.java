@@ -1,7 +1,6 @@
 package discord.mainhandler;
 
 import discord.helpermodules.ButtonHelperModule;
-import discord.helpermodules.ChessSlashHelperModule;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
@@ -13,7 +12,7 @@ import java.awt.*;
  */
 public class CommandInfo {
 
-    private final String logo = ChessSlashHelperModule.logo;
+
     private final SlashCommandInteractionEvent event;
     private final EmbedBuilder embedBuilder;
 
@@ -30,7 +29,7 @@ public class CommandInfo {
     public EmbedBuilder getPageOne() {
         this.embedBuilder.setColor(Color.blue);
         this.embedBuilder.setTitle("**Commands For Chesslise**");
-        this.embedBuilder.setThumbnail(this.logo);
+        this.embedBuilder.setThumbnail(Thumbnail.getChessliseLogo());
         this.embedBuilder.setFooter("Chesslise will stay free forever, so thank you for installing the bot! Chesslise is made by @nmp123"
         );
         this.embedBuilder.setDescription(CommandBuilder.printCommand());

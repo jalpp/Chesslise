@@ -2,7 +2,7 @@ package discord.helpermodules;
 
 import abstraction.ChessUtil;
 import chessdb.ChessDBQuery;
-import discord.mainhandler.CommandInfo;
+import discord.mainhandler.Thumbnail;
 import lichess.DailyCommand;
 import lichess.Game;
 import chariot.Client;
@@ -79,8 +79,11 @@ public class ButtonHelperModule {
             case "load-again" -> buttonEvent.reply("""
                     ## Please Pick Your Lichess Game's Mode ⚔️\s
                     
+                    ⚔️ You can now join Chesslise's own chess server! Find new chess friends, new challenges,
+                    read more by clicking on the ❓ **CSSN Network Help**
+                    
                     """).addActionRow(
-                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend")).addActionRow(Button.link("https://discord.gg/d2EHaw27hn", "\uD83D\uDC4B Join our server!"), Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help")).queue();
+                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend")).addActionRow(Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help"), Button.success("cssnhelp", "❓ CSSN Network Help")).queue();
             case "loadr" ->
                     buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.danger("3+0r", "\uD83D\uDD25 3+0")
                             , Button.danger("5+0r", "\uD83D\uDD25 5+0")
@@ -280,7 +283,7 @@ public class ButtonHelperModule {
         for (int i = 0; i < LEARN_CHESS.length; i++) {
             for (int j = 0; j < LEARN_CHESS[i].length; i++) {
                 if (LEARN_CHESS[i][0].equalsIgnoreCase(searchKey)) {
-                    return new EmbedBuilder().setDescription(LEARN_CHESS[i][1]).setImage(LEARN_CHESS[i][2]).setColor(Color.BLUE).setThumbnail(logo);
+                    return new EmbedBuilder().setDescription(LEARN_CHESS[i][1]).setImage(LEARN_CHESS[i][2]).setColor(Color.BLUE).setThumbnail(Thumbnail.getChessliseLogo());
                 }
             }
         }
@@ -295,7 +298,7 @@ public class ButtonHelperModule {
      */
     public EmbedBuilder getPlayCommandInfo() {
         EmbedBuilder help = new EmbedBuilder();
-        help.setThumbnail("https://static-00.iconduck.com/assets.00/lichess-icon-512x512-q0oh5bwk.png");
+        help.setThumbnail(Thumbnail.getChessliseLogo());
         help.setTitle("Guide for /play");
         help.setDescription("""
                 /play allows you to play LIVE chess with friends and BOTs!, to set up a **Casual game (friendly)/ Rated (gain/lose rating)**  all users need to do is click on **casual/rated** button
@@ -315,13 +318,14 @@ public class ButtonHelperModule {
                  Join our Support server and Developer will help you!""");
         return help;
     }
+
     /**
      * Get the CSSN help guide
      */
 
     public EmbedBuilder getCSSNHelpInfo(){
         EmbedBuilder help = new EmbedBuilder();
-        help.setThumbnail(logo);
+        help.setThumbnail(Thumbnail.getChessliseLogo());
         help.setTitle("Guide for playing in your network CSSN");
         help.setDescription("""
                 You can find new chess friends and find chess challenges with CSSN! 
@@ -343,6 +347,7 @@ public class ButtonHelperModule {
                 """);
         return help;
     }
+
 
     /**
      * Get the chessdb embed

@@ -1,11 +1,12 @@
 package lichess;
 
-import abstraction.ChessUtil;
+
 import abstraction.PuzzleView;
 import chariot.Client;
 import chariot.model.One;
 import chariot.model.Puzzle;
 import com.github.bhlangonijr.chesslib.Board;
+import discord.mainhandler.Thumbnail;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
@@ -16,7 +17,6 @@ import java.awt.*;
 public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
 
 
-    String hostimg = "https://upload.wikimedia.org/wikipedia/commons/4/47/Lichess_logo_2019.png";
     private Client client = Client.basic();
 
 
@@ -24,7 +24,6 @@ public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
         this.client = client;
 
     }
-
 
     @Override
     public String definePuzzleFen() {
@@ -37,17 +36,47 @@ public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
     }
 
     @Override
-    public EmbedBuilder defineCommandCard() {
+    public String definePuzzleLogo() {
+        return Thumbnail.getLichessLogo();
+    }
+
+    @Override
+    public String definePuzzleTitle() {
+        return "Lichess Daily Puzzle";
+    }
+
+    @Override
+    public Color defineEmbedColor() {
+        return Color.GRAY;
+    }
+
+    @Override
+    public String definePuzzleDescription() {
         String fen = definePuzzleFen();
-        return new EmbedBuilder().setDescription("**Turn: **" + defineSideToMove(fen) + "\n **Rating: **" + getRating() + "\n**FEN: **" + fen).setColor(Color.cyan).setTitle("Lichess Daily Puzzle").setImage(renderImage(definePuzzleFen())).setThumbnail(hostimg);
+        return "**Turn: **" + defineSideToMove(fen) + "\n **Rating: **" + getRating() + "\n**FEN: **" + fen;
+    }
+
+    @Override
+    public EmbedBuilder defineCommandCard() {
+        return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen())).setThumbnail(definePuzzleLogo());
     }
 
 
+    /**
+     * Gets the Lichess Daily puzzle rating
+     *
+     * @return gets the rating
+     */
     public int getRating() {
         return client.puzzles().dailyPuzzle().get().puzzle().rating();
     }
 
 
+    /**
+     * Gets the themes for current puzzle
+     *
+     * @return gets the current puzzle themes
+     */
     public EmbedBuilder getThemes() {
         EmbedBuilder themes = new EmbedBuilder();
 
@@ -68,7 +97,6 @@ public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
 
 
 }
-
 
 
 

@@ -3,6 +3,7 @@ package chesscom;
 
 import abstraction.Puzzle;
 import abstraction.PuzzleView;
+import discord.mainhandler.Thumbnail;
 import io.github.sornerol.chess.pubapi.client.DailyPuzzleClient;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -35,8 +36,28 @@ public class puzzle extends PuzzleView implements Puzzle {
     }
 
     @Override
-    public EmbedBuilder defineCommandCard() {
+    public String definePuzzleLogo() {
+        return Thumbnail.getChesscomLogo();
+    }
+
+    @Override
+    public String definePuzzleTitle() {
+        return "Chess.com Random Puzzle";
+    }
+
+    @Override
+    public Color defineEmbedColor() {
+        return Color.green;
+    }
+
+    @Override
+    public String definePuzzleDescription() {
         String fen = definePuzzleFen();
-        return new EmbedBuilder().setColor(Color.green).setTitle("Chess.com Random Puzzle").setImage(renderImage(definePuzzleFen())).setThumbnail("https://static.wikia.nocookie.net/logopedia/images/4/4a/Chess.com_2019_%28App_Icon%29.png/revision/latest/scale-to-width-down/250?cb=20221006103032").setDescription("\n **Turn: **" + defineSideToMove(fen) + "\n**FEN: **" + fen);
+        return "\n **Turn: **" + defineSideToMove(fen) + "\n**FEN: **" + fen;
+    }
+
+    @Override
+    public EmbedBuilder defineCommandCard() {
+        return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen())).setThumbnail(definePuzzleLogo()).setDescription(definePuzzleDescription());
     }
 }

@@ -1,6 +1,7 @@
 package discord.helpermodules;
 
 import abstraction.ChessUtil;
+import discord.mainhandler.Thumbnail;
 import engine.StockFish;
 import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -53,7 +54,7 @@ public class EngineHelperModule {
             event.getHook().sendMessage("Game Manager Tab \n **resign** to end the game \n **draw** to draw the game!").addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw")).setEphemeral(true).queue();
             embedBuilder.setTitle("White to move");
             embedBuilder.setColor(Color.green);
-            embedBuilder.setThumbnail("https://stockfishchess.org/images/logo/icon_512x512@2x.png");
+            embedBuilder.setThumbnail(Thumbnail.getStockfishLogo());
             embedBuilder.setImage(util.getImageFromFEN(whiteBoard.getFen(), "brown", "kosal"));
             event.getHook().sendMessageEmbeds(embedBuilder.build()).queue();
 
