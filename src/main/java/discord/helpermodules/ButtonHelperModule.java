@@ -6,6 +6,7 @@ import discord.mainhandler.Thumbnail;
 import lichess.DailyCommand;
 import lichess.Game;
 import chariot.Client;
+import lichess.ThemePuzzle;
 import com.github.bhlangonijr.chesslib.Board;
 import com.github.bhlangonijr.chesslib.Side;
 import net.dv8tion.jda.api.EmbedBuilder;
