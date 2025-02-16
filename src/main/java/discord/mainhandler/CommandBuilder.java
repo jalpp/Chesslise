@@ -102,7 +102,7 @@ public class CommandBuilder {
     public void registerSlashMultipleOptionCommand() {
         buildSlashMultipleOption("profile", "see Lichess profile for given user", new OptionData(OptionType.STRING, "search-user", "Search Lichess username", true));
 
-        buildSlashMultipleOption("puzzle", "do random/daily puzzles", new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random"));
+        buildSlashMultipleOption("puzzle", "do random/daily puzzles", new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random").addChoice("LichessDB theme puzzle", "lidb"));
 
         buildSlashMultipleOption("connect", "join the Chesslise network to find and challenge players", PreferencePl.getOptionData(), PreferenceTc.getOptionData(), PreferenceFr.getOpeningOptionData(), PreferenceFr.getPlayerOptionData(), PreferenceFr.getPieceOptionData(), PreferenceFr.getStyleOptionData());
 

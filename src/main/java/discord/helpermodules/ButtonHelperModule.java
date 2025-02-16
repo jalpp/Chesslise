@@ -151,7 +151,23 @@ public class ButtonHelperModule {
             case "threemove" -> sendChessDBMove(2);
         }
     }
+    
+    /**
+     * Gets the theme card
+     */
+    public void sendPuzzleDBTheme(){
+        sendPuzzleThemeCard(buttonEvent.getComponentId());
+    }
 
+    /**
+     * Helper method to get theme card for given theme
+     * @param theme the puzzle theme
+     */
+    private void sendPuzzleThemeCard(String theme){
+        buttonEvent.deferReply().queue();
+        ThemePuzzle puzzle = new ThemePuzzle(theme);
+        buttonEvent.getHook().sendMessageEmbeds(puzzle.defineCommandCard().build()).addActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).addActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
+    }
 
     /**
      * Helper method to send embed based on current move number

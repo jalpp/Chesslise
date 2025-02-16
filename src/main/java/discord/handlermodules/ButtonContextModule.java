@@ -52,6 +52,8 @@ public class ButtonContextModule implements ContextHandler {
 
         buttonTool.sendPlayingEngineFlow();
 
+        buttonTool.sendPuzzleDBTheme();
+
     }
 
 
