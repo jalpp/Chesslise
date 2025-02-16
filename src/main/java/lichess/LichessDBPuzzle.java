@@ -1,4 +1,4 @@
-ackage lichess;
+package lichess;
 
 public class LichessDBPuzzle {
 
