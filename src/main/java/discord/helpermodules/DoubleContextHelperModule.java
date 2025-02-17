@@ -112,13 +112,12 @@ public class DoubleContextHelperModule {
      * Sends the Lichess db puzzle theme button selection menu
      */
     public void sendThemePuzzle(){
-
         slashEvent.reply("Please select the puzzle theme!").addActionRow(
                 Button.success("mate", "Mate"),
                 Button.success("opening", "Opening"),
                 Button.success("middlegame", "Middlegame"),
                 Button.success("endgame", "Endgame"),
-                Button.success("master", "From Master Games")
+                Button.danger("loadpuzzles", "Load more")
         ).queue();
     }
 

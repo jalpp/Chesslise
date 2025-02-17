@@ -153,10 +153,13 @@ public class ButtonHelperModule {
         }
     }
     
-    /**
+     /**
      * Gets the theme card
      */
     public void sendPuzzleDBTheme(){
+        if(buttonEvent.getComponentId().equalsIgnoreCase("loadpuzzles")){
+            buttonEvent.editMessage("Pick more for themes!").setActionRow(Button.success("sacrifice", "sacrifice"), Button.success("short", "short"), Button.success("long", "long"),  Button.success("master", "From Master Games")).queue();
+        }
         sendPuzzleThemeCard(buttonEvent.getComponentId());
     }
 
