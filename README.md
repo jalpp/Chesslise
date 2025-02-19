@@ -43,18 +43,6 @@ Java 21, Maven, AWS, MongoDB
 read more in `CONTRIBUTING.md` on how to setup lise on Discord and server to run it locally
 
 
-# Popular Commands
-| Commands              | Description                          |
-|-----------------------|--------------------------------------|
-| /puzzle               | Do lichess/Chess.com puzzles         |
-| /solve                | solve chess puzzles in discord       |
-| /play                 | create live chess games in discord   |
- | /pairchallengenetwork | challenge a player from CSSN network |
-| /pairchallenge        | find a challenge globally            |
-
-see more commands in `commands.md`
-to see entire demo of Chesslise read the lichess blog guide [here](https://lichess.org/@/Noobmasterplayer123/blog/chesslise-breaks-free/ywQIrVDo)
-
 ## App Directory 
 [View More](https://discord.com/application-directory/930544707300393021)
 
