@@ -11,6 +11,9 @@ import network.user.PreferenceFr;
 import network.user.PreferencePl;
 import network.user.PreferenceTc;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * CommandBuilder class to handle the building of commands on JDA
  */
@@ -30,7 +33,8 @@ public class CommandBuilder {
             "Attempt to find a challenge in Chesslise network",
             "Attempt to send a challenge in your friend network",
             "Create a challenge and seek for others to accept it",
-            "Find a new friend within your network or globally"};
+            "Find a new friend within your network or globally",
+            };
 
     private static final String[][] COMMAND_SINGLE_OPTION = {
             {"chessdb", "View chessdb eval of a position useful for openings/middelgame fens", "paste-fen", "Enter fen to be analyzed"},
@@ -44,11 +48,7 @@ public class CommandBuilder {
             {"removefriend", "Remove a friend from friend list by providing discord id", "removeid", "provide friend discord username"},
             {"blockfriend", "Block a friend who is not being friendly by providing id", "blockid", "provide friend discord username"}};
 
-    private final String[] COMMAND_MESSAGE = {
-            "Lichess Daily Puzzle",
-            "Play Chess",
-            "Chess.com Daily Puzzle"
-    };
+    private static final HashMap<String, ArrayList<String>> COMMAND_MULTIPLE_OPTIONS = new HashMap<>();
 
     public CommandBuilder(CommandListUpdateAction action) {
         this.action = action;
@@ -84,6 +84,9 @@ public class CommandBuilder {
      * @param data the option data
      */
     public void buildSlashMultipleOption(String name, String desc, OptionData... data) {
+        COMMAND_MULTIPLE_OPTIONS.put(name, new ArrayList<>());
+        COMMAND_MULTIPLE_OPTIONS.get(name).add(name);
+        COMMAND_MULTIPLE_OPTIONS.get(name).add(desc);
         action.addCommands(Commands.slash(name, desc).addOptions(data).setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
     }
 
@@ -103,6 +106,10 @@ public class CommandBuilder {
         buildSlashMultipleOption("profile", "see Lichess profile for given user", new OptionData(OptionType.STRING, "search-user", "Search Lichess username", true));
 
         buildSlashMultipleOption("puzzle", "do random/daily puzzles", new OptionData(OptionType.STRING, "pick-puzzle", "pick type of puzzles", true).addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp").addChoice("Chess.com random puzzle", "random").addChoice("LichessDB theme puzzle", "lidb"));
+
+        buildSlashMultipleOption("playengine", "play engine by choosing the difficulty level", new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true).addChoice("Easy", "5").addChoice("Medium", "10").addChoice("Hard", "15"));
+
+        buildSlashMultipleOption("setengine", "set the engine difficulty", new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true).addChoice("Easy", "5").addChoice("Medium", "10").addChoice("Hard", "15"));
 
         buildSlashMultipleOption("connect", "join the Chesslise network to find and challenge players", PreferencePl.getOptionData(), PreferenceTc.getOptionData(), PreferenceFr.getOpeningOptionData(), PreferenceFr.getPlayerOptionData(), PreferenceFr.getPieceOptionData(), PreferenceFr.getStyleOptionData());
 
@@ -139,20 +146,10 @@ public class CommandBuilder {
     }
 
     /**
-     * Register the message commands
-     */
-    public void registerMessageCommand() {
-        for (String command : COMMAND_MESSAGE) {
-            buildMessageCommand(command);
-        }
-    }
-
-    /**
      * Register all the commands
      */
     public void register() {
         registerSlashMultipleOptionCommand();
-        registerMessageCommand();
         registerSlashNoOptionCommand();
         registerSlashSingleOptionCommands();
         this.action.queue();
@@ -191,6 +188,18 @@ public class CommandBuilder {
                     .append("\n")
             ;
 
+        }
+
+        builder.append("\n");
+        builder.append("Chesslise Multiple Option Commands").append("\n\n");
+
+        for(ArrayList<String> commands: COMMAND_MULTIPLE_OPTIONS.values()){
+            builder.append("**").append("/")
+                    .append(commands.get(0))
+                    .append("**")
+                    .append("\n")
+                    .append(commands.get(1))
+                    .append("\n");
         }
 
         builder.append("\n");

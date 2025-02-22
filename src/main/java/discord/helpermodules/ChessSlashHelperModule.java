@@ -1,15 +1,18 @@
 package discord.helpermodules;
 
 import abstraction.ChessUtil;
+import chariot.Client;
 import chessdb.ChessDBQuery;
+import lichess.UserProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
+
 import java.awt.*;
 
 /**
@@ -18,10 +21,7 @@ import java.awt.*;
 public class ChessSlashHelperModule {
 
     private final SlashCommandInteractionEvent event;
-    /**
-     * The chesslise logo
-     */
-    public final static String logo = "https://raw.githubusercontent.com/jalpp/DojoIcons/dd7365ea7d768fe17056d9b14ee6740c2bf4e261/oldIcons/Black%20Blue%20White%20Tactical%20eSports%20Discord%20Logo.png";
+
     /**
      * the learn chess information
      */
@@ -76,6 +76,8 @@ public class ChessSlashHelperModule {
         event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.link(util.getAnalysisBoard(fen), "Analysis Board")).queue();
     }
 
+
+
     /**
      * Send the input form for Watch command and Chess.com user profile
      *
@@ -112,6 +114,37 @@ public class ChessSlashHelperModule {
         buildInputForm("watch_user_or_game", "Input Lichess Username Or Lichess Game", "Input Lichess Username Or Lichess Game", "modalwatch", "Watch Live Or Recent Lichess Games!");
 
     }
+
+    public void sendPlayChallengeCommand() {
+        event.reply("""
+                ## Please Pick Your Lichess Game's Mode ⚔️\s
+
+                ⚔️ You can now join Chesslise's own chess server! Find new chess friends, new challenges,
+                read more by clicking on the ❓ **CSSN Network Help**
+
+                """)
+                .addActionRow(
+                        Button.success("casmode", "\uD83D\uDC4C Casual"),
+                        Button.danger("ratedmode", "\uD83E\uDD3A Rated"),
+                        Button.success("friend", "\uD83D\uDDE1️ Play Friend"))
+                .addActionRow(
+                        Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"),
+                        Button.secondary("playhelp", "❓ Help"),
+                        Button.success("cssnhelp", "❓ CSSN Network Help"))
+                .queue();
+    }
+
+    /**
+     * Send the select lichess username handle request
+     */
+    public void sendSelectLichessUserNameHandleRequest() {
+        String userID = event.getOptionsByName("search-user").get(0).getAsString();
+        UserProfile userProfile = new UserProfile(Client.basic(), userID);
+        event.deferReply(false).queue();
+        event.getHook().sendMessage(userProfile.getUserProfile()).setEphemeral(false).queue();
+
+    }
+
 
 
 }

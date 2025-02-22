@@ -15,12 +15,11 @@ public class AutoCompleteHelperModule {
 
     private final CommandAutoCompleteInteractionEvent event;
     private final Client client;
-    private final SlashCommandInteractionEvent slashEvent;
 
-    public AutoCompleteHelperModule(CommandAutoCompleteInteractionEvent event, Client client, SlashCommandInteractionEvent slashEvent) {
+
+    public AutoCompleteHelperModule(CommandAutoCompleteInteractionEvent event, Client client) {
         this.event = event;
         this.client = client;
-        this.slashEvent = slashEvent;
     }
 
     /**
@@ -38,16 +37,7 @@ public class AutoCompleteHelperModule {
 
     }
 
-    /**
-     * Send the select lichess username handle request
-     */
-    public void sendSelectLichessUserNameHandleRequest() {
-        String userID = event.getOptionsByName("search-user").get(0).getAsString();
-        UserProfile userProfile = new UserProfile(client, userID);
-        slashEvent.deferReply(false).queue();
-        slashEvent.getHook().sendMessage(userProfile.getUserProfile()).setEphemeral(false).queue();
 
-    }
 
 
 }

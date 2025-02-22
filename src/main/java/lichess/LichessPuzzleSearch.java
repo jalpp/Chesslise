@@ -6,12 +6,11 @@ import java.util.*;
 
 public class LichessPuzzleSearch {
 
-   // change to higher if needed, 5k works well in 3s search time good for Discord
     private static final int MAX_PUZZLE_SEARCH = 5000;
 
     public static void main(String[] args) {
 
-        List<List<String>> list = searchPuzzles("Themes", "master", MAX_PUZZLE_SEARCH);
+        List<List<String>> list = searchPuzzles("Themes", "master", 100);
 
         System.out.println(getRandomPuzzle(list));
     }

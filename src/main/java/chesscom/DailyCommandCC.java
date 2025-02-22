@@ -32,7 +32,7 @@ public class DailyCommandCC extends PuzzleView implements Puzzle {
     }
 
     @Override
-    public String definePuzzleLogo(){
+    public String definePuzzleLogo() {
         return Thumbnail.getChesscomLogo();
     }
 

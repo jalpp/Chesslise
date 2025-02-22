@@ -14,12 +14,12 @@
 - use any IDE (IntelliJ recommended)
 - configure `ENV_BETA` to either true or false to use the current working env, ideally for development use `DISCORD_BETA_TOKEN`
 - configure ``` DISCORD_{ENV}_TOKEN ``` for your own bots' discord token in `.env` 
-- configure ``CONNECTION_STRING`` the MongoDB connection String, ``DB_NAME`` The Database name `DB_PLAYER_COLL` the name for player collection (production) ``DB_PLAYER_COLL_Beta`` the name for player collection (Beta) ``DB_CHALL_COLL`` the name for network collection (production) ``DB_CHALL_COLL_Beta`` the network collection (Beta)
+- configure ``CONNECTION_STRING`` the MongoDB connection String, ``DB_NAME`` The Database name `DB_PLAYER_COLL` the name for player collection (production) ``DB_PLAYER_COLL_Beta`` the name for player collection (Beta) ``DB_CHALL_COLL`` the name for network collection (production) ``DB_CHALL_COLL_Beta`` the network collection (Beta), `DB_GAMES_COL` for the games collection (save games for users)
 - you are ready to run the bot with ``` mvn clean ```
 - finally, compile the code ``` mvn compile ```
 - Please note you need to follow the same steps as adding Chesslise for your own local bot
 - build the project ``` mvn package ```
-- run the application ``` java -jar /target/Chesslise-16.0-SNAPSHOT-jar-with-dependencies.jar ```
+- run the application ``` java -jar /target/Chesslise-17.0-SNAPSHOT-jar-with-dependencies.jar ```
 
 # CSSN test cases
 you run run cssn test cases if you made any changes to the cssn pairing algo espically the Pairing class

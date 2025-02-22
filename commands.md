@@ -7,6 +7,7 @@
 | /play                      | Create an open-ended challenge for discord users to play with, select time control[1+0,3+0,3+2,5+0,etc] and mode [casual/rated] |
 | /watch                     | View the last lichess game played by a user  |
 | /puzzle      | Do Daily/Random Chess.com puzzles     |
+| /playengine  | play Stockfish at various levels      |
 | /profilecc   | View Chess.com user profile           |
 | /move       |  Play Stockfish engine in discord          |
 | /chessdb    | Analyze chess positions via chessdb cn |

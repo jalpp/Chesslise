@@ -19,7 +19,6 @@ public class ChessUtil {
      * Get the image from the FEN
      *
      * @param fen        the chess fen
-     * @param isBlack    if the pov is black
      * @param boardColor the board color
      * @param pieceType  the piece type
      * @return the image link
@@ -43,7 +42,7 @@ public class ChessUtil {
         }
     }
 
-      /**
+    /**
      * Get the image for given lastMove
      * @param fen the fen
      * @param boardColor board colour

@@ -1,5 +1,8 @@
 package discord.helpermodules;
 
+import Game.GameException;
+import Game.GameHandler;
+import Game.GameSchema;
 import abstraction.ChessUtil;
 import discord.mainhandler.Thumbnail;
 import engine.StockFish;
@@ -7,61 +10,77 @@ import com.github.bhlangonijr.chesslib.Board;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import runner.Main;
 
 import java.awt.*;
 
-/**
- * EngineHelperModule class to handle the engine playing
- */
 public class EngineHelperModule {
 
     private final SlashCommandInteractionEvent event;
-    private Board whiteBoard;
-    private final Board blackBoard;
+    private final GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
 
-    public EngineHelperModule(SlashCommandInteractionEvent event, Board whiteBoard, Board blackBoard) {
+    public EngineHelperModule(SlashCommandInteractionEvent event) {
         this.event = event;
-        this.whiteBoard = whiteBoard;
-        this.blackBoard = blackBoard;
     }
 
-    /**
-     * Send the resetboard command to reset the current board state
-     */
-    public void sendresetBoardCommand() {
-        whiteBoard.loadFromFen(new Board().getFen());
-        blackBoard.loadFromFen(new Board().getFen());
-        event.reply("board is reset!").setEphemeral(true).queue();
-    }
-
-    /**
-     * send the move command to the engine from the white side
-     */
     public void sendwhiteSideMoveCommand() {
         try {
             event.deferReply(true).queue();
             String makemove = event.getOption("play-move").getAsString();
-            EmbedBuilder embedBuilder = new EmbedBuilder();
             ChessUtil util = new ChessUtil();
+            GameSchema schema = gameHandler.lookUpGame(event.getUser().getId());
+            Board board = new Board();
+            board.loadFromFen(schema.getFen());
 
-            if (whiteBoard.isMated() || whiteBoard.isDraw() || whiteBoard.isStaleMate()) {
-                event.reply("game over!").queue();
-                whiteBoard = new Board();
+            if (board.isMated() || board.isDraw() || board.isStaleMate()) {
+                event.getHook().sendMessage("game over!").queue();
+                gameHandler.updateFen(event.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+                return;
             }
 
-            whiteBoard.doMove(makemove);
-            whiteBoard.doMove(StockFish.getBestMove(15, whiteBoard.getFen()));
-            event.getHook().sendMessage("Game Manager Tab \n **resign** to end the game \n **draw** to draw the game!").addActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw")).setEphemeral(true).queue();
-            embedBuilder.setTitle("White to move");
-            embedBuilder.setColor(Color.green);
-            embedBuilder.setThumbnail(Thumbnail.getStockfishLogo());
-            embedBuilder.setImage(util.getImageFromFEN(whiteBoard.getFen(), "brown", "kosal"));
+            board.doMove(makemove);
+            board.doMove(StockFish.getBestMove(schema.getDepth(), board.getFen()));
+
+            EmbedBuilder embedBuilder = new EmbedBuilder()
+                .setTitle("White to move")
+                .setColor(Color.green)
+                .setThumbnail(Thumbnail.getStockfishLogo())
+                .setImage(util.getImageFromFEN(board.getFen(), "brown", "kosal"));
+
+            event.getHook().sendMessage("Game Manager Tab \n **resign** to end the game \n **draw** to draw the game!")
+                .addActionRow(Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw"))
+                .setEphemeral(true).queue();
             event.getHook().sendMessageEmbeds(embedBuilder.build()).queue();
+            gameHandler.updateFen(event.getUser().getId(), board.getFen());
 
         } catch (Exception e) {
-            event.reply("Not valid move! \n\n **If you are trying to castle use Captial letters (O-O & O-O-O)** \n\n (If you are running this command first time) The game is already on in other server, please reset the board with **/resetboard**!").setEphemeral(true).queue();
+            if (e instanceof GameException) {
+                event.getHook().sendMessage(e.getMessage()).queue();
+            } else {
+                event.getHook().sendMessage("Not valid move! \n\n **If you are trying to castle use Capital letters (O-O & O-O-O)** \n\n (If you are running this command first time) please use **/playengine** to select the engine level and start a new game!")
+                    .setEphemeral(true).queue();
+            }
         }
     }
 
+    public void sendPlayEngine() {
+        try {
+            event.deferReply(true).queue();
+            GameSchema schema = new GameSchema(event.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Integer.parseInt(event.getOptionsByName("difficulty").get(0).getAsString()));
+            gameHandler.createGame(schema);
+            event.getHook().sendMessage("Game created against Stockfish Level " + event.getOptionsByName("difficulty").get(0).getAsString() + " \n run **/move <move>** use Chess SAN notation (e4) or UCI notation (e2e4)").queue();
+        } catch (GameException g) {
+            event.getHook().sendMessage(g.getMessage()).queue();
+        }
+    }
 
+    public void sendSetEngineMode() {
+        try {
+            event.deferReply(true).queue();
+            gameHandler.updateDepth(event.getUser().getId(), Integer.parseInt(event.getOptionsByName("difficulty").get(0).getAsString()));
+            event.getHook().sendMessage("Engine Difficulty updated!").queue();
+        } catch (GameException g) {
+            event.getHook().sendMessage(g.getMessage()).queue();
+        }
+    }
 }

@@ -24,6 +24,8 @@ public class Main extends ListenerAdapter {
 
     private static MongoCollection<Document> networkChallenges;
 
+    private static MongoCollection<Document> gamesCollection;
+
     public static void main(String[] args) {
 
         boolean IS_BETA = dotenv.get("ENV_BETA").equalsIgnoreCase("true");
@@ -40,6 +42,7 @@ public class Main extends ListenerAdapter {
             MongoConnect.main(args);
             networkChallenges = MongoConnect.getNetworkChallenges();
             networkPlayers = MongoConnect.getNetworkPlayers();
+            gamesCollection = MongoConnect.getGamesCollection();
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
@@ -65,6 +68,11 @@ public class Main extends ListenerAdapter {
      */
     public static MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
+    }
+
+
+    public static MongoCollection<Document> getGamesCollection(){
+        return gamesCollection;
     }
 
 

@@ -1,53 +1,76 @@
-![](https://img.shields.io/badge/Status-Verified%20Discord%20Bot-brightgreen)
-![](https://img.shields.io/badge/Status-Online-brightgreen)
-![](https://img.shields.io/badge/Discord%20API-JDA-purple)
-![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory%20-blue)
+# **♟️ Chesslise**
+
+![](https://img.shields.io/badge/Status-Verified%20Discord%20Bot-brightgreen)  
+![](https://img.shields.io/badge/Status-Online-brightgreen)  
+![](https://img.shields.io/badge/Discord%20API-JDA-purple)  
+![](https://img.shields.io/badge/Available%20On-Discord%20App%20Directory-blue)  
 ![GitHub License](https://img.shields.io/github/license/jalpp/Chesslise)
 
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jalpp/DojoIcons/dd7365ea7d768fe17056d9b14ee6740c2bf4e261/oldIcons/Black%20Blue%20White%20Tactical%20eSports%20Discord%20Logo.png" alt="ChessLise" width=20% height=20% />
+  <img src="https://raw.githubusercontent.com/jalpp/DojoIcons/dd7365ea7d768fe17056d9b14ee6740c2bf4e261/oldIcons/Black%20Blue%20White%20Tactical%20eSports%20Discord%20Logo.png" alt="ChessLise" width="200"/>
 </p>
 
-Chesslise is a community-driven open-source Chess-based Discord application, that allows users to play, learn, and watch chess on their Discord server, and install it on their Discord accounts to play chess in Group DMs/friend chat rooms. Chesslise is 3rd best chess Discord bot in Discord's official App directory, being used in more than 1k servers.
+## 🚀 **What is Chesslise?**
+**Chesslise** is a **community-driven, open-source** chess bot designed to bring the **ultimate chess experience** to Discord. Whether you're looking to **play, learn, or spectate**, Chesslise makes it seamless—all within your Discord server, Group DMs, or friend chat rooms.
 
-Chesslise also has inbuilt CSSN (Chesslise Social Server Network) that allows players to find new friends, find new challenges from their friend networks and open networks
+🔥 **Ranked 2nd in Discord’s official App Directory for Chess**, Chesslise is trusted by **1,200+ servers worldwide** to deliver an engaging chess experience.
 
+---
 
-# API
+## 🎯 **Features**
+✅ **Play Chess Anywhere** – Challenge friends or compete in public games directly in Discord.  
+✅ **Learn & Improve** – Solve more than 40k chess puzzle. From Lichess Puzzle Database  
+✅ **Watch Live Games** – Spectate real-time online matches and follow top players.  
+✅ **Seamless Integration** – Works effortlessly in **Group DMs, private chats, and community servers**.  
+✅ **Stockfish Engine Support** – Play Stockfish with group matches, with easy, medium, hard level support.  
+✅ **CSSN – Chesslise Social Server Network** – Discover new chess friends, opponents, and challenges.
 
- 1. [lichess API](https://lichess.org/api) 
- 2. [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
- 3. [JDA 5 discord API](https://github.com/DV8FromTheWorld/JDA)
- 4. [StockFish API](https://stockfish.online/)
-5. [Chessdb cn](https://chessdb.cn/cloudbookc_info_en.html)
- 
- # Tech Stack
-Java 21, Maven, AWS, MongoDB
+---
 
-# Libraries
+## 🔗 **APIs Used**
+Chesslise integrates with **multiple powerful chess APIs** to provide a high-quality experience:
 
- 1. [lichess Java Client](https://github.com/tors42/chariot) 
- 2. [Tors42 JBang-chariot Java Client Examples](https://github.com/tors42/jbang-chariot)
- 3. [Chess.com Java Wrapper](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
- 4. [Java Chess Lib](https://github.com/bhlangonijr/chesslib)
+- ♟️ [Lichess API](https://lichess.org/api)
+- ♟️ [Chess.com API](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
+- ♟️ [JDA 5 (Discord API)](https://github.com/DV8FromTheWorld/JDA)
+- ♟️ [Stockfish API](https://stockfish.online/)
+- ♟️ [ChessDB CN (Opening Book)](https://chessdb.cn/cloudbookc_info_en.html)
 
-# Engines
+---
 
-- [Stockfish](https://stockfishchess.org/)
+## 🛠 **Tech Stack**
+- **Language**: Java 21
+- **Build Tool**: Maven
+- **Database**: MongoDB
+- **Hosting**: AWS
 
-# Image Generation
-- [lichess Gifs](https://github.com/lichess-org/lila-gif)
+---
 
-# Contribution
-read more in `CONTRIBUTING.md` on how to setup lise on Discord and server to run it locally
+## 📚 **Libraries Used**
+- [Lichess Java Client](https://github.com/tors42/chariot)
+- [Tors42 JBang-Chariot (Java Client Examples)](https://github.com/tors42/jbang-chariot)
+- [Chess.com Java Wrapper](https://github.com/sornerol/chess-com-pubapi-java-wrapper)
+- [Java Chess Library](https://github.com/bhlangonijr/chesslib)
 
+---
 
-## App Directory 
-[View More](https://discord.com/application-directory/930544707300393021)
+## 🎨 **Image Generation**
+- [Lichess GIFs](https://github.com/lichess-org/lila-gif)
 
-## Dev Discord
-[Discord](https://discord.gg/T2eH3tQjKC)
+## 🧩 **Puzzle Database**
+- [Lichess Puzzle Database]("https://database.lichess.org/#puzzles")
+---
+
+## 🤝 **Contributing**
+Want to contribute? Awesome! 🎉 Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and guidelines.
+
+---
+
+## 🌍 **Join the Chesslise Community**
+🔹 **App Directory** – [View Chesslise on Discord](https://discord.com/application-directory/930544707300393021)  
+🔹 **Development Discord** – [Join Our Dev Server](https://discord.gg/T2eH3tQjKC)
+
+♟️ **Let’s bring chess to every Discord server!** 🚀
 
 
 

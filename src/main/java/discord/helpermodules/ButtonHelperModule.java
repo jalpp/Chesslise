@@ -6,9 +6,9 @@ import discord.mainhandler.Thumbnail;
 import lichess.DailyCommand;
 import lichess.Game;
 import chariot.Client;
-import lichess.ThemePuzzle;
+import Game.*;
 import com.github.bhlangonijr.chesslib.Board;
-import com.github.bhlangonijr.chesslib.Side;
+import lichess.ThemePuzzle;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -16,6 +16,7 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
+import runner.Main;
 
 import java.awt.*;
 
@@ -27,15 +28,11 @@ import static discord.helpermodules.ChessSlashHelperModule.*;
 public class ButtonHelperModule {
 
     private final ButtonInteractionEvent buttonEvent;
-    private final Board board;
-    private final Board blackBoard;
     private final Client client;
 
 
-    public ButtonHelperModule(ButtonInteractionEvent buttonEvent, Board board, Board blackBoard, Client client) {
+    public ButtonHelperModule(ButtonInteractionEvent buttonEvent,Client client) {
         this.buttonEvent = buttonEvent;
-        this.board = board;
-        this.blackBoard = blackBoard;
         this.client = client;
     }
 
@@ -43,30 +40,24 @@ public class ButtonHelperModule {
      * Handle the logic for playing the engine with /move
      */
     public void sendPlayingEngineFlow() {
+        GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
         switch (buttonEvent.getComponentId()) {
             case "bot-lose" -> {
-                board.loadFromFen(new Board().getFen());
-                buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("You have resigned the game!").setColor(Color.red).build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose", "Resgin").asDisabled(), net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("bot-draw", "Draw").asDisabled()).queue();
-            }
-            case "bot-lose-black" -> {
-                blackBoard.loadFromFen(new Board().getFen());
-                buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("You have resigned the game!").setColor(Color.red).build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose-black", "Resgin").asDisabled(), net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("bot-draw-black", "Draw").asDisabled()).queue();
+
+                buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("You have resigned the game!").setColor(Color.red).build()).setActionRow(Button.danger("bot-lose", "Resgin").asDisabled(),Button.secondary("bot-draw", "Draw").asDisabled()).queue();
+                try{
+                    gameHandler.updateFen(buttonEvent.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
             case "bot-draw" -> {
-                board.loadFromFen(new Board().getFen());
-                buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("Lise accepts the draw!").setColor(Color.yellow).build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose", "Resgin").asDisabled(), net.dv8tion.jda.api.interactions.components.buttons.Button.secondary("bot-draw", "Draw").asDisabled()).queue();
-            }
-            case "bot-draw-black" -> {
-                board.loadFromFen(new Board().getFen());
-                buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("Lise accepts the draw!").setColor(Color.yellow).build()).setActionRow(net.dv8tion.jda.api.interactions.components.buttons.Button.danger("bot-lose-black", "Resgin").asDisabled(), Button.secondary("bot-draw-black", "Draw").asDisabled()).queue();
-            }
-            case "white-side" -> {
-                board.setSideToMove(Side.WHITE);
-                buttonEvent.reply("Set to White Side!").queue();
-            }
-            case "black-side" -> {
-                board.setSideToMove(Side.BLACK);
-                buttonEvent.reply("Set to Black Side!").queue();
+                buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("Chesslise accepts the draw!").setColor(Color.yellow).build()).setActionRow(Button.danger("bot-lose", "Resgin").asDisabled(), Button.secondary("bot-draw", "Draw").asDisabled()).queue();
+                try{
+                    gameHandler.updateFen(buttonEvent.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+                }catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
@@ -152,15 +143,21 @@ public class ButtonHelperModule {
             case "threemove" -> sendChessDBMove(2);
         }
     }
-    
-     /**
+
+
+    /**
      * Gets the theme card
      */
     public void sendPuzzleDBTheme(){
-        if(buttonEvent.getComponentId().equalsIgnoreCase("loadpuzzles")){
-            buttonEvent.editMessage("Pick more for themes!").setActionRow(Button.success("sacrifice", "sacrifice"), Button.success("short", "short"), Button.success("long", "long"),  Button.success("master", "From Master Games")).queue();
+        switch (buttonEvent.getComponentId()){
+            case "loadpuzzles" ->  buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("Pick more for themes!").build()).setActionRow(Button.success("sacrifice", "sacrifice"), Button.success("long", "long"),  Button.success("master", "From Master Games")).queue();
+            case "mate" -> sendPuzzleThemeCard("mate");
+            case "middlegame" -> sendPuzzleThemeCard("middlegame");
+            case "endgame" -> sendPuzzleThemeCard("endgame");
+            case "long" -> sendPuzzleThemeCard("long");
+            case "sacrifice" -> sendPuzzleThemeCard("sacrifice");
+            case "master" -> sendPuzzleThemeCard("master");
         }
-        sendPuzzleThemeCard(buttonEvent.getComponentId());
     }
 
     /**
@@ -168,9 +165,8 @@ public class ButtonHelperModule {
      * @param theme the puzzle theme
      */
     private void sendPuzzleThemeCard(String theme){
-        buttonEvent.deferReply().queue();
         ThemePuzzle puzzle = new ThemePuzzle(theme);
-        buttonEvent.getHook().sendMessageEmbeds(puzzle.defineCommandCard().build()).addActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).addActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
+        buttonEvent.editMessageEmbeds(puzzle.defineCommandCard().build()).setActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).setActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
     }
 
     /**

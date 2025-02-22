@@ -22,6 +22,8 @@ public class MongoConnect {
 
     private static MongoCollection<Document> networkChallenges;
 
+    private static MongoCollection<Document> gamesCollection;
+
 
     /**
      * Instantiates a new Mongo connect.
@@ -33,10 +35,12 @@ public class MongoConnect {
      * start the connection to the MongoDB database
      */
     public static void connect() {
+        boolean isBeta = Main.dotenv.get("ENV_BETA").equalsIgnoreCase("true");
         String connectionString = Main.dotenv.get("CONNECTION_STRING");
         String dbname = Main.dotenv.get("DB_NAME");
         String playerColName = Main.dotenv.get("DB_PLAYER_COL");
         String challengeColName = Main.dotenv.get("DB_CHALL_COL");
+        String gameColName = Main.dotenv.get("DB_GAMES_COL");
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -50,9 +54,11 @@ public class MongoConnect {
 
         MongoDatabase database = mongoClient.getDatabase(dbname);
 
-        networkChallenges = database.getCollection(Main.dotenv.get("ENV_BETA").equalsIgnoreCase("true") ? challengeColName + "beta" : challengeColName);
+        networkChallenges = database.getCollection(isBeta ? challengeColName + "beta" : challengeColName);
 
-        networkPlayers = database.getCollection(Main.dotenv.get("ENV_BETA").equalsIgnoreCase("true") ? playerColName + "beta" : playerColName);
+        networkPlayers = database.getCollection(isBeta ? playerColName + "beta" : playerColName);
+
+        gamesCollection = database.getCollection(isBeta ? gameColName + "beta" : gameColName);
     }
 
     /**
@@ -80,6 +86,11 @@ public class MongoConnect {
      */
     public static MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
+    }
+
+
+    public static MongoCollection<Document> getGamesCollection() {
+        return gamesCollection;
     }
 }
 
