@@ -58,7 +58,7 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 - [Lichess GIFs](https://github.com/lichess-org/lila-gif)
 
 ## 🧩 **Puzzle Database**
-- [Lichess Puzzle Database]("https://database.lichess.org/#puzzles")
+- [Lichess Puzzle Database](https://database.lichess.org/#puzzles)
 ---
 
 ## 🤝 **Contributing**

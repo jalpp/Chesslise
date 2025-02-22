@@ -87,7 +87,7 @@ public class CommandHandler extends ListenerAdapter {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
 
-        jda.getPresence().setActivity(Activity.watching("V16 Servers: " + guildCount + " Join CSSN!"));
+        jda.getPresence().setActivity(Activity.watching("V17 Servers: " + guildCount + " 40K puzzles added!"));
     }
 
 
