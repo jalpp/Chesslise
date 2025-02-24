@@ -6,6 +6,7 @@ import discord.mainhandler.Thumbnail;
 import io.github.sornerol.chess.pubapi.client.DailyPuzzleClient;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
 import net.dv8tion.jda.api.EmbedBuilder;
+import setting.SettingSchema;
 
 import java.awt.*;
 import java.io.IOException;
@@ -53,9 +54,13 @@ public class DailyCommandCC extends PuzzleView implements Puzzle {
     }
 
     @Override
-    public EmbedBuilder defineCommandCard() {
-        return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setThumbnail(definePuzzleLogo()).setDescription(definePuzzleDescription()).setImage(renderImage(definePuzzleFen()));
+    public EmbedBuilder defineCommandCard(SettingSchema schema) {
+        return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setThumbnail(definePuzzleLogo()).setDescription(definePuzzleDescription()).setImage(renderImage(definePuzzleFen(), schema));
     }
 
 
 }
+
+
+
+

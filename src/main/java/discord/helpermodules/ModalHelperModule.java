@@ -5,17 +5,20 @@ import lichess.Game;
 import lichess.UserGame;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
+import setting.SettingHandler;
+import setting.SettingSchemaModule;
 
 
 import java.util.Objects;
 
-public class ModalHelperModule {
+public class ModalHelperModule extends SettingSchemaModule {
 
 
     private final ModalInteractionEvent eventModal;
     private final Client client;
 
     public ModalHelperModule(ModalInteractionEvent eventModal, Client client) {
+        super(eventModal.getUser().getId());
         this.eventModal = eventModal;
         this.client = client;
     }
@@ -52,7 +55,7 @@ public class ModalHelperModule {
         } else if (client.users().byId(userInput).isPresent()) {
             UserGame userGame = new UserGame(client, userInput);
             eventModal.deferReply(true).queue();
-            eventModal.getChannel().sendMessage(userGame.getUserGames()).queue();
+            eventModal.getChannel().sendMessage(userGame.getUserGamesGif(getSettingSchema())).queue();
 
         } else {
             eventModal.reply("Please Provide A Valid Lichess Username!").queue();

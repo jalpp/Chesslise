@@ -12,15 +12,19 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
+import setting.SettingHandler;
+import setting.SettingSchema;
+import setting.SettingSchemaModule;
 
 import java.awt.*;
 
 /**
  * ChessSlashHelperModule class to handle the chess slash helper module
  */
-public class ChessSlashHelperModule {
+public class ChessSlashHelperModule extends SettingSchemaModule {
 
     private final SlashCommandInteractionEvent event;
+    private final SettingSchema setting = getSettingSchema();
 
     /**
      * the learn chess information
@@ -43,6 +47,7 @@ public class ChessSlashHelperModule {
      * @param event the event
      */
     public ChessSlashHelperModule(SlashCommandInteractionEvent event) {
+        super(event.getUser().getId());
         this.event = event;
     }
 
@@ -56,7 +61,7 @@ public class ChessSlashHelperModule {
         String fen = event.getOption("paste-fen").getAsString();
         String info = query.getTop3BestMove(fen);
 
-        EmbedBuilder builder = ButtonHelperModule.getChessDBEmbed(info, fen);
+        EmbedBuilder builder = getChessDBEmbed(info, fen);
 
         event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.success("onemove", "Play 1st move"), Button.success("twomove", "Play 2nd move"), Button.success("threemove", "Play 3rd move")).queue();
     }
@@ -70,13 +75,29 @@ public class ChessSlashHelperModule {
         event.deferReply().queue();
         String fen = event.getOption("input-fen").getAsString();
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setImage(util.getImageFromFEN(fen, "green", "kosal"));
+        builder.setImage(util.getImageFromFEN(fen, setting.getBoardTheme(),setting.getPieceType()));
         builder.setColor(Color.PINK);
 
         event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.link(util.getAnalysisBoard(fen), "Analysis Board")).queue();
     }
 
+    /**
+     * Get the chessdb embed
+     * @param moveDesc the move description
+     * @param fen the current fen
+     * @return the ChessDB embed
+     */
+    private EmbedBuilder getChessDBEmbed(String moveDesc, String fen){
+        ChessUtil chessUtil = new ChessUtil();
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setImage(chessUtil.getImageFromFEN(fen, setting.getBoardTheme(), setting.getPieceType()));
+        builder.setTitle("ChessDB CN Analysis");
+        builder.setDescription(moveDesc);
+        builder.addField("fen", fen, true);
+        builder.setFooter("Analysis by ChessDB CN see more here https://chessdb.cn/cloudbookc_info_en.html");
 
+        return builder;
+    }
 
     /**
      * Send the input form for Watch command and Chess.com user profile
@@ -144,6 +165,17 @@ public class ChessSlashHelperModule {
         event.getHook().sendMessage(userProfile.getUserProfile()).setEphemeral(false).queue();
 
     }
+
+
+    public void sendUserSettingCommand(){
+        event.deferReply(true).queue();
+        String theme = event.getOptionsByName("theme").get(0).getAsString();
+        String pieceType = event.getOptionsByName("piecetype").get(0).getAsString();
+        String status = SettingHandler.updateSetting(new SettingSchema(theme, pieceType, event.getUser().getId()));
+        event.getHook().sendMessage(status).queue();
+    }
+
+
 
 
 

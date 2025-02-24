@@ -17,21 +17,28 @@ import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
 import runner.Main;
+import setting.SettingHandler;
+import setting.SettingSchema;
+import setting.SettingSchemaModule;
 
 import java.awt.*;
+
 
 import static discord.helpermodules.ChessSlashHelperModule.*;
 
 /**
  * ButtonHelperModule class to handle the button logic
  */
-public class ButtonHelperModule {
+public class ButtonHelperModule extends SettingSchemaModule {
 
     private final ButtonInteractionEvent buttonEvent;
     private final Client client;
+    private final SettingSchema setting = getSettingSchema();
+
 
 
     public ButtonHelperModule(ButtonInteractionEvent buttonEvent,Client client) {
+        super(buttonEvent.getUser().getId());
         this.buttonEvent = buttonEvent;
         this.client = client;
     }
@@ -166,7 +173,7 @@ public class ButtonHelperModule {
      */
     private void sendPuzzleThemeCard(String theme){
         ThemePuzzle puzzle = new ThemePuzzle(theme);
-        buttonEvent.editMessageEmbeds(puzzle.defineCommandCard().build()).setActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).setActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
+        buttonEvent.editMessageEmbeds(puzzle.defineCommandCard(setting).build()).setActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).setActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
     }
 
     /**
@@ -222,10 +229,8 @@ public class ButtonHelperModule {
      */
     public void sendPuzzleButtons() {
         DailyCommand dailyCommand = new DailyCommand(client);
-        switch (buttonEvent.getComponentId()) {
-            case "puzzlecc" ->
-                    buttonEvent.replyEmbeds(dailyCommand.defineCommandCard().build()).setEphemeral(true).queue();
-            case "hint" -> buttonEvent.replyEmbeds(dailyCommand.getThemes().build()).setEphemeral(true).queue();
+        if (buttonEvent.getComponentId().equals("hint")) {
+            buttonEvent.replyEmbeds(dailyCommand.getThemes().build()).setEphemeral(true).queue();
         }
 
     }
@@ -365,23 +370,6 @@ public class ButtonHelperModule {
     }
 
 
-    /**
-     * Get the chessdb embed
-     * @param moveDesc the move description
-     * @param fen the current fen
-     * @return the ChessDB embed
-     */
-    public static EmbedBuilder getChessDBEmbed(String moveDesc, String fen){
-        ChessUtil chessUtil = new ChessUtil();
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setImage(chessUtil.getImageFromFEN(fen, "green", "kosal"));
-        builder.setTitle("ChessDB CN Analysis");
-        builder.setDescription(moveDesc);
-        builder.addField("fen", fen, true);
-        builder.setFooter("Analysis by ChessDB CN see more here https://chessdb.cn/cloudbookc_info_en.html");
-
-        return builder;
-    }
 
     /**
      * Get the next move edited version of the embed
@@ -393,7 +381,7 @@ public class ButtonHelperModule {
     public EmbedBuilder getChessDBEdited(String moveDesc, String fen, String move){
         ChessUtil chessUtil = new ChessUtil();
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setImage(chessUtil.getChessDBImage(fen, "green", "kosal", move));
+        builder.setImage(chessUtil.getChessDBImage(fen, setting.getBoardTheme(), setting.getPieceType(), move));
         builder.setTitle("ChessDB CN Analysis");
         builder.setDescription(moveDesc);
         builder.addField("fen", fen, true);

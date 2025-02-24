@@ -1,6 +1,7 @@
 package abstraction;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import setting.SettingSchema;
 
 import java.awt.*;
 
@@ -22,7 +23,7 @@ public interface Puzzle {
      *
      * @return the command card
      */
-    EmbedBuilder defineCommandCard();
+    EmbedBuilder defineCommandCard(SettingSchema schema);
 
     /**
      * Get the puzzle website's logo

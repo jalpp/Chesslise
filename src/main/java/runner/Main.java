@@ -26,6 +26,8 @@ public class Main extends ListenerAdapter {
 
     private static MongoCollection<Document> gamesCollection;
 
+    private static MongoCollection<Document> settingCollection;
+
     public static void main(String[] args) {
 
         boolean IS_BETA = dotenv.get("ENV_BETA").equalsIgnoreCase("true");
@@ -38,11 +40,16 @@ public class Main extends ListenerAdapter {
         jdaBuilder.addEventListeners(new CommandHandler());
 
         try {
+            System.out.println("[Chesslise Status]: Logging in " + (IS_BETA ? "Beta" : "Production") + " Instance...");
             jda = jdaBuilder.build();
+            System.out.println("[Chesslise Status]: Connecting to " + (IS_BETA ? "Beta" : "Production") + " Database...");
             MongoConnect.main(args);
             networkChallenges = MongoConnect.getNetworkChallenges();
             networkPlayers = MongoConnect.getNetworkPlayers();
             gamesCollection = MongoConnect.getGamesCollection();
+            settingCollection = MongoConnect.getSettingCollection();
+            System.out.println("[Chesslise Status]: " + (IS_BETA ? "Beta" : "Production") + " Successfully Running");
+            System.out.println("[Chesslise Status]: Successfully Connected To Database");
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
@@ -73,6 +80,10 @@ public class Main extends ListenerAdapter {
 
     public static MongoCollection<Document> getGamesCollection(){
         return gamesCollection;
+    }
+
+    public static MongoCollection<Document> getSettingCollection(){
+        return settingCollection;
     }
 
 
