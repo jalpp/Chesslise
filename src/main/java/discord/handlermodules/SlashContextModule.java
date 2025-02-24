@@ -31,6 +31,8 @@ public class SlashContextModule {
 
             case "setengine" -> engineTool.sendSetEngineMode();
 
+            case "setting" -> chessTool.sendUserSettingCommand();
+
             case "puzzle" -> puzzleTool.sendPuzzleMenuCommand();
 
             case "help" -> infoTool.sendInfoCommand();

@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import network.user.PreferenceFr;
 import network.user.PreferencePl;
 import network.user.PreferenceTc;
+import setting.SettingSchema;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,15 +92,6 @@ public class CommandBuilder {
     }
 
     /**
-     * Build the message command
-     *
-     * @param name the name of command
-     */
-    public void buildMessageCommand(String name) {
-        action.addCommands(Commands.context(Command.Type.MESSAGE, name));
-    }
-
-    /**
      * Register the slash commands with multiple options
      */
     public void registerSlashMultipleOptionCommand() {
@@ -110,6 +102,8 @@ public class CommandBuilder {
         buildSlashMultipleOption("playengine", "play engine by choosing the difficulty level", new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true).addChoice("Easy", "5").addChoice("Medium", "10").addChoice("Hard", "15"));
 
         buildSlashMultipleOption("setengine", "set the engine difficulty", new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true).addChoice("Easy", "5").addChoice("Medium", "10").addChoice("Hard", "15"));
+
+        buildSlashMultipleOption("setting", "set Chesslise settings like board theme & piece type", SettingSchema.getBoardThemeData(), SettingSchema.getPieceTypeData());
 
         buildSlashMultipleOption("connect", "join the Chesslise network to find and challenge players", PreferencePl.getOptionData(), PreferenceTc.getOptionData(), PreferenceFr.getOpeningOptionData(), PreferenceFr.getPlayerOptionData(), PreferenceFr.getPieceOptionData(), PreferenceFr.getStyleOptionData());
 

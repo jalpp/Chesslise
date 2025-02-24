@@ -4,6 +4,7 @@ import abstraction.Puzzle;
 import abstraction.PuzzleView;
 import discord.mainhandler.Thumbnail;
 import net.dv8tion.jda.api.EmbedBuilder;
+import setting.SettingSchema;
 
 import java.awt.*;
 
@@ -24,8 +25,8 @@ public class ThemePuzzle extends PuzzleView implements Puzzle {
     }
 
     @Override
-    public EmbedBuilder defineCommandCard() {
-        return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen())).setThumbnail(definePuzzleLogo());
+    public EmbedBuilder defineCommandCard(SettingSchema schema) {
+        return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen(), schema)).setThumbnail(definePuzzleLogo());
     }
 
     @Override

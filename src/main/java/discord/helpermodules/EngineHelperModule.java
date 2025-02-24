@@ -11,15 +11,18 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import runner.Main;
+import setting.SettingSchema;
+import setting.SettingSchemaModule;
 
 import java.awt.*;
 
-public class EngineHelperModule {
+public class EngineHelperModule extends SettingSchemaModule {
 
     private final SlashCommandInteractionEvent event;
     private final GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
 
     public EngineHelperModule(SlashCommandInteractionEvent event) {
+        super(event.getUser().getId());
         this.event = event;
     }
 
@@ -41,11 +44,12 @@ public class EngineHelperModule {
             board.doMove(makemove);
             board.doMove(StockFish.getBestMove(schema.getDepth(), board.getFen()));
 
+            SettingSchema setting = getSettingSchema();
             EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setTitle("White to move")
                 .setColor(Color.green)
                 .setThumbnail(Thumbnail.getStockfishLogo())
-                .setImage(util.getImageFromFEN(board.getFen(), "brown", "kosal"));
+                .setImage(util.getImageFromFEN(board.getFen(),setting.getBoardTheme(),setting.getPieceType()));
 
             event.getHook().sendMessage("Game Manager Tab \n **resign** to end the game \n **draw** to draw the game!")
                 .addActionRow(Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw"))

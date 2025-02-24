@@ -61,6 +61,41 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 - [Lichess Puzzle Database](https://database.lichess.org/#puzzles)
 ---
 
+
+## 🔧 **Running Chesslise Locally**
+
+Follow these steps to set up and run Chesslise on your local machine:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/jalpp/Chesslise.git
+   cd Chesslise
+   ```
+2. **Set up beta environment variables:**
+    - Copy the `copy.env` file to `.env`:
+   ```bash
+   cp copy.env .env
+   ```
+    - Fill in the required variables in the `.env` file. Note ignore production Discord token, unless you want to run production/beta bots
+3. **Build the project:**
+   ```bash
+   mvn clean install
+   ```
+4. **Run the bot:**
+   ```bash
+   java -jar target/ChessLise-17.0-SNAPSHOT-jar-with-dependencies.jar
+   ```
+5. **Check bot status:**
+    - if you did everything right, the below should be printed on console, and Chesslise will be online in Discord server
+   ```
+   [Chesslise Status]: Beta Successfully Running
+   [Chesslise Status]: Successfully Connected To Database
+    ```   
+
+The bot should now be running locally and can be tested on your Discord server!
+
+---
+
 ## 🤝 **Contributing**
 Want to contribute? Awesome! 🎉 Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and guidelines.
 
@@ -71,12 +106,6 @@ Want to contribute? Awesome! 🎉 Check out our [CONTRIBUTING.md](CONTRIBUTING.m
 🔹 **Development Discord** – [Join Our Dev Server](https://discord.gg/T2eH3tQjKC)
 
 ♟️ **Let’s bring chess to every Discord server!** 🚀
-
-
-
-
-
-
 
 
 

@@ -24,6 +24,8 @@ public class MongoConnect {
 
     private static MongoCollection<Document> gamesCollection;
 
+    private static MongoCollection<Document> settingCollection;
+
 
     /**
      * Instantiates a new Mongo connect.
@@ -41,6 +43,7 @@ public class MongoConnect {
         String playerColName = Main.dotenv.get("DB_PLAYER_COL");
         String challengeColName = Main.dotenv.get("DB_CHALL_COL");
         String gameColName = Main.dotenv.get("DB_GAMES_COL");
+        String settingColName = Main.dotenv.get("DB_SETTING_COL");
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -59,6 +62,8 @@ public class MongoConnect {
         networkPlayers = database.getCollection(isBeta ? playerColName + "beta" : playerColName);
 
         gamesCollection = database.getCollection(isBeta ? gameColName + "beta" : gameColName);
+
+        settingCollection = database.getCollection(isBeta ? settingColName + "beta" : settingColName);
     }
 
     /**
@@ -91,6 +96,10 @@ public class MongoConnect {
 
     public static MongoCollection<Document> getGamesCollection() {
         return gamesCollection;
+    }
+
+    public static MongoCollection<Document> getSettingCollection(){
+        return settingCollection;
     }
 }
 

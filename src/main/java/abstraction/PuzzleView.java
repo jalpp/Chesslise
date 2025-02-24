@@ -1,5 +1,8 @@
 package abstraction;
 
+import setting.SettingHandler;
+import setting.SettingSchema;
+
 public class PuzzleView {
 
     private final ChessUtil util = new ChessUtil();
@@ -10,8 +13,8 @@ public class PuzzleView {
      * @param fen the fen
      * @return the image link
      */
-    public String renderImage(String fen) {
-        return util.getImageFromFEN(fen, "green", "alpha");
+    public String renderImage(String fen, SettingSchema schema) {
+        return util.getImageFromFEN(fen, schema.getBoardTheme(), schema.getPieceType());
     }
 
     /**
