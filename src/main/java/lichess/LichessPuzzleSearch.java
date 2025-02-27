@@ -6,15 +6,18 @@ import java.util.*;
 
 public class LichessPuzzleSearch {
 
+    /**
+     * the max puzzle search Chesslise searches
+     */
     private static final int MAX_PUZZLE_SEARCH = 5000;
 
-    public static void main(String[] args) {
-
-        List<List<String>> list = searchPuzzles("Themes", "master", 100);
-
-        System.out.println(getRandomPuzzle(list));
-    }
-
+    /**
+     * gets the puzzle values in the csv line for given search column
+     * @param searchColumn the search column (puzzle theme)
+     * @param searchValue the search value (puzzle theme value)
+     * @param maxPuzzles max puzzles to search for
+     * @return return the csv line
+     */
     private static List<List<String>> searchPuzzles(String searchColumn, String searchValue, int maxPuzzles) {
 
         String currentFolderPath = Paths.get("").toAbsolutePath().toString();
@@ -71,6 +74,11 @@ public class LichessPuzzleSearch {
         return results;
     }
 
+    /**
+     * returns random puzzle
+     * @param puzzles the lines
+     * @return the random puzzle line
+     */
     private static List<String> getRandomPuzzle(List<List<String>> puzzles) {
         if (puzzles == null || puzzles.isEmpty()) {
             return Collections.emptyList();
@@ -80,6 +88,11 @@ public class LichessPuzzleSearch {
         return puzzles.get(randomIndex);
     }
 
+    /**
+     * gets the random puzzle for given searched theme
+     * @param themeSearch the theme
+     * @return the puzzle in LichessDB puzzle object
+     */
     public static LichessDBPuzzle getDatabasePuzzle(String themeSearch){
         List<String> randomPuzzle = getRandomPuzzle(searchPuzzles("Themes", themeSearch, MAX_PUZZLE_SEARCH));
         return new LichessDBPuzzle(randomPuzzle.get(0), randomPuzzle.get(1), randomPuzzle.get(2), randomPuzzle.get(3), randomPuzzle.get(4), randomPuzzle.get(5));

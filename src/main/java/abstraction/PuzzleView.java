@@ -1,6 +1,5 @@
 package abstraction;
 
-import setting.SettingHandler;
 import setting.SettingSchema;
 
 public class PuzzleView {

@@ -14,8 +14,13 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 public class SlashContextModule {
 
 
-
-    public void handleLogic(SlashCommandInteractionEvent slashEvent, Client client, AntiSpam spam) {
+    /**
+     * handles the slash logic
+     * @param slashEvent the slash event
+     * @param client the chariot client
+     */
+    public void handleLogic(SlashCommandInteractionEvent slashEvent, Client client) {
+        AntiSpam spam = new AntiSpam(300000, 1);
         String name = slashEvent.getName();
         EngineHelperModule engineTool = new EngineHelperModule(slashEvent);
         CommandInfo infoTool = new CommandInfo(slashEvent);

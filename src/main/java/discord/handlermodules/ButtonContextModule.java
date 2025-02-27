@@ -9,10 +9,11 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
  */
 public class ButtonContextModule {
 
-    public ButtonContextModule() {
-
-    }
-
+    /**
+     * handles logic for button event
+     * @param buttonEvent the button event
+     * @param client the chariot client
+     */
     public void handleLogic(ButtonInteractionEvent buttonEvent, Client client) {
 
         ButtonHelperModule buttonTool = new ButtonHelperModule(buttonEvent, client);
