@@ -1,9 +1,7 @@
 package discord.helpermodules;
 
-import lichess.UserProfile;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.Command;
 
 import java.util.List;

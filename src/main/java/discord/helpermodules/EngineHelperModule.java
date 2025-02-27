@@ -16,16 +16,27 @@ import setting.SettingSchemaModule;
 
 import java.awt.*;
 
+/**
+ * EngineHelperModule class to handle chess engine-related commands.
+ */
 public class EngineHelperModule extends SettingSchemaModule {
 
     private final SlashCommandInteractionEvent event;
     private final GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
 
+    /**
+     * Constructor for EngineHelperModule.
+     *
+     * @param event the SlashCommandInteractionEvent instance
+     */
     public EngineHelperModule(SlashCommandInteractionEvent event) {
         super(event.getUser().getId());
         this.event = event;
     }
 
+    /**
+     * Handles the white side move command.
+     */
     public void sendwhiteSideMoveCommand() {
         try {
             event.deferReply(true).queue();
@@ -49,7 +60,7 @@ public class EngineHelperModule extends SettingSchemaModule {
                 .setTitle("White to move")
                 .setColor(Color.green)
                 .setThumbnail(Thumbnail.getStockfishLogo())
-                .setImage(util.getImageFromFEN(board.getFen(),setting.getBoardTheme(),setting.getPieceType()));
+                .setImage(util.getImageFromFEN(board.getFen(), setting.getBoardTheme(), setting.getPieceType()));
 
             event.getHook().sendMessage("Game Manager Tab \n **resign** to end the game \n **draw** to draw the game!")
                 .addActionRow(Button.danger("bot-lose", "Resign"), Button.secondary("bot-draw", "Draw"))
@@ -67,6 +78,9 @@ public class EngineHelperModule extends SettingSchemaModule {
         }
     }
 
+    /**
+     * Handles the play engine command.
+     */
     public void sendPlayEngine() {
         try {
             event.deferReply(true).queue();
@@ -78,6 +92,9 @@ public class EngineHelperModule extends SettingSchemaModule {
         }
     }
 
+    /**
+     * Handles the set engine mode command.
+     */
     public void sendSetEngineMode() {
         try {
             event.deferReply(true).queue();

@@ -5,7 +5,6 @@ import lichess.Game;
 import lichess.UserGame;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
-import setting.SettingHandler;
 import setting.SettingSchemaModule;
 
 

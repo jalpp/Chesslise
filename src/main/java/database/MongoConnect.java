@@ -78,7 +78,7 @@ public class MongoConnect {
     /**
      * Get the network players collection
      *
-     * @return the network players collection
+     * @return the MongoDB network players collection
      */
     public static MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
@@ -87,17 +87,24 @@ public class MongoConnect {
     /**
      * Get the network challenges collection
      *
-     * @return the network challenges collection
+     * @return the MongoDB network challenges collection
      */
     public static MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
     }
 
-
+    /**
+     * gets the games collection
+     * @return the game MongoDB collection
+     */
     public static MongoCollection<Document> getGamesCollection() {
         return gamesCollection;
     }
 
+    /**
+     * gets the setting collection
+     * @return the setting MongoDB collection
+     */
     public static MongoCollection<Document> getSettingCollection(){
         return settingCollection;
     }

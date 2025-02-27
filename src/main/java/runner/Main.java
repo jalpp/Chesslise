@@ -77,11 +77,18 @@ public class Main extends ListenerAdapter {
         return networkPlayers;
     }
 
-
+    /**
+     * gets the game collection
+     * @return the game collection
+     */
     public static MongoCollection<Document> getGamesCollection(){
         return gamesCollection;
     }
 
+    /**
+     * gets the setting collection
+     * @return the setting collection
+     */
     public static MongoCollection<Document> getSettingCollection(){
         return settingCollection;
     }

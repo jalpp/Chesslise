@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 public class CommandHandler extends ListenerAdapter {
 
     private static final Client client = Client.basic(conf -> conf.retries(0));
-    private final AntiSpam spam = new AntiSpam(300000, 1);
     private final SlashContextModule slashContext = new SlashContextModule();
     private final ModalContextModule modalContext = new ModalContextModule();
     private final ButtonContextModule buttonContext = new ButtonContextModule();
@@ -38,7 +37,7 @@ public class CommandHandler extends ListenerAdapter {
      */
     @SneakyThrows
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        slashContext.handleLogic(event, client, spam);
+        slashContext.handleLogic(event, client);
     }
 
     /**
