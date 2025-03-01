@@ -8,9 +8,7 @@ import org.bson.Document;
 
 import java.util.*;
 
-/**
- * Pairing class to handle the pairing challenge
- */
+
 public class Pairing extends Action {
 
     private final PairingNetworkType type;
@@ -22,11 +20,6 @@ public class Pairing extends Action {
         this.sendRequest = new SendFriendRequest(networkPlayers);
     }
 
-    /**
-     * Pair the open network (global)
-     *
-     * @param event the slash command event
-     */
     public void pairOpenNetwork(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -39,11 +32,6 @@ public class Pairing extends Action {
         event.getHook().sendMessage(pairingMsg).queue();
     }
 
-    /**
-     * Pair the self network
-     *
-     * @param event the slash command event
-     */
     public void pairSelfNetwork(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -57,13 +45,7 @@ public class Pairing extends Action {
 
     }
 
-    /**
-     * Pair the player
-     *
-     * @param discordId       the discord id
-     * @param discordusername the discord username
-     * @return the message for pairing
-     */
+
     public String pairPlayer(String discordId, String discordusername) {
 
         Document query = new Document("status", "pending").append("oppId", "null").append("pl", getFinder().findPreferencePl(discordId)).append("ptc", getFinder().findPreferenceTc(discordId));
@@ -85,39 +67,20 @@ public class Pairing extends Action {
         return "Challenge not found! Check back later";
     }
 
-    /**
-     * Update the pairing info and get the greeting
-     *
-     * @param discordId       the discord id
-     * @param discordUsername the discord username
-     * @param challenge       the challenge document
-     * @return the greeting
-     */
+   
     private String updatePairingInfoAndGetGreeting(String discordId, String discordUsername, Document challenge) {
         Document updateQuery = new Document("$set", new Document("status", "accepted").append("oppId", discordId).append("oppUsername", discordUsername));
         getNetworkChallenges().updateOne(challenge, updateQuery);
         return "Challenge found! " + discordUsername + " vs " + challenge.getString("username") + " You can send a Discord friend request and start playing!";
     }
 
-    /**
-     * Send friend request and get the greeting
-     *
-     * @param discordID the discord id
-     * @param friendDoc the friend document
-     * @return the greeting
-     */
+    
     private String sendFriendRequestAndGetGreeting(String discordID, Document friendDoc) {
         String msg = this.sendRequest.addFriend(discordID, friendDoc.getString("username"));
         return "Successfully found friend " + friendDoc.getString("username") + " \n" + msg;
     }
 
-    /**
-     * Find the pairing
-     *
-     * @param start   the start document
-     * @param current the current document
-     * @return if the pairing is found
-     */
+   
     private boolean foundPairing(Document start, Document current) {
 
         if (start.getString("id").equalsIgnoreCase(current.getString("id"))) {
@@ -148,12 +111,7 @@ public class Pairing extends Action {
         return start.getString("pl").equalsIgnoreCase(current.getString("pl")) && start.getString("ptc").equalsIgnoreCase(current.getString("ptc"));
     }
 
-    /**
-     * Get the targeted friend challenge document
-     *
-     * @param current the current document
-     * @return the targeted friend challenge document
-     */
+    
     private Document getTargetedFriendChallengeDoc(Document current) {
         String id = current.getString("id");
         Document query = new Document("status", "pending").append("oppId", "null").append("discordId", id);
@@ -161,12 +119,7 @@ public class Pairing extends Action {
     }
 
 
-    /**
-     * Get the adjacency list for current start document
-     *
-     * @param start the start document
-     * @return the adjacency list
-     */
+   
     private ArrayList<Document> getAdjlist(Document start) {
         ArrayList<Document> friendDocs = new ArrayList<>();
         List<String> friends = start.getList("friends", String.class);
@@ -182,13 +135,7 @@ public class Pairing extends Action {
         return friendDocs;
     }
 
-    /**
-     * do BFS for pairing and finding a friend for given type passed in the constructor
-     *
-     * @param discordIdStart       the discord id start
-     * @param discordUsernameStart the discord username start
-     * @return the message for pairing
-     */
+    
     public String bfspairing(String discordIdStart, String discordUsernameStart) {
 
         Document start = getFinder().findPlayer(discordIdStart);

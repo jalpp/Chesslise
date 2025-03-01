@@ -4,9 +4,7 @@ import chariot.model.Trophy;
 
 import java.util.HashMap;
 
-/**
- * UserTrophy class to store user trophies for Lichess user
- */
+
 public class UserTrophy {
 
     private final String trophyName;
@@ -15,12 +13,8 @@ public class UserTrophy {
         this.trophyName = trophy.name();
     }
 
-    /**
-     * prints the trophy alongside the trophy emoji
-     *
-     * @return the trophy name with the trophy emoji
-     */
-    public String getImageLink() {
+    
+    public String getTrophyName() {
         HashMap<String, String> getLink = new HashMap<>();
         getLink.put("Marathon Winner", "\uD83D\uDD2E");
         getLink.put("Marathon Top 10", "\uD83C\uDF15");

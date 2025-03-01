@@ -12,9 +12,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import runner.Main;
 
-/**
- * Class to connect to the MongoDB database
- */
+
 public class MongoConnect {
 
 
@@ -27,15 +25,10 @@ public class MongoConnect {
     private static MongoCollection<Document> settingCollection;
 
 
-    /**
-     * Instantiates a new Mongo connect.
-     */
     public MongoConnect() {
     }
 
-    /**
-     * start the connection to the MongoDB database
-     */
+    
     public static void connect() {
         boolean isBeta = Main.dotenv.get("ENV_BETA").equalsIgnoreCase("true");
         String connectionString = Main.dotenv.get("CONNECTION_STRING");
@@ -66,45 +59,26 @@ public class MongoConnect {
         settingCollection = database.getCollection(isBeta ? settingColName + "beta" : settingColName);
     }
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
+
     public static void main(String[] args) {
         connect();
     }
 
-    /**
-     * Get the network players collection
-     *
-     * @return the MongoDB network players collection
-     */
+    
     public static MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
     }
 
-    /**
-     * Get the network challenges collection
-     *
-     * @return the MongoDB network challenges collection
-     */
+    
     public static MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
     }
 
-    /**
-     * gets the games collection
-     * @return the game MongoDB collection
-     */
+   
     public static MongoCollection<Document> getGamesCollection() {
         return gamesCollection;
     }
 
-    /**
-     * gets the setting collection
-     * @return the setting MongoDB collection
-     */
     public static MongoCollection<Document> getSettingCollection(){
         return settingCollection;
     }

@@ -22,9 +22,7 @@ public class ModalHelperModule extends SettingSchemaModule {
         this.client = client;
     }
 
-    /**
-     * Send the game input form
-     */
+    
     public void sendPlayFriendChallenge() {
         String selfUser = Objects.requireNonNull(eventModal.getValue("self-user")).getAsString().trim().toLowerCase();
         String target = Objects.requireNonNull(eventModal.getValue("self-usertar-user")).getAsString().trim().toLowerCase();
@@ -38,9 +36,7 @@ public class ModalHelperModule extends SettingSchemaModule {
 
     }
 
-    /**
-     * Send the game input on form submit
-     */
+    
     public void sendGameInputOnFormSubmit() {
         String userInput = eventModal.getValue("watch_user_or_game").getAsString().trim();
         if (Game.isLink(userInput)) {
@@ -61,9 +57,7 @@ public class ModalHelperModule extends SettingSchemaModule {
         }
     }
 
-    /**
-     * Send the chess.com profile on form submit
-     */
+    
     public void sendChessComProfileOnFormSubmit() {
         String usercc = eventModal.getValue("profileusercc").getAsString().trim();
         CCProfile ccProfile = new CCProfile(usercc);

@@ -13,9 +13,7 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * CommandHandler class to handle the command
- */
+
 public class CommandHandler extends ListenerAdapter {
 
     private static final Client client = Client.basic(conf -> conf.retries(0));
@@ -30,21 +28,13 @@ public class CommandHandler extends ListenerAdapter {
     }
 
 
-    /**
-     * Handle the slash command interaction
-     *
-     * @param event
-     */
+    
     @SneakyThrows
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         slashContext.handleLogic(event, client);
     }
 
-    /**
-     * Handle the modal interaction
-     *
-     * @param event
-     */
+   
     @Override
     public void onModalInteraction(@NotNull ModalInteractionEvent event) {
 
@@ -52,11 +42,7 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-    /**
-     * Handle the button interaction
-     *
-     * @param event
-     */
+    
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
 
@@ -64,11 +50,7 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-    /**
-     * Handle the autocomplete interaction
-     *
-     * @param event
-     */
+    
     @Override
     public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
 
@@ -76,11 +58,7 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-    /**
-     * Handle the ready event
-     *
-     * @param event
-     */
+    
     @Override
     public void onReady(ReadyEvent event) {
         JDA jda = event.getJDA();

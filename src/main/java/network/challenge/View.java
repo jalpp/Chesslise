@@ -9,9 +9,7 @@ import org.bson.Document;
 
 import java.awt.*;
 
-/**
- * View class to handle the view challenge
- */
+
 public class View extends Action {
 
 
@@ -19,11 +17,7 @@ public class View extends Action {
         super(networkChallenges, networkPlayers);
     }
 
-    /**
-     * View the challenge
-     *
-     * @param event the slash command event
-     */
+    
     public void view(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -40,25 +34,12 @@ public class View extends Action {
 
     }
 
-    /**
-     * View the challenges
-     *
-     * @param discordid the discord id
-     * @param status    the status
-     * @return the message
-     */
+    
     public String viewChallenges(String discordid, Status status) {
         return viewBuilder("discordId", discordid, status) + "\n" + viewBuilder("oppId", discordid, status);
     }
 
-    /**
-     * helper method View the challenges for given status
-     *
-     * @param currentField the current field
-     * @param discordID    the discord id
-     * @param status       the status
-     * @return the message
-     */
+    
     private String viewBuilder(String currentField, String discordID, Status status) {
         Document query = new Document(currentField, discordID).append("status", status.toMongo());
         FindIterable<Document> challenges = this.getNetworkChallenges().find(query);

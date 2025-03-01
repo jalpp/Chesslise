@@ -2,17 +2,10 @@ package network.user;
 
 import network.challenge.Status;
 
-/**
- * PreferenceBuilder class to build the preferences
- */
+
 public class PreferenceBuilder {
 
-    /**
-     * Build the platform preference
-     *
-     * @param tag the tag for the platform
-     * @return the platform preference
-     */
+    
     public static PreferencePl platformBuilder(String tag) {
         switch (tag) {
             case "lichess" -> {
@@ -31,12 +24,7 @@ public class PreferenceBuilder {
         return null;
     }
 
-    /**
-     * Build the status preference
-     *
-     * @param tag the tag for the status
-     * @return the status preference
-     */
+    
     public static Status statusBuilder(String tag) {
         switch (tag) {
             case "pending" -> {
@@ -55,12 +43,6 @@ public class PreferenceBuilder {
         return null;
     }
 
-    /**
-     * Build the time control preference
-     *
-     * @param tag the tag for the time control
-     * @return the time control preference
-     */
     public static PreferenceTc tcBuilder(String tag) {
         switch (tag) {
             case "classical" -> {
@@ -79,16 +61,11 @@ public class PreferenceBuilder {
         return null;
     }
 
-    /**
-     * Build the player preference
-     *
-     * @param tag the tag for the player
-     * @return the player preference
-     */
+    
     public static PreferenceFr playerBuilder(String tag) {
         switch (tag) {
             case "mag" -> {
-                return PreferenceFr.MAGNUS;
+                return PreferenceFr.MAGNUS; // the goat
             }
             case "fab" -> {
                 return PreferenceFr.FABI;
@@ -97,18 +74,13 @@ public class PreferenceBuilder {
                 return PreferenceFr.DING;
             }
             case "guk" -> {
-                return PreferenceFr.GUKESH;
+                return PreferenceFr.GUKESH; 
             }
         }
         return null;
     }
 
-    /**
-     * Build the piece preference
-     *
-     * @param tag the tag for the piece
-     * @return the piece preference
-     */
+    
     public static PreferenceFr pieceBuilder(String tag) {
         switch (tag) {
             case "bis" -> {
@@ -133,12 +105,7 @@ public class PreferenceBuilder {
         return null;
     }
 
-    /**
-     * Build the opening preference
-     *
-     * @param tag the tag for the opening
-     * @return the opening preference
-     */
+    // note this openings are not my opening rep so please don't spy here to prep against me, even if you do you would lose 
     public static PreferenceFr openingBuilder(String tag) {
         switch (tag) {
             case "qge" -> {
@@ -158,16 +125,11 @@ public class PreferenceBuilder {
         return null;
     }
 
-    /**
-     * Build the style preference
-     *
-     * @param tag the tag for the style
-     * @return the style preference
-     */
+    
     public static PreferenceFr styleBuilder(String tag) {
         switch (tag) {
             case "agg" -> {
-                return PreferenceFr.AGGRESSIVE;
+                return PreferenceFr.AGGRESSIVE; // fyi my style, good luck against my f4 breaks
             }
             case "pos" -> {
                 return PreferenceFr.POSITIONAL;

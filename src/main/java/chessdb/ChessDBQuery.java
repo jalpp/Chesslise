@@ -14,16 +14,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * ChessDBQuery class to query the ChessDB API
- */
+
 public class ChessDBQuery {
-    /**
-     * Get the top 3 best moves for the given FEN position
-     *
-     * @param fen the FEN position
-     * @return the top 3 best moves
-     */
+    
     public String getTop3BestMove(String fen) {
         StringBuilder builder = new StringBuilder();
 
@@ -86,11 +79,6 @@ public class ChessDBQuery {
     }
 
 
-    /**
-     * Get the top 3 cloud chessdb moves in a form of list
-     * @param parseView the incoming string view
-     * @return the top 3 moves
-     */
     public static List<String> getTop3Moves(String parseView){
         Pattern pattern = Pattern.compile("\\d\\)\\s([a-h][1-8][a-h][1-8])");
         Matcher matcher = pattern.matcher(parseView);

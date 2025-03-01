@@ -8,17 +8,11 @@ import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 
-/**
- * SlashContextModule class to handle the slash context
- */
+
 public class SlashContextModule {
 
 
-    /**
-     * handles the slash logic
-     * @param slashEvent the slash event
-     * @param client the chariot client
-     */
+    
     public void handleLogic(SlashCommandInteractionEvent slashEvent, Client client) {
         AntiSpam spam = new AntiSpam(300000, 1);
         String name = slashEvent.getName();

@@ -8,20 +8,14 @@ import network.challenge.Action;
 
 import org.bson.Document;
 
-/**
- * Disconnect class to handle the disconnect request
- */
+
 public class Disconnect extends Action {
 
     public Disconnect(MongoCollection<Document> networkChallenges, MongoCollection<Document> networkPlayers) {
         super(networkChallenges, networkPlayers);
     }
 
-    /**
-     * Disconnect the player
-     *
-     * @param event the slash command event
-     */
+    // pepesadge
     public void disconnect(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -30,12 +24,7 @@ public class Disconnect extends Action {
         event.getHook().sendMessage(goOffline).queue();
     }
 
-    /**
-     * Disconnect the player
-     *
-     * @param discordid the discord id
-     * @return the message for disconnecting the player
-     */
+    // sometimes you need a break, we got it
     public String goOffline(String discordid) {
 
         Document current = new Document("id", discordid);

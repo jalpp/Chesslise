@@ -10,20 +10,14 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
 import java.io.IOException;
 
-/**
- * Chess.com Profile class to get user information
- */
+
 public class CCProfile extends UserObject {
 
     public CCProfile(String username) {
         super(username);
     }
 
-    /**
-     * Get the Chess.com profile for the user
-     *
-     * @return the embed builder containing the information
-     */
+    
     public EmbedBuilder getCCProfile() {
         EmbedBuilder embedBuilder = null;
         try {
@@ -52,22 +46,11 @@ public class CCProfile extends UserObject {
         return embedBuilder;
     }
 
-    /**
-     * Get the Chess.com stats for the user
-     *
-     * @param rating the rating pool stats
-     * @return the rating or "?"
-     */
+   
     private String getRatingOrDefault(RatingPoolStats rating) {
         return rating != null ? rating.getLast().getRating().toString() : "?";
     }
 
-    /**
-     * Get the Chess.com stats for the user
-     *
-     * @param stats the puzzle rush stats
-     * @return the score or "?"
-     */
     private String getStatsOrDefault(PuzzleRushStats stats) {
         return stats != null ? stats.getBest().getScore().toString() : "?";
     }

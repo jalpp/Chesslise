@@ -11,9 +11,7 @@ import setting.SettingSchema;
 import java.awt.*;
 import java.io.IOException;
 
-/**
- * Chess.com Daily Puzzle Command class
- */
+
 public class DailyCommandCC extends PuzzleView implements Puzzle {
 
     private final DailyPuzzleClient puzzleClient = new DailyPuzzleClient();

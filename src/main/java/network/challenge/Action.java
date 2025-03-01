@@ -3,9 +3,7 @@ package network.challenge;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
-/**
- * Action class to handle the network action
- */
+
 public class Action {
 
     private final MongoCollection<Document> networkChallenges;
@@ -20,29 +18,17 @@ public class Action {
     }
 
 
-    /**
-     * Get the network challenges collection
-     *
-     * @return the network challenges collection
-     */
+    
     public MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
     }
 
-    /**
-     * Get the network players collection
-     *
-     * @return the network players collection
-     */
+   
     public MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
     }
 
-    /**
-     * Get the finder
-     *
-     * @return the finder
-     */
+    
     public Finder getFinder() {
         return finder;
     }

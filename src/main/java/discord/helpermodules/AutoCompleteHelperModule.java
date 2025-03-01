@@ -6,9 +6,6 @@ import net.dv8tion.jda.api.interactions.commands.Command;
 
 import java.util.List;
 
-/**
- * AutoCompleteHelperModule class to handle the autocomplete
- */
 public class AutoCompleteHelperModule {
 
     private final CommandAutoCompleteInteractionEvent event;
@@ -20,9 +17,6 @@ public class AutoCompleteHelperModule {
         this.client = client;
     }
 
-    /**
-     * Handle the lichess profile autocomplete
-     */
     public void onLichessProfileAutoComplete() {
 
         if (event.getName().equalsIgnoreCase("profile") && event.getFocusedOption().getName().equalsIgnoreCase("search-user")) {
@@ -34,8 +28,5 @@ public class AutoCompleteHelperModule {
         }
 
     }
-
-
-
 
 }

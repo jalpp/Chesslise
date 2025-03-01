@@ -12,9 +12,6 @@ import setting.SettingSchema;
 import java.awt.*;
 import java.io.IOException;
 
-/**
- * Chess.com Random Puzzle Command class
- */
 public class puzzle extends PuzzleView implements Puzzle {
 
 

@@ -12,9 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 
-/**
- * StockFish class to handle the stockfish engine
- */
+
 public class StockFish {
     private static final String API_ENDPOINT = "https://stockfish.online/api/s/v2.php";
     public static HashMap<String, String> getUserFen = new HashMap<>();
@@ -24,13 +22,7 @@ public class StockFish {
 
     }
 
-    /**
-     * Get the best move from the stockfish engine
-     *
-     * @param depth the depth of the move
-     * @param fen   the fen of the move
-     * @return the best move
-     */
+   
     public static String getBestMove(int depth, String fen) {
         try {
 

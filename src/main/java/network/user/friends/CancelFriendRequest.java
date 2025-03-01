@@ -4,9 +4,7 @@ import com.mongodb.client.MongoCollection;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bson.Document;
 
-/**
- * CancelFriendRequest class to handle the cancel friend request
- */
+
 public class CancelFriendRequest extends Request {
 
 
@@ -15,11 +13,7 @@ public class CancelFriendRequest extends Request {
 
     }
 
-    /**
-     * Cancel the friend request
-     *
-     * @param event the slash command event
-     */
+    
     public void cancelFriendRequest(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -28,13 +22,7 @@ public class CancelFriendRequest extends Request {
         event.getHook().sendMessage(cancelFked).queue();
     }
 
-    /**
-     * Cancel the friend request
-     *
-     * @param discordid              the discord id
-     * @param incommingFriendRequest the incoming friend request
-     * @return the message for canceling the friend
-     */
+    // no one should cancel a friend but oh well sh*t happens 
     public String cancelFriend(String discordid, String incommingFriendRequest) {
         Document current = this.getNetworkPlayers().find(new Document("id", discordid)).first();
         Document cancel = this.getNetworkPlayers().find(new Document("id", incommingFriendRequest)).first();

@@ -16,27 +16,19 @@ import setting.SettingSchemaModule;
 
 import java.awt.*;
 
-/**
- * EngineHelperModule class to handle chess engine-related commands.
- */
+
 public class EngineHelperModule extends SettingSchemaModule {
 
     private final SlashCommandInteractionEvent event;
     private final GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
 
-    /**
-     * Constructor for EngineHelperModule.
-     *
-     * @param event the SlashCommandInteractionEvent instance
-     */
+    
     public EngineHelperModule(SlashCommandInteractionEvent event) {
         super(event.getUser().getId());
         this.event = event;
     }
 
-    /**
-     * Handles the white side move command.
-     */
+    
     public void sendwhiteSideMoveCommand() {
         try {
             event.deferReply(true).queue();
@@ -78,9 +70,7 @@ public class EngineHelperModule extends SettingSchemaModule {
         }
     }
 
-    /**
-     * Handles the play engine command.
-     */
+   
     public void sendPlayEngine() {
         try {
             event.deferReply(true).queue();
@@ -92,9 +82,7 @@ public class EngineHelperModule extends SettingSchemaModule {
         }
     }
 
-    /**
-     * Handles the set engine mode command.
-     */
+   
     public void sendSetEngineMode() {
         try {
             event.deferReply(true).queue();

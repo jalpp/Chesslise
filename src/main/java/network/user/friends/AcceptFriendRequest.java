@@ -6,9 +6,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 
 import org.bson.Document;
 
-/**
- * AcceptFriendRequest class to handle the accept friend request
- */
 public class AcceptFriendRequest extends Request {
 
 
@@ -16,11 +13,7 @@ public class AcceptFriendRequest extends Request {
         super(players);
     }
 
-    /**
-     * Accept the friend request
-     *
-     * @param event the slash command event
-     */
+    
     public void acceptFriendRequest(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -29,14 +22,8 @@ public class AcceptFriendRequest extends Request {
         event.getHook().sendMessage(acceptFriendMessage).queue();
     }
 
-    /**
-     * Accept the friend request
-     *
-     * @param discordid             the discord id
-     * @param incomingFriendRequest the incoming friend request
-     * @return the message for accepting the friend
-     */
-
+    
+    // only if the world accepted more friends in life
     public String acceptFriend(String discordid, String incomingFriendRequest) {
         Document current = getFinder().findPlayer(discordid);
         Document incoming = getFinder().findPlayer(incomingFriendRequest);
