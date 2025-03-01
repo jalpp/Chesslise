@@ -1,6 +1,6 @@
 package discord.helpermodules;
 
-import Game.GameException;
+import Game.NoGameException;
 import Game.GameHandler;
 import Game.GameSchema;
 import abstraction.ChessUtil;
@@ -61,7 +61,7 @@ public class EngineHelperModule extends SettingSchemaModule {
             gameHandler.updateFen(event.getUser().getId(), board.getFen());
 
         } catch (Exception e) {
-            if (e instanceof GameException) {
+            if (e instanceof NoGameException) {
                 event.getHook().sendMessage(e.getMessage()).queue();
             } else {
                 event.getHook().sendMessage("Not valid move! \n\n **If you are trying to castle use Capital letters (O-O & O-O-O)** \n\n (If you are running this command first time) please use **/playengine** to select the engine level and start a new game!")
@@ -77,7 +77,7 @@ public class EngineHelperModule extends SettingSchemaModule {
             GameSchema schema = new GameSchema(event.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Integer.parseInt(event.getOptionsByName("difficulty").get(0).getAsString()));
             gameHandler.createGame(schema);
             event.getHook().sendMessage("Game created against Stockfish Level " + event.getOptionsByName("difficulty").get(0).getAsString() + " \n run **/move <move>** use Chess SAN notation (e4) or UCI notation (e2e4)").queue();
-        } catch (GameException g) {
+        } catch (NoGameException g) {
             event.getHook().sendMessage(g.getMessage()).queue();
         }
     }
@@ -88,7 +88,7 @@ public class EngineHelperModule extends SettingSchemaModule {
             event.deferReply(true).queue();
             gameHandler.updateDepth(event.getUser().getId(), Integer.parseInt(event.getOptionsByName("difficulty").get(0).getAsString()));
             event.getHook().sendMessage("Engine Difficulty updated!").queue();
-        } catch (GameException g) {
+        } catch (NoGameException g) {
             event.getHook().sendMessage(g.getMessage()).queue();
         }
     }
