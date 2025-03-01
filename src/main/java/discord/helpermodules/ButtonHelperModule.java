@@ -25,9 +25,7 @@ import java.awt.*;
 
 import static discord.helpermodules.ChessSlashHelperModule.*;
 
-/**
- * ButtonHelperModule class to handle the button logic
- */
+
 public class ButtonHelperModule extends SettingSchemaModule {
 
     private final ButtonInteractionEvent buttonEvent;

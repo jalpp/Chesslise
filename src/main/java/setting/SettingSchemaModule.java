@@ -1,8 +1,6 @@
 package setting;
 
-/**
- * The setting module representation that modules that requirement must extend
- */
+
 public class SettingSchemaModule {
 
     private static SettingSchema schema;
@@ -11,10 +9,6 @@ public class SettingSchemaModule {
         schema = SettingHandler.getUserSetting(discorduserid);
     }
 
-    /**
-     * gets the setting schema
-     * @return the setting schema object
-     */
     public static SettingSchema getSettingSchema() {
         return schema;
     }

@@ -10,9 +10,7 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 
-/**
- * Connect class to handle the connect request
- */
+
 public class Connect extends Request {
 
     private final Finder finder;
@@ -22,11 +20,7 @@ public class Connect extends Request {
         this.finder = new Finder(networkPlayers);
     }
 
-    /**
-     * Connect the player
-     *
-     * @param event the slash command event
-     */
+    // join cssn lfg
     public void connect(SlashCommandInteractionEvent event) {
 
         PreferenceFr player = PreferenceBuilder.playerBuilder(event.getOptionsByName("player").get(0).getAsString());
@@ -45,16 +39,7 @@ public class Connect extends Request {
         event.getHook().sendMessage(msg).queue();
     }
 
-    /**
-     * Insert the user entry in the collection
-     *
-     * @param discordid       the discord id
-     * @param discordusername the discord username
-     * @param pl              the platform
-     * @param tc              the time control
-     * @param builder         the friend preference builder
-     * @return the message for inserting the entry
-     */
+    
     public String insertEntry(String discordid, String discordusername, PreferencePl pl, PreferenceTc tc, FriendPrefBuilder builder) {
         Document find = finder.findPlayer(discordid);
 

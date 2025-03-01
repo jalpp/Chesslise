@@ -5,9 +5,7 @@ import com.mongodb.client.model.Updates;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bson.Document;
 
-/**
- * BlockFriendRequest class to handle the block friend request
- */
+
 public class BlockFriendRequest extends Request {
 
     private RemoveFriendRequest removeFriendRequest;
@@ -17,11 +15,7 @@ public class BlockFriendRequest extends Request {
         this.removeFriendRequest = new RemoveFriendRequest(players);
     }
 
-    /**
-     * Block the friend request
-     *
-     * @param event the slash command event
-     */
+    
     public void blockFriendRequest(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -30,13 +24,7 @@ public class BlockFriendRequest extends Request {
         event.getHook().sendMessage(blocked).queue();
     }
 
-    /**
-     * Block the friend
-     *
-     * @param discordid the discord id
-     * @param blockedid the blocked id
-     * @return the message for blocking the friend
-     */
+    // this stands for block main friend, not something else if you read something else well you do indeed have bad past memories
     public String blockMf(String discordid, String blockedid) {
         Document current = this.getNetworkPlayers().find(new Document("id", discordid)).first();
         Document blocked = this.getNetworkPlayers().find(new Document("username", blockedid)).first();

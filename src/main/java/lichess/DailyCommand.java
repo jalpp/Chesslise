@@ -12,9 +12,7 @@ import setting.SettingSchema;
 
 import java.awt.*;
 
-/**
- * Class to handle the daily puzzle for Lichess
- */
+
 public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
 
 
@@ -63,21 +61,11 @@ public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
     }
 
 
-    /**
-     * Gets the Lichess Daily puzzle rating
-     *
-     * @return gets the rating
-     */
     public int getRating() {
         return client.puzzles().dailyPuzzle().get().puzzle().rating();
     }
 
 
-    /**
-     * Gets the themes for current puzzle
-     *
-     * @return gets the current puzzle themes
-     */
     public EmbedBuilder getThemes() {
         EmbedBuilder themes = new EmbedBuilder();
 

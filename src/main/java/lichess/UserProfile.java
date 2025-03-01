@@ -113,7 +113,7 @@ public class UserProfile extends UserObject {
             StringBuilder trophiesBuilder = new StringBuilder();
             user.trophies().orElse(List.of()).forEach(trophy -> {
                 UserTrophy userTrophy = new UserTrophy(trophy);
-                trophiesBuilder.append(userTrophy.getImageLink()).append("\n");
+                trophiesBuilder.append(userTrophy.getTrophyName()).append("\n");
             });
 
             String trophies = trophiesBuilder.length() > 0

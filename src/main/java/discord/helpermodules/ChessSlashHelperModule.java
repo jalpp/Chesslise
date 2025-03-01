@@ -18,17 +18,12 @@ import setting.SettingSchemaModule;
 
 import java.awt.*;
 
-/**
- * ChessSlashHelperModule class to handle the chess slash helper module
- */
 public class ChessSlashHelperModule extends SettingSchemaModule {
 
     private final SlashCommandInteractionEvent event;
     private final SettingSchema setting = getSettingSchema();
 
-    /**
-     * the learn chess information
-     */
+  
     public final static String[][] LEARN_CHESS = {
             {"Rook", "**Rook:** Move any number of squares horizontally or vertically.", "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpfyINI1.png"},
             {"Bishop", "**Bishop:** Move any number of squares diagonally.", "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/phpdzgpdQ.png"},
@@ -41,19 +36,13 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
             {"Pawn-pro", "Pawn Special Move: Promotion, when your pawn reaches the 8th rank you can promote to queen,rook,bishop, or a night:", "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpFSZHst.gif"}
     };
 
-    /**
-     * Instantiates a new Chess slash helper module.
-     *
-     * @param event the event
-     */
+    
     public ChessSlashHelperModule(SlashCommandInteractionEvent event) {
         super(event.getUser().getId());
         this.event = event;
     }
 
-    /**
-     * Send the ChessDB for /chessdb command
-     */
+    
     public void sendChessDBInfo() {
         ChessDBQuery query = new ChessDBQuery();
 
@@ -66,9 +55,7 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
         event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.success("onemove", "Play 1st move"), Button.success("twomove", "Play 2nd move"), Button.success("threemove", "Play 3rd move")).queue();
     }
 
-    /**
-     * send view fen embed for /fen
-     */
+    
     public void sendChessFEN(){
         ChessUtil util = new ChessUtil();
 
@@ -81,12 +68,6 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
         event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.link(util.getAnalysisBoard(fen), "Analysis Board")).queue();
     }
 
-    /**
-     * Get the chessdb embed
-     * @param moveDesc the move description
-     * @param fen the current fen
-     * @return the ChessDB embed
-     */
     private EmbedBuilder getChessDBEmbed(String moveDesc, String fen){
         ChessUtil chessUtil = new ChessUtil();
         EmbedBuilder builder = new EmbedBuilder();
@@ -99,15 +80,7 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
         return builder;
     }
 
-    /**
-     * Send the input form for Watch command and Chess.com user profile
-     *
-     * @param inputid     the input id
-     * @param label       the label
-     * @param placeholder the placeholder
-     * @param modalid     the modal id
-     * @param modaltitle  the modal title
-     */
+
     private void buildInputForm(String inputid, String label, String placeholder, String modalid, String modaltitle) {
         TextInput ptext = TextInput.create(inputid, label, TextInputStyle.SHORT)
                 .setPlaceholder(placeholder)
@@ -121,16 +94,12 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
         event.replyModal(pmodal).queue();
     }
 
-    /**
-     * Send the Chess.com user profile input form
-     */
+    
     public void sendChessComUserProfileInputForm() {
         buildInputForm("profileusercc", "Input Chess.com Username", "Input Chess.com Username", "modalproc", "View Chess.com Profiles!");
     }
 
-    /**
-     * Send the Lichess watch game command form
-     */
+
     public void sendLichessWatchGameCommand() {
         buildInputForm("watch_user_or_game", "Input Lichess Username Or Lichess Game", "Input Lichess Username Or Lichess Game", "modalwatch", "Watch Live Or Recent Lichess Games!");
 
@@ -155,9 +124,7 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
                 .queue();
     }
 
-    /**
-     * Send the select lichess username handle request
-     */
+   
     public void sendSelectLichessUserNameHandleRequest() {
         String userID = event.getOptionsByName("search-user").get(0).getAsString();
         UserProfile userProfile = new UserProfile(Client.basic(), userID);
@@ -174,9 +141,6 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
         String status = SettingHandler.updateSetting(new SettingSchema(theme, pieceType, event.getUser().getId()));
         event.getHook().sendMessage(status).queue();
     }
-
-
-
 
 
 }

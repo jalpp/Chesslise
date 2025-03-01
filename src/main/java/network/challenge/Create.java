@@ -6,9 +6,7 @@ import org.bson.Document;
 
 import java.util.UUID;
 
-/**
- * Create class to handle the create challenge
- */
+
 public class Create extends Action {
 
 
@@ -16,11 +14,7 @@ public class Create extends Action {
         super(networkChallenges, networkPlayers);
     }
 
-    /**
-     * Create the challenge
-     *
-     * @param event the slash command event
-     */
+   
     public void create(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -33,15 +27,7 @@ public class Create extends Action {
         event.getHook().sendMessage("Challenge created! View status of your challenges by running /mychallenges").queue();
     }
 
-    /**
-     * Create the challenge
-     *
-     * @param challengediscordid       the discord id of the challenge
-     * @param challengediscordusername the discord username of the challenge
-     * @param tc                       the tc of the challenge
-     * @param pl                       the pl of the challenge
-     * @param status                   the status of the challenge
-     */
+    
     public void createChallenge(String challengediscordid, String challengediscordusername, String tc, String pl, String status) {
         Document challenge = new Document("challengeId", UUID.randomUUID().toString())
                 .append("discordId", challengediscordid)

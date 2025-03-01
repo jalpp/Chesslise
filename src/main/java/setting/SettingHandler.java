@@ -6,18 +6,12 @@ import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import runner.Main;
 
-/**
- * the class to handle setting updates and creation
- */
+
 public class SettingHandler {
 
     private static final MongoCollection<Document> settingCollection = Main.getSettingCollection();
 
-    /**
-     * method to update the setting
-     * @param schema the given schema the setting is updated
-     * @return the status message
-     */
+    
     public static String updateSetting(SettingSchema schema){
         Document settingDoc = settingCollection.find(new Document("userid", schema.getUserid())).first();
         if(settingDoc != null){
@@ -34,11 +28,6 @@ public class SettingHandler {
         return "Successfully updated the Chesslise Board theme to " + schema.getBoardTheme() + " and piecetype to " + schema.getPieceType();
     }
 
-    /**
-     * gets the given user's setting
-     * @param userid the user id
-     * @return the settingSchema object for given user id
-     */
     public static SettingSchema getUserSetting(String userid){
         Document settingDoc = settingCollection.find(new Document("userid", userid)).first();
         if(settingDoc != null){

@@ -5,23 +5,14 @@ import chariot.Client;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * Game class to handle the game creation on Lichess
- */
+
 public class Game {
 
     public Game() {
 
     }
 
-    /**
-     * generate the open ended Lichess game links
-     * @param min the game time control
-     * @param sec the game increment
-     * @param isRated if the game is rated or not
-     * @param client the chariot client
-     * @return the game link
-     */
+    
     public static String generateOpenEndedChallengeURLs(int min, int sec, Boolean isRated, Client client) {
         AtomicReference<String> URL = new AtomicReference<>("");
         if (isRated) {
@@ -52,13 +43,6 @@ public class Game {
     }
 
 
-    /**
-     * generate game links for two username pairs
-     * @param self_user the current user
-     * @param target_user the friend target user
-     * @param client the chariot client
-     * @return the game link
-     */
     public static String generateOpenChallengeForTwoUsers(String self_user, String target_user, Client client) {
         AtomicReference<String> URL = new AtomicReference<>("");
         int min = new Random().nextInt(1, 10) * 60;
@@ -71,20 +55,12 @@ public class Game {
 
     }
 
-    /**
-     * check if input is link or not
-     * @param link the link
-     * @return is link or not
-     */
+    
     public static boolean isLink(String link) {
         return link.contains("/") && link.contains(".");
     }
 
-    /**
-     * parse the Lichess game id from given game link
-     * @param link the game link
-     * @return the game id
-     */
+    
     public static String getValidGameId(String link) {
         String[] spliter = link.split("/");
         String validGameId = "";

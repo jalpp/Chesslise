@@ -11,9 +11,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bson.Document;
 
-/**
- * Main class to run Chesslise
- */
+
 public class Main extends ListenerAdapter {
 
     private static JDA jda;
@@ -59,36 +57,22 @@ public class Main extends ListenerAdapter {
 
     }
 
-    /**
-     * Get the network challenges collection
-     *
-     * @return the network challenges collection
-     */
+    
     public static MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
     }
 
-    /**
-     * Get the network players collection
-     *
-     * @return the network players collection
-     */
+    
     public static MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
     }
 
-    /**
-     * gets the game collection
-     * @return the game collection
-     */
+   
     public static MongoCollection<Document> getGamesCollection(){
         return gamesCollection;
     }
 
-    /**
-     * gets the setting collection
-     * @return the setting collection
-     */
+    
     public static MongoCollection<Document> getSettingCollection(){
         return settingCollection;
     }

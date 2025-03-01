@@ -15,9 +15,6 @@ import setting.SettingSchema;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * CommandBuilder class to handle the building of commands on JDA
- */
 public class CommandBuilder {
 
     private final CommandListUpdateAction action;
@@ -55,35 +52,17 @@ public class CommandBuilder {
         this.action = action;
     }
 
-    /**
-     * Build the slash command with no option
-     *
-     * @param name the name of command
-     * @param desc the desc of command
-     */
+   
     public void buildSlashNoOptionCommand(String name, String desc) {
         action.addCommands(Commands.slash(name, desc).setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
     }
 
-    /**
-     * Build the slash command with one option
-     *
-     * @param name      the name of command
-     * @param desc      the desc of command
-     * @param inputid   the input id
-     * @param inputDesc the input desc
-     */
+    
     public void buildSlashOneOption(String name, String desc, String inputid, String inputDesc) {
         action.addCommands(Commands.slash(name, desc).addOption(OptionType.STRING, inputid, inputDesc, true).setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
     }
 
-    /**
-     * Build the slash command with multiple options
-     *
-     * @param name the name of command
-     * @param desc the desc of command
-     * @param data the option data
-     */
+    
     public void buildSlashMultipleOption(String name, String desc, OptionData... data) {
         COMMAND_MULTIPLE_OPTIONS.put(name, new ArrayList<>());
         COMMAND_MULTIPLE_OPTIONS.get(name).add(name);
@@ -91,9 +70,6 @@ public class CommandBuilder {
         action.addCommands(Commands.slash(name, desc).addOptions(data).setContexts(InteractionContextType.ALL).setIntegrationTypes(IntegrationType.ALL));
     }
 
-    /**
-     * Register the slash commands with multiple options
-     */
     public void registerSlashMultipleOptionCommand() {
         buildSlashMultipleOption("profile", "see Lichess profile for given user", new OptionData(OptionType.STRING, "search-user", "Search Lichess username", true));
 
@@ -121,27 +97,21 @@ public class CommandBuilder {
                 .addChoice("incomming", "fin").addChoice("outgoing", "fout"));
     }
 
-    /**
-     * Register the slash commands with no options
-     */
+  
     public void registerSlashNoOptionCommand() {
         for (int i = 0; i < COMMANDS.length; i++) {
             buildSlashNoOptionCommand(COMMANDS[i], COMMANDS_DESC[i]);
         }
     }
 
-    /**
-     * Register the slash commands with single options
-     */
+   
     public void registerSlashSingleOptionCommands() {
         for (String[] strings : COMMAND_SINGLE_OPTION) {
             buildSlashOneOption(strings[0], strings[1], strings[2], strings[3]);
         }
     }
 
-    /**
-     * Register all the commands
-     */
+   
     public void register() {
         registerSlashMultipleOptionCommand();
         registerSlashNoOptionCommand();
@@ -150,11 +120,6 @@ public class CommandBuilder {
     }
 
 
-    /**
-     * get the command information in a string format
-     *
-     * @return the command information
-     */
     public static String printCommand() {
         StringBuilder builder = new StringBuilder();
         builder.append("Chesslise Slash Commands").append("\n\n");

@@ -2,9 +2,7 @@ package abstraction;
 
 import com.github.bhlangonijr.chesslib.Board;
 
-/**
- * ChessUtil class to handle chess utilities
- */
+
 public class ChessUtil {
 
     private final Board board;
@@ -15,14 +13,7 @@ public class ChessUtil {
 
     }
 
-    /**
-     * Get the image from the FEN
-     *
-     * @param fen        the chess fen
-     * @param boardColor the board color
-     * @param pieceType  the piece type
-     * @return the image link
-     */
+   
     public String getImageFromFEN(String fen, String boardColor, String pieceType) {
         try {
             String img;
@@ -42,14 +33,7 @@ public class ChessUtil {
         }
     }
 
-    /**
-     * Get the image for given lastMove
-     * @param fen the fen
-     * @param boardColor board colour
-     * @param pieceType pieceType
-     * @param lastMove the last move
-     * @return the image
-     */
+    
     public String getChessDBImage(String fen, String boardColor, String pieceType, String lastMove){
         String img = getImageFromFEN(fen, boardColor, pieceType);
 
@@ -60,12 +44,7 @@ public class ChessUtil {
         return img;
     }
 
-    /**
-     * Get which side to move
-     *
-     * @param fen the chess fen
-     * @return the side to move
-     */
+    
     public String getWhichSideToMove(String fen) {
         if (fen.contains("w")) {
             return "White to move";
@@ -74,12 +53,7 @@ public class ChessUtil {
         }
     }
 
-    /**
-     * Get the analysis board URL
-     *
-     * @param fen the chess fen
-     * @return the analysis board
-     */
+    
     public String getAnalysisBoard(String fen) {
         return "https://lichess.org/analysis/standard/" + fen.replace(" ", "_");
     }

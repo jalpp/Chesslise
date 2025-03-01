@@ -5,9 +5,6 @@ import chariot.Client;
 import chariot.model.Game;
 import setting.SettingSchema;
 
-/**
- * UserGame class to handle the user game
- */
 public class UserGame extends UserObject {
 
 
@@ -16,22 +13,14 @@ public class UserGame extends UserObject {
 
     }
 
-    /**
-     * helper function to check if the user is black in the game
-     *
-     * @return true if the user is black
-     */
+    
     private boolean isBlack() {
 
         return this.getClient().games().currentByUserId(this.getUserID()).get().players().black().name().equalsIgnoreCase(getUserID());
 
     }
 
-    /**
-     *  Gets the 1 previous Lichess game played for given userid, and shows the game in the given user setting schema
-     * @param schema the setting schema
-     * @return the game gif
-     */
+
     public String getUserGamesGif(SettingSchema schema) {
 
         String theme = schema.getBoardTheme();

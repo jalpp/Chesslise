@@ -1,6 +1,6 @@
 package discord.helpermodules;
 
-import Game.GameException;
+import Game.NoGameException;
 import Game.GameHandler;
 import Game.GameSchema;
 import abstraction.ChessUtil;
@@ -16,27 +16,19 @@ import setting.SettingSchemaModule;
 
 import java.awt.*;
 
-/**
- * EngineHelperModule class to handle chess engine-related commands.
- */
+
 public class EngineHelperModule extends SettingSchemaModule {
 
     private final SlashCommandInteractionEvent event;
     private final GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
 
-    /**
-     * Constructor for EngineHelperModule.
-     *
-     * @param event the SlashCommandInteractionEvent instance
-     */
+    
     public EngineHelperModule(SlashCommandInteractionEvent event) {
         super(event.getUser().getId());
         this.event = event;
     }
 
-    /**
-     * Handles the white side move command.
-     */
+    
     public void sendwhiteSideMoveCommand() {
         try {
             event.deferReply(true).queue();
@@ -69,7 +61,7 @@ public class EngineHelperModule extends SettingSchemaModule {
             gameHandler.updateFen(event.getUser().getId(), board.getFen());
 
         } catch (Exception e) {
-            if (e instanceof GameException) {
+            if (e instanceof NoGameException) {
                 event.getHook().sendMessage(e.getMessage()).queue();
             } else {
                 event.getHook().sendMessage("Not valid move! \n\n **If you are trying to castle use Capital letters (O-O & O-O-O)** \n\n (If you are running this command first time) please use **/playengine** to select the engine level and start a new game!")
@@ -78,29 +70,25 @@ public class EngineHelperModule extends SettingSchemaModule {
         }
     }
 
-    /**
-     * Handles the play engine command.
-     */
+   
     public void sendPlayEngine() {
         try {
             event.deferReply(true).queue();
             GameSchema schema = new GameSchema(event.getUser().getId(), "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", Integer.parseInt(event.getOptionsByName("difficulty").get(0).getAsString()));
             gameHandler.createGame(schema);
             event.getHook().sendMessage("Game created against Stockfish Level " + event.getOptionsByName("difficulty").get(0).getAsString() + " \n run **/move <move>** use Chess SAN notation (e4) or UCI notation (e2e4)").queue();
-        } catch (GameException g) {
+        } catch (NoGameException g) {
             event.getHook().sendMessage(g.getMessage()).queue();
         }
     }
 
-    /**
-     * Handles the set engine mode command.
-     */
+   
     public void sendSetEngineMode() {
         try {
             event.deferReply(true).queue();
             gameHandler.updateDepth(event.getUser().getId(), Integer.parseInt(event.getOptionsByName("difficulty").get(0).getAsString()));
             event.getHook().sendMessage("Engine Difficulty updated!").queue();
-        } catch (GameException g) {
+        } catch (NoGameException g) {
             event.getHook().sendMessage(g.getMessage()).queue();
         }
     }

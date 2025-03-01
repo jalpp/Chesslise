@@ -11,9 +11,7 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import setting.SettingSchema;
 import setting.SettingSchemaModule;
 
-/**
- * PuzzleContextHelperModule class to handle the slash command context for puzzle-related commands.
- */
+
 public class PuzzleContextHelperModule extends SettingSchemaModule {
 
     private final SlashCommandInteractionEvent slashEvent;
@@ -21,13 +19,7 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
     private final Client client;
     private final SettingSchema setting = getSettingSchema();
 
-    /**
-     * Constructor for PuzzleContextHelperModule.
-     *
-     * @param slashEvent the SlashCommandInteractionEvent instance
-     * @param antispam the AntiSpam instance
-     * @param client the Client instance
-     */
+    
     public PuzzleContextHelperModule(SlashCommandInteractionEvent slashEvent, AntiSpam antispam, Client client) {
         super(slashEvent.getUser().getId());
         this.slashEvent = slashEvent;
@@ -35,9 +27,7 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
         this.client = client;
     }
 
-    /**
-     * Sends a Lichess puzzle command response.
-     */
+    
     public void sendSlashLichesspuzzleCommand() {
         slashEvent.deferReply(false).queue();
         DailyCommand dailyCommand = new DailyCommand(client);
@@ -46,9 +36,7 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
                 .queue();
     }
 
-    /**
-     * Sends a daily puzzle command response for Chess.com.
-     */
+    
     public void sendDailyPuzzleChessComCommand() {
         slashEvent.deferReply(false).queue();
         DailyCommandCC daily = new DailyCommandCC();
@@ -57,9 +45,7 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
                 .queue();
     }
 
-    /**
-     * Sends a random puzzle command response for Chess.com.
-     */
+    
     public void sendRandomPuzzleChessComCommand() {
         slashEvent.deferReply(false).queue();
         if (antispam.checkSpam(slashEvent)) {
@@ -79,9 +65,7 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
         }
     }
 
-    /**
-     * Sends a puzzle menu command response based on the selected puzzle type.
-     */
+    
     public void sendPuzzleMenuCommand() {
         switch (slashEvent.getOptionsByName("pick-puzzle").get(0).getAsString()) {
             case "lip" -> sendSlashLichesspuzzleCommand();
@@ -91,9 +75,7 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
         }
     }
 
-    /**
-     * Sends a theme puzzle command response.
-     */
+    
     public void sendThemePuzzle() {
         slashEvent.deferReply(false).queue();
         slashEvent.getHook().sendMessageEmbeds(new EmbedBuilder().setDescription("Please select the puzzle theme!").build())

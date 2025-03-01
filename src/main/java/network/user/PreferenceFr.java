@@ -3,9 +3,7 @@ package network.user;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
-/**
- * PreferenceFr enum to handle the friend preferences
- */
+
 public enum PreferenceFr {
 
 
@@ -48,12 +46,7 @@ public enum PreferenceFr {
     KID;
 
 
-    /**
-     * Get the player preference
-     *
-     * @param discord the discord option
-     * @return the player preference MongoDB field
-     */
+
     public String toMongoPlayer() {
         switch (this) {
             case MAGNUS -> {
@@ -75,12 +68,7 @@ public enum PreferenceFr {
         return null;
     }
 
-    /**
-     * Get the piece preference
-     *
-     * @param discord the discord option
-     * @return the piece preference MongoDB field
-     */
+    
     public String toMongoPiece() {
         switch (this) {
             case PAWN -> {
@@ -110,12 +98,7 @@ public enum PreferenceFr {
         return null;
     }
 
-    /**
-     * Get the opening preference
-     *
-     * @param discord the discord option
-     * @return the opening preference MongoDB field
-     */
+   
     public String toMongoOpening() {
         switch (this) {
             case QUEENS_GAMBIT -> {
@@ -137,12 +120,7 @@ public enum PreferenceFr {
         return null;
     }
 
-    /**
-     * Get the style preference
-     *
-     * @param discord the discord option
-     * @return the style preference MongoDB field
-     */
+    
     public String toMongoStyle() {
         switch (this) {
             case POSITIONAL -> {
