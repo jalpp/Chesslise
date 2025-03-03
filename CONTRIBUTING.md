@@ -51,6 +51,9 @@ you run run cssn test cases if you made any changes to the cssn pairing algo esp
 
 to run /puzzle <Lichess puzzle db> you need to download Lichess puzzle db from [here](https://database.lichess.org/#puzzles) and place it beside at the root of the project. I know this is (hacky) but for now, it is how it is.
 
+##
+`/chesslisesky` & `/chessliseskycc` contains source code for ChessLise puzzle on BlueSky
+
 ---
 ## Dev Discord
 Join the dev Discord if you are helping with a issue or just want to hangout
