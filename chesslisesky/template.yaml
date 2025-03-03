@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  chesslisesky
+
+  Sample SAM Template for chesslisesky
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 120
+
+Parameters:
+  BlueSkyUser:
+    Type: String
+    Description: Username
+    Default: chesslise.bsky.social
+  BlueSkyUserPassword:
+    Type: String
+    Description: Password
+    Default: 'enter password'  
+
+      
+Resources:
+  ChessLiseSkyFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: chesslisesky/
+      Handler: app.lambdaHandler
+      Runtime: nodejs20.x
+      Environment:
+       Variables:
+        BlueSkyUser: !Ref BlueSkyUser
+        BlueSkyUserPassword: !Ref BlueSkyUserPassword
+      Architectures:
+        - x86_64
+      Events:
+        CWSchedule:
+          Type: ScheduleV2
+          Properties:
+            ScheduleExpression: 'cron(0 14 * * ? *)'
+            Name: TestScheduleV2Function
+            Description: Post lichess daily puzzle
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints: 
+        - app.ts
