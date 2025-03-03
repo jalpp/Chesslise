@@ -15,7 +15,7 @@
 
 🔥 **Ranked 2nd in Discord’s official App Directory for Chess**, Chesslise is trusted by **1,200+ servers worldwide** to deliver an engaging chess experience.
 
----
+
 
 ## 🎯 **Features**
 ✅ **Play Chess Anywhere** – Challenge friends or compete in public games directly in Discord.  
@@ -25,7 +25,7 @@
 ✅ **Stockfish Engine Support** – Play Stockfish with group matches, with easy, medium, hard level support.  
 ✅ **CSSN – Chesslise Social Server Network** – Discover new chess friends, opponents, and challenges.
 
----
+
 
 ## 🔗 **APIs Used**
 Chesslise integrates with **multiple powerful chess APIs** to provide a high-quality experience:
@@ -59,10 +59,11 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 
 ## 🧩 **Puzzle Database**
 - [Lichess Puzzle Database](https://database.lichess.org/#puzzles)
----
 
 
-## 🔧 **Running Chesslise Locally**
+
+## 🔧 **Running Chesslise Discord App Locally**
+
 
 Follow these steps to set up and run Chesslise on your local machine:
 
@@ -94,7 +95,21 @@ Follow these steps to set up and run Chesslise on your local machine:
 
 The bot should now be running locally and can be tested on your Discord server!
 
----
+## 🔧 **Running Chesslise BlueSky App Locally**
+
+you must have the following:
+
+- AWS account
+- AWS CLI
+- AWS SAM CLI
+- Typescript
+- BlueSky account
+
+each lambda as sam readme you can follow 
+
+
+
+
 
 ## 🤝 **Contributing**
 Want to contribute? Awesome! 🎉 Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and guidelines.
