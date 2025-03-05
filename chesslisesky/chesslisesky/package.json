@@ -16,7 +16,7 @@
     "@atproto/api": "^0.13.18",
     "axios": "^1.7.8",
     "chess.js": "^1.0.0-beta.8",
-    "esbuild": "^0.14.14"
+    "esbuild": "^0.25.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.2.0",
