@@ -1,4 +1,4 @@
-# **♟️ Chesslise**
+# **Chesslise**
 
 ![](https://img.shields.io/badge/Status-Verified%20Discord%20Bot-brightgreen)  
 ![](https://img.shields.io/badge/Status-Online-brightgreen)  
@@ -12,9 +12,6 @@
 
 ## 🚀 **What is Chesslise?**
 **Chesslise** is a **community-driven, open-source** chess bot designed to bring the **ultimate chess experience** to Discord. Whether you're looking to **play, learn, or spectate**, Chesslise makes it seamless—all within your Discord server, Group DMs, or friend chat rooms.
-
-🔥 **Ranked 2nd in Discord’s official App Directory for Chess**, Chesslise is trusted by **1,200+ servers worldwide** to deliver an engaging chess experience.
-
 
 
 ## 🎯 **Features**
@@ -120,7 +117,6 @@ Want to contribute? Awesome! 🎉 Check out our [CONTRIBUTING.md](CONTRIBUTING.m
 🔹 **App Directory** – [View Chesslise on Discord](https://discord.com/application-directory/930544707300393021)  
 🔹 **Development Discord** – [Join Our Dev Server](https://discord.gg/T2eH3tQjKC)
 
-♟️ **Let’s bring chess to every Discord server!** 🚀
 
 
 
