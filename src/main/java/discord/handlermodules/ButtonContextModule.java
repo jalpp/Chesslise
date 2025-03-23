@@ -16,6 +16,8 @@ public class ButtonContextModule {
 
         buttonTool.sendPuzzleButtons();
 
+        buttonTool.deleteCurrentMessage();
+
         buttonTool.sendPlayCommandUI();
 
         buttonTool.sendPlayCommandFlow();

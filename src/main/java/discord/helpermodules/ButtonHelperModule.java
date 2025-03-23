@@ -229,7 +229,29 @@ public class ButtonHelperModule extends SettingSchemaModule {
         if (buttonEvent.getComponentId().equals("hint")) {
             buttonEvent.replyEmbeds(dailyCommand.getThemes().build()).setEphemeral(true).queue();
         }
+    }
 
+    public void deleteCurrentMessage() {
+        if (buttonEvent.getComponentId().equalsIgnoreCase("delete")) {
+            String issuerId = Objects.requireNonNull(buttonEvent.getMessage().getEmbeds().get(0).getFields().get(0).getValue());
+            System.out.println(issuerId);
+
+            if (!issuerId.equalsIgnoreCase(buttonEvent.getUser().getAsMention())) {
+
+                buttonEvent.deferReply(true)
+                        .queue(hook -> hook.sendMessage("only op can delete the message!")
+                                .queue(message ->
+                                        hook.deleteOriginal().queueAfter(3, TimeUnit.SECONDS)
+                                )
+                        );
+                return;
+            }
+            
+            buttonEvent.deferReply().queue(interactionHook -> {
+                buttonEvent.getMessage().delete().queue();
+                interactionHook.deleteOriginal().queueAfter(3, TimeUnit.SECONDS);
+            });
+        }
     }
 
     /**

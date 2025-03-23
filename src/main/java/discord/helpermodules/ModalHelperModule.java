@@ -35,22 +35,31 @@ public class ModalHelperModule extends SettingSchemaModule {
         }
 
     }
-
     
     public void sendGameInputOnFormSubmit() {
         String userInput = eventModal.getValue("watch_user_or_game").getAsString().trim();
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.BLUE);
+        builder.setThumbnail(Thumbnail.getChessliseLogo());
+        builder.addField("Author", eventModal.getUser().getAsMention(), false);
         if (Game.isLink(userInput)) {
             String validGameId = Game.getValidGameId(userInput);
             if (validGameId != null) {
-                String gameGif = "https://lichess1.org/game/export/gif/" + validGameId + ".gif?theme=blue&piece=kosal";
-                eventModal.reply(gameGif).queue();
+
+                String gameGif = "https://lichess1.org/game/export/gif/" + validGameId + ".gif?theme=" + getSettingSchema().getBoardTheme() + "&piece=" + getSettingSchema().getPieceType();
+                builder.addField("Share", gameGif, false);
+                builder.setImage(gameGif);
+                eventModal.replyEmbeds(builder.build()).addActionRow(Button.danger("delete", "delete")).queue();
             } else {
                 eventModal.reply("Please provide a valid Lichess game!").queue();
             }
         } else if (client.users().byId(userInput).isPresent()) {
             UserGame userGame = new UserGame(client, userInput);
             eventModal.deferReply(true).queue();
-            eventModal.getChannel().sendMessage(userGame.getUserGamesGif(getSettingSchema())).queue();
+            String gameGif = userGame.getUserGamesGif(getSettingSchema());
+            builder.addField("Share", gameGif, false);
+            builder.setImage(gameGif);
+            eventModal.getChannel().sendMessageEmbeds(builder.build()).addActionRow(Button.danger("delete", "delete")).queue();
 
         } else {
             eventModal.reply("Please Provide A Valid Lichess Username!").queue();
