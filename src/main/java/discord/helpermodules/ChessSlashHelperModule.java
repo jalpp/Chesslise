@@ -3,6 +3,7 @@ package discord.helpermodules;
 import abstraction.ChessUtil;
 import chariot.Client;
 import chessdb.ChessDBQuery;
+import discord.mainhandler.Thumbnail;
 import lichess.UserProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -63,9 +64,13 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
         String fen = event.getOption("input-fen").getAsString();
         EmbedBuilder builder = new EmbedBuilder();
         builder.setImage(util.getImageFromFEN(fen, setting.getBoardTheme(),setting.getPieceType()));
+        builder.setThumbnail(Thumbnail.getChessliseLogo());
+        builder.addField("Author", event.getUser().getAsMention(), false);
+        builder.addField("FEN", fen, false);
         builder.setColor(Color.PINK);
 
-        event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.link(util.getAnalysisBoard(fen), "Analysis Board")).queue();
+        event.getHook().sendMessageEmbeds(builder.build())
+                .addActionRow(Button.link(util.getAnalysisBoard(fen), "Analysis Board"), Button.danger("delete", "delete")).queue();
     }
 
     private EmbedBuilder getChessDBEmbed(String moveDesc, String fen){
