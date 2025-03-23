@@ -42,7 +42,7 @@ public class ModalHelperModule extends SettingSchemaModule {
     public void sendGameInputOnFormSubmit() {
         String userInput = eventModal.getValue("watch_user_or_game").getAsString().trim();
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.BLUE);
+        
         builder.setThumbnail(Thumbnail.getChessliseLogo());
         builder.addField("Author", eventModal.getUser().getAsMention(), false);
         if (Game.isLink(userInput)) {
