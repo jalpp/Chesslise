@@ -1,10 +1,13 @@
 package discord.helpermodules;
 
 import chesscom.CCProfile;
+import discord.mainhandler.Thumbnail;
 import lichess.Game;
 import lichess.UserGame;
 import chariot.Client;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import setting.SettingSchemaModule;
 
 

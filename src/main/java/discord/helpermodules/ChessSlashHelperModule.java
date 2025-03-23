@@ -3,6 +3,7 @@ package discord.helpermodules;
 import abstraction.ChessUtil;
 import chariot.Client;
 import chessdb.ChessDBQuery;
+import discord.mainhandler.Thumbnail;
 import lichess.UserProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 
