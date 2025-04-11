@@ -58,7 +58,7 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 - [Lichess Puzzle Database](https://database.lichess.org/#puzzles)
 
 ## 🎨 Chesslise High level diagram
-![Chesslise](https://github.com/jalpp/Chesslise/blob/master/chesslisev2.drawio.png?raw=true)
+![Chesslise](https://github.com/jalpp/Chesslise/blob/master/chesslisev3.drawio.png?raw=true)
 
 ## 🔧 **Running Chesslise Discord App Locally**
 
