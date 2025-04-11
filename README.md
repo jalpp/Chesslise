@@ -61,6 +61,7 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 
 ## 🔧 **Running Chesslise Discord App Locally**
 
+You can use Gitpod to easily start setting up ChessLise and start coding
 
 Follow these steps to set up and run Chesslise on your local machine:
 

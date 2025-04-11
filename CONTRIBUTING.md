@@ -60,6 +60,3 @@ Join the dev Discord if you are helping with a issue or just want to hangout
 [Discord](https://discord.gg/T2eH3tQjKC)
 
 
-# Chesslise High-level Design
-This diagram is for V10 and older version, but will be updated later on
-![Lisev10B drawio](https://github.com/jalpp/LichessSearchEngineBot/assets/92553013/ab1aa349-135b-4f57-a592-bba4e6faf733)
