@@ -9,6 +9,7 @@ import chariot.Client;
 import Game.*;
 import com.github.bhlangonijr.chesslib.Board;
 import lichess.ThemePuzzle;
+import lichess.UserGame;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 
 import static discord.helpermodules.ChessSlashHelperModule.*;
+
 
 
 public class ButtonHelperModule extends SettingSchemaModule {
@@ -192,6 +194,18 @@ public class ButtonHelperModule extends SettingSchemaModule {
         EmbedBuilder chessDBView = getChessDBEdited(newInfo, position.getFen(), move);
 
         buttonEvent.getHook().editOriginalEmbeds(chessDBView.build()).setActionRow(Button.success("onemove", "Play 1st move"), Button.success("twomove", "Play 2nd move"), Button.success("threemove", "Play 3rd move")).queue();
+    }
+
+        public void sendFlipBoard() {
+        if(buttonEvent.getComponentId().equalsIgnoreCase("flip-board")){
+            String gameLink = buttonEvent.getMessage().getEmbeds().get(0).getFields().get(1).getValue();
+            assert gameLink != null;
+            String color = gameLink.contains("white") ? "black" : "white";
+            String[] gameArray = gameLink.split("/");
+            String gameId = gameArray[gameArray.length - 1].split("gif")[0].replace(".", "");
+            String gameShareUrl = UserGame.getGameGif(color, gameId, getSettingSchema());
+            buttonEvent.replyEmbeds(new EmbedBuilder().setColor(Color.BLUE).addField("Share", gameShareUrl, true).setImage(gameShareUrl).setThumbnail(Thumbnail.getChessliseLogo()).build()).setEphemeral(true).queue();
+        }
     }
 
     /**
