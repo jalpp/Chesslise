@@ -8,13 +8,13 @@ import org.bson.Document;
 
 import java.util.*;
 
-
 public class Pairing extends Action {
 
     private final PairingNetworkType type;
     private final SendFriendRequest sendRequest;
 
-    public Pairing(MongoCollection<Document> networkChallenges, MongoCollection<Document> networkPlayers, PairingNetworkType type) {
+    public Pairing(MongoCollection<Document> networkChallenges, MongoCollection<Document> networkPlayers,
+            PairingNetworkType type) {
         super(networkChallenges, networkPlayers);
         this.type = type;
         this.sendRequest = new SendFriendRequest(networkPlayers);
@@ -24,7 +24,9 @@ public class Pairing extends Action {
         event.deferReply(true).queue();
 
         if (getFinder().findConnected(event.getUser().getId())) {
-            event.getHook().sendMessage("You must connect your account before creating a pairing request! Run /connect to connect your account!").queue();
+            event.getHook().sendMessage(
+                    "You must connect your account before creating a pairing request! Run /connect to connect your account!")
+                    .queue();
         }
 
         String pairingMsg = pairPlayer(event.getUser().getId(), event.getUser().getName());
@@ -36,7 +38,9 @@ public class Pairing extends Action {
         event.deferReply(true).queue();
 
         if (getFinder().findConnected(event.getUser().getId())) {
-            event.getHook().sendMessage("You must connect your account before creating a pairing request! Run /connect to connect your account!").queue();
+            event.getHook().sendMessage(
+                    "You must connect your account before creating a pairing request! Run /connect to connect your account!")
+                    .queue();
         }
 
         String pairingMsg = bfspairing(event.getUser().getId(), event.getUser().getName());
@@ -45,10 +49,11 @@ public class Pairing extends Action {
 
     }
 
-
     public String pairPlayer(String discordId, String discordusername) {
 
-        Document query = new Document("status", "pending").append("oppId", "null").append("pl", getFinder().findPreferencePl(discordId)).append("ptc", getFinder().findPreferenceTc(discordId));
+        Document query = new Document("status", "pending").append("oppId", "null")
+                .append("pl", getFinder().findPreferencePl(discordId))
+                .append("ptc", getFinder().findPreferenceTc(discordId));
         FindIterable<Document> challenges = getNetworkChallenges().find(query);
         Document current = new Finder(getNetworkPlayers()).findPlayer(discordId);
 
@@ -59,7 +64,8 @@ public class Pairing extends Action {
 
         for (Document challenge : challenges) {
 
-            if (!challenge.getString("discordId").equalsIgnoreCase(discordId) && !blockedIds.contains(challenge.getString("discordId"))) {
+            if (!challenge.getString("discordId").equalsIgnoreCase(discordId)
+                    && !blockedIds.contains(challenge.getString("discordId"))) {
                 return updatePairingInfoAndGetGreeting(discordId, discordusername, challenge);
             }
         }
@@ -67,27 +73,27 @@ public class Pairing extends Action {
         return "Challenge not found! Check back later";
     }
 
-   
     private String updatePairingInfoAndGetGreeting(String discordId, String discordUsername, Document challenge) {
-        Document updateQuery = new Document("$set", new Document("status", "accepted").append("oppId", discordId).append("oppUsername", discordUsername));
+        Document updateQuery = new Document("$set",
+                new Document("status", "accepted").append("oppId", discordId).append("oppUsername", discordUsername));
         getNetworkChallenges().updateOne(challenge, updateQuery);
-        return "Challenge found! " + discordUsername + " vs " + challenge.getString("username") + " You can send a Discord friend request and start playing!";
+        return "Challenge found! " + discordUsername + " vs " + challenge.getString("username")
+                + " You can send a Discord friend request and start playing!";
     }
 
-    
     private String sendFriendRequestAndGetGreeting(String discordID, Document friendDoc) {
         String msg = this.sendRequest.addFriend(discordID, friendDoc.getString("username"));
         return "Successfully found friend " + friendDoc.getString("username") + " \n" + msg;
     }
 
-   
     private boolean foundPairing(Document start, Document current) {
 
         if (start.getString("id").equalsIgnoreCase(current.getString("id"))) {
             return false;
         }
 
-        if (start.getList("blocked", String.class).contains(current.getString("id")) || current.getList("blocked", String.class).contains(start.getString("id"))) {
+        if (start.getList("blocked", String.class).contains(current.getString("id"))
+                || current.getList("blocked", String.class).contains(start.getString("id"))) {
             return false;
         }
 
@@ -96,7 +102,8 @@ public class Pairing extends Action {
         }
 
         if (this.type == PairingNetworkType.PAIR_NETWORK_CHALLENGE) {
-            if (this.getNetworkChallenges().find(new Document("discordId", current.getString("id")).append("oppId", "null")).first() == null) {
+            if (this.getNetworkChallenges()
+                    .find(new Document("discordId", current.getString("id")).append("oppId", "null")).first() == null) {
                 return false;
             }
         } else if (this.type == PairingNetworkType.PAIR_NETWORK_FRIEND) {
@@ -104,22 +111,22 @@ public class Pairing extends Action {
                 return false;
             }
 
-            return start.getString("favplayer").equalsIgnoreCase(current.getString("favplayer")) || start.getString("favpiece").equalsIgnoreCase(current.getString("favpiece")) || start.getString("favopening").equalsIgnoreCase(current.getString("favopening")) || start.getString("favstyle").equalsIgnoreCase(current.getString("favstyle"));
+            return start.getString("favplayer").equalsIgnoreCase(current.getString("favplayer"))
+                    || start.getString("favpiece").equalsIgnoreCase(current.getString("favpiece"))
+                    || start.getString("favopening").equalsIgnoreCase(current.getString("favopening"))
+                    || start.getString("favstyle").equalsIgnoreCase(current.getString("favstyle"));
         }
 
-
-        return start.getString("pl").equalsIgnoreCase(current.getString("pl")) && start.getString("ptc").equalsIgnoreCase(current.getString("ptc"));
+        return start.getString("pl").equalsIgnoreCase(current.getString("pl"))
+                && start.getString("ptc").equalsIgnoreCase(current.getString("ptc"));
     }
 
-    
     private Document getTargetedFriendChallengeDoc(Document current) {
         String id = current.getString("id");
         Document query = new Document("status", "pending").append("oppId", "null").append("discordId", id);
         return getNetworkChallenges().find(query).first();
     }
 
-
-   
     private ArrayList<Document> getAdjlist(Document start) {
         ArrayList<Document> friendDocs = new ArrayList<>();
         List<String> friends = start.getList("friends", String.class);
@@ -135,7 +142,6 @@ public class Pairing extends Action {
         return friendDocs;
     }
 
-    
     public String bfspairing(String discordIdStart, String discordUsernameStart) {
 
         Document start = getFinder().findPlayer(discordIdStart);
@@ -165,7 +171,8 @@ public class Pairing extends Action {
                 System.out.println(u.getString("username"));
                 if (foundPairing(start, u)) {
                     if (this.type == PairingNetworkType.PAIR_NETWORK_CHALLENGE) {
-                        return updatePairingInfoAndGetGreeting(discordIdStart, discordUsernameStart, getTargetedFriendChallengeDoc(u));
+                        return updatePairingInfoAndGetGreeting(discordIdStart, discordUsernameStart,
+                                getTargetedFriendChallengeDoc(u));
                     } else {
                         return sendFriendRequestAndGetGreeting(discordIdStart, u);
                     }
@@ -179,11 +186,11 @@ public class Pairing extends Action {
                 }
             }
 
-            return this.type == PairingNetworkType.PAIR_NETWORK_CHALLENGE ? "No challenge found! Check back later" : "No friend found! Check back later";
+            return this.type == PairingNetworkType.PAIR_NETWORK_CHALLENGE ? "No challenge found! Check back later"
+                    : "No friend found! Check back later";
         } else {
             return "You have not connected your account to Chesslise network! Use /connect and add friends and you will be able to use this command";
         }
     }
-
 
 }

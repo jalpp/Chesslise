@@ -10,7 +10,6 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 
-
 public class Connect extends Request {
 
     private final Finder finder;
@@ -33,14 +32,13 @@ public class Connect extends Request {
         String discordid = event.getUser().getId();
         String discordusername = event.getUser().getName().toLowerCase();
 
-
         event.deferReply(true).queue();
         String msg = this.insertEntry(discordid, discordusername, pl, tc, builder);
         event.getHook().sendMessage(msg).queue();
     }
 
-    
-    public String insertEntry(String discordid, String discordusername, PreferencePl pl, PreferenceTc tc, FriendPrefBuilder builder) {
+    public String insertEntry(String discordid, String discordusername, PreferencePl pl, PreferenceTc tc,
+            FriendPrefBuilder builder) {
         Document find = finder.findPlayer(discordid);
 
         if (find != null) {
@@ -71,6 +69,5 @@ public class Connect extends Request {
 
         return discordusername + " " + "joined the network!";
     }
-
 
 }

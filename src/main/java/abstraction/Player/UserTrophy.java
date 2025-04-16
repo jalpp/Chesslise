@@ -4,7 +4,6 @@ import chariot.model.Trophy;
 
 import java.util.HashMap;
 
-
 public class UserTrophy {
 
     private final String trophyName;
@@ -13,7 +12,6 @@ public class UserTrophy {
         this.trophyName = trophy.name();
     }
 
-    
     public String getTrophyName() {
         HashMap<String, String> getLink = new HashMap<>();
         getLink.put("Marathon Winner", "\uD83D\uDD2E");

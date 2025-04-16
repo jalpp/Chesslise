@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class AntiSpam {
 
     private final Map<String, Long> userRequestMap;
@@ -19,7 +18,6 @@ public class AntiSpam {
         this.maxRequests = maxRequests;
     }
 
-   
     public boolean checkSpam(SlashCommandInteractionEvent event) {
         String userId = event.getUser().getId();
 

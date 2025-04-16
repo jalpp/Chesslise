@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import network.user.friends.FriendPrefBuilder;
 import org.bson.Document;
 
-
 public class PreferenceUpdate {
 
     private final MongoCollection<Document> networkPlayers;
@@ -15,7 +14,6 @@ public class PreferenceUpdate {
         this.networkPlayers = networkPlayers;
     }
 
-    
     public void update(SlashCommandInteractionEvent event) {
 
         PreferenceFr player = PreferenceBuilder.playerBuilder(event.getOptionsByName("player").get(0).getAsString());
@@ -27,28 +25,27 @@ public class PreferenceUpdate {
         PreferenceTc tc = PreferenceBuilder.tcBuilder(event.getOptionsByName("tc").get(0).getAsString());
         String discordid = event.getUser().getId();
 
-
         event.deferReply(true).queue();
 
         event.getHook().sendMessage(this.updatePreference(discordid, pl, tc, builder)).queue();
 
     }
 
-
-    
     public String updatePreference(String discordid, PreferencePl pl, PreferenceTc tc, FriendPrefBuilder builder) {
         Document query = new Document("id", discordid);
         Document preferencedoc = this.networkPlayers.find(query).first();
 
         if (preferencedoc != null) {
-            this.networkPlayers.updateOne(preferencedoc, Updates.combine(Updates.set("pl", pl.toMongo()), Updates.set("ptc", tc.toMongo()),
-                    Updates.set("favplayer", builder.getPlayer().toMongoPlayer()), Updates.set("favpiece", builder.getPiece().toMongoPiece()),
-                    Updates.set("favopening", builder.getOpening().toMongoOpening()), Updates.set("favstyle", builder.getStyle().toMongoStyle())));
+            this.networkPlayers.updateOne(preferencedoc,
+                    Updates.combine(Updates.set("pl", pl.toMongo()), Updates.set("ptc", tc.toMongo()),
+                            Updates.set("favplayer", builder.getPlayer().toMongoPlayer()),
+                            Updates.set("favpiece", builder.getPiece().toMongoPiece()),
+                            Updates.set("favopening", builder.getOpening().toMongoOpening()),
+                            Updates.set("favstyle", builder.getStyle().toMongoStyle())));
             return "Successfully updated the preferences!";
         }
 
         return "Not account found connected! Please connect your account using /connect";
     }
-
 
 }

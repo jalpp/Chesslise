@@ -4,9 +4,7 @@ import com.mongodb.client.MongoCollection;
 import network.challenge.Finder;
 import org.bson.Document;
 
-
 public class Request {
-
 
     private final MongoCollection<Document> networkPlayers;
     private final Finder finder;
@@ -16,15 +14,12 @@ public class Request {
         this.finder = new Finder(networkPlayers);
     }
 
-   
     public MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
     }
 
-    
     public Finder getFinder() {
         return this.finder;
     }
-
 
 }

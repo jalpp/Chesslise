@@ -10,7 +10,6 @@ import java.awt.*;
  */
 public interface Puzzle {
 
-
     String definePuzzleFen();
 
     EmbedBuilder defineCommandCard(SettingSchema schema);
@@ -22,6 +21,5 @@ public interface Puzzle {
     Color defineEmbedColor();
 
     String definePuzzleDescription();
-
 
 }

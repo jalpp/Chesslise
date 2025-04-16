@@ -11,11 +11,9 @@ import setting.SettingSchema;
 import java.awt.*;
 import java.io.IOException;
 
-
 public class DailyCommandCC extends PuzzleView implements Puzzle {
 
     private final DailyPuzzleClient puzzleClient = new DailyPuzzleClient();
-
 
     public DailyCommandCC() {
         super();
@@ -53,12 +51,9 @@ public class DailyCommandCC extends PuzzleView implements Puzzle {
 
     @Override
     public EmbedBuilder defineCommandCard(SettingSchema schema) {
-        return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setThumbnail(definePuzzleLogo()).setDescription(definePuzzleDescription()).setImage(renderImage(definePuzzleFen(), schema));
+        return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle())
+                .setThumbnail(definePuzzleLogo()).setDescription(definePuzzleDescription())
+                .setImage(renderImage(definePuzzleFen(), schema));
     }
 
-
 }
-
-
-
-

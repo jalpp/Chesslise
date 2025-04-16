@@ -6,23 +6,21 @@ import org.bson.Document;
 
 import java.util.List;
 
-
 public class ViewFriendRequest extends Request {
 
     public ViewFriendRequest(MongoCollection<Document> players) {
         super(players);
     }
 
-    
     public void viewFriendRequests(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
-        String viewres = viewRequests(event.getUser().getId(), ViewTypeFriend.getType(event.getOptionsByName("requesttype").get(0).getAsString()));
+        String viewres = viewRequests(event.getUser().getId(),
+                ViewTypeFriend.getType(event.getOptionsByName("requesttype").get(0).getAsString()));
 
         event.getHook().sendMessage(viewres).queue();
     }
 
-    
     public String viewRequests(String discordid, ViewTypeFriend type) {
         Document current = this.getNetworkPlayers().find(new Document("id", discordid)).first();
 
@@ -45,19 +43,14 @@ public class ViewFriendRequest extends Request {
         return "invalid view type!";
     }
 
-
-    
     public String viewInRequests(Document current) {
         return viewBoundRequests(current, "requestin", "incomming");
     }
 
-
-    
     public String viewOutRequests(Document current) {
         return viewBoundRequests(current, "requestout", "outgoing");
     }
 
-    
     private String viewBoundRequests(Document current, String bounded, String boundedWord) {
         StringBuilder boundBuilder = new StringBuilder();
         List<String> boundedrequest = current.getList(bounded, String.class);
@@ -83,7 +76,6 @@ public class ViewFriendRequest extends Request {
 
     }
 
-  
     public String viewList(Document current) {
         StringBuilder friendList = new StringBuilder();
         List<String> friends = current.getList("friendsusers", String.class);
@@ -107,6 +99,5 @@ public class ViewFriendRequest extends Request {
         return friendList.toString();
 
     }
-
 
 }

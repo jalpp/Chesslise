@@ -8,12 +8,10 @@ import org.bson.Document;
 
 public class AcceptFriendRequest extends Request {
 
-
     public AcceptFriendRequest(MongoCollection<Document> players) {
         super(players);
     }
 
-    
     public void acceptFriendRequest(SlashCommandInteractionEvent event) {
         event.deferReply(true).queue();
 
@@ -22,7 +20,6 @@ public class AcceptFriendRequest extends Request {
         event.getHook().sendMessage(acceptFriendMessage).queue();
     }
 
-    
     // only if the world accepted more friends in life
     public String acceptFriend(String discordid, String incomingFriendRequest) {
         Document current = getFinder().findPlayer(discordid);
@@ -36,33 +33,27 @@ public class AcceptFriendRequest extends Request {
             return "The given discord id is not valid! Make sure it's valid by viewing the requests in /viewfriends <option>";
         }
 
-
         this.getNetworkPlayers().updateOne(
                 new Document("id", discordid),
                 Updates.combine(
                         Updates.push("friends", incoming.getString("id")),
                         Updates.push("friendsusers", incoming.getString("username")),
-                        Updates.pull("requestin", incoming.getString("id"))
-                )
-        );
+                        Updates.pull("requestin", incoming.getString("id"))));
 
         this.getNetworkPlayers().updateOne(
                 new Document("id", incomingFriendRequest),
                 Updates.combine(
                         Updates.push("friends", current.getString("id")),
                         Updates.push("friendsusers", current.getString("username")),
-                        Updates.pull("requestout", discordid)
-                )
-        );
+                        Updates.pull("requestout", discordid)));
 
-        return "Successfully accepted the friend " + incomingFriendRequest + "! You can also view the status of the friendship in /viewfriends, you can send them a friend request via Discord to connect and start playing (recommended)";
+        return "Successfully accepted the friend " + incomingFriendRequest
+                + "! You can also view the status of the friendship in /viewfriends, you can send them a friend request via Discord to connect and start playing (recommended)";
     }
-
 
     @Override
     public String toString() {
         return "accepting";
     }
-
 
 }

@@ -1,6 +1,5 @@
 package setting;
 
-
 public class SettingSchemaModule {
 
     private static SettingSchema schema;

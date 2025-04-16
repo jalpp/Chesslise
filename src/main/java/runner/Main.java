@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bson.Document;
 
-
 public class Main extends ListenerAdapter {
 
     private static JDA jda;
@@ -30,7 +29,8 @@ public class Main extends ListenerAdapter {
 
         boolean IS_BETA = dotenv.get("ENV_BETA").equalsIgnoreCase("true");
 
-        JDABuilder jdaBuilder = JDABuilder.createDefault(IS_BETA ? dotenv.get("DISCORD_BETA_TOKEN") : dotenv.get("DISCORD_PROD_TOKEN"));
+        JDABuilder jdaBuilder = JDABuilder
+                .createDefault(IS_BETA ? dotenv.get("DISCORD_BETA_TOKEN") : dotenv.get("DISCORD_PROD_TOKEN"));
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
 
@@ -40,7 +40,8 @@ public class Main extends ListenerAdapter {
         try {
             System.out.println("[Chesslise Status]: Logging in " + (IS_BETA ? "Beta" : "Production") + " Instance...");
             jda = jdaBuilder.build();
-            System.out.println("[Chesslise Status]: Connecting to " + (IS_BETA ? "Beta" : "Production") + " Database...");
+            System.out
+                    .println("[Chesslise Status]: Connecting to " + (IS_BETA ? "Beta" : "Production") + " Database...");
             MongoConnect.main(args);
             networkChallenges = MongoConnect.getNetworkChallenges();
             networkPlayers = MongoConnect.getNetworkPlayers();
@@ -57,25 +58,20 @@ public class Main extends ListenerAdapter {
 
     }
 
-    
     public static MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
     }
 
-    
     public static MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
     }
 
-   
-    public static MongoCollection<Document> getGamesCollection(){
+    public static MongoCollection<Document> getGamesCollection() {
         return gamesCollection;
     }
 
-    
-    public static MongoCollection<Document> getSettingCollection(){
+    public static MongoCollection<Document> getSettingCollection() {
         return settingCollection;
     }
-
 
 }

@@ -2,7 +2,6 @@ package network.challenge;
 
 public enum Status {
 
-
     PENDING,
 
     ACCEPTED,
@@ -11,7 +10,6 @@ public enum Status {
 
     COMPLETED;
 
-    
     public String toMongo() {
         switch (this) {
             case PENDING -> {
@@ -33,6 +31,5 @@ public enum Status {
 
         return null;
     }
-
 
 }

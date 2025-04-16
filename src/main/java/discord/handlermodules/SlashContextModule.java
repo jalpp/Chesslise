@@ -1,18 +1,13 @@
 package discord.handlermodules;
 
-
 import discord.helpermodules.*;
 import discord.mainhandler.AntiSpam;
 import discord.mainhandler.CommandInfo;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
-
-
 public class SlashContextModule {
 
-
-    
     public void handleLogic(SlashCommandInteractionEvent slashEvent, Client client) {
         AntiSpam spam = new AntiSpam(300000, 1);
         String name = slashEvent.getName();
@@ -20,7 +15,7 @@ public class SlashContextModule {
         CommandInfo infoTool = new CommandInfo(slashEvent);
         ChessSlashHelperModule chessTool = new ChessSlashHelperModule(slashEvent);
         NetworkHelperModule networkTool = new NetworkHelperModule(slashEvent);
-        PuzzleContextHelperModule puzzleTool = new PuzzleContextHelperModule(slashEvent,spam,client);
+        PuzzleContextHelperModule puzzleTool = new PuzzleContextHelperModule(slashEvent, spam, client);
 
         switch (name) {
 
@@ -82,9 +77,7 @@ public class SlashContextModule {
 
             case "viewfriends" -> networkTool.sendViewFriendRequest();
 
-
         }
     }
 
 }
-

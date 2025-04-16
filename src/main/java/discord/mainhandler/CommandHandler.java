@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-
 public class CommandHandler extends ListenerAdapter {
 
     private static final Client client = Client.basic(conf -> conf.retries(0));
@@ -27,14 +26,11 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-
-    
     @SneakyThrows
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         slashContext.handleLogic(event, client);
     }
 
-   
     @Override
     public void onModalInteraction(@NotNull ModalInteractionEvent event) {
 
@@ -42,7 +38,6 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-    
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
 
@@ -50,7 +45,6 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-    
     @Override
     public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
 
@@ -58,7 +52,6 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-    
     @Override
     public void onReady(ReadyEvent event) {
         JDA jda = event.getJDA();
@@ -67,9 +60,4 @@ public class CommandHandler extends ListenerAdapter {
         jda.getPresence().setActivity(Activity.watching("V17 Servers: " + guildCount + " 40k puzzles added!"));
     }
 
-
 }
-
-
-
-

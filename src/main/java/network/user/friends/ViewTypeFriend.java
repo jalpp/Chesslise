@@ -1,8 +1,6 @@
 package network.user.friends;
 
-
 public enum ViewTypeFriend {
-
 
     INCOMMING_FRIEND,
 
@@ -10,7 +8,6 @@ public enum ViewTypeFriend {
 
     LIST_FRIEND;
 
-    
     public String toDiscord() {
         switch (this) {
             case LIST_FRIEND -> {
@@ -27,7 +24,6 @@ public enum ViewTypeFriend {
         return null;
     }
 
-    
     public static ViewTypeFriend getType(String discord) {
         switch (discord) {
             case "flist" -> {
@@ -42,6 +38,5 @@ public enum ViewTypeFriend {
         }
         return null;
     }
-
 
 }
