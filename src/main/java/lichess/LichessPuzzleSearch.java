@@ -84,7 +84,7 @@ public class LichessPuzzleSearch {
 
     public static LichessDBPuzzle getDatabasePuzzle(String themeSearch) {
         List<String> randomPuzzle = getRandomPuzzle(searchPuzzles("Themes", themeSearch, MAX_PUZZLE_SEARCH));
-        return new LichessDBPuzzle(randomPuzzle.get(0), randomPuzzle.get(1), randomPuzzle.get(2), randomPuzzle.get(3),
-                randomPuzzle.get(4), randomPuzzle.get(5));
+        return new LichessDBPuzzle(randomPuzzle.get(1), randomPuzzle.get(3),
+                randomPuzzle.get(5));
     }
 }

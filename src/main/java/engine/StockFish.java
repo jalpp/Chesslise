@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -27,7 +28,7 @@ public class StockFish {
                     URLEncoder.encode(fen, StandardCharsets.UTF_8),
                     depth);
 
-            URL url = new URL(API_ENDPOINT + "?" + queryString);
+            URL url = new URI(API_ENDPOINT + "?" + queryString).toURL();
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
