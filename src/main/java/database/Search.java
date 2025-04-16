@@ -3,10 +3,8 @@ package database;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
-
 public class Search {
 
-    
     public String search(String targetSearch, String targetID, MongoCollection<Document> collection, String returnId) {
         Document query = new Document(targetSearch, targetID);
 

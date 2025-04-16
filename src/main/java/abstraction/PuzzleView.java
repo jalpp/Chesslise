@@ -18,5 +18,4 @@ public class PuzzleView {
         return util.getAnalysisBoard(fen);
     }
 
-
 }

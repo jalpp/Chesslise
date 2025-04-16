@@ -14,12 +14,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class ChessDBQuery {
-    
+
     public String getTop3BestMove(String fen) {
         StringBuilder builder = new StringBuilder();
-
 
         String encodedFen = URLEncoder.encode(fen, StandardCharsets.UTF_8);
         String apiUrl = "https://www.chessdb.cn/cdb.php?action=queryall&board=" + encodedFen + "&json=1";
@@ -28,12 +26,10 @@ public class ChessDBQuery {
 
             HttpClient client = HttpClient.newHttpClient();
 
-
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(apiUrl))
                     .GET()
                     .build();
-
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -42,18 +38,17 @@ public class ChessDBQuery {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode = objectMapper.readTree(response.body());
 
-
                 String status = rootNode.path("status").asText();
                 if (!"ok".equals(status)) {
                     return "Seems like this position eval isnt in Chess DB right now!" + status;
                 }
 
-
                 JsonNode moves = rootNode.path("moves");
                 if (moves.isArray()) {
                     int count = 0;
                     for (JsonNode move : moves) {
-                        if (count >= 3) break;
+                        if (count >= 3)
+                            break;
 
                         String uci = move.path("uci").asText();
                         String san = move.path("san").asText();
@@ -78,8 +73,7 @@ public class ChessDBQuery {
         }
     }
 
-
-    public static List<String> getTop3Moves(String parseView){
+    public static List<String> getTop3Moves(String parseView) {
         Pattern pattern = Pattern.compile("\\d\\)\\s([a-h][1-8][a-h][1-8])");
         Matcher matcher = pattern.matcher(parseView);
 
@@ -92,9 +86,4 @@ public class ChessDBQuery {
         return moves;
     }
 
-
-
 }
-
-
-

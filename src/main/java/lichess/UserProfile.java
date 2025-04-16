@@ -28,7 +28,8 @@ public class UserProfile extends UserObject {
      * @return the rating
      */
     private String getRating(Enums.PerfType perfType, String emoji, String typeName) {
-        One<PerformanceStatistics> performance = this.getClient().users().performanceStatisticsByIdAndType(this.getUserID(), perfType);
+        One<PerformanceStatistics> performance = this.getClient().users()
+                .performanceStatisticsByIdAndType(this.getUserID(), perfType);
 
         if (performance.isPresent() && !performance.get().perf().glicko().provisional()) {
             return emoji + " **" + typeName + "**: " + performance.get().perf().glicko().rating().intValue();
@@ -120,7 +121,6 @@ public class UserProfile extends UserObject {
                     ? "\n\n🎖️ **Trophies:**\n" + trophiesBuilder
                     : "";
 
-
             return String.format(
                     "%s %s %s\n" +
                             "**All Games:** %d\n" +
@@ -137,8 +137,7 @@ public class UserProfile extends UserObject {
                     getRapidRatings(),
                     getBulletRatings(),
                     getClassicalRatings(),
-                    trophies
-            );
+                    trophies);
 
         } catch (Exception e) {
             e.printStackTrace();

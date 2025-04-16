@@ -1,9 +1,7 @@
 package network.user;
 
-
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-
 
 public enum PreferencePl {
 
@@ -13,7 +11,6 @@ public enum PreferencePl {
 
     ALL;
 
-    
     public String toMongo() {
         switch (this) {
             case LICHESS -> {
@@ -32,10 +29,10 @@ public enum PreferencePl {
         return null;
     }
 
-   
     public static OptionData getOptionData() {
-        return new OptionData(OptionType.STRING, "platform", "choose platform", true).addChoice("Lichess.org Authenticated", "lichess").addChoice("Lichess.org Anon", "unauthlichess").addChoice("All Platforms", "allplatform");
+        return new OptionData(OptionType.STRING, "platform", "choose platform", true)
+                .addChoice("Lichess.org Authenticated", "lichess").addChoice("Lichess.org Anon", "unauthlichess")
+                .addChoice("All Platforms", "allplatform");
     }
-
 
 }

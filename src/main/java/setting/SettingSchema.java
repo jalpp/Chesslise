@@ -3,7 +3,6 @@ package setting;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
-
 public class SettingSchema {
 
     private final String userid;
@@ -16,23 +15,19 @@ public class SettingSchema {
         this.userid = userid;
     }
 
-   
     public String getUserid() {
         return userid;
     }
 
-  
     public String getBoardTheme() {
         return boardTheme;
     }
 
-    
     public String getPieceType() {
         return pieceType;
     }
 
-    
-    public static OptionData getBoardThemeData(){
+    public static OptionData getBoardThemeData() {
         return new OptionData(OptionType.STRING, "theme", "Select board theme", true)
                 .addChoice("brown", "brown")
                 .addChoice("blue", "blue")
@@ -40,8 +35,7 @@ public class SettingSchema {
                 .addChoice("green", "green");
     }
 
-    
-    public static OptionData getPieceTypeData(){
+    public static OptionData getPieceTypeData() {
         return new OptionData(OptionType.STRING, "piecetype", "Select piece type", true)
                 .addChoice("kosal", "kosal")
                 .addChoice("cburnett", "cburnett")

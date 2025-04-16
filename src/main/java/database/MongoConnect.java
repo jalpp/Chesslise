@@ -12,9 +12,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import runner.Main;
 
-
 public class MongoConnect {
-
 
     private static MongoCollection<Document> networkPlayers;
 
@@ -24,11 +22,9 @@ public class MongoConnect {
 
     private static MongoCollection<Document> settingCollection;
 
-
     public MongoConnect() {
     }
 
-    
     public static void connect() {
         boolean isBeta = Main.dotenv.get("ENV_BETA").equalsIgnoreCase("true");
         String connectionString = Main.dotenv.get("CONNECTION_STRING");
@@ -59,28 +55,23 @@ public class MongoConnect {
         settingCollection = database.getCollection(isBeta ? settingColName + "beta" : settingColName);
     }
 
-
     public static void main(String[] args) {
         connect();
     }
 
-    
     public static MongoCollection<Document> getNetworkPlayers() {
         return networkPlayers;
     }
 
-    
     public static MongoCollection<Document> getNetworkChallenges() {
         return networkChallenges;
     }
 
-   
     public static MongoCollection<Document> getGamesCollection() {
         return gamesCollection;
     }
 
-    public static MongoCollection<Document> getSettingCollection(){
+    public static MongoCollection<Document> getSettingCollection() {
         return settingCollection;
     }
 }
-

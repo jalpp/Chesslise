@@ -13,7 +13,6 @@ public enum PreferenceTc {
 
     BULLET; // adding this for bullet addicts
 
-    
     public String toMongo() {
         switch (this) {
             case CLASSICAL -> {
@@ -36,11 +35,10 @@ public enum PreferenceTc {
         return null;
     }
 
-    
     public static OptionData getOptionData() {
-        return new OptionData(OptionType.STRING, "tc", "choose timecontrol", true).addChoice("classical", "classical").addChoice("rapid", "rapid")
+        return new OptionData(OptionType.STRING, "tc", "choose timecontrol", true).addChoice("classical", "classical")
+                .addChoice("rapid", "rapid")
                 .addChoice("blitz", "blitz").addChoice("bullet", "bullet");
     }
-
 
 }

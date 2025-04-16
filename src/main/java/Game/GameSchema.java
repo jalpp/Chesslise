@@ -12,17 +12,14 @@ public class GameSchema {
         this.depth = depth;
     }
 
-   
     public String getUserid() {
         return userid;
     }
 
-    
     public String getFen() {
         return fen;
     }
 
-    
     @Override
     public String toString() {
         return "GameSchema{" +
@@ -32,12 +29,10 @@ public class GameSchema {
                 '}';
     }
 
-    
     public void setFen(String fen) {
         this.fen = fen;
     }
 
-    
     public Integer getDepth() {
         return depth;
     }

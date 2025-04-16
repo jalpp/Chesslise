@@ -6,14 +6,14 @@ import java.util.*;
 
 public class LichessPuzzleSearch {
 
-    
     private static final int MAX_PUZZLE_SEARCH = 5000;
 
     /**
      * gets the puzzle values in the csv line for given search column
+     * 
      * @param searchColumn the search column (puzzle theme)
-     * @param searchValue the search value (puzzle theme value)
-     * @param maxPuzzles max puzzles to search for
+     * @param searchValue  the search value (puzzle theme value)
+     * @param maxPuzzles   max puzzles to search for
      * @return return the csv line
      */
     private static List<List<String>> searchPuzzles(String searchColumn, String searchValue, int maxPuzzles) {
@@ -25,7 +25,8 @@ public class LichessPuzzleSearch {
         List<List<String>> results = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String headerLine = br.readLine();
-            if (headerLine == null) return results;
+            if (headerLine == null)
+                return results;
 
             String[] headers = headerLine.split(",");
             Map<String, Integer> columnIndexMap = new HashMap<>();
@@ -72,7 +73,6 @@ public class LichessPuzzleSearch {
         return results;
     }
 
-    
     private static List<String> getRandomPuzzle(List<List<String>> puzzles) {
         if (puzzles == null || puzzles.isEmpty()) {
             return Collections.emptyList();
@@ -82,9 +82,9 @@ public class LichessPuzzleSearch {
         return puzzles.get(randomIndex);
     }
 
-    public static LichessDBPuzzle getDatabasePuzzle(String themeSearch){
+    public static LichessDBPuzzle getDatabasePuzzle(String themeSearch) {
         List<String> randomPuzzle = getRandomPuzzle(searchPuzzles("Themes", themeSearch, MAX_PUZZLE_SEARCH));
-        return new LichessDBPuzzle(randomPuzzle.get(0), randomPuzzle.get(1), randomPuzzle.get(2), randomPuzzle.get(3), randomPuzzle.get(4), randomPuzzle.get(5));
+        return new LichessDBPuzzle(randomPuzzle.get(0), randomPuzzle.get(1), randomPuzzle.get(2), randomPuzzle.get(3),
+                randomPuzzle.get(4), randomPuzzle.get(5));
     }
 }
-

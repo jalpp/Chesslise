@@ -4,10 +4,8 @@ import discord.helpermodules.ButtonHelperModule;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
-
 public class ButtonContextModule {
 
-    
     public void handleLogic(ButtonInteractionEvent buttonEvent, Client client) {
 
         ButtonHelperModule buttonTool = new ButtonHelperModule(buttonEvent, client);
@@ -30,7 +28,8 @@ public class ButtonContextModule {
 
         buttonTool.sendPuzzleDBTheme();
 
-    }
+        buttonTool.sendFlipBoard();
 
+    }
 
 }

@@ -4,12 +4,9 @@ import discord.helpermodules.ModalHelperModule;
 import chariot.Client;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 
-
 public class ModalContextModule {
 
-
-    
-    public void handleLogic( ModalInteractionEvent eventModal, Client client) {
+    public void handleLogic(ModalInteractionEvent eventModal, Client client) {
 
         String name = eventModal.getModalId();
         ModalHelperModule modalTool = new ModalHelperModule(eventModal, client);

@@ -1,6 +1,5 @@
 package chesscom;
 
-
 import abstraction.Puzzle;
 import abstraction.PuzzleView;
 import discord.mainhandler.Thumbnail;
@@ -14,9 +13,7 @@ import java.io.IOException;
 
 public class puzzle extends PuzzleView implements Puzzle {
 
-
     private final String randomCachedFen;
-
 
     public puzzle() {
         try {
@@ -26,7 +23,6 @@ public class puzzle extends PuzzleView implements Puzzle {
             throw new RuntimeException(e);
         }
     }
-
 
     @Override
     public String definePuzzleFen() {
@@ -56,6 +52,8 @@ public class puzzle extends PuzzleView implements Puzzle {
 
     @Override
     public EmbedBuilder defineCommandCard(SettingSchema schema) {
-        return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen(), schema)).setThumbnail(definePuzzleLogo()).setDescription(definePuzzleDescription());
+        return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle())
+                .setImage(renderImage(definePuzzleFen(), schema)).setThumbnail(definePuzzleLogo())
+                .setDescription(definePuzzleDescription());
     }
 }

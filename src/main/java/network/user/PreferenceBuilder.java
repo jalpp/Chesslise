@@ -2,10 +2,8 @@ package network.user;
 
 import network.challenge.Status;
 
-
 public class PreferenceBuilder {
 
-    
     public static PreferencePl platformBuilder(String tag) {
         switch (tag) {
             case "lichess" -> {
@@ -24,7 +22,6 @@ public class PreferenceBuilder {
         return null;
     }
 
-    
     public static Status statusBuilder(String tag) {
         switch (tag) {
             case "pending" -> {
@@ -61,7 +58,6 @@ public class PreferenceBuilder {
         return null;
     }
 
-    
     public static PreferenceFr playerBuilder(String tag) {
         switch (tag) {
             case "mag" -> {
@@ -74,13 +70,12 @@ public class PreferenceBuilder {
                 return PreferenceFr.DING;
             }
             case "guk" -> {
-                return PreferenceFr.GUKESH; 
+                return PreferenceFr.GUKESH;
             }
         }
         return null;
     }
 
-    
     public static PreferenceFr pieceBuilder(String tag) {
         switch (tag) {
             case "bis" -> {
@@ -105,7 +100,8 @@ public class PreferenceBuilder {
         return null;
     }
 
-    // note this openings are not my opening rep so please don't spy here to prep against me, even if you do you would lose 
+    // note this openings are not my opening rep so please don't spy here to prep
+    // against me, even if you do you would lose
     public static PreferenceFr openingBuilder(String tag) {
         switch (tag) {
             case "qge" -> {
@@ -125,7 +121,6 @@ public class PreferenceBuilder {
         return null;
     }
 
-    
     public static PreferenceFr styleBuilder(String tag) {
         switch (tag) {
             case "agg" -> {
@@ -143,6 +138,5 @@ public class PreferenceBuilder {
         }
         return null;
     }
-
 
 }

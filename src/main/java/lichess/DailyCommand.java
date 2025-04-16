@@ -1,6 +1,5 @@
 package lichess;
 
-
 import abstraction.PuzzleView;
 import chariot.Client;
 import chariot.model.One;
@@ -12,12 +11,9 @@ import setting.SettingSchema;
 
 import java.awt.*;
 
-
 public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
 
-
     private Client client = Client.basic();
-
 
     public DailyCommand(Client client) {
         this.client = client;
@@ -57,14 +53,14 @@ public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
 
     @Override
     public EmbedBuilder defineCommandCard(SettingSchema schema) {
-        return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen(), schema)).setThumbnail(definePuzzleLogo());
+        return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor())
+                .setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen(), schema))
+                .setThumbnail(definePuzzleLogo());
     }
-
 
     public int getRating() {
         return client.puzzles().dailyPuzzle().get().puzzle().rating();
     }
-
 
     public EmbedBuilder getThemes() {
         EmbedBuilder themes = new EmbedBuilder();
@@ -84,12 +80,4 @@ public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
         return themes;
     }
 
-
 }
-
-
-
-
-
-
-

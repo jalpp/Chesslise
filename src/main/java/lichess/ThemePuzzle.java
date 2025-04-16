@@ -8,7 +8,6 @@ import setting.SettingSchema;
 
 import java.awt.*;
 
-
 public class ThemePuzzle extends PuzzleView implements Puzzle {
 
     private final String theme;
@@ -26,7 +25,9 @@ public class ThemePuzzle extends PuzzleView implements Puzzle {
 
     @Override
     public EmbedBuilder defineCommandCard(SettingSchema schema) {
-        return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor()).setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen(), schema)).setThumbnail(definePuzzleLogo());
+        return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor())
+                .setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen(), schema))
+                .setThumbnail(definePuzzleLogo());
     }
 
     @Override
@@ -46,12 +47,12 @@ public class ThemePuzzle extends PuzzleView implements Puzzle {
 
     @Override
     public String definePuzzleDescription() {
-        return "**Turn: **" + defineSideToMove(definePuzzleFen()) + "\n **Rating: **" + currentPuzzle.getRating() + "\n**FEN: **" + definePuzzleFen();
+        return "**Turn: **" + defineSideToMove(definePuzzleFen()) + "\n **Rating: **" + currentPuzzle.getRating()
+                + "\n**FEN: **" + definePuzzleFen();
     }
 
-    public String getGameURL(){
+    public String getGameURL() {
         return currentPuzzle.getGameURL();
     }
-
 
 }

@@ -12,17 +12,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 
-
 public class StockFish {
     private static final String API_ENDPOINT = "https://stockfish.online/api/s/v2.php";
     public static HashMap<String, String> getUserFen = new HashMap<>();
-
 
     public StockFish() {
 
     }
 
-   
     public static String getBestMove(int depth, String fen) {
         try {
 
@@ -30,16 +27,12 @@ public class StockFish {
                     URLEncoder.encode(fen, StandardCharsets.UTF_8),
                     depth);
 
-
             URL url = new URL(API_ENDPOINT + "?" + queryString);
-
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
-
             int responseCode = connection.getResponseCode();
-
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
@@ -73,6 +66,5 @@ public class StockFish {
         }
         return "error!";
     }
-
 
 }

@@ -1,13 +1,11 @@
 package network.user;
 
-
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import network.challenge.Action;
 
 import org.bson.Document;
-
 
 public class Disconnect extends Action {
 
@@ -44,6 +42,5 @@ public class Disconnect extends Action {
         return "Successfully made your account offline! You won't see any challenges or friend pairings, to go online please run /connect";
 
     }
-
 
 }
