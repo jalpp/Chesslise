@@ -40,6 +40,7 @@ public class SettingSchema {
                 .addChoice("kosal", "kosal")
                 .addChoice("cburnett", "cburnett")
                 .addChoice("horsey", "horsey")
+                .addChoice("xkcd", "xkcd")
                 .addChoice("pixel", "pixel");
     }
 
