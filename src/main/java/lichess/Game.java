@@ -13,30 +13,31 @@ public class Game {
 
     public static String generateOpenEndedChallengeURLs(int min, int sec, Boolean isRated, Client client) {
         AtomicReference<String> URL = new AtomicReference<>("");
+        String gameMessage = "ChessLise Challenge Created! Please Join the Lichess Game!";
         if (isRated) {
 
             if (min == 0) {
                 int ultra = 15;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(ultra, sec)
-                        .name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(true));
+                var result = client.challenges()
+                        .challengeOpenEnded(conf -> conf.clock(ultra, sec).name(gameMessage).rated(true));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             } else {
                 int clock = min * 60;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(clock, sec)
-                        .name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(true));
+                var result = client.challenges()
+                        .challengeOpenEnded(conf -> conf.clock(clock, sec).name(gameMessage).rated(true));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             }
         } else {
             if (min == 0) {
                 int ultraC = 15;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(ultraC, sec)
-                        .name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(false));
+                var result = client.challenges()
+                        .challengeOpenEnded(conf -> conf.clock(ultraC, sec).name(gameMessage).rated(false));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             }
             {
                 int clock = min * 60;
-                var result = client.challenges().challengeOpenEnded(conf -> conf.clock(clock, sec)
-                        .name("LISEBOT Challenge Created! Please Join the Lichess Game!").rated(false));
+                var result = client.challenges()
+                        .challengeOpenEnded(conf -> conf.clock(clock, sec).name(gameMessage).rated(false));
                 result.ifPresent(play -> URL.updateAndGet(v -> v + play.challenge().url()));
             }
         }
