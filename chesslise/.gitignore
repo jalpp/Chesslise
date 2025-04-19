@@ -1,0 +1,12 @@
+.idea/
+
+*.class
+
+*.jar
+
+.env
+
+target/
+build/
+bin/
+out/
