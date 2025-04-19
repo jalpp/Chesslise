@@ -69,7 +69,7 @@ Follow these steps to set up and run Chesslise on your local machine:
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/jalpp/Chesslise.git
-   cd Chesslise
+   cd Chesslise/chesslise
    ```
 2. **Set up beta environment variables:**
     - Copy the `copy.env` file to `.env`:
