@@ -74,7 +74,7 @@ public class ChessSlashHelperModule extends SettingSchemaModule {
                 String fen = event.getOption("input-fen").getAsString();
                 FenPuzzle fenPuzzle = new FenPuzzle(fen);
 
-                event.getHook().sendMessageEmbeds(fenPuzzle.defineCommandCard(setting).build())
+                event.getHook().sendMessageEmbeds(fenPuzzle.defineCommandCard(setting).addField("Author", event.getUser().getAsMention(), true).build())
                                 .addActionRow(Button.link(util.getAnalysisBoard(fen), "Analysis Board"),
                                                 Button.danger("delete", "delete"))
                                 .queue();
