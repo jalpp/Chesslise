@@ -6,7 +6,6 @@ import lombok.SneakyThrows;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
-import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -19,8 +18,6 @@ public class CommandHandler extends ListenerAdapter {
     private final SlashContextModule slashContext = new SlashContextModule();
     private final ModalContextModule modalContext = new ModalContextModule();
     private final ButtonContextModule buttonContext = new ButtonContextModule();
-
-    private final AutoCompleteContextModule autoContext = new AutoCompleteContextModule();
 
     public CommandHandler() {
 
@@ -42,13 +39,6 @@ public class CommandHandler extends ListenerAdapter {
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
 
         buttonContext.handleLogic(event, client);
-
-    }
-
-    @Override
-    public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
-
-        autoContext.handleLogic(event, client);
 
     }
 
