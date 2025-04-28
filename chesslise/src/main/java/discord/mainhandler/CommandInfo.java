@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import abstraction.CommandTrigger;
 import java.awt.*;
 
-public class CommandInfo implements CommandTrigger{
+public class CommandInfo implements CommandTrigger {
 
     private final SlashCommandInteractionEvent event;
     private final EmbedBuilder embedBuilder;
@@ -48,7 +48,7 @@ public class CommandInfo implements CommandTrigger{
 
     @Override
     public void trigger(String commandName) {
-        switch (commandName){
+        switch (commandName) {
             case "help" -> sendInfoCommand();
 
             case "learnchess" -> sendLearnCommand();

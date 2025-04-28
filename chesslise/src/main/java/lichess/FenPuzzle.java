@@ -23,7 +23,7 @@ public class FenPuzzle extends PuzzleView implements Puzzle {
         return this.fen;
     }
 
-    public boolean isValidFen(){
+    public boolean isValidFen() {
         try {
             Board board = new Board();
             board.loadFromFen(this.fen);
@@ -31,7 +31,7 @@ public class FenPuzzle extends PuzzleView implements Puzzle {
         } catch (Exception e) {
             return false;
         }
-      }
+    }
 
     @Override
     public EmbedBuilder defineCommandCard(SettingSchema schema) {

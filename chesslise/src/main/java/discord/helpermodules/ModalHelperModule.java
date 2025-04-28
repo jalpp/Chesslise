@@ -16,12 +16,11 @@ import abstraction.CommandTrigger;
 public class ModalHelperModule extends SettingSchemaModule implements CommandTrigger {
 
     private final ModalInteractionEvent eventModal;
-    private final Client client;
+    private static final Client client = Client.basic(conf -> conf.retries(0));
 
-    public ModalHelperModule(ModalInteractionEvent eventModal, Client client) {
+    public ModalHelperModule(ModalInteractionEvent eventModal) {
         super(eventModal.getUser().getId());
         this.eventModal = eventModal;
-        this.client = client;
     }
 
     public void sendPlayFriendChallenge() {
