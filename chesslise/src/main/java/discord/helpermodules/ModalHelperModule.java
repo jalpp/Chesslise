@@ -11,8 +11,9 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import setting.SettingSchemaModule;
 import java.awt.*;
 import java.util.Objects;
+import abstraction.CommandTrigger;
 
-public class ModalHelperModule extends SettingSchemaModule {
+public class ModalHelperModule extends SettingSchemaModule implements CommandTrigger {
 
     private final ModalInteractionEvent eventModal;
     private final Client client;
@@ -79,6 +80,15 @@ public class ModalHelperModule extends SettingSchemaModule {
         CCProfile ccProfile = new CCProfile(usercc);
         eventModal.deferReply(true).queue();
         eventModal.getChannel().sendMessageEmbeds(ccProfile.getCCProfile().build()).queue();
+    }
+
+    @Override
+    public void trigger(String commandName) {
+        switch (commandName) {
+            case "modalwatch" -> sendGameInputOnFormSubmit();
+            case "modalproc" -> sendChessComProfileOnFormSubmit();
+            case "modal-self-user" -> sendPlayFriendChallenge();
+        }
     }
 
 }

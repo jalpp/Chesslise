@@ -5,9 +5,6 @@ import setting.SettingSchema;
 
 import java.awt.*;
 
-/**
- * Interface for handling Puzzle Commands
- */
 public interface Puzzle {
 
     String definePuzzleFen();

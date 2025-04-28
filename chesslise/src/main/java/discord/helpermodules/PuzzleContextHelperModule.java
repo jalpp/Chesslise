@@ -10,19 +10,18 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import setting.SettingSchema;
 import setting.SettingSchemaModule;
-
-public class PuzzleContextHelperModule extends SettingSchemaModule {
+import abstraction.CommandTrigger;
+public class PuzzleContextHelperModule extends SettingSchemaModule implements CommandTrigger{
 
     private final SlashCommandInteractionEvent slashEvent;
-    private final AntiSpam antispam;
-    private final Client client;
+    private final AntiSpam spam = new AntiSpam(300000, 1);
+    private static final Client client = Client.basic(conf -> conf.retries(0));
     private final SettingSchema setting = getSettingSchema();
 
-    public PuzzleContextHelperModule(SlashCommandInteractionEvent slashEvent, AntiSpam antispam, Client client) {
+    
+    public PuzzleContextHelperModule(SlashCommandInteractionEvent slashEvent) {
         super(slashEvent.getUser().getId());
         this.slashEvent = slashEvent;
-        this.antispam = antispam;
-        this.client = client;
     }
 
     public void sendSlashLichesspuzzleCommand() {
@@ -44,7 +43,7 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
 
     public void sendRandomPuzzleChessComCommand() {
         slashEvent.deferReply(false).queue();
-        if (antispam.checkSpam(slashEvent)) {
+        if (spam.checkSpam(slashEvent)) {
             slashEvent.getHook().sendMessage(
                     "Only 1 Chesscom puzzle request within 5 mins! Please take your time to solve the Chesscom puzzle!")
                     .setEphemeral(true)
@@ -85,5 +84,12 @@ public class PuzzleContextHelperModule extends SettingSchemaModule {
                         Button.success("endgame", "Endgame"),
                         Button.danger("loadpuzzles", "Load more"))
                 .queue();
+    }
+
+    @Override
+    public void trigger(String commandName) {
+        if (commandName.equals("puzzle")) {
+            sendPuzzleMenuCommand();
+        }
     }
 }

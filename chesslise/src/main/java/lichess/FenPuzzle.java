@@ -22,6 +22,16 @@ public class FenPuzzle extends PuzzleView implements Puzzle {
         return this.fen;
     }
 
+    public boolean isValidFen(){
+        try {
+            Board board = new Board();
+            board.loadFromFen(this.fen);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+      }
+
     @Override
     public EmbedBuilder defineCommandCard(SettingSchema schema) {
         return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor())

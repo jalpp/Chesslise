@@ -13,10 +13,11 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import runner.Main;
 import setting.SettingSchema;
 import setting.SettingSchemaModule;
+import abstraction.CommandTrigger;
 
 import java.awt.*;
 
-public class EngineHelperModule extends SettingSchemaModule {
+public class EngineHelperModule extends SettingSchemaModule implements CommandTrigger{
 
     private final SlashCommandInteractionEvent event;
     private final GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
@@ -94,6 +95,17 @@ public class EngineHelperModule extends SettingSchemaModule {
             event.getHook().sendMessage("Engine Difficulty updated!").queue();
         } catch (NoGameException g) {
             event.getHook().sendMessage(g.getMessage()).queue();
+        }
+    }
+
+    @Override
+    public void trigger(String commandName) {
+        switch (commandName){
+            case "move" -> sendwhiteSideMoveCommand();
+
+            case "playengine" -> sendPlayEngine();
+
+            case "setengine" -> sendSetEngineMode();
         }
     }
 }

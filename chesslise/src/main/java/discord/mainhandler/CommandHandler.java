@@ -1,7 +1,6 @@
 package discord.mainhandler;
 
 import discord.handlermodules.*;
-import chariot.Client;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
@@ -14,32 +13,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandHandler extends ListenerAdapter {
 
-    private static final Client client = Client.basic(conf -> conf.retries(0));
-    private final SlashContextModule slashContext = new SlashContextModule();
-    private final ModalContextModule modalContext = new ModalContextModule();
-    private final ButtonContextModule buttonContext = new ButtonContextModule();
-
-    public CommandHandler() {
-
-    }
-
     @SneakyThrows
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        slashContext.handleLogic(event, client);
+        new SlashContextModule(event).handleLogic();
     }
 
     @Override
     public void onModalInteraction(@NotNull ModalInteractionEvent event) {
-
-        modalContext.handleLogic(event, client);
-
+        new ModalContextModule(event).handleLogic();
     }
 
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
-
-        buttonContext.handleLogic(event, client);
-
+        new ButtonContextModule(event).handleLogic();
     }
 
     @Override
