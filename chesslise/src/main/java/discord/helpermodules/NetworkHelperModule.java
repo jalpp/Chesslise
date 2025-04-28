@@ -9,8 +9,9 @@ import network.user.PreferenceUpdate;
 import network.user.friends.*;
 import org.bson.Document;
 import runner.Main;
+import abstraction.CommandTrigger;
 
-public class NetworkHelperModule {
+public class NetworkHelperModule implements CommandTrigger {
 
     private final MongoCollection<Document> players;
     private final MongoCollection<Document> challenges;
@@ -100,6 +101,44 @@ public class NetworkHelperModule {
     public void sendViewFriendRequest() {
         ViewFriendRequest view = new ViewFriendRequest(players);
         view.viewFriendRequests(event);
+    }
+
+    @Override
+    public void trigger(String commandName) {
+        switch (commandName) {
+            case "connect" -> sendConnect();
+
+            case "disconnect" -> sendDisconnect();
+
+            case "setpreference" -> sendSetPreference();
+
+            case "mychallenges" -> sendMyChallenge();
+
+            case "pairchallenge" -> sendChallengeGlobal();
+
+            case "pairchallengenetwork" -> sendChallengeSelf();
+
+            case "seekchallenge" -> sendSeekChallenge();
+
+            case "cancelchallenge" -> sendCancelChallenge();
+
+            case "completechallenge" -> sendCompleteChallenge();
+
+            case "sendfriendrequest" -> sendSendFriendRequest();
+
+            case "acceptfriendrequest" -> sendAcceptFriendRequest();
+
+            case "cancelfriendrequest" -> sendcancelFriendRequest();
+
+            case "findfriend" -> sendFriendFinderNetwork();
+
+            case "removefriend" -> sendRemoveFriendRequest();
+
+            case "blockfriend" -> sendBlockFriendRequest();
+
+            case "viewfriends" -> sendViewFriendRequest();
+
+        }
     }
 
 }

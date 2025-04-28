@@ -6,6 +6,7 @@ import abstraction.PuzzleView;
 import discord.mainhandler.Thumbnail;
 import net.dv8tion.jda.api.EmbedBuilder;
 import setting.SettingSchema;
+import com.github.bhlangonijr.chesslib.Board;
 
 import java.awt.*;
 
@@ -20,6 +21,16 @@ public class FenPuzzle extends PuzzleView implements Puzzle {
     @Override
     public String definePuzzleFen() {
         return this.fen;
+    }
+
+    public boolean isValidFen() {
+        try {
+            Board board = new Board();
+            board.loadFromFen(this.fen);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

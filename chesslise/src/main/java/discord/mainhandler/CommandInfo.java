@@ -4,10 +4,10 @@ import discord.helpermodules.ButtonHelperModule;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
-
+import abstraction.CommandTrigger;
 import java.awt.*;
 
-public class CommandInfo {
+public class CommandInfo implements CommandTrigger {
 
     private final SlashCommandInteractionEvent event;
     private final EmbedBuilder embedBuilder;
@@ -44,6 +44,15 @@ public class CommandInfo {
     public void sendLearnCommand() {
         event.replyEmbeds(ButtonHelperModule.getLearnChessCard("Rook").build())
                 .addActionRow(Button.primary("Bishop", "♝")).setEphemeral(true).queue();
+    }
+
+    @Override
+    public void trigger(String commandName) {
+        switch (commandName) {
+            case "help" -> sendInfoCommand();
+
+            case "learnchess" -> sendLearnCommand();
+        }
     }
 
 }
