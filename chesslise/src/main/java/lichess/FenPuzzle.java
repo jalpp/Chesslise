@@ -6,6 +6,7 @@ import abstraction.PuzzleView;
 import discord.mainhandler.Thumbnail;
 import net.dv8tion.jda.api.EmbedBuilder;
 import setting.SettingSchema;
+import com.github.bhlangonijr.chesslib.Board;
 
 import java.awt.*;
 
