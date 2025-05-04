@@ -21,6 +21,7 @@
 ✅ **Seamless Integration** – Works effortlessly in **Group DMs, private chats, and community servers**.  
 ✅ **Stockfish Engine Support** – Play Stockfish with group matches, with easy, medium, hard level support.  
 ✅ **CSSN – Chesslise Social Server Network** – Discover new chess friends, opponents, and challenges.
+✅ **Coordinates Game** - Train chess coordinates! 
 
 
 
@@ -59,55 +60,6 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 
 ## 🎨 Chesslise High level diagram
 ![Chesslise](https://github.com/jalpp/Chesslise/blob/master/chesslisev3.drawio.png?raw=true)
-
-## 🔧 **Running Chesslise Discord App Locally**
-
-You can use Gitpod to easily start setting up ChessLise and start coding
-
-Follow these steps to set up and run Chesslise on your local machine:
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/jalpp/Chesslise.git
-   cd Chesslise/chesslise
-   ```
-2. **Set up beta environment variables:**
-    - Copy the `copy.env` file to `.env`:
-   ```bash
-   cp copy.env .env
-   ```
-    - Fill in the required variables in the `.env` file. Note ignore production Discord token, unless you want to run production/beta bots
-3. **Build the project:**
-   ```bash
-   mvn clean install
-   ```
-4. **Run the bot:**
-   ```bash
-   java -jar target/ChessLise-17.0-SNAPSHOT-jar-with-dependencies.jar
-   ```
-5. **Check bot status:**
-    - if you did everything right, the below should be printed on console, and Chesslise will be online in Discord server
-   ```
-   [Chesslise Status]: Beta Successfully Running
-   [Chesslise Status]: Successfully Connected To Database
-    ```   
-
-The bot should now be running locally and can be tested on your Discord server!
-
-## 🔧 **Running Chesslise BlueSky App Locally**
-
-you must have the following:
-
-- AWS account
-- AWS CLI
-- AWS SAM CLI
-- Typescript
-- BlueSky account
-
-each lambda as sam readme you can follow 
-
-
-
 
 
 ## 🤝 **Contributing**

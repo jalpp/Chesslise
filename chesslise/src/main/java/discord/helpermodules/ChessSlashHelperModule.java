@@ -4,12 +4,15 @@ import abstraction.ChessUtil;
 import abstraction.CommandTrigger;
 import chariot.Client;
 import chessdb.ChessDBQuery;
+
+import discord.mainhandler.Thumbnail;
 import lichess.FenPuzzle;
 import lichess.UserProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
+
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
@@ -17,6 +20,9 @@ import net.dv8tion.jda.api.interactions.modals.Modal;
 import setting.SettingHandler;
 import setting.SettingSchema;
 import setting.SettingSchemaModule;
+
+import java.awt.*;
+
 
 public class ChessSlashHelperModule extends SettingSchemaModule implements CommandTrigger {
 
@@ -80,6 +86,28 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         builder.setFooter("Analysis by ChessDB CN see more here https://chessdb.cn/cloudbookc_info_en.html");
 
         return builder;
+    }
+
+    public void sendCoordinateGame() {
+        event.deferReply().queue();
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setThumbnail(Thumbnail.getChessliseLogo());
+        embedBuilder.setTitle("The Chesslise Coordinate Game");
+        embedBuilder.setDescription("""
+                Welcome to the coordinate game!
+                
+                You have 3 mins to view the position and pick the correct coordinate,
+                
+                you have button options which you have to select the right answer,
+                
+                Your job is do the most coordinates, no points for now but stats will be added later on!
+                
+                Are you ready? Click the button below to start the game!
+              
+                """);
+        embedBuilder.setColor(Color.MAGENTA);
+        event.getHook().sendMessageEmbeds(embedBuilder.build()).addActionRow(Button.success("startcoorgame", "Start!")).queue();
     }
 
 
@@ -165,6 +193,8 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
             case "fen" -> sendChessFEN();
 
             case "setting" -> sendUserSettingCommand();
+
+            case "coordinategame" -> sendCoordinateGame();
 
         }
     }
