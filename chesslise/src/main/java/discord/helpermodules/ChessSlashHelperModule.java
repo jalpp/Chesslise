@@ -82,6 +82,28 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         return builder;
     }
 
+    public void sendCoordinateGame() {
+        event.deferReply().queue();
+
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setThumbnail(Thumbnail.getChessliseLogo());
+        embedBuilder.setTitle("The Chesslise Coordinate Game");
+        embedBuilder.setDescription("""
+                Welcome to the coordinate game!
+                
+                You have 3 mins to view the position and pick the correct coordinate,
+                
+                you have button options which you have to select the right answer,
+                
+                Your job is do the most coordinates, no points for now but stats will be added later on!
+                
+                Are you ready? Click the button below to start the game!
+              
+                """);
+        embedBuilder.setColor(Color.MAGENTA);
+        event.getHook().sendMessageEmbeds(embedBuilder.build()).addActionRow(Button.success("startcoorgame", "Start!")).queue();
+    }
+
 
     private void buildInputForm(String inputid, String label, String placeholder, String modalid, String modaltitle) {
         TextInput ptext = TextInput.create(inputid, label, TextInputStyle.SHORT)
@@ -165,6 +187,8 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
             case "fen" -> sendChessFEN();
 
             case "setting" -> sendUserSettingCommand();
+
+            case "coordinategame" -> sendCoordinateGame();
 
         }
     }

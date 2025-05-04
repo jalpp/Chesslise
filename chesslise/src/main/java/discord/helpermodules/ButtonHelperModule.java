@@ -3,6 +3,7 @@ package discord.helpermodules;
 import abstraction.ChessUtil;
 import abstraction.CommandTrigger;
 import chessdb.ChessDBQuery;
+import coordinategame.Coordinategame;
 import discord.mainhandler.Thumbnail;
 import lichess.DailyCommand;
 import lichess.Game;
@@ -24,6 +25,8 @@ import setting.SettingSchemaModule;
 
 import java.awt.*;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
@@ -131,7 +134,56 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
 
     }
 
-  
+    public void sendPlayCoordinateGameUI() {
+        String id = buttonEvent.getComponentId();
+
+        if (id.contains("ansidt")) {
+            buttonEvent.reply("Correct! Keep moving")
+                    .setEphemeral(true)
+                    .queue(hook -> sendRunCoordinateGame());
+
+        } else if (id.contains("ansidf")) {
+            buttonEvent.reply("Incorrect! Good luck next time!")
+                    .setEphemeral(true)
+                    .queue(hook -> sendRunCoordinateGame());
+
+        } else if (id.equalsIgnoreCase("startcoorgame")) {
+          
+            buttonEvent.deferReply().setEphemeral(true).queue(hook -> {
+                sendRunCoordinateGame();
+            });
+        }
+    }
+
+
+    private void sendRunCoordinateGame() {
+        Coordinategame game = new Coordinategame();
+        ArrayList<String> ans = game.getAnswers();
+        HashMap<String, String> ansmap = game.getAnswersmap();
+        ItemComponent[] components = new ItemComponent[5];
+        for (int i = 0; i < ans.size(); i++) {
+            components[i] = Button.secondary("ansid" + ansmap.get(ans.get(i)) + ans.get(i) + i, "pick " + ans.get(i));
+        }
+
+      
+        buttonEvent.getHook().editOriginalEmbeds(game.defineCommandCard(setting).build())
+                .setActionRow(components)
+                .queue(sentMessage -> {
+                   
+                    ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+                    scheduler.schedule(() -> {
+                        sentMessage.editMessageEmbeds(new EmbedBuilder()
+                                .setTitle("⏰ Time's up!")
+                                .setDescription("Game Over. You didn't respond in time.")
+                                .setColor(Color.RED)
+                                .build()
+                        ).queue(); 
+                        scheduler.shutdown();
+                    }, 3, TimeUnit.MINUTES);
+                });
+    }
+
+
     public void sendChessDBButtonView(){
 
         switch (buttonEvent.getComponentId()){
