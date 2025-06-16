@@ -11,7 +11,7 @@
 </p>
 
 ## 🚀 **What is Chesslise?**
-**Chesslise** is a **community-driven, open-source** chess bot designed to bring the **ultimate chess experience** to Discord. Whether you're looking to **play, learn, or spectate**, Chesslise makes it seamless—all within your Discord server, Group DMs, or friend chat rooms.
+**Chesslise** is a **community-driven, open-source** chess platform designed to bring the **ultimate chess experience** to Discord. Whether you're looking to **play, learn, or spectate**, Chesslise makes it seamless—all within your Discord server, Group DMs, or friend chat rooms.
 
 
 ## 🎯 **Features**
@@ -21,8 +21,7 @@
 ✅ **Seamless Integration** – Works effortlessly in **Group DMs, private chats, and community servers**.  
 ✅ **Stockfish Engine Support** – Play Stockfish with group matches, with easy, medium, hard level support.  
 ✅ **CSSN – Chesslise Social Server Network** – Discover new chess friends, opponents, and challenges.
-✅ **Coordinates Game** - Train chess coordinates! 
-
+✅ **Coordinates Game** - Train chess coordinates!
 
 
 ## 🔗 **APIs Used**
@@ -37,10 +36,12 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 ---
 
 ## 🛠 **Tech Stack**
-- **Language**: Java 21
-- **Build Tool**: Maven
+
+- **Language**: Java, Typescript
+- **Build Tool**: Maven, npm
 - **Database**: MongoDB
-- **Hosting**: AWS
+- **Hosting**: AWS Lambda, Vercel
+
 
 ---
 
@@ -60,6 +61,9 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 
 ## 🎨 Chesslise High level diagram
 ![Chesslise](https://github.com/jalpp/Chesslise/blob/master/chesslisev3.drawio.png?raw=true)
+
+### 🌐 ChessLise Web
+Check out the chesslise website [here](https://chessliseweb.vercel.app/) Website version which contains blindfold/flash card system, the source code for website can be found [here](https://github.com/jalpp/chessliseweb)
 
 
 ## 🤝 **Contributing**
