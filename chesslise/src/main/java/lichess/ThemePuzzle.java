@@ -13,9 +13,9 @@ public class ThemePuzzle extends PuzzleView implements Puzzle {
     private final String theme;
     private final LichessDBPuzzle currentPuzzle;
 
-    public ThemePuzzle(String theme) {
+    public ThemePuzzle(String theme,String userId) {
         this.theme = theme;
-        this.currentPuzzle = LichessPuzzleSearch.getDatabasePuzzle(theme);
+        this.currentPuzzle = LichessPuzzleSearch.getDatabasePuzzle(theme,userId);
     }
 
     @Override

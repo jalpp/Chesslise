@@ -212,7 +212,7 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
 
    
     private void sendPuzzleThemeCard(String theme){
-        ThemePuzzle puzzle = new ThemePuzzle(theme);
+        ThemePuzzle puzzle = new ThemePuzzle(theme,buttonEvent.getUser().getId());
         buttonEvent.editMessageEmbeds(puzzle.defineCommandCard(setting).build()).setActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).setActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
     }
 

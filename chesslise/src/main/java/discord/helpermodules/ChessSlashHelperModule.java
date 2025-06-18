@@ -172,7 +172,8 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         event.deferReply(true).queue();
         String theme = event.getOptionsByName("theme").get(0).getAsString();
         String pieceType = event.getOptionsByName("piecetype").get(0).getAsString();
-        String status = SettingHandler.updateSetting(new SettingSchema(theme, pieceType, event.getUser().getId()));
+        String difficultyLevel = event.getOptionsByName("difficultylevel").get(0).getAsString();
+        String status = SettingHandler.updateSetting(new SettingSchema(theme, pieceType, event.getUser().getId(),difficultyLevel));
         event.getHook().sendMessage(status).queue();
     }
 
