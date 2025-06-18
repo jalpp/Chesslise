@@ -42,6 +42,16 @@ The bot should now be running locally and can be tested on your Discord server!
 
 ---
 
+## ⚙️ **Puzzle API Integration: Chessgubbins**
+Chesslise now utilizes the Chessgubbins Puzzle API to fetch random puzzles based on themes. This integration allows for more varied and updated puzzles.
+
+If the Chessgubbins API is temporarily unavailable, Chesslise falls back to using a local CSV database (lichess_db_puzzle.csv). When contributing to the project:
+
+Please ensure any changes to puzzle handling or difficulty adjustments consider both API and local CSV processes.
+Add or update error handling or logging if issues with the Chessgubbins API occur.
+
+---
+
 # Notes:
 
 ## CSSN test cases
