@@ -1,4 +1,4 @@
-kage lichess;
+package lichess;
 
 import abstraction.Puzzle;
 import abstraction.PuzzleView;
