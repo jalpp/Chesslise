@@ -1,4 +1,4 @@
-package lichess;
+kage lichess;
 
 import abstraction.Puzzle;
 import abstraction.PuzzleView;
@@ -26,7 +26,7 @@ public class ThemePuzzle extends PuzzleView implements Puzzle {
     @Override
     public EmbedBuilder defineCommandCard(SettingSchema schema) {
         return new EmbedBuilder().setDescription(definePuzzleDescription()).setColor(defineEmbedColor())
-                .setTitle(definePuzzleTitle()).setImage(renderImage(definePuzzleFen(), schema))
+                .setTitle(definePuzzleTitle()).setFooter("\n**Note: To adjust your puzzle difficulty, use the `/setting` command to update your preferences. **").setImage(renderImage(definePuzzleFen(), schema))
                 .setThumbnail(definePuzzleLogo());
     }
 
@@ -48,7 +48,7 @@ public class ThemePuzzle extends PuzzleView implements Puzzle {
     @Override
     public String definePuzzleDescription() {
         return "**Turn: **" + defineSideToMove(definePuzzleFen()) + "\n **Rating: **" + currentPuzzle.getRating()
-                + "\n**FEN: **" + definePuzzleFen() + "\n**Note: To adjust your puzzle difficulty, use the `/setting` command to update your preferences. **";
+        + "\n**FEN: **" + definePuzzleFen();
     }
 
     public String getGameURL() {
