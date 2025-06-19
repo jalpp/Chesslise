@@ -48,7 +48,7 @@ public class ThemePuzzle extends PuzzleView implements Puzzle {
     @Override
     public String definePuzzleDescription() {
         return "**Turn: **" + defineSideToMove(definePuzzleFen()) + "\n **Rating: **" + currentPuzzle.getRating()
-                + "\n**FEN: **" + definePuzzleFen();
+                + "\n**FEN: **" + definePuzzleFen() + "\n**Note: To adjust your puzzle difficulty, use the `/setting` command to update your preferences. **";
     }
 
     public String getGameURL() {

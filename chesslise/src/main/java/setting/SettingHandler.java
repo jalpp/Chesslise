@@ -15,24 +15,24 @@ public class SettingHandler {
             settingCollection.updateOne(settingDoc, Updates.combine(
                     Updates.set("boardtheme", schema.getBoardTheme()),
                     Updates.set("piecetype", schema.getPieceType()),
-                    Updates.set("difficultylevel",schema.getDifficultyLevel())));
+                    Updates.set("puzzledifficultylevel",schema.getPuzzleDifficulty())));
         } else {
             settingCollection.insertOne(new Document("userid", schema.getUserid())
                     .append("boardtheme", schema.getBoardTheme())
                     .append("piecetype", schema.getPieceType())
-                    .append("difficultylevel",schema.getDifficultyLevel()));
+                    .append("puzzledifficultylevel",schema.getPuzzleDifficulty()));
         }
 
         return "Successfully updated the Chesslise Board theme to " + schema.getBoardTheme() + " , piecetype to "
-                + schema.getPieceType() + " and difficulty is set to " + schema.getDifficultyLevel();
+                + schema.getPieceType() + " and puzzle difficulty is set to " + schema.getPuzzleDifficulty();
     }
 
     public static SettingSchema getUserSetting(String userid) {
         Document settingDoc = settingCollection.find(new Document("userid", userid)).first();
         if (settingDoc != null) {
-            return new SettingSchema(settingDoc.getString("boardtheme"), settingDoc.getString("piecetype"), userid, settingDoc.getString("difficultylevel"));
+            return new SettingSchema(settingDoc.getString("boardtheme"), settingDoc.getString("piecetype"), userid, settingDoc.getString("puzzledifficultylevel"));
         } else {
-            return new SettingSchema("blue", "kosal", userid,"Easy");
+            return new SettingSchema("blue", "kosal", userid,"Medium");
         }
     }
 

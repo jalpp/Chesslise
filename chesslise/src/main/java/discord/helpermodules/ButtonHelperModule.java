@@ -207,6 +207,7 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
             case "long" -> sendPuzzleThemeCard("long");
             case "sacrifice" -> sendPuzzleThemeCard("sacrifice");
             case "master" -> sendPuzzleThemeCard("master");
+            case "opening" -> sendPuzzleThemeCard("opening");
         }
     }
 

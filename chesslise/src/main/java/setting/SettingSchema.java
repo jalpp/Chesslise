@@ -3,18 +3,20 @@ package setting;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
+import java.util.Optional;
+
 public class SettingSchema {
 
     private final String userid;
     private final String boardTheme;
     private final String pieceType;
-    private final String difficultyLevel;
+    private final String puzzleDifficulty;
 
-    public SettingSchema(String boardTheme, String pieceType, String userid,String difficultyLevel) {
-        this.boardTheme = boardTheme;
-        this.pieceType = pieceType;
+    public SettingSchema(String boardTheme, String pieceType, String userid,String puzzleDifficulty) {
+        this.boardTheme = Optional.ofNullable(boardTheme).orElse("blue");
+        this.pieceType = Optional.ofNullable(pieceType).orElse("kosal");
         this.userid = userid;
-        this.difficultyLevel = difficultyLevel;
+        this.puzzleDifficulty = Optional.ofNullable(puzzleDifficulty).orElse("Medium");
     }
 
     public String getUserid() {
@@ -29,7 +31,7 @@ public class SettingSchema {
         return pieceType;
     }
 
-    public String getDifficultyLevel(){return difficultyLevel;}
+    public String getPuzzleDifficulty(){return puzzleDifficulty;}
 
     public static OptionData getBoardThemeData() {
         return new OptionData(OptionType.STRING, "theme", "Select board theme", true)
@@ -48,8 +50,8 @@ public class SettingSchema {
                 .addChoice("pixel", "pixel");
     }
 
-    public static OptionData getDifficultyLevelType(){
-        return new OptionData(OptionType.STRING,"difficultylevel","Select difficulty Level", true)
+    public static OptionData getPuzzleDifficultyData(){
+        return new OptionData(OptionType.STRING,"puzzledifficultylevel","Select difficulty Level", true)
                 .addChoice("Easy (Rating: < 1200)","Easy")
                 .addChoice("Medium (Rating: 1200-2000)","Medium")
                 .addChoice("Hard (Rating: 2000+)","Hard");

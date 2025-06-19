@@ -30,7 +30,7 @@ public class LichessPuzzleSearch {
     private static final HttpClient client = HttpClient.newHttpClient();
 
 
-    private static List<List<String>> searchPuzzles(String searchColumn, String searchValue, int maxPuzzles, String userId) {
+    private static List<List<String>> searchPuzzlesGubbinsApi(String searchColumn, String searchValue, int maxPuzzles, String userId) {
         List<String> neededColumns = Arrays.asList("lichessId", "FEN", "moves", "rating", "themes", "gameURL");
         List<List<String>> results = new ArrayList<>();
         int retryCount = 0;
@@ -52,7 +52,7 @@ public class LichessPuzzleSearch {
                 JSONParser parser = new JSONParser();
                 JSONObject jsonObject = (JSONObject) parser.parse(response.body());
                 int difficultyLevel = Integer.parseInt(jsonObject.get("rating").toString());
-                if(!isValidDifficulty(difficultyLevel, settingSchema.getDifficultyLevel())){
+                if(!isValidDifficulty(difficultyLevel, Optional.ofNullable(settingSchema.getPuzzleDifficulty()).orElse("Medium"))){
                     continue;
                 }
                 List<String> puzzleStringList = new ArrayList<>();
@@ -69,7 +69,7 @@ public class LichessPuzzleSearch {
                 return results;
             }
             if(retryCount == MAX_RETRY_COUNT){
-                results = searchPuzzleLocal(searchColumn,searchValue,maxPuzzles,settingSchema.getDifficultyLevel());
+                results = searchPuzzleLocal(searchColumn,searchValue,maxPuzzles,settingSchema.getPuzzleDifficulty());
             }
             System.out.println("Found " + puzzleCount + " puzzles.");
         } catch (IOException e) {
@@ -151,7 +151,7 @@ public class LichessPuzzleSearch {
     }
 
     public static LichessDBPuzzle getDatabasePuzzle(String themeSearch,String userId) {
-        List<String> randomPuzzle = getRandomPuzzle(searchPuzzles("Themes", themeSearch, MAX_PUZZLE_SEARCH,userId));
+        List<String> randomPuzzle = getRandomPuzzle(searchPuzzlesGubbinsApi("Themes", themeSearch, MAX_PUZZLE_SEARCH,userId));
         return new LichessDBPuzzle(randomPuzzle.get(1), randomPuzzle.get(3),
                 randomPuzzle.get(5));
     }
