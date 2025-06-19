@@ -32,6 +32,7 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 - ♟️ [JDA 5 (Discord API)](https://github.com/DV8FromTheWorld/JDA)
 - ♟️ [Stockfish API](https://stockfish.online/)
 - ♟️ [ChessDB CN (Opening Book)](https://chessdb.cn/cloudbookc_info_en.html)
+- ♟️ [Chessgubbins Puzzle API](https://chessgubbins.com)
 
 ---
 
