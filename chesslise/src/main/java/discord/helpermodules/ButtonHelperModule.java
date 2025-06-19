@@ -207,12 +207,13 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
             case "long" -> sendPuzzleThemeCard("long");
             case "sacrifice" -> sendPuzzleThemeCard("sacrifice");
             case "master" -> sendPuzzleThemeCard("master");
+            case "opening" -> sendPuzzleThemeCard("opening");
         }
     }
 
    
     private void sendPuzzleThemeCard(String theme){
-        ThemePuzzle puzzle = new ThemePuzzle(theme);
+        ThemePuzzle puzzle = new ThemePuzzle(theme,buttonEvent.getUser().getId());
         buttonEvent.editMessageEmbeds(puzzle.defineCommandCard(setting).build()).setActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).setActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
     }
 

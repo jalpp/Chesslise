@@ -10,7 +10,6 @@ import network.user.PreferenceFr;
 import network.user.PreferencePl;
 import network.user.PreferenceTc;
 import setting.SettingSchema;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -93,8 +92,8 @@ public class CommandBuilder {
                 new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true)
                         .addChoice("Easy", "5").addChoice("Medium", "10").addChoice("Hard", "15"));
 
-        buildSlashMultipleOption("setting", "set Chesslise settings like board theme & piece type",
-                SettingSchema.getBoardThemeData(), SettingSchema.getPieceTypeData());
+        buildSlashMultipleOption("setting", "set Chesslise settings like board theme, piece type and puzzle difficulty level",
+                SettingSchema.getBoardThemeData(), SettingSchema.getPieceTypeData(), SettingSchema.getPuzzleDifficultyData());
 
         buildSlashMultipleOption("connect", "join the Chesslise network to find and challenge players",
                 PreferencePl.getOptionData(), PreferenceTc.getOptionData(), PreferenceFr.getOpeningOptionData(),

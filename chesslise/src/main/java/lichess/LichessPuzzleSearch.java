@@ -1,12 +1,20 @@
 package lichess;
-
 import java.io.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.Paths;
 import java.util.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import setting.SettingHandler;
+import setting.SettingSchema;
 
 public class LichessPuzzleSearch {
 
     private static final int MAX_PUZZLE_SEARCH = 5000;
+    private static final int MAX_RETRY_COUNT = 2; //Retry count for calling the external API if the API is down
 
     /**
      * gets the puzzle values in the csv line for given search column
@@ -16,8 +24,66 @@ public class LichessPuzzleSearch {
      * @param maxPuzzles   max puzzles to search for
      * @return return the csv line
      */
-    private static List<List<String>> searchPuzzles(String searchColumn, String searchValue, int maxPuzzles) {
 
+    private static final String puzzleUrl = "https://api.chessgubbins.com/puzzles/random?themes=";
+
+    private static final HttpClient client = HttpClient.newHttpClient();
+
+
+    private static List<List<String>> searchPuzzlesGubbinsApi(String searchColumn, String searchValue, int maxPuzzles, String userId) {
+        List<String> neededColumns = Arrays.asList("lichessId", "FEN", "moves", "rating", "themes", "gameURL");
+        List<List<String>> results = new ArrayList<>();
+        int retryCount = 0;
+        try {
+            SettingSchema settingSchema;
+            settingSchema = SettingHandler.getUserSetting(userId);
+            int puzzleCount = 0;
+            while (retryCount < MAX_RETRY_COUNT){
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(puzzleUrl+searchValue))
+                        .GET()
+                        .build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() != 200 || response.body() == null || response.body().isEmpty()) {
+                    System.err.println("Invalid response for: " + puzzleUrl + searchValue);
+                    retryCount++;
+                    continue;
+                }
+                JSONParser parser = new JSONParser();
+                JSONObject jsonObject = (JSONObject) parser.parse(response.body());
+                int difficultyLevel = Integer.parseInt(jsonObject.get("rating").toString());
+                if(!isValidDifficulty(difficultyLevel, Optional.ofNullable(settingSchema.getPuzzleDifficulty()).orElse("Medium"))){
+                    continue;
+                }
+                List<String> puzzleStringList = new ArrayList<>();
+                for(String columns: neededColumns){
+                    Object column = jsonObject.get(columns);
+                    if(column!=null) {
+                        puzzleStringList.add(column.toString());
+                    }
+                }
+                if(puzzleStringList.isEmpty()){
+                    continue;
+                }
+                results.add(puzzleStringList);
+                return results;
+            }
+            if(retryCount == MAX_RETRY_COUNT){
+                results = searchPuzzleLocal(searchColumn,searchValue,maxPuzzles,settingSchema.getPuzzleDifficulty());
+            }
+            System.out.println("Found " + puzzleCount + " puzzles.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    private static List<List<String>> searchPuzzleLocal(String searchColumn, String searchValue, int maxPuzzles, String difficulty){
         String currentFolderPath = Paths.get("").toAbsolutePath().toString();
         String csvFilePath = currentFolderPath + File.separator + "lichess_db_puzzle.csv";
         List<String> neededColumns = Arrays.asList("PuzzleId", "FEN", "Moves", "Rating", "Themes", "GameUrl");
@@ -60,8 +126,10 @@ public class LichessPuzzleSearch {
                                 puzzleData.add(values[index].trim());
                             }
                         }
-                        results.add(puzzleData);
-                        puzzleCount++;
+                        if(isValidDifficulty(Integer.parseInt(puzzleData.get(3)),difficulty)){
+                            results.add(puzzleData);
+                            puzzleCount++;
+                        }
                     }
                 }
             }
@@ -82,9 +150,26 @@ public class LichessPuzzleSearch {
         return puzzles.get(randomIndex);
     }
 
-    public static LichessDBPuzzle getDatabasePuzzle(String themeSearch) {
-        List<String> randomPuzzle = getRandomPuzzle(searchPuzzles("Themes", themeSearch, MAX_PUZZLE_SEARCH));
+    public static LichessDBPuzzle getDatabasePuzzle(String themeSearch,String userId) {
+        List<String> randomPuzzle = getRandomPuzzle(searchPuzzlesGubbinsApi("Themes", themeSearch, MAX_PUZZLE_SEARCH,userId));
         return new LichessDBPuzzle(randomPuzzle.get(1), randomPuzzle.get(3),
                 randomPuzzle.get(5));
+    }
+
+    private static boolean isValidDifficulty(int rating , String difficulty){
+        try{
+
+            return switch (difficulty) {
+                case "Easy" -> rating <= 1200;
+                case "Medium" -> (rating > 1200 && rating <= 2000);
+                case "Hard" -> (rating > 2000);
+                default -> false;
+            };
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }
