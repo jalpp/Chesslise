@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.ItemComponent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
@@ -35,7 +36,9 @@ import java.util.concurrent.TimeUnit;
 
 import static discord.helpermodules.ChessSlashHelperModule.*;
 
-
+/**
+ * ButtonHelperModule class to handle the button logic
+ */
 public class ButtonHelperModule extends SettingSchemaModule implements CommandTrigger {
 
     private final ButtonInteractionEvent buttonEvent;
@@ -43,12 +46,15 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
     private final SettingSchema setting = getSettingSchema();
 
 
+
     public ButtonHelperModule(ButtonInteractionEvent buttonEvent) {
         super(buttonEvent.getUser().getId());
         this.buttonEvent = buttonEvent;
     }
 
-  
+    /**
+     * Handle the logic for playing the engine with /move
+     */
     public void sendPlayingEngineFlow() {
         GameHandler gameHandler = new GameHandler(Main.getGamesCollection());
         switch (buttonEvent.getComponentId()) {
@@ -72,66 +78,66 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         }
     }
 
-  
+    /**
+     * Handle the logic for play command flow with /play
+     */
     public void sendPlayCommandFlow() {
 
         switch (buttonEvent.getComponentId()) {
             case "load-again" -> buttonEvent.reply("""
                     ## Please Pick Your Lichess Game's Mode ⚔️\s
                     
-                    ⚔️ You can now join Chesslise's own chess server! Find new chess friends, new challenges,
-                    read more by clicking on the ❓ **CSSN Network Help**
+                    \uD83D\uDC4C Casual
+                    Time control casual chess games on Lichess
                     
+                    \uD83E\uDD3A Rated
+                    Time control rated chess games on Lichess
+                    
+                    \uD83D\uDDE1 Play Friend
+                    Random time control game against you and your friend on Lichess
+                    
+                    ⏱\uFE0F Correspondence
+                    Play correspondence chess on Lichess
+                    
+                    \uD83D\uDD12 Login/Register
+                    Login/Register for Lichess on current device
+                    
+                    ❓ Help
+                    Click on following buttons to start a game with friend, all links will be posted
+                    in the current channel, you can use **/play** anywhere!
+                    
+                    ❓ CSSN Network Help
+                    Learn about how to play in cssn network
                     """).addActionRow(
-                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend")).addActionRow(Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.secondary("playhelp", "❓ Help"), Button.success("cssnhelp", "❓ CSSN Network Help")).queue();
-            case "loadr" ->
-                    buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.danger("3+0r", "\uD83D\uDD25 3+0")
-                            , Button.danger("5+0r", "\uD83D\uDD25 5+0")
-                            , Button.danger("10+0r", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩️ Home")).queue();
-            case "loadc" ->
-                    buttonEvent.editMessage(" ## Please Pick Your Time Control ⏱️").setActionRow(Button.primary("3+0c", " \uD83D\uDD253+0")
-                            , Button.primary("5+0c", "\uD83D\uDD25 5+0")
-                            , Button.primary("10+0c", "\uD83D\uDC07 10+0"), Button.success("load-again", "↩️ Home")).queue();
-            case "3+0r" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(3, 0, true, client)).setActionRow(Button.primary("3+0r", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "5+0r" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(5, 0, true, client)).setActionRow(Button.primary("5+0r", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "10+0r" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(10, 0, true, client)).setActionRow(Button.primary("10+0r", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "3+0c" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(3, 0, false, client)).setActionRow(Button.primary("3+0c", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "5+0c" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(5, 0, false, client)).setActionRow(Button.primary("5+0c", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "10+0c" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(10, 0, false, client)).setActionRow(Button.primary("10+0c", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "playhelp" -> {
-                buttonEvent.replyEmbeds(getPlayCommandInfo().build()).setEphemeral(true).queue();
-            }
+                    Button.success("casmode", "\uD83D\uDC4C Casual"), Button.danger("ratedmode", "\uD83E\uDD3A Rated"), Button.success("friend", "\uD83D\uDDE1️ Play Friend"), Button.success("corr", "⏱\uFE0F Correspondence")).addActionRow(Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"), Button.success("cssnhelp", "❓ CSSN Network Help")).queue();
             case "cssnhelp" -> buttonEvent.replyEmbeds(getCSSNHelpInfo().build()).setEphemeral(true).queue();
             case "friend" -> sendSelfUserInputForm();
+
         }
 
     }
 
-    
+    /**
+     * Handle the logic for the play command UI for /play
+     */
     public void sendPlayCommandUI() {
 
         switch (buttonEvent.getComponentId()) {
             case "casmode" -> buttonEvent.editMessage("## Please Pick Your Time Control ⏱️").setActionRow(
-                    Button.primary("ultrafastc", "\uD83D\uDE85 1/4+0"),
-                    Button.primary("bulletfastc", "\uD83D\uDE85 1+0"),
-                    Button.primary("blitzfastc", "\uD83D\uDD25 3+2"),
-                    Button.primary("rapidfastc", "\uD83D\uDD25 5+5"),
-                    Button.success("loadc", "\uD83D\uDD04 Load More Time Controls")
+                    StringSelectMenu.create("casmode-game-menu")
+                            .addOptions(Game.getGameSelectOption()).build()
             ).queue();
 
             case "ratedmode" -> buttonEvent.editMessage("## Please Pick Your Time Control ⏱️").setActionRow(
-                    Button.danger("ultrafastr", "\uD83D\uDE85 1/4+0"),
-                    Button.danger("bulletfastr", "\uD83D\uDE85 1+0"),
-                    Button.danger("blitzfastr", "\uD83D\uDD25 3+2"),
-                    Button.danger("rapidfastr", "\uD83D\uDD25 5+5"),
-                    Button.success("loadr", "\uD83D\uDD04 Load More Time Controls")
+                    StringSelectMenu.create("ratedmode-game-menu")
+                            .addOptions(Game.getGameSelectOption())
+                            .build()
             ).queue();
+            case "corr" ->
+                    buttonEvent.editMessage("## Please Pick time per day").setActionRow(
+                            StringSelectMenu.create("cores-game-menu")
+                                    .addOptions(Game.getGameCorresSelectOption())
+                                    .build()).queue();
 
         }
 
@@ -151,7 +157,7 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
                     .queue(hook -> sendRunCoordinateGame());
 
         } else if (id.equalsIgnoreCase("startcoorgame")) {
-          
+            // Acknowledge the interaction
             buttonEvent.deferReply().setEphemeral(true).queue(hook -> {
                 sendRunCoordinateGame();
             });
@@ -165,14 +171,14 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         HashMap<String, String> ansmap = game.getAnswersmap();
         ItemComponent[] components = new ItemComponent[5];
         for (int i = 0; i < ans.size(); i++) {
-            components[i] = Button.secondary("ansid" + ansmap.get(ans.get(i)) + ans.get(i) + i, "pick " + ans.get(i));
+            components[i] = Button.secondary("ansid" + ansmap.get(ans.get(i)) + ans.get(i) + i, "pick " + ans.get(i).toLowerCase());
         }
 
-      
+        // Show game message
         buttonEvent.getHook().editOriginalEmbeds(game.defineCommandCard(setting).build())
                 .setActionRow(components)
                 .queue(sentMessage -> {
-                   
+
                     ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
                     scheduler.schedule(() -> {
                         sentMessage.editMessageEmbeds(new EmbedBuilder()
@@ -180,12 +186,14 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
                                 .setDescription("Game Over. You didn't respond in time.")
                                 .setColor(Color.RED)
                                 .build()
-                        ).queue(); 
+                        ).queue(); // removes buttons
                         scheduler.shutdown();
-                    }, 3, TimeUnit.MINUTES);
+                    }, 1, TimeUnit.MINUTES);
                 });
     }
-
+    /**
+     * the button handler for chessdb button view
+     */
 
     public void sendChessDBButtonView(){
 
@@ -196,28 +204,10 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         }
     }
 
-
-    
-    public void sendPuzzleDBTheme(){
-        switch (buttonEvent.getComponentId()){
-            case "loadpuzzles" ->  buttonEvent.editMessageEmbeds(new EmbedBuilder().setDescription("Pick more for themes!").build()).setActionRow(Button.success("sacrifice", "sacrifice"), Button.success("long", "long"),  Button.success("master", "From Master Games")).queue();
-            case "mate" -> sendPuzzleThemeCard("mate");
-            case "middlegame" -> sendPuzzleThemeCard("middlegame");
-            case "endgame" -> sendPuzzleThemeCard("endgame");
-            case "long" -> sendPuzzleThemeCard("long");
-            case "sacrifice" -> sendPuzzleThemeCard("sacrifice");
-            case "master" -> sendPuzzleThemeCard("master");
-            case "opening" -> sendPuzzleThemeCard("opening");
-        }
-    }
-
-   
-    private void sendPuzzleThemeCard(String theme){
-        ThemePuzzle puzzle = new ThemePuzzle(theme,buttonEvent.getUser().getId());
-        buttonEvent.editMessageEmbeds(puzzle.defineCommandCard(setting).build()).setActionRow(Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board")).setActionRow(Button.link(puzzle.getGameURL(), "Game")).queue();
-    }
-
-    
+    /**
+     * Helper method to send embed based on current move number
+     * @param moveNumber the move number index
+     */
     private void sendChessDBMove(int moveNumber){
         buttonEvent.deferEdit().queue();
         ChessDBQuery query = new ChessDBQuery();
@@ -244,35 +234,10 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
             buttonEvent.replyEmbeds(new EmbedBuilder().setColor(Color.BLUE).addField("Share", gameShareUrl, true).setImage(gameShareUrl).setThumbnail(Thumbnail.getChessliseLogo()).build()).setEphemeral(true).queue();
         }
     }
-    
-    public void sendMoreTimeControls() {
 
-        switch (buttonEvent.getComponentId()) {
-            case "ultrafastc" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(0, 0, false, client)).setActionRow(Button.primary("ultrafastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "bulletfastc" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(1, 0, false, client)).setActionRow(Button.primary("bulletfastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "blitzfastc" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(3, 2, false, client)).setActionRow(Button.primary("blitzfastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "rapidfastc" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(5, 5, false, client)).setActionRow(Button.primary("rapidfastc", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-        }
-
-        switch (buttonEvent.getComponentId()) {
-            case "ultrafastr" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(0, 0, true, client)).setActionRow(Button.primary("ultrafastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "bulletfastr" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(1, 0, true, client)).setActionRow(Button.primary("bulletfastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "blitzfastr" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(3, 2, true, client)).setActionRow(Button.primary("blitzfastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-            case "rapidfastr" ->
-                    buttonEvent.editMessage(Game.generateOpenEndedChallengeURLs(5, 5, true, client)).setActionRow(Button.primary("rapidfastr", "Rematch"), Button.success("load-again", "↩️ Home")).queue();
-
-        }
-    }
-
-
-    
+    /**
+     * Handle the logic for the puzzle buttons for /puzzle
+     */
     public void sendPuzzleButtons() {
         DailyCommand dailyCommand = new DailyCommand(client);
         if (buttonEvent.getComponentId().equals("hint")) {
@@ -304,7 +269,9 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         }
     }
 
-  
+    /**
+     * Handle the logic for the learn command for /learnchess
+     */
     public void sendLearnCommand() {
 
         switch (buttonEvent.getComponentId()) {
@@ -331,6 +298,9 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
 
     }
 
+    /**
+     * handle the logic for the challenge friend form
+     */
     private void buildButtonInputForm() {
         TextInput ptext = TextInput.create("self-user", "Input Your Lichess Username", TextInputStyle.SHORT)
                 .setPlaceholder("Input Your Lichess Username")
@@ -351,12 +321,19 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         buttonEvent.replyModal(pmodal).queue();
     }
 
-    
+    /**
+     * Send the self user input form
+     */
     public void sendSelfUserInputForm() {
         buildButtonInputForm();
     }
 
-  
+    /**
+     * Get the learn chess card EmbedBuilder for /learnchess
+     *
+     * @param searchKey the button Search key
+     * @return the EmbedBuilder
+     */
     public static EmbedBuilder getLearnChessCard(String searchKey) {
         for (int i = 0; i < LEARN_CHESS.length; i++) {
             for (int j = 0; j < LEARN_CHESS[i].length; i++) {
@@ -369,7 +346,11 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         return null;
     }
 
-    
+    /**
+     * Get the play command info for /play
+     *
+     * @return the EmbedBuilder
+     */
     public EmbedBuilder getPlayCommandInfo() {
         EmbedBuilder help = new EmbedBuilder();
         help.setThumbnail(Thumbnail.getChessliseLogo());
@@ -393,7 +374,9 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         return help;
     }
 
-   
+    /**
+     * Get the CSSN help guide
+     */
 
     public EmbedBuilder getCSSNHelpInfo(){
         EmbedBuilder help = new EmbedBuilder();
@@ -422,7 +405,13 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
 
 
 
-   
+    /**
+     * Get the next move edited version of the embed
+     * @param moveDesc the move description
+     * @param fen the fen
+     * @param move the lastmove
+     * @return the edited Embed
+     */
     public EmbedBuilder getChessDBEdited(String moveDesc, String fen, String move){
         ChessUtil chessUtil = new ChessUtil();
         EmbedBuilder builder = new EmbedBuilder();
@@ -448,14 +437,12 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
 
         sendPlayCommandFlow();
 
-        sendMoreTimeControls();
-
         sendPlayingEngineFlow();
 
         sendChessDBButtonView();
 
-        sendPuzzleDBTheme();
+        sendFlipBoard();
 
-       sendFlipBoard();
+        sendPlayCoordinateGameUI();
     }
 }

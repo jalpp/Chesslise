@@ -18,7 +18,7 @@ public class CommandBuilder {
     private final CommandListUpdateAction action;
 
     private static final String[] COMMANDS = { "help", "play", "profilecc", "watch", "resetboard", "learnchess",
-            "disconnect", "pairchallenge", "pairchallengenetwork", "seekchallenge", "findfriend" };
+            "disconnect", "pairchallenge", "pairchallengenetwork", "seekchallenge", "findfriend", "ladderplayerinfo" };
 
     private static final String[] COMMANDS_DESC = { "View Chesslise command info",
             "Play live chess games",
@@ -31,6 +31,7 @@ public class CommandBuilder {
             "Attempt to send a challenge in your friend network",
             "Create a challenge and seek for others to accept it",
             "Find a new friend within your network or globally",
+            "View ladder player info"
     };
 
     private static final String[][] COMMAND_SINGLE_OPTION = {
@@ -49,7 +50,8 @@ public class CommandBuilder {
             { "removefriend", "Remove a friend from friend list by providing discord id", "removeid",
                     "provide friend discord username" },
             { "blockfriend", "Block a friend who is not being friendly by providing id", "blockid",
-                    "provide friend discord username" } };
+                    "provide friend discord username" },
+          };
 
     private static final HashMap<String, ArrayList<String>> COMMAND_MULTIPLE_OPTIONS = new HashMap<>();
 
@@ -87,6 +89,10 @@ public class CommandBuilder {
         buildSlashMultipleOption("playengine", "play engine by choosing the difficulty level",
                 new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true)
                         .addChoice("Easy", "5").addChoice("Medium", "10").addChoice("Hard", "15"));
+
+        buildSlashMultipleOption("lichessladder", "View Lichess Ladders Info",
+                new OptionData(OptionType.STRING, "laddertype", "pick the ladder type", true)
+                        .addChoice("30+30", "l1").addChoice("60+30", "l2"));
 
         buildSlashMultipleOption("setengine", "set the engine difficulty",
                 new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true)
