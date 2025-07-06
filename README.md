@@ -33,6 +33,7 @@ Chesslise integrates with **multiple powerful chess APIs** to provide a high-qua
 - ♟️ [Stockfish API](https://stockfish.online/)
 - ♟️ [ChessDB CN (Opening Book)](https://chessdb.cn/cloudbookc_info_en.html)
 - ♟️ [Chessgubbins Puzzle API](https://chessgubbins.com)
+- ♟️ [Chessladders Ladders API](https://lichessladders.com/)
 
 ---
 

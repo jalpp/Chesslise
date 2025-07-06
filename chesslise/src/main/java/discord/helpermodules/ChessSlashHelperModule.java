@@ -6,14 +6,17 @@ import chariot.Client;
 import chessdb.ChessDBQuery;
 
 import discord.mainhandler.Thumbnail;
+import ladders.LichessLaddersParser;
 import lichess.FenPuzzle;
 import lichess.UserProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import net.dv8tion.jda.api.interactions.components.selections.EntitySelectMenu;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
@@ -22,6 +25,8 @@ import setting.SettingSchema;
 import setting.SettingSchemaModule;
 
 import java.awt.*;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 
 public class ChessSlashHelperModule extends SettingSchemaModule implements CommandTrigger {
@@ -29,7 +34,7 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
     private final SlashCommandInteractionEvent event;
     private final SettingSchema setting = getSettingSchema();
 
-    
+
     public final static String[][] LEARN_CHESS = {
             {"Rook", "**Rook:** Move any number of squares horizontally or vertically.", "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/pdrpnht/phpfyINI1.png"},
             {"Bishop", "**Bishop:** Move any number of squares diagonally.", "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PeterDoggers/phpdzgpdQ.png"},
@@ -42,7 +47,7 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
             {"Pawn-pro", "Pawn Special Move: Promotion, when your pawn reaches the 8th rank you can promote to queen,rook,bishop, or a night:", "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpFSZHst.gif"}
     };
 
-    
+
     public ChessSlashHelperModule(SlashCommandInteractionEvent event) {
         super(event.getUser().getId());
         this.event = event;
@@ -60,7 +65,7 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         event.getHook().sendMessageEmbeds(builder.build()).addActionRow(Button.success("onemove", "Play 1st move"), Button.success("twomove", "Play 2nd move"), Button.success("threemove", "Play 3rd move")).queue();
     }
 
-    
+
     public void sendChessFEN(){
         ChessUtil util = new ChessUtil();
 
@@ -124,12 +129,12 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         event.replyModal(pmodal).queue();
     }
 
-   
+
     public void sendChessComUserProfileInputForm() {
         buildInputForm("profileusercc", "Input Chess.com Username", "Input Chess.com Username", "modalproc", "View Chess.com Profiles!");
     }
 
-   
+
     public void sendLichessWatchGameCommand() {
         buildInputForm("watch_user_or_game", "Input Lichess Username Or Lichess Game", "Input Lichess Username Or Lichess Game", "modalwatch", "Watch Live Or Recent Lichess Games!");
 
@@ -140,18 +145,37 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
     public void sendPlayChallengeCommand() {
         event.reply("""
                 ## Please Pick Your Lichess Game's Mode ⚔️\s
-
-                ⚔️ You can now join Chesslise's own chess server! Find new chess friends, new challenges,
-                read more by clicking on the ❓ **CSSN Network Help**
-
+                
+                \uD83D\uDC4C Casual
+                Time control casual chess games on Lichess
+                
+                \uD83E\uDD3A Rated
+                Time control rated chess games on Lichess
+                
+                \uD83D\uDDE1 Play Friend
+                Random time control game against you and your friend on Lichess
+                
+                ⏱\uFE0F Correspondence
+                Play correspondence chess on Lichess
+                
+                \uD83D\uDD12 Login/Register
+                Login/Register for Lichess on current device
+                
+                ❓ Help
+                Click on following buttons to start a game with friend, all links will be posted
+                in the current channel, you can use **/play** anywhere!
+                
+                ❓ CSSN Network Help
+                Learn about how to play in cssn network
+                
                 """)
                 .addActionRow(
                         Button.success("casmode", "\uD83D\uDC4C Casual"),
                         Button.danger("ratedmode", "\uD83E\uDD3A Rated"),
-                        Button.success("friend", "\uD83D\uDDE1️ Play Friend"))
+                        Button.success("friend", "\uD83D\uDDE1 Play Friend"),
+                        Button.success("corr", "⏱\uFE0F Correspondence"))
                 .addActionRow(
                         Button.link("https://lichess.org/login", "\uD83D\uDD12 Login/Register"),
-                        Button.secondary("playhelp", "❓ Help"),
                         Button.success("cssnhelp", "❓ CSSN Network Help"))
                 .queue();
     }
@@ -167,6 +191,46 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
 
     }
 
+    public void sendLadderPlayerInfo(){
+        event.deferReply(true).queue();
+        event.getHook().sendMessage("Please pick a player from current Discord server!")
+                .setActionRow(
+                        EntitySelectMenu.create("ladder-player-menu", EntitySelectMenu.SelectTarget.USER).build()
+                ).queue();
+    }
+
+    private void sendLadderInfo(String id) {
+        event.deferReply(true).queue();
+        try {
+            LichessLaddersParser.PagedResult result = LichessLaddersParser.getLadderInfoPaged(id);
+
+            // Send the first page as the initial reply
+            if (result.getTotalPages() > 0) {
+                event.getHook().sendMessage(result.getPage(1)).queue();
+            }
+
+            // Send remaining pages as follow-up messages with delays
+            for (int i = 2; i <= result.getTotalPages(); i++) {
+                final int pageNum = i;
+                // Add a small delay between messages to avoid rate limiting
+                event.getHook().sendMessage(result.getPage(pageNum)).setEphemeral(true)
+                        .queueAfter(500L * (pageNum - 2), TimeUnit.MILLISECONDS);
+            }
+
+        } catch (IOException e) {
+            event.getHook().sendMessage("Error fetching ladder information: " + e.getMessage()).queue();
+        }
+    }
+
+
+    public void sendLichessLadderCommand(){
+
+        switch (event.getOptionsByName("laddertype").get(0).getAsString()) {
+            case "l1" -> sendLadderInfo("1");
+            case "l2" -> sendLadderInfo("2");
+        }
+    }
+
 
     public void sendUserSettingCommand(){
         event.deferReply(true).queue();
@@ -176,6 +240,8 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         String status = SettingHandler.updateSetting(new SettingSchema(theme, pieceType, event.getUser().getId(),difficultyLevel));
         event.getHook().sendMessage(status).queue();
     }
+
+
 
 
     @Override
@@ -196,6 +262,10 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
             case "setting" -> sendUserSettingCommand();
 
             case "coordinategame" -> sendCoordinateGame();
+
+            case "lichessladder" -> sendLichessLadderCommand();
+
+            case "ladderplayerinfo" -> sendLadderPlayerInfo();
 
         }
     }

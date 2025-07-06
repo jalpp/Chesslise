@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.EntitySelectInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -39,6 +40,11 @@ public class CommandHandler extends ListenerAdapter {
     }
 
     @Override
+    public void onEntitySelectInteraction(@NotNull EntitySelectInteractionEvent event) {
+        new EntityContextModule(event).handleLogic();
+    }
+
+    @Override
     public void onReady(ReadyEvent event) {
         JDA jda = event.getJDA();
         int guildCount = jda.getGuilds().size();
@@ -48,4 +54,6 @@ public class CommandHandler extends ListenerAdapter {
 
 
 }
+
+
 
