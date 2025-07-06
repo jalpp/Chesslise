@@ -6,6 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Paths;
 import java.util.*;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import setting.SettingHandler;
@@ -15,7 +16,6 @@ public class LichessPuzzleSearch {
 
     private static final int MAX_PUZZLE_SEARCH = 5000;
     private static final int MAX_RETRY_COUNT = 2; //Retry count for calling the external API if the API is down
-
     /**
      * gets the puzzle values in the csv line for given search column
      *
@@ -241,6 +241,10 @@ public class LichessPuzzleSearch {
 
     public static LichessDBPuzzle getDatabasePuzzle(String themeSearch,String userId) {
         List<String> randomPuzzle = getRandomPuzzle(searchPuzzlesGubbinsApi("Themes", themeSearch, MAX_PUZZLE_SEARCH,userId));
+        LichessPuzzleMoveService lichessPuzzleMoveService = new LichessPuzzleMoveService();
+        JSONObject userSettings = getUserSettings(userId);
+        List<String> moveList = Arrays.asList(randomPuzzle.get(2).split(" "));
+        lichessPuzzleMoveService.updateLichessPuzzleData(userId,randomPuzzle.get(1), moveList ,themeSearch,userSettings.get("pieceType").toString(),userSettings.get("boardTheme").toString(),userSettings.get("puzzleDifficulty").toString(),"lichess");
         return new LichessDBPuzzle(randomPuzzle.get(1), randomPuzzle.get(3),
                 randomPuzzle.get(5));
     }
@@ -276,5 +280,20 @@ public class LichessPuzzleSearch {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private static JSONObject getUserSettings(String userId){
+        JSONObject userSettings = new JSONObject();
+        try{
+            SettingSchema settingSchema = SettingHandler.getUserSetting(userId);
+            userSettings.put("boardTheme",settingSchema.getBoardTheme());
+            userSettings.put("pieceType",settingSchema.getPieceType());
+            userSettings.put("puzzleDifficulty",settingSchema.getPuzzleDifficulty());
+            return userSettings;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return userSettings;
     }
 }

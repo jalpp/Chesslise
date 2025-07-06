@@ -22,5 +22,6 @@
 | /findfriend | find a new friend |
 | /sendfriendrequest | send a friend request |
 | /acceptfriendreqest | accept a friend request |
+| /lichessdbpuzzlemove | Submit your move for the currently active LichessDB theme puzzle. Use this after generating a puzzle with `/puzzle` (LichessDB theme). Enter your move in UCI format (e.g., `e2e4` or `e7e8q`). |
 
 and more run /help to see them
