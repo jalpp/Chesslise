@@ -51,6 +51,7 @@ public class CommandBuilder {
                     "provide friend discord username" },
             { "blockfriend", "Block a friend who is not being friendly by providing id", "blockid",
                     "provide friend discord username" },
+            {"pgn", "scroll through moves in pgn form", "game-pgn", "the game's pgn"}        
           };
 
     private static final HashMap<String, ArrayList<String>> COMMAND_MULTIPLE_OPTIONS = new HashMap<>();

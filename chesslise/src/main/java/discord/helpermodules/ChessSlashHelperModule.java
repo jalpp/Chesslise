@@ -8,9 +8,11 @@ import chessdb.ChessDBQuery;
 import discord.mainhandler.Thumbnail;
 import ladders.LichessLaddersParser;
 import lichess.FenPuzzle;
+import lichess.PgnScroll;
 import lichess.UserProfile;
 import net.dv8tion.jda.api.EmbedBuilder;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
@@ -26,6 +28,9 @@ import setting.SettingSchemaModule;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -231,6 +236,30 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         }
     }
 
+    public void sendPgnScroll(){
+       try {
+           event.deferReply().queue();
+           String pgn = event.getOption("game-pgn").getAsString();
+           String moveList = PgnScroll.getMovesString(pgn);
+           if(moveList.isEmpty() || moveList.isBlank()){
+               event.getHook().sendMessage("Invalid PGN! Make sure the pgn is in correct format!").setEphemeral(true).queue();
+               return;
+           }
+
+           HashMap<String, String> headers = PgnScroll.getPgnHeaders(pgn);
+           List<MessageEmbed.Field> fieldList = new ArrayList<>();
+           System.out.println(headers);
+           for(String key: headers.keySet()){
+               fieldList.add(new MessageEmbed.Field(key, headers.get(key), false));
+           }
+           EmbedBuilder builder = PgnScroll.PgnViewBuilder(moveList, 0, "white", setting, fieldList);
+           event.getHook().sendMessageEmbeds(builder.build()).addActionRow(PgnScroll.sendPgnActionsOptions(moveList, 0)).queue();
+       }catch (Exception e){
+           System.out.println(e.getMessage());
+           event.getHook().sendMessage(e.getMessage()).setEphemeral(true).queue();
+       }
+    }
+
 
     public void sendUserSettingCommand(){
         event.deferReply(true).queue();
@@ -240,9 +269,6 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
         String status = SettingHandler.updateSetting(new SettingSchema(theme, pieceType, event.getUser().getId(),difficultyLevel));
         event.getHook().sendMessage(status).queue();
     }
-
-
-
 
     @Override
     public void trigger(String commandName) {
@@ -266,6 +292,8 @@ public class ChessSlashHelperModule extends SettingSchemaModule implements Comma
             case "lichessladder" -> sendLichessLadderCommand();
 
             case "ladderplayerinfo" -> sendLadderPlayerInfo();
+
+            case "pgn" -> sendPgnScroll();
 
         }
     }
