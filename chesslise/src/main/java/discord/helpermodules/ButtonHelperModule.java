@@ -3,16 +3,15 @@ package discord.helpermodules;
 import abstraction.ChessUtil;
 import abstraction.CommandTrigger;
 import chessdb.ChessDBQuery;
+import com.github.bhlangonijr.chesslib.pgn.PgnHolder;
 import coordinategame.Coordinategame;
 import discord.mainhandler.Thumbnail;
-import lichess.DailyCommand;
-import lichess.Game;
+import lichess.*;
 import chariot.Client;
 import Game.*;
 import com.github.bhlangonijr.chesslib.Board;
-import lichess.ThemePuzzle;
-import lichess.UserGame;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.ItemComponent;
@@ -28,6 +27,7 @@ import setting.SettingSchemaModule;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -76,6 +76,69 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
                 }
             }
         }
+    }
+
+    public void sendPgnFlow(){
+        switch (buttonEvent.getComponentId()){
+
+            case "pgn-flip" -> {
+                sendPgnActionsFactory("flip");
+            }
+            case "pgn-prev" -> {
+                sendPgnActionsFactory("prev");
+            }
+            case "pgn-next" -> {
+                sendPgnActionsFactory("next");
+            }
+            case "pgn-next-2x" -> {
+                sendPgnActionsFactory("next-2x");
+            }
+            case "pgn-prev-2x" -> {
+                sendPgnActionsFactory("prev-2x");
+            }
+
+        }
+    }
+
+    private void sendPgnActionsFactory(String action){
+        buttonEvent.deferEdit().queue();
+        String moveNumber = buttonEvent.getMessage().getEmbeds().getFirst().getFields().getFirst().getValue();
+        String side = buttonEvent.getMessage().getEmbeds().getFirst().getFields().get(1).getValue();
+        List<MessageEmbed.Field> gameHeaders = buttonEvent.getMessage().getEmbeds().getFirst().getFields().subList(2, 6);
+        String moveList = buttonEvent.getMessage().getEmbeds().getFirst().getDescription();
+
+        int nextMove = 0;
+        int parseMoveNumber = Integer.parseInt(Objects.requireNonNull(moveNumber));
+        EmbedBuilder builder = new EmbedBuilder();
+
+        switch (action){
+            case "next" -> {
+                 nextMove = ++parseMoveNumber;
+                 builder = PgnScroll.PgnViewBuilder(moveList, nextMove, side, setting, gameHeaders);
+            }
+            case "next-2x" -> {
+                nextMove = parseMoveNumber + 2;
+                builder = PgnScroll.PgnViewBuilder(moveList, nextMove, side, setting, gameHeaders);
+            }
+            case "prev" -> {
+                nextMove = --parseMoveNumber;
+                builder = PgnScroll.PgnViewBuilder(moveList, nextMove, side, setting, gameHeaders);
+            }
+            case "prev-2x" -> {
+                nextMove = parseMoveNumber - 2;
+                builder = PgnScroll.PgnViewBuilder(moveList, nextMove, side, setting, gameHeaders);
+            }
+            case "flip" -> {
+
+                if(Objects.requireNonNull(side).equalsIgnoreCase("white")){
+                    builder = PgnScroll.PgnViewBuilder(moveList, Integer.parseInt(moveNumber), "black", setting, gameHeaders);
+                }else{
+                    builder = PgnScroll.PgnViewBuilder(moveList, Integer.parseInt(moveNumber), "white", setting, gameHeaders);
+                }
+            }
+        }
+
+        buttonEvent.getHook().editOriginalEmbeds(builder.build()).setActionRow(PgnScroll.sendPgnActionsOptions(Objects.requireNonNull(moveList), nextMove)).queue();
     }
 
     /**
@@ -444,5 +507,7 @@ public class ButtonHelperModule extends SettingSchemaModule implements CommandTr
         sendFlipBoard();
 
         sendPlayCoordinateGameUI();
+
+        sendPgnFlow();
     }
 }
