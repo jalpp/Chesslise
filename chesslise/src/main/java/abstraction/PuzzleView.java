@@ -10,6 +10,10 @@ public class PuzzleView {
         return util.getImageFromFEN(fen, schema.getBoardTheme(), schema.getPieceType());
     }
 
+    public String renderImage(String fen, String boardTheme , String pieceType){
+        return util.getImageFromFEN(fen, boardTheme,pieceType);
+    }
+
     public String defineSideToMove(String fen) {
         return util.getWhichSideToMove(fen);
     }

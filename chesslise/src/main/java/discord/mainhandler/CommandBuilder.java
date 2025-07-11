@@ -125,6 +125,13 @@ public class CommandBuilder {
                 new OptionData(OptionType.STRING, "requesttype", "Select request type", true)
                         .addChoice("friendlist", "flist")
                         .addChoice("incomming", "fin").addChoice("outgoing", "fout"));
+
+        buildSlashMultipleOption(
+                "lichessdbpuzzlemove",                              // command name
+                "Make your move for the active lichess puzzle",    // description
+                new OptionData(OptionType.STRING, "move",  // option name
+                        "Enter your move like e2e4 or e7e8q", true)  // description and required
+        );
     }
 
     public void registerSlashNoOptionCommand() {
