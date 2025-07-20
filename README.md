@@ -7,7 +7,7 @@
 </p>
 
 
-This repo contains source code for Chesslise App, the website source code is [here](https://github.com/jalpp/chessliseweb), contributions are also welcome, check the contributing doc [here](https://github.com/jalpp/Chesslise/blob/master/CONTRIBUTING.md)
+This repo contains source code for Chesslise App, the website source code is [here](https://github.com/jalpp/chessliseweb), contributions are also welcome, check the contributing doc [here](https://github.com/jalpp/Chesslise/blob/master/CONTRIBUTING.md). To view info on how to use the app and TOS check the website.
 
 
 
