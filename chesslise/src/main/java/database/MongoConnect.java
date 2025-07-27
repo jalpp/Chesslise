@@ -1,5 +1,7 @@
 package database;
 
+import org.bson.Document;
+
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -9,7 +11,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import org.bson.Document;
 import runner.Main;
 
 public class MongoConnect {
@@ -22,6 +23,8 @@ public class MongoConnect {
 
     private static MongoCollection<Document> settingCollection;
 
+    private static MongoCollection<Document> puzzleCollection;
+
     public MongoConnect() {
     }
 
@@ -33,6 +36,7 @@ public class MongoConnect {
         String challengeColName = Main.dotenv.get("DB_CHALL_COL");
         String gameColName = Main.dotenv.get("DB_GAMES_COL");
         String settingColName = Main.dotenv.get("DB_SETTING_COL");
+        String puzzleColName = Main.dotenv.get("DB_PUZZLE_SOLVE_COL");
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -53,6 +57,9 @@ public class MongoConnect {
         gamesCollection = database.getCollection(isBeta ? gameColName + "beta" : gameColName);
 
         settingCollection = database.getCollection(isBeta ? settingColName + "beta" : settingColName);
+
+        puzzleCollection = database.getCollection(isBeta ? puzzleColName + "beta" : puzzleColName);
+
     }
 
     public static void main(String[] args) {
@@ -73,5 +80,9 @@ public class MongoConnect {
 
     public static MongoCollection<Document> getSettingCollection() {
         return settingCollection;
+    }
+
+    public static MongoCollection<Document> getPuzzleCollection() {
+        return puzzleCollection;
     }
 }

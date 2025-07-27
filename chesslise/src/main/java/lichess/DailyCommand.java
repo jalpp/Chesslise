@@ -1,15 +1,18 @@
 package lichess;
 
+import java.awt.Color;
+
+import org.json.simple.JSONObject;
+
+import com.github.bhlangonijr.chesslib.Board;
+
 import abstraction.PuzzleView;
 import chariot.Client;
 import chariot.model.One;
 import chariot.model.Puzzle;
-import com.github.bhlangonijr.chesslib.Board;
 import discord.mainhandler.Thumbnail;
 import net.dv8tion.jda.api.EmbedBuilder;
 import setting.SettingSchema;
-
-import java.awt.*;
 
 public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
 
@@ -18,6 +21,13 @@ public class DailyCommand extends PuzzleView implements abstraction.Puzzle {
     public DailyCommand(Client client) {
         this.client = client;
 
+    }
+
+    public JSONObject getDailyPuzzle() {
+        JSONObject json = new JSONObject();
+        json.put("solution", client.puzzles().dailyPuzzle().get().puzzle().solution());
+        json.put("fen", definePuzzleFen());
+        return json;
     }
 
     @Override

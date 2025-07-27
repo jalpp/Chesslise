@@ -22,13 +22,14 @@ public class SlashContextModule implements HandleContext {
         ChessSlashHelperModule chessTool = new ChessSlashHelperModule(slashEvent);
         NetworkHelperModule networkTool = new NetworkHelperModule(slashEvent);
         PuzzleContextHelperModule puzzleTool = new PuzzleContextHelperModule(slashEvent);
+        PuzzleSolutionHelperModule puzzleSolutionTool = new PuzzleSolutionHelperModule(slashEvent);
 
         engineTool.trigger(name);
         infoTool.trigger(name);
         chessTool.trigger(name);
         networkTool.trigger(name);
         puzzleTool.trigger(name);
-
+        puzzleSolutionTool.trigger(name);
     }
 
 }

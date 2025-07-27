@@ -1,6 +1,9 @@
 package runner;
 
+import org.bson.Document;
+
 import com.mongodb.client.MongoCollection;
+
 import database.MongoConnect;
 import discord.mainhandler.CommandBuilder;
 import discord.mainhandler.CommandHandler;
@@ -9,7 +12,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.bson.Document;
 
 public class Main extends ListenerAdapter {
 
@@ -24,6 +26,8 @@ public class Main extends ListenerAdapter {
     private static MongoCollection<Document> gamesCollection;
 
     private static MongoCollection<Document> settingCollection;
+
+    private static MongoCollection<Document> puzzleCollection;
 
     public static void main(String[] args) {
 
@@ -47,6 +51,8 @@ public class Main extends ListenerAdapter {
             networkPlayers = MongoConnect.getNetworkPlayers();
             gamesCollection = MongoConnect.getGamesCollection();
             settingCollection = MongoConnect.getSettingCollection();
+            puzzleCollection = MongoConnect.getPuzzleCollection();
+
             System.out.println("[Chesslise Status]: " + (IS_BETA ? "Beta" : "Production") + " Successfully Running");
             System.out.println("[Chesslise Status]: Successfully Connected To Database");
         } catch (Exception exception) {
@@ -72,6 +78,10 @@ public class Main extends ListenerAdapter {
 
     public static MongoCollection<Document> getSettingCollection() {
         return settingCollection;
+    }
+
+    public static MongoCollection<Document> getPuzzleCollection() {
+        return puzzleCollection;
     }
 
 }

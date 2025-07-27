@@ -1,8 +1,13 @@
 package discord.helpermodules;
 
+import java.util.List;
+
+import abstraction.CommandTrigger;
 import chariot.Client;
 import chesscom.DailyCommandCC;
 import chesscom.puzzle;
+import discord.helpermodules.chess.ChessMoveConverter;
+import discord.helpermodules.chess.PgnParser;
 import discord.mainhandler.AntiSpam;
 import lichess.DailyCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -10,15 +15,14 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import setting.SettingSchema;
 import setting.SettingSchemaModule;
-import abstraction.CommandTrigger;
-public class PuzzleContextHelperModule extends SettingSchemaModule implements CommandTrigger{
+
+public class PuzzleContextHelperModule extends SettingSchemaModule implements CommandTrigger {
 
     private final SlashCommandInteractionEvent slashEvent;
     private final AntiSpam spam = new AntiSpam(300000, 1);
     private static final Client client = Client.basic(conf -> conf.retries(0));
     private final SettingSchema setting = getSettingSchema();
 
-    
     public PuzzleContextHelperModule(SlashCommandInteractionEvent slashEvent) {
         super(slashEvent.getUser().getId());
         this.slashEvent = slashEvent;
@@ -27,6 +31,11 @@ public class PuzzleContextHelperModule extends SettingSchemaModule implements Co
     public void sendSlashLichesspuzzleCommand() {
         slashEvent.deferReply(false).queue();
         DailyCommand dailyCommand = new DailyCommand(client);
+        System.out.println("Fetching today's puzzle from Lichess: " + dailyCommand.getDailyPuzzle().toString());
+        PuzzleSolutionHelperModule puzzleSolutionHelperModule = new PuzzleSolutionHelperModule(this.slashEvent);
+        puzzleSolutionHelperModule.saveGeneratedPuzzleData((String) dailyCommand.getDailyPuzzle().get("fen"),
+                (List<String>) dailyCommand.getDailyPuzzle().get("solution"));
+
         slashEvent.getHook().sendMessageEmbeds(dailyCommand.defineCommandCard(setting).build())
                 .addActionRow(Button.primary("hint", "hint"),
                         Button.link(dailyCommand.defineAnalysisBoard(dailyCommand.definePuzzleFen()), "Analysis Board"))
@@ -36,6 +45,13 @@ public class PuzzleContextHelperModule extends SettingSchemaModule implements Co
     public void sendDailyPuzzleChessComCommand() {
         slashEvent.deferReply(false).queue();
         DailyCommandCC daily = new DailyCommandCC();
+        String puzzlePGN = daily.definePuzzlePGN();
+        List<String> moves = PgnParser.extractMoves(puzzlePGN);
+        System.out.println("Moves: " + moves.toString());
+        List<String> uciMove = ChessMoveConverter.convertSanToUci(daily.definePuzzleFen(), moves);
+        System.out.println("uciMove: " + uciMove.toString());
+        PuzzleSolutionHelperModule puzzleSolutionHelperModule = new PuzzleSolutionHelperModule(this.slashEvent);
+        puzzleSolutionHelperModule.saveGeneratedPuzzleData(daily.definePuzzleFen(), uciMove);
         slashEvent.getHook().sendMessageEmbeds(daily.defineCommandCard(setting).build())
                 .addActionRow(Button.link(daily.defineAnalysisBoard(daily.definePuzzleFen()), "Analysis Board"))
                 .queue();
@@ -51,6 +67,14 @@ public class PuzzleContextHelperModule extends SettingSchemaModule implements Co
         } else {
             try {
                 puzzle puzzle = new puzzle();
+                String puzzlePGN = puzzle.definePGN();
+                System.out.println("puzzlePGN: " + puzzlePGN);
+                List<String> moves = PgnParser.extractMoves(puzzlePGN);
+                System.out.println("Moves: " + moves.toString());
+                List<String> uciMove = ChessMoveConverter.convertSanToUci(puzzle.definePuzzleFen(), moves);
+                System.out.println("uciMove: " + uciMove.toString());
+                PuzzleSolutionHelperModule puzzleSolutionHelperModule = new PuzzleSolutionHelperModule(this.slashEvent);
+                puzzleSolutionHelperModule.saveGeneratedPuzzleData(puzzle.definePuzzleFen(), uciMove);
                 slashEvent.getHook().sendMessageEmbeds(puzzle.defineCommandCard(setting).build())
                         .addActionRow(
                                 Button.link(puzzle.defineAnalysisBoard(puzzle.definePuzzleFen()), "Analysis Board"))
