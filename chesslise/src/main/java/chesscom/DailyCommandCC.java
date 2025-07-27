@@ -1,15 +1,15 @@
 package chesscom;
 
-import abstraction.*;
+import java.awt.Color;
+import java.io.IOException;
+
 import abstraction.Puzzle;
+import abstraction.PuzzleView;
 import discord.mainhandler.Thumbnail;
 import io.github.sornerol.chess.pubapi.client.DailyPuzzleClient;
 import io.github.sornerol.chess.pubapi.exception.ChessComPubApiException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import setting.SettingSchema;
-
-import java.awt.*;
-import java.io.IOException;
 
 public class DailyCommandCC extends PuzzleView implements Puzzle {
 
@@ -54,6 +54,15 @@ public class DailyCommandCC extends PuzzleView implements Puzzle {
         return new EmbedBuilder().setColor(defineEmbedColor()).setTitle(definePuzzleTitle())
                 .setThumbnail(definePuzzleLogo()).setDescription(definePuzzleDescription())
                 .setImage(renderImage(definePuzzleFen(), schema));
+    }
+
+    public String definePuzzlePGN() {
+        try {
+            return puzzleClient.getTodaysDailyPuzzle().getPgn();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "invalid pgn";
+        }
     }
 
 }

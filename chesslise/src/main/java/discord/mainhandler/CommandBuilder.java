@@ -87,6 +87,9 @@ public class CommandBuilder {
                         .addChoice("Lichess daily puzzle", "lip").addChoice("Chess.com daily puzzle", "cpp")
                         .addChoice("Chess.com random puzzle", "random").addChoice("LichessDB theme puzzle", "lidb"));
 
+        buildSlashMultipleOption("puzzlesolve", "solve the last puzzle you generated",
+                        new OptionData(OptionType.STRING, "move", "Enter Your Move", true));
+
         buildSlashMultipleOption("playengine", "play engine by choosing the difficulty level",
                 new OptionData(OptionType.STRING, "difficulty", "pick the engine difficulty", true)
                         .addChoice("Easy", "5").addChoice("Medium", "10").addChoice("Hard", "15"));

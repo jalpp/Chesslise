@@ -18,4 +18,8 @@ public class PuzzleView {
         return util.getAnalysisBoard(fen);
     }
 
+    public String renderImage(String fen, String boardTheme, String pieceType) {
+        return util.getImageFromFEN(fen, boardTheme, pieceType);
+    }
+
 }
